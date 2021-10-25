@@ -10,7 +10,7 @@ If you've never installed a Java Runtime Environment you will need to download a
 
 Now install dbt-firebolt. For the current version:
 ```
-pip install git+https://github.com/firebolt-analytics/dbt-firebolt.git
+pip install dbt-firebolt
 ```
 
 ## Setup
