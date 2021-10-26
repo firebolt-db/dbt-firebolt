@@ -40,6 +40,8 @@ These fields are optional:
 
 Note that, although the value of `type` is always `firebolt`, it must be included either in `profiles.yml` or in the dbt_project.yml file for your application.
 
+Finally, multi-threading is not currently supported, so threads must be set to 1.
+
 #### Example file:
 ```
 my_project:
