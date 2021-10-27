@@ -9,6 +9,7 @@
   {% do drop_relations_loop(tbls) %}
 {% endmacro %}
 
+
 {% macro drop_relations_loop(relations) %}
   {% for row in relations %}
     {%- set relation = api.Relation.create(database=target.database,
@@ -64,6 +65,29 @@
 {% endmacro %}
 
 
+{% macro make_create_index_sql(relation,
+                               index_name,
+                               create_statement,
+                               spine_col,
+                               other_col) -%}
+  {{ create_statement }} "{{ index_name }}" ON {{ relation }} (
+      {{ spine_col }},
+      {% if other_col is iterable and other_col is not string -%}
+          {{ other_col | join(', ') }}
+      {%- else -%}
+          {{ other_col }}
+      {%- endif -%}
+      );
+{%- endmacro %}
+
+
+{% macro drop_index(index_name, index_type) -%}
+    {% call statement('drop_relation', auto_begin=False) -%}
+        DROP {{ index_type | upper }} INDEX "{{ index_name }}"
+    {%- endcall %}
+{% endmacro %}
+
+
 {% macro firebolt__get_create_index_sql(relation, index_dict) -%}
     {%- set index_config = adapter.parse_index(index_dict) -%}
     {%- set index_name = index_config.render(relation) -%}
@@ -81,80 +105,21 @@
 {%- endmacro %}
 
 
-{% macro make_create_index_sql(relation,
-                               index_name,
-                               create_statement,
-                               spine_col,
-                               other_col) -%}
-  {{ create_statement }} "{{ index_name }}" ON {{ relation }} (
-      {{ spine_col }},
-      {% if other_col is iterable and other_col is not string -%}
-          {{ other_col | join(', ') }}
-      {%- else -%}
-          {{ other_col }}
-      {%- endif -%}
-      );
-{%- endmacro %}
-
-{% macro drop_index(index_name, index_type) -%}
-    {% call statement('drop_relation', auto_begin=False) -%}
-        DROP {{ index_type | upper }} INDEX "{{ index_name }}"
-    {%- endcall %}
-{% endmacro %}
-
-{% macro firebolt__get_create_index_sql(relation, index_dict) -%}
-  {%- set index_config = adapter.parse_index(index_dict) -%}
-  {%- set index_name = index_config.render(relation) -%}
-  {%- set index_type = index_config.type | upper -%}
-
-  {%- if index_type == "JOIN" -%}
-    {{ make_create_index_sql(
-      relation, index_name, "CREATE JOIN INDEX",
-      index_config.join_column, index_config.dimension_column) }}
-  {%- elif index_type == "AGGREGATING" -%}
-    {{ make_create_index_sql(
-      relation, index_name, "CREATE AND GENERATE AGGREGATING INDEX", 
-      index_config.key_column, index_config.aggregation) }}
-  {%- endif -%}
-
-{%- endmacro %}
-
-{% macro make_create_index_sql(
-  relation, index_name, create_statement, spine_col, other_col) -%}
-
-  {{ create_statement }} "{{ index_name }}" ON {{ relation }} (
-    {{ spine_col }},
-    {% if other_col is iterable and other_col is not string -%}
-      {{ other_col | join(', ') }}
-    {%- else -%}
-      {{ other_col }}
-    {%- endif -%}
-    );
-{%- endmacro %}
-
-{% macro drop_index(index_name, index_type) -%}
-
-  {% call statement('drop_relation', auto_begin=False) -%}
-    DROP {{ index_type | upper }} INDEX "{{ index_name }}"
-  {%- endcall %}
-{% endmacro %}
-
-
 {% macro firebolt__drop_relation(relation) -%}
-  {# drop non-primary indexes #}
-  {% if relation.type == 'table' %}
-    {% set idx_info_table = run_query('SHOW INDEXES;') %}
-    {% set idxs_tbl = adapter.filter_table(idx_info_table, 'table_name', relation.identifier) %}
-    {% set idxs_to_drop = adapter.filter_table(idxs_tbl, 'type', '^((?!primary).)*$') %}
+    {# drop non-primary indexes #}
+    {% if relation.type == 'table' %}
+        {% set idx_info_table = run_query('SHOW INDEXES;') %}
+        {% set idxs_tbl = adapter.filter_table(idx_info_table, 'table_name', relation.identifier) %}
+        {% set idxs_to_drop = adapter.filter_table(idxs_tbl, 'type', '^((?!primary).)*$') %}
 
-    {% for row in idxs_to_drop %}
-      {% do drop_index(row[0], row[2]) %}
-    {% endfor %}
-  {% endif %}
+        {% for row in idxs_to_drop %}
+            {% do drop_index(row[0], row[2]) %}
+        {% endfor %}
+    {% endif %}
 
-  {% call statement('drop_relation', auto_begin=False) -%}
-    DROP {{ relation.type }} IF EXISTS {{ relation.identifier }}
-  {%- endcall %}
+    {% call statement('drop_relation', auto_begin=False) -%}
+        DROP {{ relation.type }} IF EXISTS {{ relation.identifier }}
+    {%- endcall %}
 {% endmacro %}
 
 
