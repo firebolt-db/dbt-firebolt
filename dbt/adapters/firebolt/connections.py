@@ -23,6 +23,7 @@ class FireboltCredentials(Credentials):
     host: Optional[str] = 'api.app.firebolt.io'
     driver: str = 'com.firebolt.FireboltDriver'
     engine_name: Optional[str] = None
+    account: Optional[str] = None
 
     @property
     def type(self):
@@ -33,7 +34,7 @@ class FireboltCredentials(Credentials):
         Return list of keys (i.e. not values) to display
         in the `dbt debug` output.
         """
-        return ("host", "user",
+        return ("host", "account", "user",
                 "schema", "database", "engine_name",
                 "jar_path", "params")
 
@@ -116,8 +117,9 @@ class FireboltConnectionManager(SQLConnectionManager):
             # If there's not an engine name specified either as an environment
             # variable or as an engine_name value in profiles.yml, it uses the
             # engine Firebolt has set as default for this DB.
-            jdbc_url += f"?engine={urllib.parse.quote(credentials.engine_name)}"
-
+            jdbc_url += f'?engine={urllib.parse.quote(credentials.engine_name)}'
+        if credentials.account:
+            jdbc_url += f'&account={urllib.parse.quote(credentials.account.lower())}'
         return jdbc_url
 
     @contextmanager
