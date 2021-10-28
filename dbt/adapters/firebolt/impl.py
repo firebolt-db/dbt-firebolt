@@ -164,14 +164,17 @@ class FireboltAdapter(SQLAdapter):
     @available.parse_none
     def make_field_partition_pairs(self, columns, partitions) -> List[str]:
         """
-        Return a list of strings of form "column column_type PARTITION(regex)"
-        or "column column_type" if not partition exists for that column.
-        Columns with a partition must come at end of list.
+        Return a list of strings of form "column column_type" or
+        "column column_type PARTITION(regex)" where the partitions
+        fall at the end of the list.
         """
         unpartitioned_columns = []
         partitioned_columns = []
-        print('\n** make_field_partition_pairs')
-        print('partitions: ', partitions)
+        for column in columns:
+            unpartitioned_columns.append(self.quote(column['name'])
+                                         + ' '
+                                         + column['data_type']
+                                         )
         if partitions: # partitions may be empty.
             for partition in partitions:
                 partitioned_columns.append(self.quote(partition['name'])
@@ -181,11 +184,6 @@ class FireboltAdapter(SQLAdapter):
                                            + partition['regex']
                                            + "')"
                                            )
-        for column in columns:
-            unpartitioned_columns.append(self.quote(column['name'])
-                                         + ' '
-                                         + column['data_type']
-                                         )
         return unpartitioned_columns + partitioned_columns
 
     @available.parse_none
