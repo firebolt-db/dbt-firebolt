@@ -26,7 +26,7 @@ def _dbt_synapse_version():
 package_name = "dbt-firebolt"
 package_version = _dbt_synapse_version()
 description = "The Firebolt adapter plugin for dbt (data build tool)"
-dbt_version = '0.21.0'
+dbt_version = '0.21'
 
 # the package version should be the dbt version, with maybe some things on the
 # ends of it. (0.18.1 vs 0.18.1a1, 0.18.1.1, ...)
