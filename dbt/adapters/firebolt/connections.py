@@ -103,16 +103,6 @@ class FireboltConnectionManager(SQLConnectionManager):
         jdbc_url = os.path.join("jdbc:firebolt://",
                                 credentials.host,
                                 credentials.database)
-        if credentials.params:
-            jdbc_url += "".join(
-                    map(
-                        lambda kv: "&"
-                        + quote(kv[0])
-                        + "="
-                        + quote(kv[1]),
-                        credentials.params.items(),
-                    )
-            )
         # For both engine name and account, if there's not a value specified
         # it uses whatever Firebolt has set as default for this DB. So just
         # fill in url variables that are not None.
@@ -120,6 +110,12 @@ class FireboltConnectionManager(SQLConnectionManager):
                     for key in ['engine', 'account']
                     if getattr(credentials, key)
                    }
+        # If params, then add them, too.
+        if credentials.params:
+            url_vars.update({key:quote(credentials.params.items()[key]).lower()
+                             for key in credentials.params.items()
+                             if credentials.params.items()[key]
+                            })
         if url_vars:
             jdbc_url += "?" + urlencode(url_vars)
         return jdbc_url
