@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Optional, Dict, List, Any, Iterable
-import urllib
+from urllib.parse import urlencode, quote
 import os
 import json
 import agate
@@ -22,7 +22,8 @@ class FireboltCredentials(Credentials):
     params: Optional[Dict[str, str]] = None
     host: Optional[str] = 'api.app.firebolt.io'
     driver: str = 'com.firebolt.FireboltDriver'
-    engine_name: Optional[str] = None
+    engine: Optional[str] = None
+    account: Optional[str] = None
 
     @property
     def type(self):
@@ -33,8 +34,8 @@ class FireboltCredentials(Credentials):
         Return list of keys (i.e. not values) to display
         in the `dbt debug` output.
         """
-        return ("host", "user",
-                "schema", "database", "engine_name",
+        return ("host", "account", "user",
+                "schema", "database", "engine",
                 "jar_path", "params")
 
     @property
@@ -47,7 +48,7 @@ class FireboltCredentials(Credentials):
         # Is this safe, or is it too much information. It should only be
         # called by `hashed_unique_field()` as stated in the docstring
         # but I'm asking here for noting in the PR of this branch.
-        return self.engine_name
+        return self.engine
 
 class FireboltConnectionManager(SQLConnectionManager):
     """Methods to implement:
@@ -81,16 +82,16 @@ class FireboltConnectionManager(SQLConnectionManager):
             connection.state = "fail"
             # If we get a 502 or 503 error, maybe engine isn't running.
             if "50" in f"{e}":
-                if credentials.engine_name is None:
-                    engine_name = 'default'
+                if credentials.engine is None:
+                    engine = 'default'
                     error_msg_append = ('\nTo specify a non-default engine, '
-                    'add an engine_name field into the appropriate target in your '
+                    'add an engine field into the appropriate target in your '
                     'profiles.yml file.')
                 else:
-                    engine_name = credentials.engine_name
+                    engine = credentials.engine
                     error_msg_append = ''
                 raise EngineOfflineException(
-                    f'Failed to connect via JDBC. Is the {engine_name} engine for '
+                    f'Failed to connect via JDBC. Is the {engine} engine for '
                     + f'{credentials.database} running? '
                     + error_msg_append
                 )
@@ -102,22 +103,21 @@ class FireboltConnectionManager(SQLConnectionManager):
         jdbc_url = os.path.join("jdbc:firebolt://",
                                 credentials.host,
                                 credentials.database)
+        # For both engine name and account, if there's not a value specified
+        # it uses whatever Firebolt has set as default for this DB. So just
+        # fill in url variables that are not None.
+        url_vars = {key:quote(getattr(credentials, key).lower())
+                    for key in ['engine', 'account']
+                    if getattr(credentials, key)
+                   }
+        # If params, then add them, too.
         if credentials.params:
-            jdbc_url += "".join(
-                    map(
-                        lambda kv: "&"
-                        + urllib.parse.quote(kv[0])
-                        + "="
-                        + urllib.parse.quote(kv[1]),
-                        credentials.params.items(),
-                    )
-            )
-        if credentials.engine_name:
-            # If there's not an engine name specified either as an environment
-            # variable or as an engine_name value in profiles.yml, it uses the
-            # engine Firebolt has set as default for this DB.
-            jdbc_url += f"?engine={urllib.parse.quote(credentials.engine_name)}"
-
+            url_vars.update({key:quote(credentials.params.items()[key]).lower()
+                             for key in credentials.params.items()
+                             if credentials.params.items()[key]
+                            })
+        if url_vars:
+            jdbc_url += "?" + urlencode(url_vars)
         return jdbc_url
 
     @contextmanager
