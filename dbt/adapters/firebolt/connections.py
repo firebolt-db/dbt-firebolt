@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Optional, Dict, List, Any, Iterable
-from urllib.parse import urlencode, quote
+from urllib.parse import quote, urlencode
 import os
 import json
 import agate
@@ -100,9 +100,17 @@ class FireboltConnectionManager(SQLConnectionManager):
         return connection
 
     def make_jdbc_url(self, credentials):
-        jdbc_url = os.path.join("jdbc:firebolt://",
-                                credentials.host,
-                                credentials.database)
+        jdbc_url = f'jdbc:firebolt://{credentials.host}/{credentials.database}'
+        if credentials.params:
+            jdbc_url += "".join(
+                    map(
+                        lambda kv: "&"
+                        + urllib.parse.quote(kv[0])
+                        + "="
+                        + urllib.parse.quote(kv[1]),
+                        credentials.params.items(),
+                    )
+            )
         # For both engine name and account, if there's not a value specified
         # it uses whatever Firebolt has set as default for this DB. So just
         # fill in url variables that are not None.
@@ -112,9 +120,9 @@ class FireboltConnectionManager(SQLConnectionManager):
                    }
         # If params, then add them, too.
         if credentials.params:
-            url_vars.update({key:quote(credentials.params.items()[key]).lower()
-                             for key in credentials.params.items()
-                             if credentials.params.items()[key]
+            url_vars.update({key:quote(value).lower()
+                             for key, value in credentials.params.items()
+                             if value
                             })
         if url_vars:
             jdbc_url += "?" + urlencode(url_vars)
