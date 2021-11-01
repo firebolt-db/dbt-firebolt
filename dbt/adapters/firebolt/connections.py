@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Optional, Dict, List, Any, Iterable
-from urllib.parse import quote, urlencode, urljoin
+from urllib.parse import quote, urlencode
 import os
 import json
 import agate
