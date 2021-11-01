@@ -115,7 +115,7 @@ class FireboltConnectionManager(SQLConnectionManager):
             # variable or as an engine_name value in profiles.yml, it uses the
             # engine Firebolt has set as default for this DB.
             jdbc_url += f"?engine={urllib.parse.quote(credentials.engine_name)}"
-
+            print(f'** jdbc url: {jdbc_url}')
         return jdbc_url
 
     @contextmanager
