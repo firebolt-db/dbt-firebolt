@@ -99,9 +99,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         return connection
 
     def make_jdbc_url(self, credentials):
-        jdbc_url = os.path.join("jdbc:firebolt://",
-                                credentials.host,
-                                credentials.database)
+        jdbc_url = f'jdbc:firebolt://{credentials.host}/{credentials.database}'
         if credentials.params:
             jdbc_url += "".join(
                     map(
