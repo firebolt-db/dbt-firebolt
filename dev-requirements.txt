@@ -1,4 +1,4 @@
 pytest~=0.6.2
 pytest-dbt-adapter==0.5.1
-dbt-core~=0.20.0
+dbt-core~=0.21.0
 .
