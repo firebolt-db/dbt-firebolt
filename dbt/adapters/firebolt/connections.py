@@ -100,10 +100,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         return connection
 
     def make_jdbc_url(self, credentials):
-        jdbc_url = urljoin('jdbc:firebolt://',
-                           credentials.host,
-                           credentials.database
-                           )
+        jdbc_url = f'jdbc:firebolt://{credentials.host}/{credentials.database}'
         if credentials.params:
             jdbc_url += "".join(
                     map(
@@ -129,7 +126,6 @@ class FireboltConnectionManager(SQLConnectionManager):
                             })
         if url_vars:
             jdbc_url += "?" + urlencode(url_vars)
-        print(url_vars)
         return jdbc_url
 
     @contextmanager
