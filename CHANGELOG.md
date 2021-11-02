@@ -4,7 +4,7 @@
 
 ### Readme
 
-- Updated and edited various sections of readme, adding new tables and examples for clarity.
+- Updated and edited various sections of readme, adding new tables and examples for clarity. [#6](https://github.com/firebolt-db/dbt-firebolt/pull/6)
 
 ### Breaking Changes
 
