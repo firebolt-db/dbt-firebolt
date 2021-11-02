@@ -50,6 +50,7 @@ class FireboltRelation(BaseRelation):
             ComponentName.Schema: schema,
             ComponentName.Identifier: identifier
         })
+        logger.info('relation.match: BEGIN')
 
         if not search:
             # nothing was passed in
@@ -70,7 +71,8 @@ class FireboltRelation(BaseRelation):
             target = self.create(
                 database=database, schema=schema, identifier=identifier
             )
-            
+            logger.info('relation.match: END')
             dbt.exceptions.approximate_relation_match(target, self)
         
+        logger.info('relation.match: END')
         return exact_match
