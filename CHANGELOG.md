@@ -2,6 +2,10 @@
 
 ## v.0.21.2
 
+### Readme
+
+- Updated and edited various sections of readme, adding new tables and examples for clarity. [#6](https://github.com/firebolt-db/dbt-firebolt/pull/6)
+
 ### Breaking Changes
 
 - `engine_name` has been renamed to `engine` please update your `profiles.yml` accordingly [#4](https://github.com/firebolt-db/dbt-firebolt/pull/4)
