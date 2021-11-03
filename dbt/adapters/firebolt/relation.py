@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from dbt.adapters.base.relation import BaseRelation, Policy
 from dbt.contracts.relation import ComponentName
-from dbt.exceptions import RuntimeException
+from dbt.exceptions import RuntimeException, raise_compiler_error, approximate_relation_match
 from dbt.logger import GLOBAL_LOGGER as logger
 from dbt.utils import filter_null_values
 
@@ -22,6 +22,14 @@ class FireboltIncludePolicy(Policy):
     schema: bool = False
     identifier: bool = True
 
+def approximate_relation_match(target, relation):
+    raise_compiler_error(
+        'When searching for a relation, dbt found an approximate match. '
+        'Instead of guessing \nwhich relation to use, dbt will move on. '
+        'Please delete {relation}, or rename it to be less ambiguous.'
+        '\nSearched for: {target}\nFound: {relation}'
+        .format(target=target,
+                relation=relation))
 
 @dataclass(frozen=True, eq=False, repr=False)
 class FireboltRelation(BaseRelation):
@@ -54,7 +62,7 @@ class FireboltRelation(BaseRelation):
 
         if not search:
             # nothing was passed in
-            raise dbt.exceptions.RuntimeException(
+            raise RuntimeException(
                 "Tried to match relation, but no search path was passed!")
 
         exact_match = True
@@ -75,7 +83,9 @@ class FireboltRelation(BaseRelation):
                 database=database, schema=schema, identifier=identifier
             )
             logger.info('relation.match: END')
-            dbt.exceptions.approximate_relation_match(target, self)
+            approximate_relation_match(target, self)
         
         logger.info('relation.match: END')
         return exact_match
+
+
