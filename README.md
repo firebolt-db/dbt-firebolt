@@ -5,10 +5,7 @@ dbt-firebolt supports dbt 0.21 and newer
 
 ## Installation
 
-First, download the [JDBC driver](https://firebolt-publishing-public.s3.amazonaws.com/repo/jdbc/firebolt-jdbc-1.15-jar-with-dependencies.jar) and place it wherever you'd prefer.
-If you've never installed a Java Runtime Environment you will need to download and install one from either [OpenJDK](https://openjdk.java.net/install/) or [Oracle](https://www.oracle.com/java/technologies/downloads/).
-
-Now install dbt-firebolt. For the current version:
+First, install dbt-firebolt. For the current version:
 ```
 pip install dbt-firebolt
 ```
@@ -18,35 +15,34 @@ pip install dbt-firebolt
 ### Engines
 For dbt to function with Firebolt you must have an engine connected to your database and available. In addition, these needs must be met:
 
-1. The engine must be a general-purpose read-write engine.
+1. The engine must be a general-purpose read-write engine, not an analytics engine.
 1. You must have permissions to access the engine.
 1. The engine must be running.
 1. If you're not using the default engine for the database, you must specify an engine name.
 1. If there is more than one account associated with your credentials, you must specify an account.
 
 ### YAML configuration file
-You'll need to add your project to the `profiles.yml` file. These fields are necessary:
+You'll need to add your project to the `profiles.yml` file. The fields not specified as optional below must be included:
 
-- `type`
-- `user`
-- `password`
-- `database`
-- `schema`
-- `jar_path`
 
-These fields are optional:
+|  Field   |                                                                               Description                                                                               |
+|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`         | Always use `firebolt`. This must be included either in `profiles.yml` or in the `dbt_project.yml` file for your application.                                                   |
+| `user`         | Your Firebolt username / email                                                                                                                                          |
+| `password`     | Your Firebolt password                                                                                                                                                  |
+| `database`     | The identifier for your Firebolt database                                                                                                                               |
+| `schema`       | A target schema identifier that dbt will use to differentiate separate environments. For an example of how this works, see [this section below](https://github.com/firebolt-db/dbt-firebolt#dbt-projects-with-concurrent-users). |
+| `Jar_path`     | The path to your JDBC driver on your local drive.                                                                                                                       |
+| `engine_name`  | Optional. If left blank, it will use your specified Firebolt default engine.                                                                                           |
+| `host`         | Optional. Defaults to `api.app.firebolt.io`.                                                                                                                              |
+| `account`      | Optional. This is the account *name*, not the account ID. If `account` is omitted, the default account will be used. |
+| `threads`      | Must be set to `1`. Multi-threading is not currently supported. |
 
-- `engine` (See note above.)
-- `api_endpoint` (`api_endpoint` defaults to `api.app.firebolt.io`. If you would like to use a dev account you must include the `api_endpoint` field and set it to `api.dev.firebolt.io`.)
-- `account` (Please note that this is the account *name*, not the account ID. If `account` is omitted the default account will be used.)
-
-Note that, although the value of `type` is always `firebolt`, it must be included either in `profiles.yml` or in the dbt_project.yml file for your application.
-
-Finally, multi-threading is not currently supported, so threads must be set to 1.
+Your yaml file must be indented properly for dbt to recognize it.
 
 #### Example file:
 ```
-my_project:
+<my_project>:
   target: fb_app
   fb_app:
       type: firebolt
@@ -54,7 +50,6 @@ my_project:
       password: <my_password>
       database: <my_db_name>
       schema: <my_schema_name>
-      jar_path: <path_to_my_local_jdbc_jar>
       threads: 1
     # The following three fields are optional. Please see the notes above.
       account: <my_account_name>
@@ -78,21 +73,31 @@ my_project:
 
 ### Dimension and Fact Tables
 
-Both [fact and dimension tables](https://docs.firebolt.io/concepts/working-with-tables#fact-and-dimension-tables) are supported.
-When `materialized='table'`, `table type` and `primary index` configurations can be set. `table type` can be either `fact` or `dimension`. `primary_index` is required for fact tables, and can be a string or a list of strings.
-
-These configs can be set by either:
-1. a config block at the top of that model's SQL file (like below), or
-  ```sql
-  {{
+Firebolt [fact and dimension tables](https://docs.firebolt.io/concepts/working-with-tables#fact-and-dimension-tables) can both be read in dbt, but they need to be specified in a config block. You can include these config settings in any of these locations:
+1. At the top of a dbt model SQL file (see below).
+  ```
+{{
     config(
       materialized = 'table',
       table_type = 'dimension',
       primary_index = ['customer_id', 'first_name']
       )
-  }}
+}}
   ```
-2. in the `dbt_project.yml` or model schema YAML file.
+2. As a model config in the `dbt_project.yml` file.
+```yml
+models:
+  <my_project>
+    materialized: 'table'
+    table_type =  ‘fact’
+    primary_index = ['customer_id', 'first_name']
+```
+
+|     Field     |                                                     Description                                                      |
+|---------------|----------------------------------------------------------------------------------------------------------------------|
+| `materialized`  | Use `table`                                                                                                            |
+| `table_type`    | Can be either `fact` or `dimension`                                                                                  |
+| `primary_index` | Required for fact tables and can be either a string or a list of strings for the column names of your primary index. |
 
 Read more in [dbt docs on configuring models](https://docs.getdbt.com/docs/building-a-dbt-project/building-models#configuring-models)
 
@@ -107,16 +112,22 @@ dbt-firebolt follows the same convention for indexes as was introduced to dbt-po
 #### Naming
 
 In dbt-firebolt, indexes are named as follows, with the number being a unix timestamp at the time of execution
-- template: `table-name__key-column__index-type_unix-timestamp`
-- join index: `my_orders__order_id__join_1633504263`
-- aggregating index: `my_orders__order_id__aggregating_1633504263`
+- **Syntax**: `<table-name>__<key-column>__<index-type>_<unix-timestamp>`
+- **Join index example**: `my_orders__order_id__join_1633504263`
+- **Aggregating index example**: `my_orders__order_id__aggregating_1633504263`
 
 #### Usage
-The `index` argument takes a list of dictionaries, where each dictionary is an index you'd like to define. there are two `types` of indexes that can be defined here: `aggregating` and `join`. The required fields for each index are as follows:
-- `aggregating`: `key_column` (string) and `aggregation` (string of list of strings)
-- `join`: `join_column` (string) and `dimension_column` (string of list of strings)
+To use Firebolt aggregating or join indexes in dbt, you need to add a list of dictionaries to your dbt config block. The following configurations must be included:
 
-#### Fact table with aggregating index
+#### Aggregating index
+
+|     key     |                                                                                           value                                                                                           |
+|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`        | `aggregating`                                                                                                                                                                             |
+| `key_column`  | The table column specified as key_column when the aggregating index was created. See [Firebolt docs](https://docs.firebolt.io/sql-reference/commands/ddl-commands#create-join-index) for more information |
+| `aggregation` | One or more aggregation functions performed as part of the index                                                                                                                          |
+
+#### Example of fact table with aggregating index
 ```sql
 -- orders.sql
 {{
@@ -134,7 +145,17 @@ The `index` argument takes a list of dictionaries, where each dictionary is an i
     )
 }}
 ```
-#### Dimension table with join index
+#### Join index
+
+|       key        |                                       value                                        |
+|------------------|------------------------------------------------------------------------------------|
+| `type`             | `join`                                                                               |
+| `join_column`      | The join_column specified when the join index was created.                         |
+| `dimension_column` | One or more dimension columns that were specified when the join index was created. |
+
+
+
+#### Example of dimension table with join index
 ```sql
 -- orders.sql
 {{
@@ -151,7 +172,7 @@ The `index` argument takes a list of dictionaries, where each dictionary is an i
     )
 }}
 ```
-#### Fact table with two aggregating indexes and one join index
+#### Example of fact table with two aggregating indexes and one join index
 ```sql
 -- orders.sql
 {{
@@ -193,12 +214,7 @@ seeds:
 
 ### dbt projects with concurrent users
 
-Currently, with `dbt-firebolt`, all models will be run in the same schema, so the `schema` provided isn't used, but is still required. If you are a team of analytics engineers using a the same database and engine, a recommended practice is to add the following macro to your project. It will prefix the model name/alias with the schema value to provide namespacing so that multiple developers are not interacting with the same set of models.
-
-For example, consider two analytics engineers on the same project: Shahar and Eric.
-
-If in their `.dbt/profiles.yml`, Sharar provides `schema=sh`, and Eric, `schema=er`, when they each run the `customers` model, the models will land in the database as `sh_customers` and `er_customers`, respectively.
-
+Currently with `dbt-firebolt`, all models will be run in the same schema, so the `schema` provided isn't used, but is still required. If your team consists of multiple analytics engineers using the same database and engine, we recommend adding the following macro to your project. This will prefix the model name/alias with the schema value to provide namespacing so that multiple developers are not interacting with the same set of models.
 
 ```sql
 -- macros/generate_alias_name.sql
@@ -206,44 +222,50 @@ If in their `.dbt/profiles.yml`, Sharar provides `schema=sh`, and Eric, `schema=
 
     {%- if custom_alias_name is none -%}
 
-        {{ node.schema }}_{{ node.name }}
+        {{ node.schema }}__{{ node.name }}
 
     {%- else -%}
 
-        {{ node.schema }}_{{ custom_alias_name | trim }}
+        {{ node.schema }}__{{ custom_alias_name | trim }}
 
     {%- endif -%}
 
 {%- endmacro %}
 ```
 
+For an example of how this works, let’s say Shahar and Eric are both working on the same project.
+
+In their `.dbt/profiles.yml`, Shahar provides `schema=sh`, and Eric, `schema=er`. When they each run the `customers` model, the models will land in the database as `sh_customers` and `er_customers`, respectively.
+
 ### External Tables
 
-Documentation on dbt's use of external tables can be found in the dbt [documentation](https://docs.getdbt.com/reference/resource-properties/external).
+More information on dbt's use of external tables can be found in the dbt [documentation](https://docs.getdbt.com/reference/resource-properties/external).
 
-Documentation on using external tables including properly configuring IAM can be found in the Firebolt [documentation](https://docs.firebolt.io/sql-reference/commands/ddl-commands#create-external-table).
+More information on using external tables including properly configuring IAM can be found in the Firebolt [documentation](https://docs.firebolt.io/sql-reference/commands/ddl-commands#create-external-table).
 
 #### Installation
 
 To install and use dbt-external-tables with firebolt, you must:
-1. Add the package to your `packages.yml`,
+1. Add this package to your packages.yml:
     ```yml
     packages:
     - package: dbt-labs/dbt_external_tables
         version: <VERSION>
     ```
-2. add this to your `dbt_project.yml`, and
+2. add these fields to your `dbt_project.yml`:
     ```yml
     dispatch:
       - macro_namespace: dbt_external_tables
         search_order: ['dbt', 'dbt_external_tables']
     ```
-3. call `dbt deps`
+3. Pull in the packages.yml dependencies by calling `dbt deps`
 #### Usage
 
-To use external tables, you must define a table as `EXTERNAL` in your project.yml file. Every external table must contain fields for url, type, and object pattern. Note that the Firebolt external table specification differs slightly from the dbt specification in the dbt documentation in that it does not require all the fields shown in dbt's documentation.
+To use external tables, you must define a table as `EXTERNAL` in your `dbt_project.yml` file. Every external table must contain fields for url, type, and object pattern. Note that the Firebolt external table specifications require fewer fields than what is specified in the dbt documentation.
 
-In addition to specifying the columns, an external table may specify partitions. Partitions are not columns and a partition name cannot have the same name as a column. An example yaml file follows. In order to avoid yml parsing errors it is likely necessary to quote at least the `url`, `object_pattern`, and `regex` values.
+In addition to specifying the columns, an external table may specify partitions. Partitions are not columns and they cannot have the same name as columns. To avoid yaml parsing errors the url, object_pattern, and regex values should be encased in quotation marks. .
+
+#### Example dbt_project.yml file for an external table
 
 ```yml
 sources:
