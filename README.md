@@ -226,11 +226,11 @@ Currently with `dbt-firebolt`, all models will be run in the same schema, so the
 
     {%- if custom_alias_name is none -%}
 
-        {{ node.schema }}_{{ node.name }}
+        {{ node.schema }}__{{ node.name }}
 
     {%- else -%}
 
-        {{ node.schema }}_{{ custom_alias_name | trim }}
+        {{ node.schema }}__{{ custom_alias_name | trim }}
 
     {%- endif -%}
 
