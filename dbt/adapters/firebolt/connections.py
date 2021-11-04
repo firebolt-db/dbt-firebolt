@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Optional, Dict, List, Any, Iterable
-import urllib
+from urllib.parse import urlencode, quote
 import os
 import json
 import agate
@@ -13,16 +13,18 @@ from dbt.contracts.connection import AdapterResponse
 from dbt.adapters.sql import SQLConnectionManager
 from dbt.clients.agate_helper import table_from_rows
 
+from firebolt.db import connect
+from firebolt.client import DEFAULT_API_URL
+
 @dataclass
 class FireboltCredentials(Credentials):
     # These values all come from either profiles.yml or dbt_project.yml.
     user: str
     password: str
-    jar_path: str
-    params: Optional[Dict[str, str]] = None
-    host: Optional[str] = 'api.app.firebolt.io'
+    api_endpoint: Optional[str] = DEFAULT_API_URL
     driver: str = 'com.firebolt.FireboltDriver'
-    engine_name: Optional[str] = None
+    engine: Optional[str] = None
+    account: Optional[str] = None
 
     @property
     def type(self):
@@ -33,9 +35,8 @@ class FireboltCredentials(Credentials):
         Return list of keys (i.e. not values) to display
         in the `dbt debug` output.
         """
-        return ("host", "user",
-                "schema", "database", "engine_name",
-                "jar_path", "params")
+        return ("api_endpoint", "user", "engine", "database",
+                "account", "schema")
 
     @property
     def unique_field(self):
@@ -47,7 +48,7 @@ class FireboltCredentials(Credentials):
         # Is this safe, or is it too much information. It should only be
         # called by `hashed_unique_field()` as stated in the docstring
         # but I'm asking here for noting in the PR of this branch.
-        return self.engine_name
+        return self.engine
 
 class FireboltConnectionManager(SQLConnectionManager):
     """Methods to implement:
@@ -66,59 +67,45 @@ class FireboltConnectionManager(SQLConnectionManager):
         if connection.state == "open":
             return connection
         credentials = cls.get_credentials(connection.credentials)
-        jdbc_url = cls.make_jdbc_url(cls, credentials)
 
         try:
-            connection.handle = jaydebeapi.connect(
-                    credentials.driver,
-                    jdbc_url,
-                    [credentials.user, credentials.password],
-                    credentials.jar_path
-                )
+            # create a connection based on provided credentials
+            connection = connect(
+                engine_name=credentials.engine,
+                database=credentials.database,
+                username=credentials.user,
+                password=credentials.password,
+                api_endpoint=credentials.api_endpoint,
+            )
+            cursor = connection.cursor()
+            # connection.handle = connect(
+            #         credentials.driver,
+            #         jdbc_url,
+            #         [credentials.user, credentials.password],
+            #         credentials.jar_path
+            #     )
             connection.state = "open"
         except Exception as e:
             connection.handle = None
             connection.state = "fail"
             # If we get a 502 or 503 error, maybe engine isn't running.
             if "50" in f"{e}":
-                if credentials.engine_name is None:
-                    engine_name = 'default'
+                if credentials.engine is None:
+                    engine = 'default'
                     error_msg_append = ('\nTo specify a non-default engine, '
-                    'add an engine_name field into the appropriate target in your '
+                    'add an engine field into the appropriate target in your '
                     'profiles.yml file.')
                 else:
-                    engine_name = credentials.engine_name
+                    engine = credentials.engine
                     error_msg_append = ''
                 raise EngineOfflineException(
-                    f'Failed to connect via JDBC. Is the {engine_name} engine for '
+                    f'Failed to connect via JDBC. Is the {engine} engine for '
                     + f'{credentials.database} running? '
                     + error_msg_append
                 )
 
             raise dbt.exceptions.FailedToConnectException(str(e))
         return connection
-
-    def make_jdbc_url(self, credentials):
-        jdbc_url = os.path.join("jdbc:firebolt://",
-                                credentials.host,
-                                credentials.database)
-        if credentials.params:
-            jdbc_url += "".join(
-                    map(
-                        lambda kv: "&"
-                        + urllib.parse.quote(kv[0])
-                        + "="
-                        + urllib.parse.quote(kv[1]),
-                        credentials.params.items(),
-                    )
-            )
-        if credentials.engine_name:
-            # If there's not an engine name specified either as an environment
-            # variable or as an engine_name value in profiles.yml, it uses the
-            # engine Firebolt has set as default for this DB.
-            jdbc_url += f"?engine={urllib.parse.quote(credentials.engine_name)}"
-
-        return jdbc_url
 
     @contextmanager
     def exception_handler(self, sql: str):

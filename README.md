@@ -21,7 +21,8 @@ For dbt to function with Firebolt you must have an engine connected to your data
 1. The engine must be a general-purpose read-write engine.
 1. You must have permissions to access the engine.
 1. The engine must be running.
-1. *If* you're not using the default engine for the database, the name of the engine must be specified.
+1. If you're not using the default engine for the database, you must specify an engine name.
+1. If there is more than one account associated with your credentials, you must specify an account.
 
 ### YAML configuration file
 You'll need to add your project to the `profiles.yml` file. These fields are necessary:
@@ -35,8 +36,9 @@ You'll need to add your project to the `profiles.yml` file. These fields are nec
 
 These fields are optional:
 
-- `engine_name` (See note above.)
-- `host` (The host defaults to `api.app.firebolt.io`. If you want to use a dev account you must include the `host` field and set it to `api.dev.firebolt.io`.)
+- `engine` (See note above.)
+- `api_endpoint` (`api_endpoint` defaults to `api.app.firebolt.io`. If you would like to use a dev account you must include the `api_endpoint` field and set it to `api.dev.firebolt.io`.)
+- `account` (Please note that this is the account *name*, not the account ID. If `account` is omitted the default account will be used.)
 
 Note that, although the value of `type` is always `firebolt`, it must be included either in `profiles.yml` or in the dbt_project.yml file for your application.
 
@@ -54,9 +56,10 @@ my_project:
       schema: <my_schema_name>
       jar_path: <path_to_my_local_jdbc_jar>
       threads: 1
-    # The following two fields are optional. Please see the notes above.
-      engine_name: <my_engine_name>
-      host: api.app.firebolt.io
+    # The following three fields are optional. Please see the notes above.
+      account: <my_account_name>
+      engine: <my_engine>
+      api_endpoint: api.app.firebolt.io
 ```
 
 ## dbt feature support
