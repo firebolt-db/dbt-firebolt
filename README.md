@@ -32,9 +32,8 @@ You'll need to add your project to the `profiles.yml` file. The fields not speci
 | `password`     | Your Firebolt password                                                                                                                                                  |
 | `database`     | The identifier for your Firebolt database                                                                                                                               |
 | `schema`       | A target schema identifier that dbt will use to differentiate separate environments. For an example of how this works, see [this section below](https://github.com/firebolt-db/dbt-firebolt#dbt-projects-with-concurrent-users). |
-| `Jar_path`     | The path to your JDBC driver on your local drive.                                                                                                                       |
-| `engine_name`  | Optional. If left blank, it will use your specified Firebolt default engine.                                                                                           |
-| `host`         | Optional. Defaults to `api.app.firebolt.io`.                                                                                                                              |
+| `engine`       | Optional. If left blank, it will use your specified Firebolt default engine.                                                                                           |
+| `api_endpoing` | Optional. Defaults to `api.app.firebolt.io`.                                                                                                                              |
 | `account`      | Optional. This is the account *name*, not the account ID. If `account` is omitted, the default account will be used. |
 | `threads`      | Must be set to `1`. Multi-threading is not currently supported. |
 

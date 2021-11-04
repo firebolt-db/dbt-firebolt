@@ -28,15 +28,15 @@ class FireboltCredentials(Credentials):
 
     @property
     def type(self):
-        return "firebolt"
+        return 'firebolt'
 
     def _connection_keys(self):
         """
         Return list of keys (i.e. not values) to display
         in the `dbt debug` output.
         """
-        return ("api_endpoint", "user", "engine", "database",
-                "account", "schema")
+        return ('api_endpoint', 'user', 'engine', 'database',
+                'account', 'schema')
 
     @property
     def unique_field(self):
@@ -60,36 +60,35 @@ class FireboltConnectionManager(SQLConnectionManager):
         - clear_transaction
         - execute
     """
-    TYPE = "firebolt"
+    TYPE = 'firebolt'
 
     @classmethod
     def open(cls, connection):
-        if connection.state == "open":
+        if connection.state == 'open':
             return connection
         credentials = cls.get_credentials(connection.credentials)
 
         try:
             # create a connection based on provided credentials
-            connection = connect(
+            connection.handle = connect(
                 engine_name=credentials.engine,
                 database=credentials.database,
                 username=credentials.user,
                 password=credentials.password,
                 api_endpoint=credentials.api_endpoint,
             )
-            cursor = connection.cursor()
             # connection.handle = connect(
             #         credentials.driver,
             #         jdbc_url,
             #         [credentials.user, credentials.password],
             #         credentials.jar_path
             #     )
-            connection.state = "open"
+            connection.state = 'open'
         except Exception as e:
             connection.handle = None
-            connection.state = "fail"
+            connection.state = 'fail'
             # If we get a 502 or 503 error, maybe engine isn't running.
-            if "50" in f"{e}":
+            if '502' in f'{e}' or '503' in f'{e}':
                 if credentials.engine is None:
                     engine = 'default'
                     error_msg_append = ('\nTo specify a non-default engine, '
@@ -128,7 +127,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         """
         return AdapterResponse(
             #TODO: get an actual status message and "code" from the cursor
-            _message="OK",
+            _message='OK',
             # code=code,
             rows_affected=cursor.rowcount
         )
@@ -159,7 +158,7 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     @classmethod
     def get_status(cls, cursor):
-        return "OK"
+        return 'OK'
 
     @classmethod
     def get_result_from_cursor(cls, cursor: Any) -> agate.Table:
@@ -202,13 +201,13 @@ class FireboltConnectionManager(SQLConnectionManager):
 
 class EngineOfflineException(Exception):
     CODE = 10003
-    MESSAGE = "Connection Error"
+    MESSAGE = 'Connection Error'
 
     def process_stack(self):
         lines = []
 
         if hasattr(self.node, 'build_path') and self.node.build_path:
-            lines.append("compiled SQL at {}".format(self.node.build_path))
+            lines.append('compiled SQL at {}'.format(self.node.build_path))
 
         return lines + RuntimeException.process_stack(self)
 
