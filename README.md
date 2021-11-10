@@ -33,7 +33,7 @@ You'll need to add your project to the `profiles.yml` file. The fields not speci
 | `database`     | The identifier for your Firebolt database                                                                                                                               |
 | `schema`       | A target schema identifier that dbt will use to differentiate separate environments. For an example of how this works, see [this section below](https://github.com/firebolt-db/dbt-firebolt#dbt-projects-with-concurrent-users). |
 | `engine`       | Optional. If left blank, it will use your specified Firebolt default engine.                                                                                           |
-| `api_endpoing` | Optional. Defaults to `api.app.firebolt.io`.                                                                                                                              |
+| `api_endpoint` | Optional. Defaults to `api.app.firebolt.io`.                                                                                                                              |
 | `account`      | Optional. This is the account *name*, not the account ID. If `account` is omitted, the default account will be used. |
 | `threads`      | Must be set to `1`. Multi-threading is not currently supported. |
 

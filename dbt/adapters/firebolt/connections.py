@@ -5,7 +5,6 @@ from urllib.parse import quote, urlencode
 import os
 import json
 import agate
-import jaydebeapi as jaydebeapi
 
 import dbt.exceptions
 from dbt.adapters.base import Credentials
@@ -76,6 +75,7 @@ class FireboltConnectionManager(SQLConnectionManager):
                 username=credentials.user,
                 password=credentials.password,
                 api_endpoint=credentials.api_endpoint,
+                account_name=credentials.account,
             )
             # connection.handle = connect(
             #         credentials.driver,
@@ -207,7 +207,7 @@ class EngineOfflineException(Exception):
         lines = []
 
         if hasattr(self.node, 'build_path') and self.node.build_path:
-            lines.append('compiled SQL at {}'.format(self.node.build_path))
+            lines.append(f'compiled SQL at {self.node.build_path}')
 
         return lines + RuntimeException.process_stack(self)
 
