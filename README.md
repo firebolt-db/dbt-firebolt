@@ -2,8 +2,6 @@
 
 The [dbt](https://www.getdbt.com) adapter for [Firebolt](https://www.firebolt.io/). Supports dbt 0.21+.
 
-[Installation](https://github.com/firebolt-db/dbt-firebolt#installation)
-
 ## Installation
 
 1. Download the [Firebolt JDBC driver](https://firebolt-publishing-public.s3.amazonaws.com/repo/jdbc/firebolt-jdbc-1.18-jar-with-dependencies.jar) and place it wherever you'd prefer.
