@@ -153,36 +153,6 @@ class FireboltConnectionManager(SQLConnectionManager):
     def get_status(cls, cursor):
         return 'OK'
 
-    @classmethod
-    def get_result_from_cursor(cls, cursor: Any) -> agate.Table:
-        data: List[Any] = []
-        column_names: List[str] = []
-
-        if cursor.description is not None:
-            column_names = [col[0] for col in cursor.description]
-            rows = cursor.fetchall()
-            data = cls.process_results(column_names, rows)
-
-        return cls.table_from_data_flat(
-            data,
-            column_names
-        )
-
-    @classmethod
-    def table_from_data_flat(cls, data, column_names: Iterable[str]) -> agate.Table:
-        """Convert list of dictionaries into an Agate table."""
-        rows = []
-        for _row in data:
-            row = []
-            for value in list(_row.values()):
-                if isinstance(value, (dict, list, tuple)):
-                    out = json.dumps(value, cls=dbt.utils.JSONEncoder)
-                else:
-                    out = value
-                row.append(out)
-            rows.append(row)
-        return table_from_rows(rows=rows, column_names=column_names)
-
 
 class EngineOfflineException(Exception):
     CODE = 10003

@@ -120,25 +120,6 @@ class FireboltAdapter(SQLAdapter):
         )
 
     @available.parse_none
-    def convert_agate_date_cols_to_text_cols(self, agate_table) -> agate.Table:
-        """
-        Firebolt (or FB JDBC driver?) doesn't like datetime params,
-        so convert all Date type columns of the agate table to text first.
-        """
-
-        def cast_col_to_text(col_name) -> agate.Formula:
-            """wrapper for creating agate.Formula objects"""
-            return agate.Formula(agate.Text(), lambda r: r[col_name])
-
-        computations = [
-            (col.name, cast_col_to_text(col.name))
-            for col in agate_table.columns
-            if 'Date' in str(col.data_type)
-            ]
-
-        return agate_table.compute(computations,replace=True)
-
-    @available.parse_none
     def reformat_view_results(self, agate_table, schema_relation) -> agate.Table:
         """
         Tweak `SHOW VIEWS` to match the output of information_schema.tables
