@@ -1,49 +1,40 @@
 # dbt-firebolt
-[dbt](https://www.getdbt.com) adapter for [Firebolt](https://www.firebolt.io/)
 
-dbt-firebolt supports dbt 0.21 and newer
+The [dbt](https://www.getdbt.com) adapter for [Firebolt](https://www.firebolt.io/). Supports dbt 0.21+.
+
+[Installation](https://github.com/firebolt-db/dbt-firebolt#installation)
 
 ## Installation
 
-First, download the [JDBC driver](https://firebolt-publishing-public.s3.amazonaws.com/repo/jdbc/firebolt-jdbc-1.18-jar-with-dependencies.jar) and place it wherever you'd prefer.
-If you've never installed a Java Runtime Environment you will need to download and install one from either [OpenJDK](https://openjdk.java.net/install/) or [Oracle](https://www.oracle.com/java/technologies/downloads/).
-
-Now install dbt-firebolt. For the current version:
-```
-pip install dbt-firebolt
-```
+1. Download the [Firebolt JDBC driver](https://firebolt-publishing-public.s3.amazonaws.com/repo/jdbc/firebolt-jdbc-1.18-jar-with-dependencies.jar) and place it wherever you'd prefer.
+2. If you've never installed a Java Runtime Environment you will need to download and install one from either [OpenJDK](https://openjdk.java.net/install/) or [Oracle](https://www.oracle.com/java/technologies/downloads/).
+3. Install the dbt-firebolt package from pypi:
+   ```
+   pip install dbt-firebolt
+   ```
 
 ## Setup
 
-### Engines
-For dbt to function with Firebolt you must have an engine connected to your database and available. In addition, these needs must be met:
+### Connecting to Firebolt
 
-1. The engine must be a general-purpose read-write engine, not an analytics engine
-1. You must have permissions to access the engine.
-1. The engine must be running.
-1. If you're not using the default engine for the database, you must specify an engine name.
-1. If there is more than one account associated with your credentials, you must specify an account.
-
-### YAML configuration file
-You'll need to add your project to the `profiles.yml` file. The fields not specified as optional below must be included:
+To connect to Firebolt from dbt, you'll need to add a new [profile](https://docs.getdbt.com/dbt-cli/configure-your-profile) to your `profiles.yml` file. A Firebolt profile uses the following fields:
 
 
-|  Field   |                                                                               Description                                                                               |
-|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `type`         | Always use `firebolt`. This must be included either in `profiles.yml` or in the `dbt_project.yml` file for your application.                                                   |
-| `user`         | Your Firebolt username / email                                                                                                                                          |
-| `password`     | Your Firebolt password                                                                                                                                                  |
-| `database`     | The identifier for your Firebolt database                                                                                                                               |
-| `schema`       | A target schema identifier that dbt will use to differentiate separate environments. For an example of how this works, see [this section below](https://github.com/firebolt-db/dbt-firebolt#dbt-projects-with-concurrent-users). |
-| `Jar_path`     | The path to your JDBC driver on your local drive.                                                                                                                       |
-| `engine_name`  | Optional. If left blank, it will use your specified Firebolt default engine.                                                                                           |
-| `host`         | Optional. Defaults to `api.app.firebolt.io`.                                                                                                                              |
-| `account`      | Optional. This is the account *name*, not the account ID. If `account` is omitted, the default account will be used. |
-| `threads`      | Must be set to `1`. Multi-threading is not currently supported. |
- 
-Your yaml file must be indented properly for dbt to recognize it. 
+| Field                    | Description |
+|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`                   | Must be set to `firebolt`. This must be included either in `profiles.yml` or in the `dbt_project.yml` file. |
+| `user`                   | Your Firebolt username. |
+| `password`               | Your Firebolt password. |
+| `database`               | The name of your Firebolt database. |
+| `schema`                 | A string to prefix the names of generated tables with. For an example of how this works, see [this section below](https://github.com/firebolt-db/dbt-firebolt#dbt-projects-with-concurrent-users). |
+| `jar_path`               | The path to your JDBC driver on your local drive. |
+| `threads`                | Must be set to `1`. Multi-threading is not currently supported. |
+| `engine_name` (Optional) | The name (not the URL) of the Firebolt engine to use. If omitted, it will use your default engine. |
+| `host` (Optional)        | The host name of the connection. For all customers it is `api.app.firebolt.io`, which will be used if omitted. |
+| `account` (Optional)     | The account name (not the account ID). If omitted, it will use your default account. |
 
-#### Example file:
+Example `profiles.yml`:
+
 ```
 <my_project>:
   target: fb_app
@@ -55,23 +46,43 @@ Your yaml file must be indented properly for dbt to recognize it.
       schema: <my_schema_name>
       jar_path: <path_to_my_local_jdbc_jar>
       threads: 1
-    # The following three fields are optional. Please see the notes above.
-      account: <my_account_name>
+    # Optional
       engine: <my_engine>
       host: api.app.firebolt.io
+      account: <my_account_name>
 ```
 
-## dbt feature support
-| feature          | supported          |
-|------------------|--------------------|
-| tables/views     | :white_check_mark: |
-| ephemeral        | :white_check_mark: |
-| tests            | :white_check_mark: |
-| docs             | :white_check_mark: |
-| incremental      | :x:                |
-| snapshot         | :x:                |
-| source_freshness | :white_check_mark: |
+### Troubleshooting Connections
 
+If you encounter issues connecting to Firebolt from dbt, make sure the following criteria are met:
+- The engine must be a general-purpose read-write engine, not an analytics engine.
+- You must have adequate permissions to access the engine.
+- The engine must be running.
+- If you're not using the default engine for the database, you must specify an engine name.
+- If there is more than one account associated with your credentials, you must specify an account.
+
+## Feature Support
+
+The table below shows which dbt and Firebolt features are supported by the adapter. dbt-firebolt is under active development and will be gradually unlocking more features over time.
+
+| Feature          | Supported          |
+|------------------|--------------------|
+| Table materializations     | :white_check_mark: |
+| Ephemeral materializations       | :white_check_mark: |
+| View materializations | :x: |
+| Incremental materializations | :x: |
+| Seeds | :white_check_mark: |
+| Tests            | :white_check_mark: |
+| Documentation             | :white_check_mark: |
+| Snapshots         | :x:                |
+| Custom schemas | :x: (see [workaround](https://github.com/firebolt-db/dbt-firebolt#dbt-projects-with-concurrent-users)) |
+| Custom databases | :x: |
+| Source freshness | :white_check_mark: |
+| External tables | :white_check_mark: |
+| Primary indexes | :white_check_mark: |
+| Aggregating indexes | :white_check_mark: |
+| Join indexes | :white_check_mark: |
+| Partitioned tables | :x: |
 
 ## Model Configuration in Firebolt
 
