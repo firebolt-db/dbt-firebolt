@@ -47,8 +47,5 @@ setup(
     url="",  # url of dbt adapter installation
     packages=find_namespace_packages(include=['dbt', 'dbt.*']),
     include_package_data=True,
-    install_requires=[
-        "dbt-core~={}".format(dbt_version),
-        "jaydebeapi",
-    ],
+    install_requires=[f"dbt-core~={dbt_version}"],
 )

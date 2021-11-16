@@ -44,8 +44,8 @@ class FireboltCredentials(Credentials):
         team/organization building with this adapter. This is called by
         `hashed_unique_field()`.
         """
-        # Is this safe, or is it too much information. It should only be
-        # called by `hashed_unique_field()` as stated in the docstring
+        # Is this safe, or is it too much information? It should only be
+        # called by `hashed_unique_field()` as stated in the docstring,
         # but I'm asking here for noting in the PR of this branch.
         return self.engine
 
@@ -68,7 +68,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         credentials = cls.get_credentials(connection.credentials)
 
         try:
-            # create a connection based on provided credentials
+            # Create a connection based on provided credentials.
             connection.handle = connect(
                 engine_name=credentials.engine,
                 database=credentials.database,
@@ -77,12 +77,6 @@ class FireboltConnectionManager(SQLConnectionManager):
                 api_endpoint=credentials.api_endpoint,
                 account_name=credentials.account,
             )
-            # connection.handle = connect(
-            #         credentials.driver,
-            #         jdbc_url,
-            #         [credentials.user, credentials.password],
-            #         credentials.jar_path
-            #     )
             connection.state = 'open'
         except Exception as e:
             connection.handle = None
@@ -98,7 +92,7 @@ class FireboltConnectionManager(SQLConnectionManager):
                     engine = credentials.engine
                     error_msg_append = ''
                 raise EngineOfflineException(
-                    f'Failed to connect via JDBC. Is the {engine} engine for '
+                    f'Failed to connect to the database. Is the {engine} engine for '
                     + f'{credentials.database} running? '
                     + error_msg_append
                 )
@@ -114,21 +108,20 @@ class FireboltConnectionManager(SQLConnectionManager):
             self.release()
             raise dbt.exceptions.RuntimeException(str(e))
 
-    #TODO: Decide how much metadata we want to return.
+    # TODO: Decide how much metadata we want to return.
+    # For now, returning "_message" hard-coded as "OK", and
+    # the rows_affected, which I suspect isn't working properly.
     @classmethod
     def get_response(cls, cursor) -> AdapterResponse:
         """
-        Returns adapter-specific information about the last executed
+        Return adapter-specific information about the last executed
         command. Ideally, the return value is an AdapterResponse object
         that includes items such as code, rows_affected, bytes_processed,
         and a summary _message for logging to stdout.
-        For now, returning "_message" hard-coded as "OK", and
-        the rows_affected, which I suspect isn't working properly
         """
         return AdapterResponse(
-            #TODO: get an actual status message and "code" from the cursor
+            # TODO: get an actual status message and "code" from the cursor.
             _message='OK',
-            # code=code,
             rows_affected=cursor.rowcount
         )
 
@@ -166,8 +159,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         column_names: List[str] = []
 
         if cursor.description is not None:
-            # convert Java Strings to Python strings
-            column_names = [str(col[0]) for col in cursor.description]
+            column_names = [col[0] for col in cursor.description]
             rows = cursor.fetchall()
             data = cls.process_results(column_names, rows)
 
@@ -178,20 +170,13 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     @classmethod
     def table_from_data_flat(cls, data, column_names: Iterable[str]) -> agate.Table:
-        """Convert list of dictionaries into an Agate table"""
+        """Convert list of dictionaries into an Agate table."""
         rows = []
         for _row in data:
             row = []
             for value in list(_row.values()):
                 if isinstance(value, (dict, list, tuple)):
                     out = json.dumps(value, cls=dbt.utils.JSONEncoder)
-                elif str(type(value)) == "<java class 'java.lang.Integer'>":
-                    out = int(value)
-                # stolen from this abandoned jaydebeapi PR:
-                # https://github.com/baztian/jaydebeapi/commit/ba8e93fe8828fb87236ee64e05e82e2b13d66034
-                # might fail with very large numbers?
-                elif str(type(value)) == "<java class 'java.math.BigInteger'>":
-                    out = int(getattr(value, 'toString')())
                 else:
                     out = value
                 row.append(out)
