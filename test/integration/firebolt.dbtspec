@@ -8,6 +8,28 @@ target:
   schema: "dbt_test_{{ var('_dbt_random_suffix') }}"
   port: 443
   threads: 1
+projects:
+  - overrides: base
+    dbt_project_yml: &override-project
+      name: schema_tests
+      config-version: 2
+      version: '1.0.0'
+      models:
+        dbt_test_project:
+          +pre-hook: "set firebolt_dont_wait_for_upload_to_s3=1"
+      seeds:
+        dbt_test_project:
+          +pre-hook: "set firebolt_dont_wait_for_upload_to_s3=1"
+  - overrides: ephemeral
+    dbt_project_yml: *override-project
+  - overrides: incremental
+    dbt_project_yml: *override-project
+  - overrides: snapshot_strategy_timestamp
+    dbt_project_yml: *override-project
+  - overrides: snapshot_strategy_check_cols
+    dbt_project_yml: *override-project
+  - overrides: schema_tests
+    dbt_project_yml: *override-project
 sequences:
   test_dbt_empty: empty
   test_dbt_base: base
