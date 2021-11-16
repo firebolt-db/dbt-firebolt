@@ -111,7 +111,7 @@ class FireboltAdapter(SQLAdapter):
     @classmethod
     def convert_datetime_type(cls, agate_table: agate.Table, col_idx: int) -> str:
         # there's an issue with timestamp currently
-        return 'DATE'
+        return 'TEXT'
 
     @classmethod
     def convert_time_type(cls, agate_table: agate.Table, col_idx: int) -> str:
