@@ -12,6 +12,7 @@ from dbt.adapters.base import Credentials
 from dbt.contracts.connection import AdapterResponse
 from dbt.adapters.sql import SQLConnectionManager
 from dbt.clients.agate_helper import table_from_rows
+from dbt.contracts.graph.manifest import Manifest
 
 @dataclass
 class FireboltCredentials(Credentials):
@@ -219,6 +220,9 @@ class FireboltConnectionManager(SQLConnectionManager):
                 row.append(out)
             rows.append(row)
         return table_from_rows(rows=rows, column_names=column_names)
+
+    def set_query_header(self, manifest: Manifest) -> None:
+        self.query_header = None
 
 
 class EngineOfflineException(Exception):
