@@ -1,5 +1,12 @@
 # Changelog
 
+
+## v.0.21.3
+
+## Changes
+
+- temporary workaround for #11 where running models twice fails [#12](https://github.com/firebolt-db/dbt-firebolt/pull/12)
+
 ## v.0.21.2
 
 ### Readme
