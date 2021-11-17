@@ -6,10 +6,15 @@
                                                 schema=schema,
                                                 identifier=identifier,
                                                 type='table') -%}
+  {%- set target_relation_view = api.Relation.create(database=database,
+                                                schema=schema,
+                                                identifier=identifier,
+                                                type='view') -%}
 
   {{ run_hooks(pre_hooks) }}
 
   {% do adapter.drop_relation(target_relation) %}
+  {% do adapter.drop_relation(target_relation_view) %}
 
   -- build model
   {% call statement('main') -%}
