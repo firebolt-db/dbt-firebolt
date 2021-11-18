@@ -165,7 +165,7 @@ Config block syntax
 ) }}
 ```
 
-#### Configuring Fact Tables
+#### Fact Table Configurations
 
 | Configuration     | Description                                                                               |
 |-------------------|-------------------------------------------------------------------------------------------|
@@ -241,7 +241,7 @@ Config block syntax
 ) }}
 ```
 
-#### Description of Configurations Pertaining to Dimension Tables
+#### Dimension Table Configurations
 
 | Configuration      | Description                                                                               |
 |--------------------|-------------------------------------------------------------------------------------------|
