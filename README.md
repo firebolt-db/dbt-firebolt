@@ -165,7 +165,7 @@ Config block syntax
 ) }}
 ```
 
-#### Description of Configurations Pertaining to Fact Tables
+#### Configuring Fact Tables
 
 | Configuration     | Description                                                                               |
 |-------------------|-------------------------------------------------------------------------------------------|
