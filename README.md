@@ -88,7 +88,7 @@ In dbt, database schemas are used to compartmentalize developer environments so 
 
 For an example of how this works, let’s say Shahar and Eric are both working on the same project.
 
-In their `.dbt/profiles.yml`, Sharar sets `schema=sh`, whereas Eric sets `schema=er`. When they each run the `customers` model, the models will land in the database as tables named `sh_customers` and `er_customers`, respectively. When running dbt in production, you would use yet another `profiles.yml` with nothing set in the `schema` field (or any string of your choice).
+In her `.dbt/profiles.yml`, Sharar sets `schema=sh`, whereas Eric sets `schema=er` in his. When each runs the `customers` model, the models will land in the database as tables named `sh_customers` and `er_customers`, respectively. When running dbt in production, you would use yet another `profiles.yml` with nothing set in the `schema` field (or any string of your choice).
 
 ## Feature Support
 
@@ -303,7 +303,7 @@ To install and use `dbt-external-tables` with Firebolt, you must:
 
 #### Using External Tables
 
-To use external tables, you must define a table as `external` in your `dbt_project.yml` file. Every external table must contain the fields `url`, `type`, and `object_pattern`. Note that the Firebolt external table specifications require fewer fields than what is specified in the dbt documentation.
+To use external tables, you must define a table as `external` in your `dbt_project.yml` file. Every external table must contain the fields `url`, `type`, and `object_pattern`. Note that the Firebolt external table specification requires fewer fields than what is specified in the dbt documentation.
 
 In addition to specifying the columns, an external table may specify partitions. Partitions are not columns and they cannot have the same name as columns. To avoid yaml parsing errors, remember to encase string literals (such as the `url` and `object_pattern` values) in single quotation marks.
 
