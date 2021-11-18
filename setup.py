@@ -44,7 +44,7 @@ setup(
     long_description_content_type="text/markdown",
     author="Shahar Shalev, Eric Ford, and Anders Swanson",
     author_email="eric@firebolt.io",
-    url="",  # url of dbt adapter installation
+    url="https://github.com/firebolt-db/dbt-firebolt",
     packages=find_namespace_packages(include=['dbt', 'dbt.*']),
     include_package_data=True,
     install_requires=[
