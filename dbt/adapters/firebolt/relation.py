@@ -1,6 +1,5 @@
-from typing import Optional
-
 from dataclasses import dataclass
+from typing import Optional
 
 from dbt.adapters.base.relation import BaseRelation, Policy
 from dbt.exceptions import RuntimeException
