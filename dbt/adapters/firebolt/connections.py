@@ -22,8 +22,8 @@ class FireboltCredentials(Credentials):
     params: Optional[Dict[str, str]] = None
     host: Optional[str] = 'api.app.firebolt.io'
     driver: str = 'com.firebolt.FireboltDriver'
-    engine: Optional[str] = None
-    account: Optional[str] = None
+    engine_name: Optional[str] = None
+    account_name: Optional[str] = None
 
     @property
     def type(self):
@@ -34,8 +34,8 @@ class FireboltCredentials(Credentials):
         Return list of keys (i.e. not values) to display
         in the `dbt debug` output.
         """
-        return ("host", "account", "user",
-                "schema", "database", "engine",
+        return ("host", "account_name", "user",
+                "schema", "database", "engine_name",
                 "jar_path", "params")
 
     @property
@@ -48,7 +48,7 @@ class FireboltCredentials(Credentials):
         # Is this safe, or is it too much information. It should only be
         # called by `hashed_unique_field()` as stated in the docstring
         # but I'm asking here for noting in the PR of this branch.
-        return self.engine
+        return self.engine_name
 
 class FireboltConnectionManager(SQLConnectionManager):
     """Methods to implement:
@@ -82,17 +82,17 @@ class FireboltConnectionManager(SQLConnectionManager):
             connection.state = "fail"
             # If we get a 502 or 503 error, maybe engine isn't running.
             if "50" in f"{e}":
-                if credentials.engine is None:
-                    engine = 'default'
+                if credentials.engine_name is None:
+                    engine_name = 'default'
                     error_msg_append = ('\nTo specify a non-default engine, '
                     'add an engine field into the appropriate target in your '
                     'profiles.yml file.')
                 else:
-                    engine = credentials.engine
+                    engine_name = credentials.engine_name
                     error_msg_append = ''
                 raise EngineOfflineException(
-                    f'Failed to connect via JDBC. Is the {engine} engine for '
-                    + f'{credentials.database} running? '
+                    f'Failed to connect via JDBC. Is the {engine_name} '
+                    + f'engine for {credentials.database} running? '
                     + error_msg_append
                 )
 
@@ -111,11 +111,12 @@ class FireboltConnectionManager(SQLConnectionManager):
                         credentials.params.items(),
                     )
             )
-        # For both engine name and account, if there's not a value specified
+        # For both engine and account names, if there's not a value specified
         # it uses whatever Firebolt has set as default for this DB. So just
         # fill in url variables that are not None.
-        url_vars = {key:quote(getattr(credentials, key).lower())
-                    for key in ['engine', 'account']
+        # Hack: remove "_name" from keys so url is correctly formed.
+        url_vars = {key[:-5]:quote(getattr(credentials, key).lower())
+                    for key in ['engine_name', 'account_name']
                     if getattr(credentials, key)
                    }
         # If params, then add them, too.
