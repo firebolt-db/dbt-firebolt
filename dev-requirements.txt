@@ -1,6 +1,6 @@
 pytest~=0.6.2
 pytest-dbt-adapter==0.5.1
 dbt-core~=0.21.0
-isort
-flake8
-black
+isort>=5.10
+flake8>=4.0
+black>=21.10
