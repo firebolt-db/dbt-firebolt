@@ -98,7 +98,7 @@ The table below shows which dbt and Firebolt features are supported by the adapt
 |------------------------------|--------------------|
 | Table materializations       | :white_check_mark: |
 | Ephemeral materializations   | :white_check_mark: |
-| View materializations        | :x: |
+| View materializations        | :white_check_mark: |
 | Incremental materializations | :x: |
 | Seeds                        | :white_check_mark: |
 | Tests                        | :white_check_mark: |
