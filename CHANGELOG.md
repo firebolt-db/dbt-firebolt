@@ -1,11 +1,17 @@
 # Changelog
 
 
-## v.0.21.4
+## v.0.21.5
 
 ### Changes
 
 - Added linting using Black, Flake8, and iSort. This necessitated the addition of a `setup.cfg` file, so an additional linter, `setup-cfg-fmt` was added to check that file. These linters are all pre-commit hooks, so will force any future commits to abide by our style.
+
+## v.0.21.4
+
+### Changes
+
+- views are not officially supported with dbt-firebolt! [#22](https://github.com/firebolt-db/dbt-firebolt/pull/22)
 
 ## v.0.21.3
 
@@ -25,7 +31,7 @@
 
 ### Features
 
-- Ddded ability to specify an account for users who have more than one account associated with their credentials [#4](https://github.com/firebolt-db/dbt-firebolt/pull/4).
+- Added ability to specify an account for users who have more than one account associated with their credentials [#4](https://github.com/firebolt-db/dbt-firebolt/pull/4).
 
 ### Fixes
 

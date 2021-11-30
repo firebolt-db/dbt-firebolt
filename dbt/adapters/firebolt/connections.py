@@ -11,6 +11,7 @@ from dbt.adapters.base import Credentials
 from dbt.adapters.sql import SQLConnectionManager
 from dbt.clients.agate_helper import table_from_rows
 from dbt.contracts.connection import AdapterResponse
+from dbt.contracts.graph.manifest import Manifest
 from dbt.exceptions import RuntimeException
 
 
@@ -92,10 +93,10 @@ class FireboltConnectionManager(SQLConnectionManager):
             connection.state = 'fail'
             # If we get a 502 or 503 error, maybe engine isn't running.
             if '50' in f'{e}':
-                if credentials.engine is None:
+                if credentials.engine_name is None:
                     error_msg_append = (
                         '\nTo specify a non-default engine, '
-                        'add an engine field into the appropriate '
+                        'add an engine_name field into the appropriate '
                         'target in your '
                         'profiles.yml file.'
                     )
@@ -123,9 +124,10 @@ class FireboltConnectionManager(SQLConnectionManager):
         # For both engine and account names, if there's not a value specified
         # it uses whatever Firebolt has set as default for this DB. So just
         # fill in url variables that are not None.
+        # Hack: remove "_name" from keys so url is correctly formed.
         url_vars = {
-            key: quote(getattr(credentials, key).lower())
-            for key in ['engine', 'account']
+            key[:-5]: quote(getattr(credentials, key).lower())
+            for key in ['engine_name', 'account_name']
             if getattr(credentials, key)
         }
         # If params, then add them, too.
@@ -147,7 +149,7 @@ class FireboltConnectionManager(SQLConnectionManager):
             yield
         except Exception as e:
             self.release()
-            raise dbt.exceptions.RuntimeException(str(e))
+            raise RuntimeException(str(e))
 
     # TODO: Decide how much metadata we want to return.
     @classmethod
@@ -227,6 +229,9 @@ class FireboltConnectionManager(SQLConnectionManager):
                 row.append(out)
             rows.append(row)
         return table_from_rows(rows=rows, column_names=column_names)
+
+    def set_query_header(self, manifest: Manifest) -> None:
+        self.query_header = None
 
 
 class EngineOfflineException(Exception):
