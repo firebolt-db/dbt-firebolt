@@ -1,0 +1,42 @@
+repos:
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-merge-conflict
+
+  - repo: https://github.com/asottile/setup-cfg-fmt
+    rev: v1.17.0
+    hooks:
+      - id: setup-cfg-fmt
+
+  - repo: https://github.com/myint/autoflake
+    rev: v1.4
+    hooks:
+      - id: autoflake
+        args:
+          - -i
+          - -r
+          - --remove-all-unused-imports
+          - --ignore-init-module-imports
+          - --remove-duplicate-keys
+          - --remove-unused-variables
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.9.3
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/psf/black
+    rev: 21.7b0
+    hooks:
+      - id: black
+        language-version: 3.9
+
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.7.9
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-tidy-imports
+          - flake8-quotes

@@ -1,18 +1,19 @@
+import json
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Optional, Dict, List, Any, Iterable
+from typing import Any, Dict, Iterable, List, Optional
 from urllib.parse import quote, urlencode
-import os
-import json
-import agate
-import jaydebeapi as jaydebeapi
 
+import agate
 import dbt.exceptions
+import jaydebeapi
 from dbt.adapters.base import Credentials
-from dbt.contracts.connection import AdapterResponse
 from dbt.adapters.sql import SQLConnectionManager
 from dbt.clients.agate_helper import table_from_rows
+from dbt.contracts.connection import AdapterResponse
 from dbt.contracts.graph.manifest import Manifest
+from dbt.exceptions import RuntimeException
+
 
 @dataclass
 class FireboltCredentials(Credentials):
@@ -28,16 +29,23 @@ class FireboltCredentials(Credentials):
 
     @property
     def type(self):
-        return "firebolt"
+        return 'firebolt'
 
     def _connection_keys(self):
         """
         Return list of keys (i.e. not values) to display
         in the `dbt debug` output.
         """
-        return ("host", "account_name", "user",
-                "schema", "database", "engine_name",
-                "jar_path", "params")
+        return (
+            'host',
+            'account',
+            'user',
+            'schema',
+            'database',
+            'engine',
+            'jar_path',
+            'params',
+        )
 
     @property
     def unique_field(self):
@@ -51,43 +59,47 @@ class FireboltCredentials(Credentials):
         # but I'm asking here for noting in the PR of this branch.
         return self.engine_name
 
+
 class FireboltConnectionManager(SQLConnectionManager):
     """Methods to implement:
-        - exception_handler
-        - cancel_open
-        - open
-        - begin
-        - commit
-        - clear_transaction
-        - execute
+    - exception_handler
+    - cancel_open
+    - open
+    - begin
+    - commit
+    - clear_transaction
+    - execute
     """
-    TYPE = "firebolt"
+
+    TYPE = 'firebolt'
 
     @classmethod
     def open(cls, connection):
-        if connection.state == "open":
+        if connection.state == 'open':
             return connection
         credentials = cls.get_credentials(connection.credentials)
         jdbc_url = cls.make_jdbc_url(cls, credentials)
 
         try:
             connection.handle = jaydebeapi.connect(
-                    credentials.driver,
-                    jdbc_url,
-                    [credentials.user, credentials.password],
-                    credentials.jar_path
-                )
-            connection.state = "open"
+                credentials.driver,
+                jdbc_url,
+                [credentials.user, credentials.password],
+                credentials.jar_path,
+            )
+            connection.state = 'open'
         except Exception as e:
             connection.handle = None
-            connection.state = "fail"
+            connection.state = 'fail'
             # If we get a 502 or 503 error, maybe engine isn't running.
-            if "50" in f"{e}":
+            if '50' in f'{e}':
                 if credentials.engine_name is None:
-                    engine_name = 'default'
-                    error_msg_append = ('\nTo specify a non-default engine, '
-                    'add an engine field into the appropriate target in your '
-                    'profiles.yml file.')
+                    error_msg_append = (
+                        '\nTo specify a non-default engine, '
+                        'add an engine_name field into the appropriate '
+                        'target in your '
+                        'profiles.yml file.'
+                    )
                 else:
                     engine_name = credentials.engine_name
                     error_msg_append = ''
@@ -103,31 +115,32 @@ class FireboltConnectionManager(SQLConnectionManager):
     def make_jdbc_url(self, credentials):
         jdbc_url = f'jdbc:firebolt://{credentials.host}/{credentials.database}'
         if credentials.params:
-            jdbc_url += "".join(
-                    map(
-                        lambda kv: "&"
-                        + urllib.parse.quote(kv[0])
-                        + "="
-                        + urllib.parse.quote(kv[1]),
-                        credentials.params.items(),
-                    )
+            jdbc_url += ''.join(
+                map(
+                    lambda kv: '&' + quote(kv[0]) + '=' + quote(kv[1]),
+                    credentials.params.items(),
+                )
             )
         # For both engine and account names, if there's not a value specified
         # it uses whatever Firebolt has set as default for this DB. So just
         # fill in url variables that are not None.
         # Hack: remove "_name" from keys so url is correctly formed.
-        url_vars = {key[:-5]:quote(getattr(credentials, key).lower())
-                    for key in ['engine_name', 'account_name']
-                    if getattr(credentials, key)
-                   }
+        url_vars = {
+            key[:-5]: quote(getattr(credentials, key).lower())
+            for key in ['engine_name', 'account_name']
+            if getattr(credentials, key)
+        }
         # If params, then add them, too.
         if credentials.params:
-            url_vars.update({key:quote(value).lower()
-                             for key, value in credentials.params.items()
-                             if value
-                            })
+            url_vars.update(
+                {
+                    key: quote(value).lower()
+                    for key, value in credentials.params.items()
+                    if value
+                }
+            )
         if url_vars:
-            jdbc_url += "?" + urlencode(url_vars)
+            jdbc_url += '?' + urlencode(url_vars)
         return jdbc_url
 
     @contextmanager
@@ -136,9 +149,9 @@ class FireboltConnectionManager(SQLConnectionManager):
             yield
         except Exception as e:
             self.release()
-            raise dbt.exceptions.RuntimeException(str(e))
+            raise RuntimeException(str(e))
 
-    #TODO: Decide how much metadata we want to return.
+    # TODO: Decide how much metadata we want to return.
     @classmethod
     def get_response(cls, cursor) -> AdapterResponse:
         """
@@ -150,10 +163,10 @@ class FireboltConnectionManager(SQLConnectionManager):
         the rows_affected, which I suspect isn't working properly
         """
         return AdapterResponse(
-            #TODO: get an actual status message and "code" from the cursor
-            _message="OK",
+            # TODO: get an actual status message and "code" from the cursor
+            _message='OK',
             # code=code,
-            rows_affected=cursor.rowcount
+            rows_affected=cursor.rowcount,
         )
 
     def begin(self):
@@ -161,14 +174,12 @@ class FireboltConnectionManager(SQLConnectionManager):
         Passing `SQLConnectionManager.begin()` because
         Firebolt does not yet support transactions.
         """
-        pass
 
     def commit(self):
         """
         Passing `SQLConnectionManager.begin()` because
         Firebolt does not yet support transactions.
         """
-        pass
 
     @classmethod
     def get_credentials(cls, credentials):
@@ -182,7 +193,7 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     @classmethod
     def get_status(cls, cursor):
-        return "OK"
+        return 'OK'
 
     @classmethod
     def get_result_from_cursor(cls, cursor: Any) -> agate.Table:
@@ -195,10 +206,7 @@ class FireboltConnectionManager(SQLConnectionManager):
             rows = cursor.fetchall()
             data = cls.process_results(column_names, rows)
 
-        return cls.table_from_data_flat(
-            data,
-            column_names
-        )
+        return cls.table_from_data_flat(data, column_names)
 
     @classmethod
     def table_from_data_flat(cls, data, column_names: Iterable[str]) -> agate.Table:
@@ -228,13 +236,13 @@ class FireboltConnectionManager(SQLConnectionManager):
 
 class EngineOfflineException(Exception):
     CODE = 10003
-    MESSAGE = "Connection Error"
+    MESSAGE = 'Connection Error'
 
     def process_stack(self):
         lines = []
 
         if hasattr(self.node, 'build_path') and self.node.build_path:
-            lines.append("compiled SQL at {}".format(self.node.build_path))
+            lines.append('compiled SQL at {}'.format(self.node.build_path))
 
         return lines + RuntimeException.process_stack(self)
 
