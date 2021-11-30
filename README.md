@@ -44,7 +44,7 @@ To connect to Firebolt from dbt, you'll need to add a new [profile](https://docs
 | `user`                   | Yes | Your Firebolt username. |
 | `password`               | Yes | Your Firebolt password. |
 | `database`               | Yes | The name of your Firebolt database. |
-| `schema`                 | Yes | A string to prefix the names of generated tables with, if using the [custom schemas workaround below](https://github.com/firebolt-db/dbt-firebolt#dbt-projects-with-concurrent-users). |
+| `schema`                 | Yes | A string to prefix the names of generated tables with, if using the [custom schemas workaround below](https://github.com/firebolt-db/dbt-firebolt#supporting-concurrent-development). |
 | `jar_path`               | Yes | The path to your JDBC driver on your local drive. |
 | `threads`                | Yes | Must be set to `1`. Multi-threading is not currently supported. |
 | `engine_name`            | No | The name (not the URL) of the Firebolt engine to use. If omitted, it will use your default engine. |
@@ -64,7 +64,7 @@ If you encounter issues connecting to Firebolt from dbt, make sure the following
 
 #### `quote_columns`
 
-To prevent a warning, you should add a configuration as below to your `dbt_project.yml`. For more info, see the [relevant dbt docs page](https://docs.getdbt.com/reference/resource-configs/quote_columns)
+To prevent a warning, you should add a configuration as below to your `dbt_project.yml`. For more info, see the [relevant dbt docs page](https://docs.getdbt.com/reference/resource-configs/quote_columns).
 
 ```yml
 seeds:
@@ -104,7 +104,7 @@ The table below shows which dbt and Firebolt features are supported by the adapt
 | Tests                        | :white_check_mark: |
 | Documentation                | :white_check_mark: |
 | Snapshots                    | :x: |
-| Custom schemas               | :x: (see [workaround](https://github.com/firebolt-db/dbt-firebolt#dbt-projects-with-concurrent-users)) |
+| Custom schemas               | :x: (see [workaround](https://github.com/firebolt-db/dbt-firebolt#supporting-concurrent-development)) |
 | Custom databases             | :x: |
 | Source freshness             | :white_check_mark: |
 | External tables              | :white_check_mark: |
