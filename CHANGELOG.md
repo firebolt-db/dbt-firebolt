@@ -1,6 +1,12 @@
 # Changelog
 
 
+## v.0.21.4
+
+## Changes
+
+- views are not officially supported with dbt-firebolt! [#22](https://github.com/firebolt-db/dbt-firebolt/pull/22)
+
 ## v.0.21.3
 
 ## Changes

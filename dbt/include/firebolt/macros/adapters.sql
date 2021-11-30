@@ -105,24 +105,6 @@
 {%- endmacro %}
 
 
-{% macro firebolt__drop_relation(relation) -%}
-    {# drop non-primary indexes #}
-    {% if relation.type == 'table' %}
-        {% set idx_info_table = run_query('SHOW INDEXES;') %}
-        {% set idxs_tbl = adapter.filter_table(idx_info_table, 'table_name', relation.identifier) %}
-        {% set idxs_to_drop = adapter.filter_table(idxs_tbl, 'type', '^((?!primary).)*$') %}
-
-        {% for row in idxs_to_drop %}
-            {% do drop_index(row[0], row[2]) %}
-        {% endfor %}
-    {% endif %}
-
-    {% call statement('drop_relation', auto_begin=False) -%}
-        DROP {{ relation.type }} IF EXISTS {{ relation.identifier }}
-    {%- endcall %}
-{% endmacro %}
-
-
 {% macro firebolt__get_columns_in_relation(relation) -%}
     {% call statement('get_columns_in_relation', fetch_result=True) %}
         SELECT column_name,
