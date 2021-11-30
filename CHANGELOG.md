@@ -7,6 +7,11 @@
 
 - Added linting using Black, Flake8, and iSort. This necessitated the addition of a `setup.cfg` file, so an additional linter, `setup-cfg-fmt` was added to check that file. These linters are all pre-commit hooks, so will force any future commits to abide by our style.
 
+
+### Under the hood
+
+- added GitHub templates for PRs and issues
+
 ## v.0.21.4
 
 ### Changes
