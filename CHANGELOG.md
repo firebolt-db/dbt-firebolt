@@ -5,7 +5,8 @@
 
 ### Changes
 
-- Added linting using Black, Flake8, and iSort. This necessitated the addition of a `setup.cfg` file, so an additional linter, `setup-cfg-fmt` was added to check that file. These linters are all pre-commit hooks, so will force any future commits to abide by our style.
+- Added linting using Black, Flake8, and iSort. This necessitated the addition of a `setup.cfg` file, so an additional linter, `setup-cfg-fmt` was added to check that file. These linters are all pre-commit hooks, so will force any future commits to abide by our style. [#20](https://github.com/firebolt-db/dbt-firebolt/pull/20)
+- views are now officially supported with dbt-firebolt! [#22](https://github.com/firebolt-db/dbt-firebolt/pull/22)
 
 ## v.0.21.3
 
