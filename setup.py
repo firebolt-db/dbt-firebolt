@@ -49,6 +49,6 @@ setup(
     include_package_data=True,
     install_requires=[
         f"dbt-core~={dbt_version}",
-        "firebolt-sdk>=0.1.0"
+        "firebolt-sdk>=0.2.0"
     ],
 )
