@@ -23,8 +23,8 @@ class FireboltCredentials(Credentials):
     params: Optional[Dict[str, str]] = None
     host: Optional[str] = 'api.app.firebolt.io'
     driver: str = 'com.firebolt.FireboltDriver'
-    engine: Optional[str] = None
-    account: Optional[str] = None
+    engine_name: Optional[str] = None
+    account_name: Optional[str] = None
 
     @property
     def type(self):
@@ -56,7 +56,7 @@ class FireboltCredentials(Credentials):
         # Is this safe, or is it too much information. It should only be
         # called by `hashed_unique_field()` as stated in the docstring
         # but I'm asking here for noting in the PR of this branch.
-        return self.engine
+        return self.engine_name
 
 
 class FireboltConnectionManager(SQLConnectionManager):
@@ -101,11 +101,11 @@ class FireboltConnectionManager(SQLConnectionManager):
                         'profiles.yml file.'
                     )
                 else:
-                    engine = credentials.engine
+                    engine_name = credentials.engine_name
                     error_msg_append = ''
                 raise EngineOfflineException(
-                    f'Failed to connect via JDBC. Is the {engine} engine for '
-                    + f'{credentials.database} running? '
+                    f'Failed to connect via JDBC. Is the {engine_name} '
+                    + f'engine for {credentials.database} running? '
                     + error_msg_append
                 )
 
@@ -121,7 +121,7 @@ class FireboltConnectionManager(SQLConnectionManager):
                     credentials.params.items(),
                 )
             )
-        # For both engine name and account, if there's not a value specified
+        # For both engine and account names, if there's not a value specified
         # it uses whatever Firebolt has set as default for this DB. So just
         # fill in url variables that are not None.
         url_vars = {
