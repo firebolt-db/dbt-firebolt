@@ -5,9 +5,12 @@
 
 ### Changes
 
+- views are now officially supported with dbt-firebolt! [#22](https://github.com/firebolt-db/dbt-firebolt/pull/22) and [#25](https://github.com/firebolt-db/dbt-firebolt/pull/25)
+
+### Under the hood
+
+- added GitHub templates for PRs and issues
 - Added linting using Black, Flake8, and iSort. This necessitated the addition of a `setup.cfg` file, so an additional linter, `setup-cfg-fmt` was added to check that file. These linters are all pre-commit hooks, so will force any future commits to abide by our style. [#20](https://github.com/firebolt-db/dbt-firebolt/pull/20)
-- views are not officially supported with dbt-firebolt! [#22](https://github.com/firebolt-db/dbt-firebolt/pull/22)
-- re-implement workaround for [#12](https://github.com/firebolt-db/dbt-firebolt/pull/12) for view materialization [#25](https://github.com/firebolt-db/dbt-firebolt/pull/25)
 
 ## v.0.21.3
 
