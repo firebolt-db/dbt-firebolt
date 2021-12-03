@@ -1,0 +1,42 @@
+# This workflow will install Python dependencies, run pre-commit checks, and run tests with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Pre-commit linting
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install ".[dev]"
+
+    - name: Run pre-commit checks
+      uses: pre-commit/action@v2.0.3
+      with:
+        extra_args: --all-files
+
+    # - name: Type check with mypy
+    #   run: |
+    #     mypy src
+
+    # - name: Test with pytest
+    #   run: |
+    #     pytest tests/unit
