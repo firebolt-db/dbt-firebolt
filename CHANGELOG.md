@@ -1,6 +1,11 @@
 # Changelog
 
 
+## v.0.21.5
+
+### Under the hood
+
+- resolve unknown import error
 ## v.0.21.4
 
 ### Changes
@@ -11,6 +16,7 @@
 
 - added GitHub templates for PRs and issues
 - Added linting using Black, Flake8, and iSort. This necessitated the addition of a `setup.cfg` file, so an additional linter, `setup-cfg-fmt` was added to check that file. These linters are all pre-commit hooks, so will force any future commits to abide by our style. [#20](https://github.com/firebolt-db/dbt-firebolt/pull/20)
+- indefinitely removed `setup.cfg` from project [#29](https://github.com/firebolt-db/dbt-firebolt/pull/29)
 
 ## v.0.21.3
 
