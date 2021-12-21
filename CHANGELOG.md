@@ -3,9 +3,14 @@
 
 ## v.0.21.5
 
+### Changes
+
+- Updated readme to link to newest JDBC driver.
+
 ### Under the hood
 
-- resolve unknown import error
+- Resolved unknown import error.
+
 ## v.0.21.4
 
 ### Changes
@@ -14,9 +19,9 @@
 
 ### Under the hood
 
-- added GitHub templates for PRs and issues
-- Added linting using Black, Flake8, and iSort. This necessitated the addition of a `setup.cfg` file, so an additional linter, `setup-cfg-fmt` was added to check that file. These linters are all pre-commit hooks, so will force any future commits to abide by our style. [#20](https://github.com/firebolt-db/dbt-firebolt/pull/20)
-- indefinitely removed `setup.cfg` from project [#29](https://github.com/firebolt-db/dbt-firebolt/pull/29)
+- Added GitHub templates for PRs and issues.
+- Added linting using Black, Flake8, and iSort. This necessitated the addition of a `setup.cfg` file, so an additional linter, `setup-cfg-fmt` was added to check that file. These linters are all pre-commit hooks, so will force any future commits to abide by our style. [#20](https://github.com/firebolt-db/dbt-firebolt/pull/20).
+- Indefinitely removed `setup.cfg` from project [#29](https://github.com/firebolt-db/dbt-firebolt/pull/29).
 
 ## v.0.21.3
 
