@@ -1,11 +1,12 @@
 # Changelog
 
-
-## v.0.21.5
+## v.0.21.6
 
 ### Changes
 
 - Updated readme to link to newest JDBC driver.
+
+## v.0.21.5
 
 ### Under the hood
 
