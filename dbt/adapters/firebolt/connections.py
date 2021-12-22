@@ -1,19 +1,16 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Optional, Dict, List, Any, Iterable
-from urllib.parse import quote, urlencode
-import os
-import json
-import agate
+from typing import Optional
 
 import dbt.exceptions
 from dbt.adapters.base import Credentials
-from dbt.contracts.connection import AdapterResponse
 from dbt.adapters.sql import SQLConnectionManager
-from dbt.clients.agate_helper import table_from_rows
-
-from firebolt.db import connect
+from dbt.contracts.connection import AdapterResponse
+from dbt.contracts.graph.manifest import Manifest
+from dbt.exceptions import RuntimeException
 from firebolt.client import DEFAULT_API_URL
+from firebolt.db import connect
+
 
 @dataclass
 class FireboltCredentials(Credentials):
@@ -22,8 +19,8 @@ class FireboltCredentials(Credentials):
     password: str
     api_endpoint: Optional[str] = DEFAULT_API_URL
     driver: str = 'com.firebolt.FireboltDriver'
-    engine: Optional[str] = None
-    account: Optional[str] = None
+    engine_name: Optional[str] = None
+    account_name: Optional[str] = None
 
     @property
     def type(self):
@@ -34,8 +31,16 @@ class FireboltCredentials(Credentials):
         Return list of keys (i.e. not values) to display
         in the `dbt debug` output.
         """
-        return ('api_endpoint', 'user', 'engine', 'database',
-                'account', 'schema')
+        return (
+            'host',
+            'account',
+            'user',
+            'schema',
+            'database',
+            'engine',
+            'jar_path',
+            'params',
+        )
 
     @property
     def unique_field(self):
@@ -47,18 +52,20 @@ class FireboltCredentials(Credentials):
         # Is this safe, or is it too much information? It should only be
         # called by `hashed_unique_field()` as stated in the docstring,
         # but I'm asking here for noting in the PR of this branch.
-        return self.engine
+        return self.engine_name
+
 
 class FireboltConnectionManager(SQLConnectionManager):
     """Methods to implement:
-        - exception_handler
-        - cancel_open
-        - open
-        - begin
-        - commit
-        - clear_transaction
-        - execute
+    - exception_handler
+    - cancel_open
+    - open
+    - begin
+    - commit
+    - clear_transaction
+    - execute
     """
+
     TYPE = 'firebolt'
 
     @classmethod
@@ -82,18 +89,20 @@ class FireboltConnectionManager(SQLConnectionManager):
             connection.handle = None
             connection.state = 'fail'
             # If we get a 502 or 503 error, maybe engine isn't running.
-            if '502' in f'{e}' or '503' in f'{e}':
-                if credentials.engine is None:
-                    engine = 'default'
-                    error_msg_append = ('\nTo specify a non-default engine, '
-                    'add an engine field into the appropriate target in your '
-                    'profiles.yml file.')
+            if '50' in f'{e}':
+                if credentials.engine_name is None:
+                    error_msg_append = (
+                        '\nTo specify a non-default engine, '
+                        'add an engine_name field into the appropriate '
+                        'target in your '
+                        'profiles.yml file.'
+                    )
                 else:
-                    engine = credentials.engine
+                    engine_name = credentials.engine_name
                     error_msg_append = ''
                 raise EngineOfflineException(
-                    f'Failed to connect to the database. Is the {engine} engine for '
-                    + f'{credentials.database} running? '
+                    f'Failed to connect via JDBC. Is the {engine_name} '
+                    + f'engine for {credentials.database} running? '
                     + error_msg_append
                 )
 
@@ -106,11 +115,9 @@ class FireboltConnectionManager(SQLConnectionManager):
             yield
         except Exception as e:
             self.release()
-            raise dbt.exceptions.RuntimeException(str(e))
+            raise RuntimeException(str(e))
 
     # TODO: Decide how much metadata we want to return.
-    # For now, returning "_message" hard-coded as "OK", and
-    # the rows_affected, which I suspect isn't working properly.
     @classmethod
     def get_response(cls, cursor) -> AdapterResponse:
         """
@@ -120,9 +127,10 @@ class FireboltConnectionManager(SQLConnectionManager):
         and a summary _message for logging to stdout.
         """
         return AdapterResponse(
-            # TODO: get an actual status message and "code" from the cursor.
+            # TODO: get an actual status message and "code" from the cursor
             _message='OK',
-            rows_affected=cursor.rowcount
+            # code=code,
+            rows_affected=cursor.rowcount,
         )
 
     def begin(self):
@@ -130,14 +138,12 @@ class FireboltConnectionManager(SQLConnectionManager):
         Passing `SQLConnectionManager.begin()` because
         Firebolt does not yet support transactions.
         """
-        pass
 
     def commit(self):
         """
         Passing `SQLConnectionManager.begin()` because
         Firebolt does not yet support transactions.
         """
-        pass
 
     @classmethod
     def get_credentials(cls, credentials):
@@ -152,6 +158,9 @@ class FireboltConnectionManager(SQLConnectionManager):
     @classmethod
     def get_status(cls, cursor):
         return 'OK'
+
+    def set_query_header(self, manifest: Manifest) -> None:
+        self.query_header = None
 
 
 class EngineOfflineException(Exception):

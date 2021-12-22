@@ -1,28 +1,29 @@
-from datetime import datetime
-from dataclasses import dataclass
-import time
 import re
-from typing import (Optional, List, Any, Union)
-
-
-from dbt.adapters.base import available
-from dbt.adapters.base.impl import AdapterConfig
-from dbt.adapters.base.relation import BaseRelation
-from dbt.adapters.sql import SQLAdapter
-from dbt.adapters.firebolt import FireboltConnectionManager, FireboltRelation
-from dbt.dataclass_schema import dbtClassMixin, ValidationError
+import time
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Any, List, Optional, Union
 
 import agate
 import dbt.exceptions
 import dbt.utils
+from dbt.adapters.base import available
+from dbt.adapters.base.impl import AdapterConfig
+from dbt.adapters.base.relation import BaseRelation
+from dbt.adapters.sql import SQLAdapter
+from dbt.dataclass_schema import ValidationError, dbtClassMixin
+
+from dbt.adapters.firebolt.connections import FireboltConnectionManager
+from dbt.adapters.firebolt.relation import FireboltRelation
+
 
 @dataclass
 class FireboltIndexConfig(dbtClassMixin):
     type: str
     join_column: Optional[str] = None
     key_column: Optional[str] = None
-    dimension_column: Optional[Union[str,List[str]]] = None
-    aggregation: Optional[Union[str,List[str]]] = None
+    dimension_column: Optional[Union[str, List[str]]] = None
+    aggregation: Optional[Union[str, List[str]]] = None
 
     def render(self, relation):
         """
@@ -32,7 +33,7 @@ class FireboltIndexConfig(dbtClassMixin):
         """
         now_unix = time.mktime(datetime.utcnow().timetuple())
         spine_col = self.key_column if self.key_column else self.join_column
-        inputs = ([relation.identifier, spine_col, str(self.type), str(int(now_unix))])
+        inputs = [relation.identifier, spine_col, str(self.type), str(int(now_unix))]
         string = '__'.join(inputs)[0:254]
         return string
 
@@ -52,37 +53,41 @@ class FireboltIndexConfig(dbtClassMixin):
 
             if index_config.type.upper() not in ['JOIN', 'AGGREGATING']:
                 dbt.exceptions.raise_compiler_error(
-                f'Invalid index type:\n'
-                f'  Got: {index_config.type}\n'
-                f'  type should be either: "join" or "aggregating"'
+                    f'Invalid index type:\n'
+                    f'  Got: {index_config.type}\n'
+                    f'  type should be either: "join" or "aggregating"'
                 )
             elif index_config.type == 'join' and not (
-                index_config.join_column and index_config.dimension_column):
+                index_config.join_column and index_config.dimension_column
+            ):
 
                 dbt.exceptions.raise_compiler_error(
-                f'Invalid join index definition:\n'
-                f'  Got: {index_config}\n'
-                f'  join_column and dimension_column must be specified for join indexes'
+                    f'Invalid join index definition:\n'
+                    f'  Got: {index_config}\n'
+                    f'  join_column and dimension_column must be specified '
+                    '  for join indexes'
                 )
             elif index_config.type == 'aggregating' and not (
-                index_config.key_column and index_config.aggregation):
+                index_config.key_column and index_config.aggregation
+            ):
 
                 dbt.exceptions.raise_compiler_error(
-                f'Invalid aggregating index definition:\n'
-                f'  Got: {index_config}\n'
-                f'  key_column and aggregation must be specified for join indexes'
+                    f'Invalid aggregating index definition:\n'
+                    f'  Got: {index_config}\n'
+                    f'  key_column and aggregation must be specified'
+                    '  for join indexes'
                 )
             else:
                 return index_config
         except ValidationError as exc:
             msg = dbt.exceptions.validator_error_message(exc)
-            dbt.exceptions.raise_compiler_error(
-                f'Could not parse index config: {msg}'
-            )
+            dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}')
+
 
 @dataclass
 class FireboltConfig(AdapterConfig):
     indexes: Optional[List[FireboltIndexConfig]] = None
+
 
 class FireboltAdapter(SQLAdapter):
     Relation = FireboltRelation
@@ -131,14 +136,16 @@ class FireboltAdapter(SQLAdapter):
             return agate.Formula(agate.Text(), lambda r: string_val)
 
         agate_new = (
-            agate_table
-            .exclude(['schema'])
+            agate_table.exclude(['schema'])
             .rename(column_names={'view_name': 'name'})
-            .compute([
-               ('database',  form_sing_val_col(schema_relation.database)),
-               ('schema',  form_sing_val_col(schema_relation.schema)),
-               ('type',  form_sing_val_col('view'))
-            ]).select(['database', 'name', 'schema', 'type'])
+            .compute(
+                [
+                    ('database', form_sing_val_col(schema_relation.database)),
+                    ('schema', form_sing_val_col(schema_relation.schema)),
+                    ('type', form_sing_val_col('view')),
+                ]
+            )
+            .select(['database', 'name', 'schema', 'type'])
         )
         return agate_new
 
@@ -152,19 +159,19 @@ class FireboltAdapter(SQLAdapter):
         unpartitioned_columns = []
         partitioned_columns = []
         for column in columns:
-            unpartitioned_columns.append(self.quote(column['name'])
-                                         + ' '
-                                         + column['data_type']
-                                         )
-        if partitions: # partitions may be empty.
+            unpartitioned_columns.append(
+                self.quote(column['name']) + ' ' + column['data_type']
+            )
+        if partitions:  # partitions may be empty.
             for partition in partitions:
-                partitioned_columns.append(self.quote(partition['name'])
-                                           + ' '
-                                           + partition['data_type']
-                                           + " PARTITION ('"
-                                           + partition['regex']
-                                           + "')"
-                                           )
+                partitioned_columns.append(
+                    self.quote(partition['name'])
+                    + ' '
+                    + partition['data_type']
+                    + " PARTITION ('"
+                    + partition['regex']
+                    + "')"
+                )
         return unpartitioned_columns + partitioned_columns
 
     @available.parse_none
@@ -178,11 +185,11 @@ class FireboltAdapter(SQLAdapter):
         if len(non_empty_tables) == 0:
             return tables_list[0]
         else:
-            return (agate.TableSet(non_empty_tables,
-                                keys=range(len(non_empty_tables)))
-                            .merge()
-                            .exclude(['group'])
-                        )
+            return (
+                agate.TableSet(non_empty_tables, keys=range(len(non_empty_tables)))
+                .merge()
+                .exclude(['group'])
+            )
 
     @available.parse_none
     def filter_table(cls, agate_table, col_name, re_match_exp) -> agate.Table:
@@ -214,7 +221,8 @@ class FireboltAdapter(SQLAdapter):
             names = sorted((self.quote(n) for n in column_names))
 
         where_expressions = [
-            f"{relation_a}.{name} = {relation_b}.{name}" for name in names]
+            f'{relation_a}.{name} = {relation_b}.{name}' for name in names
+        ]
         where_clause = ' AND '.join(where_expressions)
 
         columns_csv = ', '.join(names)
