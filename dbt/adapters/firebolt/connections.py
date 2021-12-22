@@ -33,12 +33,11 @@ class FireboltCredentials(Credentials):
         """
         return (
             'host',
-            'account',
+            'account_name',
             'user',
             'schema',
             'database',
-            'engine',
-            'jar_path',
+            'engine_name',
             'params',
         )
 
@@ -77,12 +76,12 @@ class FireboltConnectionManager(SQLConnectionManager):
         try:
             # Create a connection based on provided credentials.
             connection.handle = connect(
-                engine_name=credentials.engine,
+                engine_name=credentials.engine_name,
                 database=credentials.database,
                 username=credentials.user,
                 password=credentials.password,
                 api_endpoint=credentials.api_endpoint,
-                account_name=credentials.account,
+                account_name=credentials.account_name,
             )
             connection.state = 'open'
         except Exception as e:
