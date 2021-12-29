@@ -4,7 +4,7 @@
 
 ### Changes
 
-- Updated readme to link to newest JDBC driver.
+- Updated readme to link to Firebolt JDBC page, in order to assure latest driver is always linked.
 
 ## v.0.21.5
 
@@ -16,7 +16,7 @@
 
 ### Changes
 
-- views are now officially supported with dbt-firebolt! [#22](https://github.com/firebolt-db/dbt-firebolt/pull/22) and [#25](https://github.com/firebolt-db/dbt-firebolt/pull/25)
+- Views are now officially supported with dbt-firebolt! [#22](https://github.com/firebolt-db/dbt-firebolt/pull/22) and [#25](https://github.com/firebolt-db/dbt-firebolt/pull/25).
 
 ### Under the hood
 
@@ -28,7 +28,7 @@
 
 ### Changes
 
-- temporary workaround for #11 where running models twice fails [#12](https://github.com/firebolt-db/dbt-firebolt/pull/12)
+- Temporary workaround implemented for #11 where running models twice fails [#12](https://github.com/firebolt-db/dbt-firebolt/pull/12).
 
 ## v.0.21.2
 
@@ -65,6 +65,7 @@
 ### Fixes
 
 - Many
+
 ### Under the Hood
 
 - A lot of work!
