@@ -13,7 +13,8 @@ from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
 
-from dbt.adapters.firebolt import FireboltConnectionManager, FireboltRelation
+from dbt.adapters.firebolt.connections import FireboltConnectionManager
+from dbt.adapters.firebolt.relation import  FireboltRelation
 
 
 @dataclass
