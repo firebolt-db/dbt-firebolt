@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 0.21.6
+
+### Under the hood
+- add Black formatting pipeline
+
 ## v.0.21.5
 
 ### Under the hood
