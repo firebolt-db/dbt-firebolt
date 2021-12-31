@@ -33,9 +33,9 @@ jobs:
       with:
         extra_args: --all-files
 
-    # - name: Type check with mypy
-    #   run: |
-    #     mypy src
+    - name: Type check with mypy
+      run: |
+        mypy src
 
     # - name: Test with pytest
     #   run: |
