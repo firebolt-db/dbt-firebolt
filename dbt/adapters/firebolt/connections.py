@@ -21,7 +21,6 @@ class FireboltCredentials(Credentials):
     user: str
     password: str
     jar_path: str
-    threads: Optional[str] = None
     params: Optional[Dict[str, str]] = None
     host: Optional[str] = 'api.app.firebolt.io'
     driver: str = 'com.firebolt.FireboltDriver'
@@ -45,7 +44,6 @@ class FireboltCredentials(Credentials):
             'database',
             'engine',
             'jar_path',
-            'threads',
             'params',
         )
 
@@ -79,16 +77,7 @@ class FireboltConnectionManager(SQLConnectionManager):
     def open(cls, connection):
         if connection.state == 'open':
             return connection
-        # print('\nopening connection:')
         credentials = connection.credentials
-        # for key in connection.__dict__:
-        #     print('    ' + key + ':', connection.__dict__[key])
-        # print(connection._handle.__dict__)
-        # print('\n')
-        # if credentials.threads != '1':
-        #     raise ThreadingException('Multi-threading is not permitted. '
-        #                              'Please change "threads" value to "1" '
-        #                              'in profiles.yml.')
         jdbc_url = cls.make_jdbc_url(cls, credentials)
 
         try:
