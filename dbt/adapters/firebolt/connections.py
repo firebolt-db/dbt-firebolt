@@ -77,7 +77,7 @@ class FireboltConnectionManager(SQLConnectionManager):
     def open(cls, connection):
         if connection.state == 'open':
             return connection
-        credentials = cls.get_credentials(connection.credentials)
+        credentials = connection.credentials
         jdbc_url = cls.make_jdbc_url(cls, credentials)
 
         try:
@@ -180,10 +180,6 @@ class FireboltConnectionManager(SQLConnectionManager):
         Passing `SQLConnectionManager.begin()` because
         Firebolt does not yet support transactions.
         """
-
-    @classmethod
-    def get_credentials(cls, credentials):
-        return credentials
 
     def cancel(self, connection):
         """Cancel the last query on the given connection."""
