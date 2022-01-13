@@ -1,5 +1,17 @@
 # Changelog
 
+## v.0.21.8
+
+### Under the hood
+
+- Updated pre-commit linting and added pull request linting.
+
+## v.0.21.7
+
+### Changes
+
+- Disallowed setting of `threads` in `profiles.yml` to a value greater than 1.
+
 ## v.0.21.6
 
 ### Changes
