@@ -1,0 +1,21 @@
+name: Firebolt Security Scan
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Code"
+        uses: actions/checkout@v2
+
+      - name: "Security Scan"
+        uses: firebolt-db/action-security-scan@main
+        with:
+          github-key: ${{ secrets.GITHUB_TOKEN }}
+          fossa-key: ${{ secrets.FOSSA_TOKEN }}
+          sonar-key: ${{ secrets.SONARCLOUD_TOKEN }}
