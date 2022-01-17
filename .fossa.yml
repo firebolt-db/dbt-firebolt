@@ -1,0 +1,9 @@
+version: 3
+
+project:
+  id: git+github.com/firebolt-db/dbt-firebolt
+  name: dbt-firebolt
+
+targets:
+  only:
+    - type: pipenv
