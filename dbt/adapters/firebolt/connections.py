@@ -71,7 +71,7 @@ class FireboltConnectionManager(SQLConnectionManager):
     def open(cls, connection):
         if connection.state == 'open':
             return connection
-        credentials = cls.get_credentials(connection.credentials)
+        credentials = connection.credentials
 
         try:
             # Create a connection based on provided credentials.
