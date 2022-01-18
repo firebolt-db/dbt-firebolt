@@ -50,5 +50,5 @@ setup(
     url='https://github.com/firebolt-db/dbt-firebolt',
     packages=find_namespace_packages(include=['dbt', 'dbt.*']),
     include_package_data=True,
-    install_requires=[f'dbt-core~={dbt_version}', 'firebolt-sdk>=0.2.0'],
+    install_requires=[f'dbt-core~={dbt_version}', 'firebolt-sdk>=0.2.1'],
 )

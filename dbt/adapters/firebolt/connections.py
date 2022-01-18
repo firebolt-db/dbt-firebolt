@@ -144,10 +144,6 @@ class FireboltConnectionManager(SQLConnectionManager):
         Firebolt does not yet support transactions.
         """
 
-    @classmethod
-    def get_credentials(cls, credentials):
-        return credentials
-
     def cancel(self, connection):
         """Cancel the last query on the given connection."""
         raise dbt.exceptions.NotImplementedException(

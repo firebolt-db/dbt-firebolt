@@ -1,16 +1,29 @@
 # Changelog
 
-## v.0.21.6
+## v.0.21.8
 
 ### Breaking changes
 
-- We now use our [DB-API] rather than our JDBC.
+- We now use our [DB-API](https://github.com/firebolt-db/firebolt-python-sdk) rather than our JDBC.
+
+## v.0.21.7
+
+### Changes
+
+- Disallowed setting of `threads` in `profiles.yml` to a value greater than 1.
+
+## v.0.21.6
+
+### Changes
+
+- Updated readme to link to Firebolt JDBC page, in order to assure latest driver is always linked.
 
 ## v.0.21.5
 
 ### Under the hood
 
-- Resolve unknown import error.
+- Resolved unknown import error.
+
 ## v.0.21.4
 
 ### Changes
@@ -27,7 +40,7 @@
 
 ### Changes
 
-- Temporary workaround for #11 where running models twice fails [#12](https://github.com/firebolt-db/dbt-firebolt/pull/12).
+- Temporary workaround implemented for #11 where running models twice fails [#12](https://github.com/firebolt-db/dbt-firebolt/pull/12).
 
 ## v.0.21.2
 
@@ -65,6 +78,7 @@
 ### Fixes
 
 - Many
+
 ### Under the Hood
 
 - A lot of work!
