@@ -1,10 +1,12 @@
 target:
-  type: firebolt
-  host: "{{ env_var('DBT_FB_HOST') }}"
-  database: "{{ env_var('DBT_FB_DB') }}"
-  user: "{{ env_var('DBT_FB_UID') }}"
-  password: "{{ env_var('DBT_FB_PWD') }}"
-  jar_path: "{{ env_var('DBT_FB_JARPATH') }}"
+  type: dbt-firebolt
+  api_endpoint: "{{ env_var('API_ENDPOINT') }}"
+  account_name: "{{ env_var('ACCOUNT_NAME') }}"
+  database: "{{ env_var('DATABASE_NAME') }}"
+  engine_name: "{{ env_var('ENGINE_NAME') }}"
+  user: "{{ env_var('USER_NAME') }}"
+  password: "{{ env_var('PASSWORD') }}"
+  jar_path: "{{ env_var('JDBC_PATH') }}"
   schema: "dbt_test_{{ var('_dbt_random_suffix') }}"
   port: 443
   threads: 1
