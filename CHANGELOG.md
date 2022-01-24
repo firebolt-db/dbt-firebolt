@@ -2,7 +2,13 @@
 
 ## v.1.0.0
 
-- dbt-firebolt now support dbt 1.0+!
+- dbt-firebolt now supports dbt 1.0+!
+
+## v.0.21.9
+
+### Breaking changes
+
+- We now use our [DB-API](https://github.com/firebolt-db/firebolt-python-sdk) rather than our JDBC.
 
 ## v.0.21.8
 
@@ -71,6 +77,7 @@
 
 - Removed log statements and an extra `firebolt__get_create_index_sql` macro error via [#2](https://github.com/firebolt-db/dbt-firebolt/pull/2).
 
+- Added ability to specify an account for users who have more than one account associated with their credentials.
 
 ## v.0.21.0
 
