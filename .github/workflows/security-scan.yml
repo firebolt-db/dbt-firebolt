@@ -25,11 +25,6 @@ jobs:
           git branch --track ${GITHUB_HEAD_REF##*/} origin/${GITHUB_HEAD_REF##*/}
           git checkout ${GITHUB_HEAD_REF##*/}
         shell: bash
-      # - name: "Build"
-      #   run: |
-      #     python3 -m pip install --upgrade pip setuptools wheel
-      #     python3 -m pipenv install -e .
-      #   shell: bash
       - name: "Run FOSSA Scan"
         uses: fossas/fossa-action@v1
         with:
