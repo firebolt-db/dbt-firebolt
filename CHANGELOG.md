@@ -1,5 +1,9 @@
 # Changelog
 
+## v.1.0.0
+
+- dbt-firebolt now support dbt 1.0+!
+
 ## v.0.21.8
 
 ### Under the hood

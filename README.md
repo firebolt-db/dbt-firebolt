@@ -9,7 +9,7 @@ The [dbt](https://www.getdbt.com) adapter for [Firebolt](https://www.firebolt.io
 * Declarative, version-controlled data modeling
 * Auto-generated data lineage and documentation
 
-dbt-firebolt supports dbt 0.21+.
+dbt-firebolt supports dbt 1.0+.
 
 
 ## Installation
