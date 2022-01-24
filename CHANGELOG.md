@@ -18,11 +18,6 @@
 
 - Updated readme to link to Firebolt JDBC page, in order to assure latest driver is always linked.
 
-## 0.21.6
-
-### Under the hood
-- add Black formatting pipeline
-
 ## v.0.21.5
 
 ### Under the hood
