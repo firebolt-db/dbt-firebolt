@@ -124,6 +124,8 @@ class FireboltConnectionManager(SQLConnectionManager):
         command. Ideally, the return value is an AdapterResponse object
         that includes items such as code, rows_affected, bytes_processed,
         and a summary _message for logging to stdout.
+        For now, return "_message" hard-coded as "OK", and
+        the rows_affected, which I suspect isn't working properly.
         """
         return AdapterResponse(
             # TODO: get an actual status message and "code" from the cursor
