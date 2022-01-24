@@ -6,4 +6,4 @@ project:
 
 targets:
   only:
-    - type: pipenv
+    - type: setuptools
