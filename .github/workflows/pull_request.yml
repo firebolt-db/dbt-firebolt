@@ -7,3 +7,10 @@ on:
 jobs:
   code-checkers:
     uses: firebolt-db/dbt-firebolt/.github/workflows/pre-commit-checks.yml@main
+  check-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check title name convention
+        uses: jef/conventional-commits-pr-action@v1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
