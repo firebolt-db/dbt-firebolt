@@ -13,8 +13,8 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.6
         env:
-          GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ inputs.SONARCLOUD_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
       - name: "Fossa branch fix"
         if: ${{ github.event_name == 'pull_request' }}
         run: |
