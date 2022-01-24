@@ -1,1 +1,1 @@
-version = '1.0.0'
+from dbt.adapters.firebolt import __version__ as version  # noqa

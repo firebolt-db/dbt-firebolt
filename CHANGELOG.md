@@ -1,5 +1,11 @@
 # Changelog
 
+## v.0.21.8
+
+### Under the hood
+
+- Updated pre-commit linting and added pull request linting.
+
 ## v.0.21.7
 
 ### Changes
