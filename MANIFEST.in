@@ -1,1 +1,1 @@
-recursive-include dbt/include *.sql *.yml *.md *.txt
+recursive-include ./dbt/include *.sql *.yml *.md *.txt
