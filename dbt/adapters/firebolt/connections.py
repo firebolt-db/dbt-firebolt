@@ -152,10 +152,6 @@ class FireboltConnectionManager(SQLConnectionManager):
             '`cancel` is not implemented for this adapter!'
         )
 
-    @classmethod
-    def get_status(cls, cursor):
-        return 'OK'
-
     def set_query_header(self, manifest: Manifest) -> None:
         self.query_header = None
 
