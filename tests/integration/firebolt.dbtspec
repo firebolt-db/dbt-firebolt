@@ -9,6 +9,7 @@ target:
   schema: "{{ env_var('SCHEMA') }}"
   port: 443
   threads: 1
+
 sequences:
   test_dbt_empty: empty
   test_dbt_base: base
