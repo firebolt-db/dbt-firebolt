@@ -14,9 +14,7 @@ dbt-firebolt supports dbt 0.21+.
 
 ## Installation
 
-1. Download the [Firebolt JDBC driver](https://docs.firebolt.io/integrations/connecting-via-jdbc.html#downloading-the-driver) and place it wherever you'd prefer.
-2. If you've never installed a Java Runtime Environment you will need to download and install one from either [OpenJDK](https://openjdk.java.net/install/) or [Oracle](https://www.oracle.com/java/technologies/downloads/).
-3. Install the dbt-firebolt package from PyPI:
+Install the dbt-firebolt package from PyPI:
    ```
    pip install dbt-firebolt
    ```
