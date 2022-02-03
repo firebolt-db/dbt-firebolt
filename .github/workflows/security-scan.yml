@@ -1,0 +1,36 @@
+name: Firebolt Security Scan
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v1.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+      - name: "Fossa branch fix"
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          git fetch
+          git branch --track ${GITHUB_HEAD_REF##*/} origin/${GITHUB_HEAD_REF##*/}
+          git checkout ${GITHUB_HEAD_REF##*/}
+        shell: bash
+      - name: "Run FOSSA Scan"
+        uses: fossas/fossa-action@v1
+        with:
+          api-key: ${{ secrets.FOSSA_TOKEN }}
+      - name: "Run FOSSA Test"
+        uses: fossas/fossa-action@v1
+        with:
+          api-key: ${{ secrets.FOSSA_TOKEN }}
+          run-tests: true
