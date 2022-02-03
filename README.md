@@ -42,19 +42,21 @@ The table below shows which dbt and Firebolt features are supported by the adapt
 | Table materializations       | :white_check_mark: |
 | Ephemeral materializations   | :white_check_mark: |
 | View materializations        | :white_check_mark: |
-| Incremental materializations | :x: |
+| Incremental materializations - append | :x: |
+| Incremental materializations - insert_overwrite | :x: |
+| Incremental materializations - merge | :x: |
+| Snapshots                    | :x: |
 | Seeds                        | :white_check_mark: |
 | Tests                        | :white_check_mark: |
 | Documentation                | :white_check_mark: |
-| Snapshots                    | :x: |
 | Custom schemas               | :x: (see [workaround](https://github.com/firebolt-db/dbt-firebolt#supporting-concurrent-development)) |
 | Custom databases             | :x: |
 | Source freshness             | :white_check_mark: |
 | External tables              | :white_check_mark: |
 | Primary indexes              | :white_check_mark: |
 | Aggregating indexes          | :white_check_mark: |
-| Join indexes                 | :white_check_mark: |
-| Partitioned tables           | :x: |
+| Join indexes                 | :x: (syntax supported, but not effective) |
+
 
 
 ## Using dbt-firebolt
