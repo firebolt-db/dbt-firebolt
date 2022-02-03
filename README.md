@@ -54,8 +54,8 @@ The table below shows which dbt and Firebolt features are supported by the adapt
 | Source freshness             | :white_check_mark: |
 | External tables              | :white_check_mark: |
 | Primary indexes              | :white_check_mark: |
-| Aggregating indexes          | 🔶 (multiple key_columns not supported) |
-| Join indexes                 | :x: (syntactically supported, but not effective) |
+| Aggregating indexes          | :white_check_mark: |
+| Join indexes                 | :x: (syntax supported, but not effective) |
 
 
 
