@@ -1,0 +1,71 @@
+name: Firebolt Python Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      pre-release-tag:
+        required: false
+        description: 'Tag for pre-release (optional)'
+      major-release:
+        required: false
+        description: 'Trigger a major release (optional). Leave empty for regular release.'
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ".[dev]"
+
+      - name: Setup database and engine
+        id: setup
+        uses: firebolt-db/integration-testing-setup@master
+        with:
+          firebolt-username: ${{ secrets.FIREBOLT_USERNAME }}
+          firebolt-password: ${{ secrets.FIREBOLT_PASSWORD }}
+          api-endpoint: "api.dev.firebolt.io"
+          region: "us-east-1"
+
+      - name: Run integration tests
+        env:
+          USER_NAME: ${{ secrets.FIREBOLT_USERNAME }}
+          PASSWORD: ${{ secrets.FIREBOLT_PASSWORD }}
+          DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
+          ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
+          ENGINE_URL: ${{ steps.setup.outputs.engine_url }}
+          STOPPED_ENGINE_NAME: ${{ steps.setup.outputs.stopped_engine_name }}
+          STOPPED_ENGINE_URL: ${{ steps.setup.outputs.stopped_engine_url }}
+          API_ENDPOINT: "api.dev.firebolt.io"
+        run: |
+          pytest -o log_cli=true -o log_cli_level=INFO test/integration/firebolt.dbtspec
+
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs: integration-tests
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.RELEASE_PAT }}
+
+    - name: 'Publish action'
+      uses: firebolt-db/action-python-release@main
+      with:
+        pre-release-tag: ${{ inputs.pre-release-tag }}
+        major-release: ${{ inputs.major-release }}
+        pypi-username: ${{ secrets.PYPI_USERNAME }}
+        pypi-password: ${{ secrets.PYPI_PASSWORD }}
+        version-file-path: dbt/adapters/firebolt/__init__.py
