@@ -6,6 +6,7 @@ target:
   engine_name: "{{ env_var('ENGINE_NAME') }}"
   user: "{{ env_var('USER_NAME') }}"
   password: "{{ env_var('PASSWORD') }}"
+  schema: test
   port: 443
   threads: 1
 sequences:
