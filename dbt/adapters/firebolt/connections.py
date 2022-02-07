@@ -100,9 +100,9 @@ class FireboltConnectionManager(SQLConnectionManager):
                     engine_name = credentials.engine_name
                     error_msg_append = ''
                 raise EngineOfflineException(
-                    f'Failed to connect via JDBC. Is the {engine_name} '
-                    + f'engine for {credentials.database} running? '
-                    + error_msg_append
+                    f'Failed to connect. Is the {engine_name} '
+                    f'engine for {credentials.database} running? '
+                    f'{error_msg_append}'
                 )
 
             raise dbt.exceptions.FailedToConnectException(str(e))
