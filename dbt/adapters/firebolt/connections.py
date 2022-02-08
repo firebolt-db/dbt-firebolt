@@ -73,39 +73,16 @@ class FireboltConnectionManager(SQLConnectionManager):
             return connection
         credentials = connection.credentials
 
-        try:
-            # Create a connection based on provided credentials.
-            connection.handle = connect(
-                engine_name=credentials.engine_name,
-                database=credentials.database,
-                username=credentials.user,
-                password=credentials.password,
-                api_endpoint=credentials.api_endpoint,
-                account_name=credentials.account_name,
-            )
-            connection.state = 'open'
-        except Exception as e:
-            connection.handle = None
-            connection.state = 'fail'
-            # If we get a 502 or 503 error, maybe engine isn't running.
-            if '50' in f'{e}':
-                if credentials.engine_name is None:
-                    error_msg_append = (
-                        '\nTo specify a non-default engine, '
-                        'add an engine_name field into the appropriate '
-                        'target in your '
-                        'profiles.yml file.'
-                    )
-                else:
-                    engine_name = credentials.engine_name
-                    error_msg_append = ''
-                raise EngineOfflineException(
-                    f'Failed to connect. Is the {engine_name} '
-                    f'engine for {credentials.database} running? '
-                    f'{error_msg_append}'
-                )
-
-            raise dbt.exceptions.FailedToConnectException(str(e))
+        # Create a connection based on provided credentials.
+        connection.handle = connect(
+            engine_name=credentials.engine_name,
+            database=credentials.database,
+            username=credentials.user,
+            password=credentials.password,
+            api_endpoint=credentials.api_endpoint,
+            account_name=credentials.account_name,
+        )
+        connection.state = 'open'
         return connection
 
     @contextmanager
@@ -154,20 +131,3 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     def set_query_header(self, manifest: Manifest) -> None:
         self.query_header = None
-
-
-class EngineOfflineException(Exception):
-    CODE = 10003
-    MESSAGE = 'Connection Error'
-
-    def process_stack(self):
-        lines = []
-
-        if hasattr(self.node, 'build_path') and self.node.build_path:
-            lines.append(f'compiled SQL at {self.node.build_path}')
-
-        return lines + RuntimeException.process_stack(self)
-
-    @property
-    def type(self):
-        return 'firebolt'
