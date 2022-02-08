@@ -1,0 +1,15 @@
+seeds:
+  +quote_columns: true
+jaffle_shop:
+  target: app
+  outputs:
+    app: &app
+      type: firebolt
+      api_endpoint: "{{ env_var('API_ENDPOINT') }}"
+      account_name: "{{ env_var('ACCOUNT_NAME') }}"
+      database: "{{ env_var('DATABASE_NAME') }}"
+      engine_name: "{{ env_var('ENGINE_NAME') }}"
+      user: "{{ env_var('USER_NAME') }}"
+      password: "{{ env_var('PASSWORD') }}"
+      schema: jaffle_shop
+      threads: 1
