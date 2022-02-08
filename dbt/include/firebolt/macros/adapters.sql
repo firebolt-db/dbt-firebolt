@@ -1,4 +1,4 @@
-{% macro firebolt__drop_schema(schema_relation) -%}
+5{% macro firebolt__drop_schema(schema_relation) -%}
   {# until schemas are supported #}
   {# this macro will drop all tables and views #}
   {% set relations = (list_relations_without_caching(schema_relation)) %}
@@ -178,15 +178,23 @@
 
 
 {% macro firebolt__truncate_relation(relation) -%}
-    {% call statement('truncate_relation', fetch_result=True) -%}
-        SELECT COUNT(*) AS count
-          FROM information_schema.tables
-         WHERE "table_name" = '{{ relation }}';
-    {% endcall %}
-    {% set num_rows = load_result('truncate_relation').table %}
-    {% if num_rows == '1' %}
-        {% call statement('truncate_relation') %}
-            TRUNCATE {{ relation.identifier }}
-        {%- endcall %}
-    {% endif %}
+{# Firebolt doesn't currently support TRUNCATE, so DROP CASCADE.
+   Get table list from SHOW TABLES and save. After drop, recreate table. #}
+    {% call statement('list_tables', fetch_result=True) -%}
+        SHOW TABLES
+    {%- endcall %}
+    {% set tables = load_result('list_tables')['data'] %}
+    {% call statement('table_schema') -%}
+        DROP TABLE {{ relation.identifier }} CASCADE
+    {%- endcall %}
+    {# SHOW TABLES returns a dictionary. We want the list of tuples at key=='data'.
+       Unluckily, we have to step through each one to find the one that corresponds
+       to relation.identifier #}
+    {% for table in tables %}
+        {% if table[0] == relation.identifier %}
+            {% call statement('create_table') -%}
+                {{ table[5] }}
+            {%- endcall %}
+        {% endif %}
+    {% endfor %}
 {% endmacro %}
