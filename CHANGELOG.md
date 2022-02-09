@@ -1,10 +1,27 @@
 # Changelog
 
-## v.0.21.8
+## v.1.0.0
+
+- dbt-firebolt now supports dbt 1.0+!
+
+## v.0.21.10
 
 ### Breaking changes
 
 - We now use our [DB-API](https://github.com/firebolt-db/firebolt-python-sdk) rather than our JDBC.
+
+## v.0.21.9
+
+### Under the hood
+
+- Bug fixes to do with pull request linting.
+– Also for PRs, moved to conventional commmits.
+
+## v.0.21.8
+
+### Under the hood
+
+- Updated pre-commit linting and added pull request linting.
 
 ## v.0.21.7
 
@@ -67,7 +84,7 @@
 
 - Removed log statements and an extra `firebolt__get_create_index_sql` macro error via [#2](https://github.com/firebolt-db/dbt-firebolt/pull/2).
 
-- added ability to specify an account for users who have more than one account associated with their credentials
+- Added ability to specify an account for users who have more than one account associated with their credentials.
 
 ## v.0.21.0
 

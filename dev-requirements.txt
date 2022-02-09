@@ -4,4 +4,3 @@ dbt-core~=0.21.0
 isort>=5.10
 flake8>=4.0
 black>=21.10
-
