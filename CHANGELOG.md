@@ -1,10 +1,21 @@
 # Changelog
 
-## v.0.21.9
+## v.1.0.0
+
+- dbt-firebolt now supports dbt 1.0+!
+
+## v.0.21.10
 
 ### Breaking changes
 
 - We now use our [DB-API](https://github.com/firebolt-db/firebolt-python-sdk) rather than our JDBC.
+
+## v.0.21.9
+
+### Under the hood
+
+- Bug fixes to do with pull request linting.
+– Also for PRs, moved to conventional commmits.
 
 ## v.0.21.8
 
