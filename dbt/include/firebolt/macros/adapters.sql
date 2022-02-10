@@ -62,7 +62,7 @@
 {% macro firebolt__check_schema_exists(information_schema, schema) -%}
     {# stub. Not yet supported in Firebolt. #}
     {% call statement('check_schema_exists', fetch_result=True, auto_begin=True) %}
-        SELECT 'schema_exists'
+        SELECT 1
     {% endcall %}
     {{ return(load_result('check_schema_exists').table) }}
 {% endmacro %}
