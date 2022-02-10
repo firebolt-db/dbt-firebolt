@@ -29,6 +29,10 @@
 
 - Disallowed setting of `threads` in `profiles.yml` to a value greater than 1.
 
+### Under the hood
+
+- Added automatic PR security scanning via Sonar Cloud adn Fossa.
+
 ## v.0.21.6
 
 ### Changes
