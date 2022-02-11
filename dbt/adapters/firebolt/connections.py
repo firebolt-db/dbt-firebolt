@@ -72,7 +72,6 @@ class FireboltConnectionManager(SQLConnectionManager):
         if connection.state == 'open':
             return connection
         credentials = connection.credentials
-
         # Create a connection based on provided credentials.
         connection.handle = connect(
             engine_name=credentials.engine_name,
