@@ -190,3 +190,12 @@
         {%- endcall %}
     {% endif %}
 {% endmacro %}
+
+
+{% macro firebolt__snapshot_string_as_time(timestamp) -%}
+    {{ log(timestamp, True ) }}
+    {% call statement('timestamp', fetch_result=True) -%}
+        SELECT NOW()
+    {% endcall %}
+    {{ return load_result('timestamp').table }}
+{%- endmacro %}
