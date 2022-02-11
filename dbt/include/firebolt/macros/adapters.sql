@@ -201,9 +201,10 @@
 
 
 {% macro firebolt__snapshot_string_as_time(timestamp) -%}
-    {{ log(timestamp, True ) }}
+    {{ log('\n\n*** Timestamp input: ' ~ timestamp, True ) }}
     {% call statement('timestamp', fetch_result=True) -%}
-        SELECT NOW()
+        SELECT CAST('{{ timestamp }}' AS DATE)
     {% endcall %}
-    {{ return load_result('timestamp').table }}
+    {{ log('\n*** timestamp output: ' ~ load_result('timestamp'.table) ~ '\n\n', True)}}
+    {{ return(load_result('timestamp').table) }}
 {%- endmacro %}
