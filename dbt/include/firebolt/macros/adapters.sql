@@ -24,7 +24,8 @@
 
 {% macro firebolt__list_schemas(database) %}
     {% if target.threads > 1 %}
-        {{ exceptions.raise_compiler_error("Firebolt does not currently support more than one thread.") }}
+        {{ exceptions.raise_compiler_error("Firebolt does not currently support "
+                                           "more than one thread.") }}
     {% endif %}
     {% call statement('list_schemas', fetch_result=True, auto_begin=False) %}
         SELECT '{{target.schema}}' AS schema
