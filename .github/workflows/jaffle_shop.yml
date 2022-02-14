@@ -1,4 +1,4 @@
-name: Run integration tests
+name: Run Jaffle shop tests
 on:
   workflow_dispatch:
   workflow_call:
