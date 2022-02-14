@@ -25,5 +25,6 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
     JOIN cols ON tbls.table_name = cols.table_name
     ORDER BY tbls.table_name, cols.column_name
   {%- endcall -%}
+  {{ log(load_result('catalog').table, True) }}
   {{ return(load_result('catalog').table) }}
 {%- endmacro %}
