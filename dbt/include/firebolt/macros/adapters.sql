@@ -1,4 +1,4 @@
-5{% macro firebolt__drop_schema(schema_relation) -%}
+{% macro firebolt__drop_schema(schema_relation) -%}
   {# until schemas are supported #}
   {# this macro will drop all tables and views #}
   {% set relations = (list_relations_without_caching(schema_relation)) %}
