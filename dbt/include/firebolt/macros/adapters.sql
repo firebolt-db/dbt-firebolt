@@ -1,4 +1,4 @@
-5{% macro firebolt__drop_schema(schema_relation) -%}
+{% macro firebolt__drop_schema(schema_relation) -%}
   {# until schemas are supported #}
   {# this macro will drop all tables and views #}
   {% set relations = (list_relations_without_caching(schema_relation)) %}
@@ -183,6 +183,7 @@
     {% call statement('list_tables', fetch_result=True) -%}
         SHOW TABLES
     {%- endcall %}
+    {{ log(load_result('list_tables'), True) }}
     {% set tables = load_result('list_tables')['data'] %}
     {% call statement('table_schema') -%}
         DROP TABLE {{ relation.identifier }} CASCADE
