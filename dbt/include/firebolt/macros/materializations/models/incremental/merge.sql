@@ -2,7 +2,7 @@
   {{ adapter.dispatch('get_merge_sql', 'dbt')(target, source, unique_key, dest_columns, predicates) }}
 {%- endmacro %}
 
-{% macro default__get_merge_sql(target, source, unique_key, dest_columns, predicates) -%}
+{% macro firebolt__get_merge_sql(target, source, unique_key, dest_columns, predicates) -%}
     {%- set predicates = [] if predicates is none else [] + predicates -%}
     {%- set dest_cols_csv = get_quoted_csv(dest_columns | map(attribute="name")) -%}
     {%- set update_columns = config.get('merge_update_columns', default = dest_columns | map(attribute="quoted") | list) -%}
@@ -39,28 +39,18 @@
 {% endmacro %}
 
 
-{% macro get_delete_insert_merge_sql(target, source, unique_key, dest_columns) -%}
-  {{ adapter.dispatch('get_delete_insert_merge_sql', 'dbt')(target, source, unique_key, dest_columns) }}
-{%- endmacro %}
-
-{% macro default__get_delete_insert_merge_sql(target, source, unique_key, dest_columns) -%}
-
+{% macro firebolt__get_delete_insert_merge_sql(target, source, unique_key, dest_columns) -%}
     {%- set dest_cols_csv = get_quoted_csv(dest_columns | map(attribute="name")) -%}
-
     {% if unique_key is not none %}
-    delete from {{ target }}
-    where ({{ unique_key }}) in (
-        select ({{ unique_key }})
-        from {{ source }}
+    DELETE FROM {{ target }}
+    WHERE ({{ unique_key }}) IN (
+        SELECT ({{ unique_key }})
+        FROM {{ source }}
     );
     {% endif %}
-
-    insert into {{ target }} ({{ dest_cols_csv }})
-    (
-        select {{ dest_cols_csv }}
-        from {{ source }}
-    )
-
+    INSERT INTO {{ target }} ({{ dest_cols_csv }})
+        SELECT {{ dest_cols_csv }}
+        FROM {{ source }}
 {%- endmacro %}
 
 
@@ -68,7 +58,7 @@
   {{ adapter.dispatch('get_insert_overwrite_merge_sql', 'dbt')(target, source, dest_columns, predicates, include_sql_header) }}
 {%- endmacro %}
 
-{% macro default__get_insert_overwrite_merge_sql(target, source, dest_columns, predicates, include_sql_header) -%}
+{% macro firebolt__get_insert_overwrite_merge_sql(target, source, dest_columns, predicates, include_sql_header) -%}
     {%- set predicates = [] if predicates is none else [] + predicates -%}
     {%- set dest_cols_csv = get_quoted_csv(dest_columns | map(attribute="name")) -%}
     {%- set sql_header = config.get('sql_header', none) -%}
