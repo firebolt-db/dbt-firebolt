@@ -183,7 +183,6 @@
     {% call statement('list_tables', fetch_result=True) -%}
         SHOW TABLES
     {%- endcall %}
-    {{ log(load_result('list_tables'), True) }}
     {% set tables = load_result('list_tables')['data'] %}
     {% call statement('table_schema') -%}
         DROP TABLE {{ relation.identifier }} CASCADE
@@ -202,10 +201,8 @@
 
 
 {% macro firebolt__snapshot_string_as_time(timestamp) -%}
-    {{ log('\n\n*** Timestamp input: ' ~ timestamp, True ) }}
     {% call statement('timestamp', fetch_result=True) -%}
         SELECT CAST('{{ timestamp }}' AS DATE)
     {% endcall %}
-    {{ log('\n*** timestamp output: ' ~ load_result('timestamp'.table) ~ '\n\n', True)}}
     {{ return(load_result('timestamp').table) }}
 {%- endmacro %}
