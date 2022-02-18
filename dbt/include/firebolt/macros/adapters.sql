@@ -183,18 +183,13 @@
     {% call statement('list_tables', fetch_result=True) -%}
         SHOW TABLES
     {%- endcall %}
-    {% set tables = load_result('list_tables')['data'] %}
     {% call statement('table_schema') -%}
         DROP TABLE {{ relation.identifier }} CASCADE
     {%- endcall %}
-    {# SHOW TABLES returns a dictionary. We want the list of tuples at key=='data'.
-       Unluckily, we have to step through each one to find the one that corresponds
-       to relation.identifier #}
-    {% for table in tables %}
-        {% if table[0] == relation.identifier %}
-            {% call statement('create_table') -%}
-                {{ table[5] }}
-            {%- endcall %}
-        {% endif %}
-    {% endfor %}
+    {% call statement('create_table') -%}
+      {# filter_table returns a table with one row, so get 0th item. #}
+      {{ adapter.filter_table(load_result('list_tables').table,
+                              'table_name',
+                              relation.identifier).rows[0]['schema'] }}
+    {%- endcall %}
 {% endmacro %}
