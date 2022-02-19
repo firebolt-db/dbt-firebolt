@@ -27,6 +27,7 @@
 {% endmacro %}
 
 
+{# TODO: Make sure this is going to run correctly, or delete it. #}
 {% macro firebolt__reset_csv_table(model,
                                    full_refresh,
                                    old_relation,
