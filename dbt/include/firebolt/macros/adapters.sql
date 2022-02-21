@@ -15,8 +15,7 @@
     {%- set relation = api.Relation.create(database=target.database,
                                            schema=target.schema,
                                            identifier=row[1],
-                                           type=row[3]
-                                           ) -%}
+                                           type=row[3]) -%}
     {% do drop_relation(relation) %}
   {%- endfor %}
 {% endmacro %}
