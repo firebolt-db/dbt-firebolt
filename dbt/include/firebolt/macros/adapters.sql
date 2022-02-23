@@ -15,8 +15,7 @@
     {%- set relation = api.Relation.create(database=target.database,
                                            schema=target.schema,
                                            identifier=row[1],
-                                           type=row[3]
-                                           ) -%}
+                                           type=row[3]) -%}
     {% do drop_relation(relation) %}
   {%- endfor %}
 {% endmacro %}
@@ -37,7 +36,7 @@
 {% macro firebolt__create_schema(relation) -%}
 {# stub. Not yet supported in Firebolt. #}
     {%- call statement('create_schema') -%}
-        SELECT 'create_schema'
+        SELECT 1
     {% endcall %}
 {% endmacro %}
 
@@ -98,13 +97,17 @@
     {%- set index_type = index_config.type | upper -%}
 
     {%- if index_type == "JOIN" -%}
-        {{ make_create_index_sql(
-          relation, index_name, "CREATE JOIN INDEX",
-          index_config.join_column, index_config.dimension_column) }}
+        {{ make_create_index_sql(relation,
+                                 index_name,
+                                 "CREATE JOIN INDEX",
+                                 index_config.join_column,
+                                 index_config.dimension_column) }}
     {%- elif index_type == "AGGREGATING" -%}
-        {{ make_create_index_sql(
-          relation, index_name, "CREATE AND GENERATE AGGREGATING INDEX",
-          index_config.key_column, index_config.aggregation) }}
+        {{ make_create_index_sql(relation,
+                                 index_name,
+                                 "CREATE AND GENERATE AGGREGATING INDEX",
+                                 index_config.key_column,
+                                 index_config.aggregation) }}
     {%- endif -%}
 {%- endmacro %}
 
@@ -144,7 +147,8 @@
                                          schema_relation) %}
     {% if (table_info_table.rows | length) > 0
        or (view_info_table_tweaked.rows | length) > 0 %}
-          {{ return(adapter.stack_tables([table_info_table, view_info_table_tweaked])) }}
+          {{ return(adapter.stack_tables([table_info_table,
+                                          view_info_table_tweaked])) }}
     {% else %}
         {{ return(table_info_table) }}
     {% endif %}
@@ -184,7 +188,6 @@
     {% call statement('list_tables', fetch_result=True) -%}
         SHOW TABLES
     {%- endcall %}
-    {{ log(load_result('list_tables'), True) }}
     {% set tables = load_result('list_tables')['data'] %}
     {% call statement('table_schema') -%}
         DROP TABLE {{ relation.identifier }} CASCADE
@@ -203,10 +206,8 @@
 
 
 {% macro firebolt__snapshot_string_as_time(timestamp) -%}
-    {{ log('\n\n*** Timestamp input: ' ~ timestamp, True ) }}
     {% call statement('timestamp', fetch_result=True) -%}
         SELECT CAST('{{ timestamp }}' AS DATE)
     {% endcall %}
-    {{ log('\n*** timestamp output: ' ~ load_result('timestamp'.table) ~ '\n\n', True)}}
     {{ return(load_result('timestamp').table) }}
 {%- endmacro %}
