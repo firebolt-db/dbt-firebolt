@@ -165,7 +165,7 @@ class FireboltAdapter(SQLAdapter):
                 )
             else:
                 raise dbt.exceptions.RuntimeException(
-                    f"Data type is missing for column {column['name']}."
+                    f"Data type is missing for column `{column['name']}`."
                 )
         if partitions:  # partitions may be empty.
             for partition in partitions:
@@ -188,7 +188,7 @@ class FireboltAdapter(SQLAdapter):
                     else:
                         raise dbt.exceptions.RuntimeException(
                             'Either regex or data type is missing for '
-                            f"partition {partition['name']}."
+                            f"partition `{partition['name']}`."
                         )
                 else:  # name is missing
                     raise dbt.exceptions.RuntimeException(
