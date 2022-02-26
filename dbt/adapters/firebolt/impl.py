@@ -159,23 +159,24 @@ class FireboltAdapter(SQLAdapter):
         unpartitioned_columns = []
         partitioned_columns = []
         for column in columns:
-            if 'name' in column:
-                if 'data_type' in column:
-                    unpartitioned_columns.append(
-                        self.quote(column['name']) + ' ' + column['data_type']
-                    )
-                else:
-                    raise dbt.exceptions.RuntimeException(
-                        f"Data type is missing for column {column['name']}."
-                    )
+            if 'data_type' in column and column['data_type'] is not None:
+                unpartitioned_columns.append(
+                    self.quote(column['name']) + ' ' + column['data_type']
+                )
             else:
                 raise dbt.exceptions.RuntimeException(
-                    f'Column name is missing or misformatted.'
+                    f"Data type is missing for column {column['name']}."
                 )
         if partitions:  # partitions may be empty.
             for partition in partitions:
-                if 'name' in partition:
-                    if 'data_type' in partition and 'regex' in partition:
+                # Todo: See if name is a required field.
+                if 'name' in partition and partition['name'] is not None:
+                    if (
+                        'data_type' in partition
+                        and 'regex' in partition
+                        and partition['data_type'] is not None
+                        and partition['regex'] is not None
+                    ):
                         partitioned_columns.append(
                             self.quote(partition['name'])
                             + ' '
