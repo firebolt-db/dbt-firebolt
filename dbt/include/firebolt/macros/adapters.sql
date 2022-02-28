@@ -179,17 +179,10 @@
 
 {% macro firebolt__truncate_relation(relation) -%}
 {# Firebolt doesn't currently support TRUNCATE, so DROP CASCADE.
-   Get table list from SHOW TABLES and save. After drop, recreate table. #}
-    {% call statement('list_tables', fetch_result=True) -%}
-        SHOW TABLES
-    {%- endcall %}
+   This should only be called from reset_csv_table, where it's followed by
+   `create_csv_table`, so not recreating the table here. To retrieve old code,
+   see commit f9984f6d61b8a1b877bc107b102eeb30eba54f35 #}
     {% call statement('table_schema') -%}
         DROP TABLE {{ relation.identifier }} CASCADE
-    {%- endcall %}
-    {% call statement('create_table') -%}
-      {# filter_table returns a table with one row, so get 0th item. #}
-      {{ adapter.filter_table(load_result('list_tables').table,
-                              'table_name',
-                              relation.identifier).rows[0]['schema'] }}
     {%- endcall %}
 {% endmacro %}
