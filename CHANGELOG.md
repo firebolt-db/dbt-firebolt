@@ -1,5 +1,11 @@
 # Changelog
 
+## v.1.0.1
+
+### Under the hood
+
+- Updated seed behavior. Seed now does a `DROP <table_name> CASCADE` followed by a `CREATE TABLE <table_name>` rather than `TRUNCATE`, which was not working consistently.
+
 ## v.1.0.0
 
 - dbt-firebolt now supports dbt 1.0+!
