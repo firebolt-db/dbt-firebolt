@@ -11,12 +11,19 @@ target:
   threads: 1
 
 sequences:
+# These are passing.
   test_dbt_empty: empty
-#  test_dbt_base: base
-#  test_dbt_ephemeral: ephemeral
-#  test_dbt_incremental: incremental
-#  test_dbt_snapshot_strategy_timestamp: snapshot_strategy_timestamp
-#  test_dbt_snapshot_strategy_check_cols: snapshot_strategy_check_cols
+  test_dbt_schema_test: schema_test
   test_dbt_data_test: data_test
-#  test_dbt_schema_test: schema_test
-#  test_dbt_ephemeral_data_tests: data_test_ephemeral_models
+
+
+# These aren't passing yet.
+ # test_dbt_base: base
+ # test_dbt_ephemeral: ephemeral
+ # test_dbt_ephemeral_data_tests: data_test_ephemeral_models
+ # test_dbt_incremental: incremental
+
+# These are only needed for saving state in the DB, so maybe not
+# necessary for v1.
+  # test_dbt_snapshot_strategy_timestamp: snapshot_strategy_timestamp
+  # test_dbt_snapshot_strategy_check_cols: snapshot_strategy_check_cols
