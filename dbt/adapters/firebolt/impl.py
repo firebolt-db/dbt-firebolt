@@ -25,15 +25,15 @@ class FireboltIndexConfig(dbtClassMixin):
     dimension_column: Optional[Union[str, List[str]]] = None
     aggregation: Optional[Union[str, List[str]]] = None
 
-    def render(self, relation):
+    def render_name(self, relation):
         """
-        Name the index according to the following format, joined by `_`:
-        relation name, key/join column, index type, timestamp (unix & UTC)
-        example index name: my_model_customer_id_join_1633504263.
+        Name an index name according to the following format, joined by `_`:
+        index type, relation name, key/join column, timestamp (unix & UTC)
+        example index name: join_my_model_customer_id_1633504263.
         """
         now_unix = time.mktime(datetime.utcnow().timetuple())
         spine_col = self.key_column if self.key_column else self.join_column
-        inputs = [relation.identifier, spine_col, str(self.type), str(int(now_unix))]
+        inputs = [str(self.type), relation.identifier, spine_col, str(int(now_unix))]
         string = '__'.join(inputs)[0:254]
         return string
 
