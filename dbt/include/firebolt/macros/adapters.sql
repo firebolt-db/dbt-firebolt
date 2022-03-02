@@ -73,14 +73,15 @@
                                create_statement,
                                spine_col,
                                other_col) -%}
-  {{ create_statement }} "{{ index_name }}" ON {{ relation }} (
-      {{ spine_col }},
-      {% if other_col is iterable and other_col is not string -%}
-          {{ other_col | join(', ') }}
-      {%- else -%}
-          {{ other_col }}
-      {%- endif -%}
-      );
+    {# Write SQL for generating a join or aggregating index. #}
+    {{ create_statement }} "{{ index_name }}" ON {{ relation }} (
+        {{ spine_col }},
+        {% if other_col is iterable and other_col is not string -%}
+            {{ other_col | join(', ') }}
+        {%- else -%}
+            {{ other_col }}
+        {%- endif -%}
+    );
 {%- endmacro %}
 
 
@@ -92,18 +93,23 @@
 
 
 {% macro firebolt__get_create_index_sql(relation, index_dict) -%}
+    {# Parse index inputs and send parsed input to make_create_index_sql #}
     {%- set index_config = adapter.parse_index(index_dict) -%}
-    {%- set index_name = index_config.render(relation) -%}
-    {%- set index_type = index_config.type | upper -%}
+    {%- set index_name = index_config.render_name(relation) -%}
+    {%- set index_type = index_config.index_type | upper -%}
 
     {%- if index_type == "JOIN" -%}
-        {{ make_create_index_sql(
-          relation, index_name, "CREATE JOIN INDEX",
-          index_config.join_column, index_config.dimension_column) }}
+        {{ make_create_index_sql(relation,
+                                 index_name,
+                                 "CREATE JOIN INDEX",
+                                 index_config.join_column,
+                                 index_config.dimension_column) }}
     {%- elif index_type == "AGGREGATING" -%}
-        {{ make_create_index_sql(
-          relation, index_name, "CREATE AND GENERATE AGGREGATING INDEX",
-          index_config.key_column, index_config.aggregation) }}
+        {{ make_create_index_sql(relation,
+                                 index_name,
+                                 "CREATE AND GENERATE AGGREGATING INDEX",
+                                 index_config.key_column,
+                                 index_config.aggregation) }}
     {%- endif -%}
 {%- endmacro %}
 
