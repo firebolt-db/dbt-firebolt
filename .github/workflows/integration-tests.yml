@@ -44,5 +44,5 @@ jobs:
           API_ENDPOINT: "api.dev.firebolt.io"
           ACCOUNT_NAME: "firebolt"
         run: |
-          pytest -o log_cli=true -o log_cli_level=INFO test/integration/firebolt.dbtspec
+          pytest -o log_cli=true -o log_cli_level=INFO tests/integration/firebolt.dbtspec
         
