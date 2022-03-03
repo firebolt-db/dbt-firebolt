@@ -74,6 +74,7 @@
                                spine_col,
                                other_col) -%}
     {# Write SQL for generating a join or aggregating index. #}
+    {{ log("\n\n** Spine column\n" ~ spine_col, True) }}
     {{ create_statement }} "{{ index_name }}" ON {{ relation }} (
         {{ spine_col }},
         {% if other_col is iterable and other_col is not string -%}
