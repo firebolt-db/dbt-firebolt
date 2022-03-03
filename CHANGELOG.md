@@ -1,5 +1,9 @@
 # Changelog
 
+## v.1.0.4
+
+- dbt-firebolt now supports aggregating indexes with multiple-column keys. 
+
 ## v.1.0.3
 
 ### Under the hood
