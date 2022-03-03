@@ -1,5 +1,11 @@
 # Changelog
 
+## v.1.0.2
+
+### Under the hood
+
+- Added integration tests to PR workflow. Tests are limited now but will expand as more features are added.
+
 ## v.1.0.1
 
 ### Under the hood
