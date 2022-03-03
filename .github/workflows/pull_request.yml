@@ -16,3 +16,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
   integration-tests:
     uses: firebolt-db/dbt-firebolt/.github/workflows/integration-tests.yml@main
+    secrets:
+      FIREBOLT_PASSWORD: ${{ secrets.FIREBOLT_PASSWORD }}
+      FIREBOLT_USER: ${{ secrets.FIREBOLT_USER }}
