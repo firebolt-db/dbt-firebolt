@@ -19,7 +19,7 @@ from dbt.adapters.firebolt.relation import FireboltRelation
 
 @dataclass
 class FireboltIndexConfig(dbtClassMixin):
-    type: str
+    index_type: str
     join_column: Optional[str] = None
     key_column: Optional[str] = None
     dimension_column: Optional[Union[str, List[str]]] = None
@@ -27,7 +27,7 @@ class FireboltIndexConfig(dbtClassMixin):
 
     def render_name(self, relation):
         """
-        Name an index name according to the following format, joined by `_`:
+        Name an index according to the following format, joined by `_`:
         index type, relation name, key/join column, timestamp (unix & UTC)
         example index name: join_my_model_customer_id_1633504263.
         """
@@ -48,40 +48,36 @@ class FireboltIndexConfig(dbtClassMixin):
             return None
         try:
             cls.validate(raw_index)
-
             index_config = cls.from_dict(raw_index)
-
-            if index_config.type.upper() not in ['JOIN', 'AGGREGATING']:
+            if index_config.index_type.upper() not in ['JOIN', 'AGGREGATING']:
                 dbt.exceptions.raise_compiler_error(
-                    f'Invalid index type:\n'
-                    f'  Got: {index_config.type}\n'
-                    f'  type should be either: "join" or "aggregating"'
+                    'Invalid index type:\n'
+                    f'  Got: {index_config.index_type}.\n'
+                    '  Type should be either: "join" or "aggregating."'
                 )
-            elif index_config.type == 'join' and not (
+            elif index_config.index_type == 'join' and not (
                 index_config.join_column and index_config.dimension_column
             ):
-
                 dbt.exceptions.raise_compiler_error(
-                    f'Invalid join index definition:\n'
-                    f'  Got: {index_config}\n'
-                    f'  join_column and dimension_column must be specified '
-                    '  for join indexes'
+                    'Invalid join index definition:\n'
+                    f'  Got: {index_config}.\n'
+                    '  join_column and dimension_column must be specified '
+                    '  for join indexes.'
                 )
-            elif index_config.type == 'aggregating' and not (
+            elif index_config.index_type == 'aggregating' and not (
                 index_config.key_column and index_config.aggregation
             ):
-
                 dbt.exceptions.raise_compiler_error(
-                    f'Invalid aggregating index definition:\n'
-                    f'  Got: {index_config}\n'
-                    f'  key_column and aggregation must be specified'
-                    '  for join indexes'
+                    'Invalid aggregating index definition:\n'
+                    f'  Got: {index_config}.\n'
+                    '  key_column and aggregation must be specified'
+                    '  for aggregating indexes.'
                 )
             else:
                 return index_config
         except ValidationError as exc:
             msg = dbt.exceptions.validator_error_message(exc)
-            dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}')
+            dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}.')
 
 
 @dataclass
