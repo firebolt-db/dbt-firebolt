@@ -1,11 +1,23 @@
 # Changelog
 
+## v.1.0.3
+
+### Under the hood
+
+- Added integration tests to PR workflow. Tests are limited now but will expand as more features are added.
+
 ## v.1.0.2
 
 ### Under the hood
 
 - Bug fix to check for `data_type` and `regex` fields when necessary on external tables.
 - Changed default behavior on external table insert to `DROP IF EXISTS`.
+
+## v.1.0.1
+
+### Under the hood
+
+- Updated seed behavior. Seed now does a `DROP <table_name> CASCADE` followed by a `CREATE TABLE <table_name>` rather than `TRUNCATE`, which was not working consistently.
 
 ## v.1.0.0
 

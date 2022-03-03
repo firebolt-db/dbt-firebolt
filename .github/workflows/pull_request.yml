@@ -14,3 +14,8 @@ jobs:
         uses: jef/conventional-commits-pr-action@v1.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+  integration-tests:
+    uses: firebolt-db/dbt-firebolt/.github/workflows/integration-tests.yml@main
+    secrets:
+      FIREBOLT_PASSWORD: ${{ secrets.FIREBOLT_PASSWORD }}
+      FIREBOLT_USERNAME: ${{ secrets.FIREBOLT_USERNAME }}

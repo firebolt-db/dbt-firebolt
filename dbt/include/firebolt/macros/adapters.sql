@@ -185,15 +185,11 @@
 
 
 {% macro firebolt__truncate_relation(relation) -%}
-    {% call statement('truncate_relation', fetch_result=True) -%}
-        SELECT COUNT(*) AS count
-          FROM information_schema.tables
-         WHERE "table_name" = '{{ relation }}';
-    {% endcall %}
-    {% set num_rows = load_result('truncate_relation').table %}
-    {% if num_rows == '1' %}
-        {% call statement('truncate_relation') %}
-            TRUNCATE {{ relation.identifier }}
-        {%- endcall %}
-    {% endif %}
+{# Firebolt doesn't currently support TRUNCATE, so DROP CASCADE.
+   This should only be called from reset_csv_table, where it's followed by
+   `create_csv_table`, so not recreating the table here. To retrieve old code,
+   see commit f9984f6d61b8a1b877bc107b102eeb30eba54f35 #}
+    {% call statement('table_schema') -%}
+        DROP TABLE {{ relation.identifier }} CASCADE
+    {%- endcall %}
 {% endmacro %}
