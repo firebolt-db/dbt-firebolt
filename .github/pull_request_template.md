@@ -1,8 +1,20 @@
 <!---
   The PR title should indicate what has changed and should be in the active voice,
   e.g. "Added new macro to enable x" or "Fixed run twice bug".
-  This makes auto-generated release notes more valuable, as
-  they use PR titles, not descriptions.
+  This makes auto-generated release notes more valuable, as they use PR titles, 
+  not descriptions. Note that PR titles must be prefixed with specific _lowercased_
+  prefixes followed by a colon. Allowable prefixes are:
+  • feat: A new feature
+  • fix: A bug fix
+  • docs: Documentation-only changes
+  • style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+  • refactor: A code change that neither fixes a bug nor adds a feature
+  • perf: A code change that improves performance
+  • test: Adding missing tests or correcting existing tests
+  • build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+  • ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+  • chore: Other changes that don't modify src or test files
+  • revert: Reverts a previous commit
 -->
 
 <!---

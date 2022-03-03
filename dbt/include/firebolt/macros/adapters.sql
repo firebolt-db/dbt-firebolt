@@ -183,24 +183,12 @@
 
 {% macro firebolt__truncate_relation(relation) -%}
 {# Firebolt doesn't currently support TRUNCATE, so DROP CASCADE.
-   Get table list from SHOW TABLES and save. After drop, recreate table. #}
-    {% call statement('list_tables', fetch_result=True) -%}
-        SHOW TABLES
-    {%- endcall %}
-    {% set tables = load_result('list_tables')['data'] %}
+   This should only be called from reset_csv_table, where it's followed by
+   `create_csv_table`, so not recreating the table here. To retrieve old code,
+   see commit f9984f6d61b8a1b877bc107b102eeb30eba54f35 #}
     {% call statement('table_schema') -%}
         DROP TABLE {{ relation.identifier }} CASCADE
     {%- endcall %}
-    {# SHOW TABLES returns a dictionary. We want the list of tuples at key=='data'.
-       Unluckily, we have to step through each one to find the one that corresponds
-       to relation.identifier #}
-    {% for table in tables %}
-        {% if table[0] == relation.identifier %}
-            {% call statement('create_table') -%}
-                {{ table[5] }}
-            {%- endcall %}
-        {% endif %}
-    {% endfor %}
 {% endmacro %}
 
 

@@ -159,19 +159,41 @@ class FireboltAdapter(SQLAdapter):
         unpartitioned_columns = []
         partitioned_columns = []
         for column in columns:
-            unpartitioned_columns.append(
-                self.quote(column['name']) + ' ' + column['data_type']
-            )
+            if 'data_type' in column and column['data_type'] is not None:
+                unpartitioned_columns.append(
+                    self.quote(column['name']) + ' ' + column['data_type']
+                )
+            else:
+                raise dbt.exceptions.RuntimeException(
+                    f"Data type is missing for column `{column['name']}`."
+                )
         if partitions:  # partitions may be empty.
             for partition in partitions:
-                partitioned_columns.append(
-                    self.quote(partition['name'])
-                    + ' '
-                    + partition['data_type']
-                    + " PARTITION ('"
-                    + partition['regex']
-                    + "')"
-                )
+                # Todo: See if name is a required field.
+                if 'name' in partition and partition['name'] is not None:
+                    if (
+                        'data_type' in partition
+                        and 'regex' in partition
+                        and partition['data_type'] is not None
+                        and partition['regex'] is not None
+                    ):
+                        partitioned_columns.append(
+                            self.quote(partition['name'])
+                            + ' '
+                            + partition['data_type']
+                            + " PARTITION ('"
+                            + partition['regex']
+                            + "')"
+                        )
+                    else:
+                        raise dbt.exceptions.RuntimeException(
+                            'Either regex or data type is missing for '
+                            f"partition `{partition['name']}`."
+                        )
+                else:  # name is missing
+                    raise dbt.exceptions.RuntimeException(
+                        f'Partition name missing or misformatted.'
+                    )
         return unpartitioned_columns + partitioned_columns
 
     @available.parse_none
