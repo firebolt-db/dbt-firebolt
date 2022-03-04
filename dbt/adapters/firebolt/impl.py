@@ -20,8 +20,8 @@ from dbt.adapters.firebolt.relation import FireboltRelation
 @dataclass
 class FireboltIndexConfig(dbtClassMixin):
     index_type: str
-    join_column: Optional[str] = None
-    key_column: Optional[str] = None
+    join_column: Optional[Union[str, List[str]]] = None
+    key_column: Optional[Union[str, List[str]]] = None
     dimension_column: Optional[Union[str, List[str]]] = None
     aggregation: Optional[Union[str, List[str]]] = None
 
@@ -33,7 +33,12 @@ class FireboltIndexConfig(dbtClassMixin):
         """
         now_unix = time.mktime(datetime.utcnow().timetuple())
         spine_col = self.key_column if self.key_column else self.join_column
-        inputs = [str(self.type), relation.identifier, spine_col, str(int(now_unix))]
+        inputs = [
+            str(self.index_type),
+            relation.identifier,
+            spine_col,
+            str(int(now_unix)),
+        ]
         string = '__'.join(inputs)[0:254]
         return string
 
@@ -55,7 +60,7 @@ class FireboltIndexConfig(dbtClassMixin):
                     f'  Got: {index_config.index_type}.\n'
                     '  Type should be either: "join" or "aggregating."'
                 )
-            elif index_config.index_type == 'join' and not (
+            elif index_config.index_type.upper() == 'JOIN' and not (
                 index_config.join_column and index_config.dimension_column
             ):
                 dbt.exceptions.raise_compiler_error(
@@ -64,7 +69,7 @@ class FireboltIndexConfig(dbtClassMixin):
                     '  join_column and dimension_column must be specified '
                     '  for join indexes.'
                 )
-            elif index_config.index_type == 'aggregating' and not (
+            elif index_config.index_type.upper() == 'AGGREGATING' and not (
                 index_config.key_column and index_config.aggregation
             ):
                 dbt.exceptions.raise_compiler_error(
