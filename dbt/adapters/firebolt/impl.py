@@ -32,14 +32,15 @@ class FireboltIndexConfig(dbtClassMixin):
         example index name: join_my_model_customer_id_1633504263.
         """
         now_unix = time.mktime(datetime.utcnow().timetuple())
-        spine_col = self.key_column if self.key_column else self.join_column
+        spine_col = '_'.join(self.key_column if self.key_column else self.join_column)
         inputs = [
             str(self.index_type),
+            'idx',
             relation.identifier,
             spine_col,
             str(int(now_unix)),
         ]
-        string = '__'.join(inputs)[0:254]
+        string = '__'.join(inputs)[:254]
         return string
 
     @classmethod
@@ -170,6 +171,7 @@ class FireboltAdapter(SQLAdapter):
                 )
         if partitions:  # partitions may be empty.
             for partition in partitions:
+                # Todo: See if name is a required field.
                 if 'name' in partition and partition['name'] is not None:
                     if (
                         'data_type' in partition
