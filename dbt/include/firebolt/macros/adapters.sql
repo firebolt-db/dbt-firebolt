@@ -46,11 +46,6 @@
 {%- endmacro %}
 
 
---TODO
----add column to table
---  ALTER TABLE {{ relation }}
---  ADD COLUMN modify column {{ adapter.quote(column_name) }}
----    {{ new_column_type }} {{ on_cluster_clause(label="on cluster") }}
 {% macro firebolt__alter_column_type(relation, column_name, new_column_type) -%}
     {# stub #}
     {% call statement('alter_column_type') %}
@@ -132,8 +127,6 @@
 
 
 {% macro firebolt__list_relations_without_caching(schema_relation) %}
-    {# TODO: schema_relation is ??
-             What does "without caching" mean in this context? #}
     {% call statement('list_tables_without_caching', fetch_result=True) -%}
         SELECT '{{ schema_relation.database }}' AS "database",
                table_name AS "name",

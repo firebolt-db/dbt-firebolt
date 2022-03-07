@@ -170,7 +170,6 @@ class FireboltAdapter(SQLAdapter):
                 )
         if partitions:  # partitions may be empty.
             for partition in partitions:
-                # Todo: See if name is a required field.
                 if 'name' in partition and partition['name'] is not None:
                     if (
                         'data_type' in partition

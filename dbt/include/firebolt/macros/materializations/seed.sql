@@ -1,5 +1,3 @@
-{# TODO: write down what all of this is doing #}
-
 {% macro firebolt__get_binding_char() %}
   {# Override the wildcard character in prepared SQL statements. #}
   {{ return('?') }}
