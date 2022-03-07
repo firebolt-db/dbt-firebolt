@@ -72,7 +72,11 @@
     {{ log("\n\n** make_create_index_sql: Spine column\n" ~ spine_col, True) }}
 
     {{ create_statement }} "{{ index_name }}" ON {{ relation }} (
-        {{ spine_col }},
+        {% if spine_col is iterable and spine_col is not string -%}
+            {{ spine_col | join(', ') }},
+        {% else -%}
+            {{ spine_col }},
+        {% endif -%}
         {% if other_col is iterable and other_col is not string -%}
             {{ other_col | join(', ') }}
         {%- else -%}
