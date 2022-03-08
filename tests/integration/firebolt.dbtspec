@@ -16,7 +16,6 @@ sequences:
  # test_dbt_schema_test: schema_test
  # test_dbt_data_test: data_test
 
-
 # These aren't passing
   test_dbt_base: base
  # test_dbt_ephemeral: ephemeral
