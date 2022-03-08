@@ -10,7 +10,7 @@
     -- {%- set partitions = external.partitions -%}
     {%- set credentials = external.credentials -%}
     {# Leaving out "IF NOT EXISTS" because this should only be called by
-       get_external_build_plan *after* a dropif #}
+       if no DROP IF is necessary. #}
     CREATE EXTERNAL TABLE {{source(source_node.source_name, source_node.name)}} (
         {%- for column in columns -%}
           {{ column }}

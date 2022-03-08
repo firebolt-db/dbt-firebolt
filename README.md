@@ -49,7 +49,7 @@ The table below shows which dbt and Firebolt features are supported by the adapt
 | Seeds                        | :white_check_mark: |
 | Tests                        | :white_check_mark: |
 | Documentation                | :white_check_mark: |
-| Custom schemas               | :x: (see [workaround](https://github.com/firebolt-db/dbt-firebolt#supporting-concurrent-development)) |
+| Custom schemas               | :x: (see [workaround](https://docs.getdbt.com/reference/warehouse-profiles/firebolt-profile#supporting-concurrent-development)) |
 | Custom databases             | :x: |
 | Source freshness             | :white_check_mark: |
 | External tables              | :white_check_mark: |

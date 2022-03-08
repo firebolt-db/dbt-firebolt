@@ -1,5 +1,3 @@
-{# TODO: write down what all of this is doing #}
-
 {% macro firebolt__get_binding_char() %}
   {# Override the wildcard character in prepared SQL statements. #}
   {{ return('?') }}
@@ -35,10 +33,9 @@
     {% set sql = "" %}
     {% if full_refresh %}
         {{ adapter.drop_relation(old_relation) }}
-        {% set sql = create_csv_table(model, agate_table) %}
     {% else %}
         {{ adapter.truncate_relation(old_relation) }}
-        {% set sql = "TRUNCATE " ~ old_relation.identifier %}
     {% endif %}
+    {% set sql = create_csv_table(model, agate_table) %}
     {{ return(sql) }}
 {% endmacro %}

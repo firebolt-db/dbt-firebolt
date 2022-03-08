@@ -19,22 +19,28 @@ from dbt.adapters.firebolt.relation import FireboltRelation
 
 @dataclass
 class FireboltIndexConfig(dbtClassMixin):
-    type: str
-    join_column: Optional[str] = None
-    key_column: Optional[str] = None
+    index_type: str
+    join_column: Optional[Union[str, List[str]]] = None
+    key_column: Optional[Union[str, List[str]]] = None
     dimension_column: Optional[Union[str, List[str]]] = None
     aggregation: Optional[Union[str, List[str]]] = None
 
-    def render(self, relation):
+    def render_name(self, relation):
         """
-        Name the index according to the following format, joined by `_`:
-        relation name, key/join column, index type, timestamp (unix & UTC)
-        example index name: my_model_customer_id_join_1633504263.
+        Name an index according to the following format, joined by `_`:
+        index type, relation name, key/join column, timestamp (unix & UTC)
+        example index name: join_my_model_customer_id_1633504263.
         """
         now_unix = time.mktime(datetime.utcnow().timetuple())
-        spine_col = self.key_column if self.key_column else self.join_column
-        inputs = [relation.identifier, spine_col, str(self.type), str(int(now_unix))]
-        string = '__'.join(inputs)[0:254]
+        spine_col = '_'.join(self.key_column if self.key_column else self.join_column)
+        inputs = [
+            str(self.index_type),
+            'idx',
+            relation.identifier,
+            spine_col,
+            str(int(now_unix)),
+        ]
+        string = '__'.join(inputs)[:254]
         return string
 
     @classmethod
@@ -48,40 +54,36 @@ class FireboltIndexConfig(dbtClassMixin):
             return None
         try:
             cls.validate(raw_index)
-
             index_config = cls.from_dict(raw_index)
-
-            if index_config.type.upper() not in ['JOIN', 'AGGREGATING']:
+            if index_config.index_type.upper() not in ['JOIN', 'AGGREGATING']:
                 dbt.exceptions.raise_compiler_error(
-                    f'Invalid index type:\n'
-                    f'  Got: {index_config.type}\n'
-                    f'  type should be either: "join" or "aggregating"'
+                    'Invalid index type:\n'
+                    f'  Got: {index_config.index_type}.\n'
+                    '  Type should be either: "join" or "aggregating."'
                 )
-            elif index_config.type == 'join' and not (
+            elif index_config.index_type.upper() == 'JOIN' and not (
                 index_config.join_column and index_config.dimension_column
             ):
-
                 dbt.exceptions.raise_compiler_error(
-                    f'Invalid join index definition:\n'
-                    f'  Got: {index_config}\n'
-                    f'  join_column and dimension_column must be specified '
-                    '  for join indexes'
+                    'Invalid join index definition:\n'
+                    f'  Got: {index_config}.\n'
+                    '  join_column and dimension_column must be specified '
+                    '  for join indexes.'
                 )
-            elif index_config.type == 'aggregating' and not (
+            elif index_config.index_type.upper() == 'AGGREGATING' and not (
                 index_config.key_column and index_config.aggregation
             ):
-
                 dbt.exceptions.raise_compiler_error(
-                    f'Invalid aggregating index definition:\n'
-                    f'  Got: {index_config}\n'
-                    f'  key_column and aggregation must be specified'
-                    '  for join indexes'
+                    'Invalid aggregating index definition:\n'
+                    f'  Got: {index_config}.\n'
+                    '  key_column and aggregation must be specified'
+                    '  for aggregating indexes.'
                 )
             else:
                 return index_config
         except ValidationError as exc:
             msg = dbt.exceptions.validator_error_message(exc)
-            dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}')
+            dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}.')
 
 
 @dataclass
@@ -159,19 +161,41 @@ class FireboltAdapter(SQLAdapter):
         unpartitioned_columns = []
         partitioned_columns = []
         for column in columns:
-            unpartitioned_columns.append(
-                self.quote(column['name']) + ' ' + column['data_type']
-            )
+            if 'data_type' in column and column['data_type'] is not None:
+                unpartitioned_columns.append(
+                    self.quote(column['name']) + ' ' + column['data_type']
+                )
+            else:
+                raise dbt.exceptions.RuntimeException(
+                    f"Data type is missing for column `{column['name']}`."
+                )
         if partitions:  # partitions may be empty.
             for partition in partitions:
-                partitioned_columns.append(
-                    self.quote(partition['name'])
-                    + ' '
-                    + partition['data_type']
-                    + " PARTITION ('"
-                    + partition['regex']
-                    + "')"
-                )
+                # Todo: See if name is a required field.
+                if 'name' in partition and partition['name'] is not None:
+                    if (
+                        'data_type' in partition
+                        and 'regex' in partition
+                        and partition['data_type'] is not None
+                        and partition['regex'] is not None
+                    ):
+                        partitioned_columns.append(
+                            self.quote(partition['name'])
+                            + ' '
+                            + partition['data_type']
+                            + " PARTITION ('"
+                            + partition['regex']
+                            + "')"
+                        )
+                    else:
+                        raise dbt.exceptions.RuntimeException(
+                            'Either regex or data type is missing for '
+                            f"partition `{partition['name']}`."
+                        )
+                else:  # name is missing
+                    raise dbt.exceptions.RuntimeException(
+                        f'Partition name missing or misformatted.'
+                    )
         return unpartitioned_columns + partitioned_columns
 
     @available.parse_none
