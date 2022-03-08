@@ -1,6 +1,6 @@
 {% macro firebolt__drop_schema(schema_relation) -%}
-  {# until schemas are supported #}
-  {# this macro will drop all tables and views #}
+  {# until schemas are supported
+     this macro will drop all tables and views #}
   {% set relations = (list_relations_without_caching(schema_relation)) %}
 
   {% set vews = adapter.filter_table(relations, 'type', 'view') %}
@@ -84,7 +84,7 @@
 
 
 {% macro drop_index(index_name, index_type) -%}
-    {% call statement('drop_relation', auto_begin=False) -%}
+    {% call statement('drop_index', auto_begin=False) -%}
         DROP {{ index_type | upper }} INDEX "{{ index_name }}"
     {%- endcall %}
 {% endmacro %}

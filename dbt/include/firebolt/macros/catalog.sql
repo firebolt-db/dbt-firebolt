@@ -4,14 +4,14 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
 {% macro firebolt__get_catalog(information_schemas, schemas) -%}
   {%- call statement('catalog', fetch_result=True) -%}
     SELECT tbls.table_schema AS table_database
-         , SPLIT_PART(tbls.table_name, '_', 1) AS table_schema
+         , '{{ target.schema }}' AS table_schema
          , tbls.table_type
          , tbls.table_name
          , cols.column_name
          , cols.data_type AS column_type
-    FROM "information_schema"."tables" tbls
-        JOIN "information_schema"."columns" cols
-        USING(table_name)
+    FROM information_schema.tables tbls
+         JOIN information_schema.columns cols
+         USING(table_name)
     WHERE
         {% for schema in schemas -%}
           tbls.table_name ILIKE '{{ schema }}_%' {%- if not loop.last %} or {% endif -%}
