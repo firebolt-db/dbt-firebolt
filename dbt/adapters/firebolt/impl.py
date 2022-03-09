@@ -68,7 +68,7 @@ class FireboltIndexConfig(dbtClassMixin):
                     'Invalid join index definition:\n'
                     f'  Got: {index_config}.\n'
                     '  join_column and dimension_column must be specified '
-                    '  for join indexes.'
+                    'for join indexes.'
                 )
             elif index_config.index_type.upper() == 'AGGREGATING' and not (
                 index_config.key_column and index_config.aggregation
@@ -76,8 +76,8 @@ class FireboltIndexConfig(dbtClassMixin):
                 dbt.exceptions.raise_compiler_error(
                     'Invalid aggregating index definition:\n'
                     f'  Got: {index_config}.\n'
-                    '  key_column and aggregation must be specified'
-                    '  for aggregating indexes.'
+                    '  key_column and aggregation must be specified '
+                    'for aggregating indexes.'
                 )
             else:
                 return index_config
