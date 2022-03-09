@@ -28,7 +28,7 @@
     {% endif %}
     {% call statement('list_schemas', fetch_result=True, auto_begin=False) %}
         SELECT split_part(table_name, '_', 1) as schema
-        FROM information_schema.table
+        FROM information_schema.tables
     {% endcall %}
     {{ return(load_result('list_schemas').table) }}
 {% endmacro %}
