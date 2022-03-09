@@ -2,6 +2,10 @@
 
 ## v.1.0.3
 
+### Under the hood
+
+- Updated the way internal code deals with schemas.
+
 ## v.1.0.2
 
 ### Under the hood
