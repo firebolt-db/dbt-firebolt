@@ -5,7 +5,7 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
   {%- call statement('catalog', fetch_result=True) -%}
     WITH tbls AS (
         SELECT table_schema AS table_database
-             , NULL AS table_schema
+             , {{ target.schema }} AS table_schema
              , table_name
         FROM "information_schema"."tables"
     ),
