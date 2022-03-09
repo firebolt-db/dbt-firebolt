@@ -1,5 +1,7 @@
 # Changelog
 
+## v.1.0.3
+
 ## v.1.0.2
 
 ### Under the hood
@@ -8,6 +10,10 @@
 - Added integration tests to PR workflow. Tests are limited now but will expand as more features are added.
 - Bug fix to check for `data_type` and `regex` fields when necessary on external tables.
 - Changed default behavior on external table insert to `DROP IF EXISTS`.
+
+### Breaking changes
+
+- Models with aggregating and join indexes now require `index_type` field in index config blocks rather than `type`.
 
 ## v.1.0.1
 
