@@ -19,22 +19,28 @@ from dbt.adapters.firebolt.relation import FireboltRelation
 
 @dataclass
 class FireboltIndexConfig(dbtClassMixin):
-    type: str
-    join_column: Optional[str] = None
-    key_column: Optional[str] = None
+    index_type: str
+    join_column: Optional[Union[str, List[str]]] = None
+    key_column: Optional[Union[str, List[str]]] = None
     dimension_column: Optional[Union[str, List[str]]] = None
     aggregation: Optional[Union[str, List[str]]] = None
 
-    def render(self, relation):
+    def render_name(self, relation):
         """
-        Name the index according to the following format, joined by `_`:
-        relation name, key/join column, index type, timestamp (unix & UTC)
-        example index name: my_model_customer_id_join_1633504263.
+        Name an index according to the following format, joined by `_`:
+        index type, relation name, key/join column, timestamp (unix & UTC)
+        example index name: join_my_model_customer_id_1633504263.
         """
         now_unix = time.mktime(datetime.utcnow().timetuple())
-        spine_col = self.key_column if self.key_column else self.join_column
-        inputs = [relation.identifier, spine_col, str(self.type), str(int(now_unix))]
-        string = '__'.join(inputs)[0:254]
+        spine_col = '_'.join(self.key_column if self.key_column else self.join_column)
+        inputs = [
+            str(self.index_type),
+            'idx',
+            relation.identifier,
+            spine_col,
+            str(int(now_unix)),
+        ]
+        string = '__'.join(inputs)[:254]
         return string
 
     @classmethod
@@ -48,40 +54,36 @@ class FireboltIndexConfig(dbtClassMixin):
             return None
         try:
             cls.validate(raw_index)
-
             index_config = cls.from_dict(raw_index)
-
-            if index_config.type.upper() not in ['JOIN', 'AGGREGATING']:
+            if index_config.index_type.upper() not in ['JOIN', 'AGGREGATING']:
                 dbt.exceptions.raise_compiler_error(
-                    f'Invalid index type:\n'
-                    f'  Got: {index_config.type}\n'
-                    f'  type should be either: "join" or "aggregating"'
+                    'Invalid index type:\n'
+                    f'  Got: {index_config.index_type}.\n'
+                    '  Type should be either: "join" or "aggregating."'
                 )
-            elif index_config.type == 'join' and not (
+            elif index_config.index_type.upper() == 'JOIN' and not (
                 index_config.join_column and index_config.dimension_column
             ):
-
                 dbt.exceptions.raise_compiler_error(
-                    f'Invalid join index definition:\n'
-                    f'  Got: {index_config}\n'
-                    f'  join_column and dimension_column must be specified '
-                    '  for join indexes'
+                    'Invalid join index definition:\n'
+                    f'  Got: {index_config}.\n'
+                    '  join_column and dimension_column must be specified '
+                    'for join indexes.'
                 )
-            elif index_config.type == 'aggregating' and not (
+            elif index_config.index_type.upper() == 'AGGREGATING' and not (
                 index_config.key_column and index_config.aggregation
             ):
-
                 dbt.exceptions.raise_compiler_error(
-                    f'Invalid aggregating index definition:\n'
-                    f'  Got: {index_config}\n'
-                    f'  key_column and aggregation must be specified'
-                    '  for join indexes'
+                    'Invalid aggregating index definition:\n'
+                    f'  Got: {index_config}.\n'
+                    '  key_column and aggregation must be specified '
+                    'for aggregating indexes.'
                 )
             else:
                 return index_config
         except ValidationError as exc:
             msg = dbt.exceptions.validator_error_message(exc)
-            dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}')
+            dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}.')
 
 
 @dataclass
@@ -115,14 +117,46 @@ class FireboltAdapter(SQLAdapter):
 
     @classmethod
     def convert_datetime_type(cls, agate_table: agate.Table, col_idx: int) -> str:
-        # there's an issue with timestamp currently
+        """
+        Return the type in the database that best maps to the agate.DateTime
+        type for the given agate table and column index.
+
+        :param agate_table: The table
+        :param col_idx: The index into the agate table for the column.
+        :return: The name of the type in the database
+
+        As there's only one available type, don't need the agate table, class, etc.
+        """
+        return 'DATETIME'
+
+    @classmethod
+    def convert_date_type(cls, agate_table: agate.Table, col_idx: int) -> str:
+        """
+        Return the type in the database that best maps to the agate.Date
+        type for the given agate table and column index.
+
+        :param agate_table: The table
+        :param col_idx: The index into the agate table for the column.
+        :return: The name of the type in the database
+
+        As there's only one type available type, don't need the agate table, class, etc.
+        """
         return 'DATE'
 
     @classmethod
     def convert_time_type(cls, agate_table: agate.Table, col_idx: int) -> str:
-        raise dbt.exceptions.NotImplementedException(
-            '`convert_time_type` is not implemented for this adapter!'
-        )
+        """
+        Return the type in the database that best maps to the
+        agate.TimeDelta type for the given agate table and column index.
+
+        :param agate_table: The table
+        :param col_idx: The index into the agate table for the column.
+        :return: The name of the type in the database
+
+        Firebolt doesn't have a TIME type. Closest is DATETIME. Likewise, as
+        there's only one available type, don't need the agate table, class, etc.
+        """
+        return 'DATETIME'
 
     @available.parse_none
     def reformat_view_results(self, agate_table, schema_relation) -> agate.Table:
@@ -220,15 +254,6 @@ class FireboltAdapter(SQLAdapter):
         https://agate.readthedocs.io/en/latest/cookbook/filter.html#by-regex
         """
         return agate_table.where(lambda row: re.match(re_match_exp, str(row[col_name])))
-
-    @available.parse_none
-    def get_rows(cls, agate_table):
-        """
-        Filter agate table by column name and regex match expression.
-        https://agate.readthedocs.io/en/latest/cookbook/filter.html#by-regex
-        """
-        print('\n\n' + agate_table.rows.values() + '\n\n')
-        return ', '.join(agate_table.rows.values())
 
     @available.parse_none
     def get_rows_different_sql(
