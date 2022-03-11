@@ -4,7 +4,7 @@
 
 ### Under the hood
 
-- Added integration tests to PR workflow. Tests are limited now but will expand as more features are added.
+- dbt-firebolt now supports aggregating indexes with multiple-column keys. 
 - Bug fix to check for `data_type` and `regex` fields when necessary on external tables.
 - Changed default behavior on external table insert to `DROP IF EXISTS`.
 
