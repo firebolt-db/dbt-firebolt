@@ -61,7 +61,7 @@ class FireboltIndexConfig(dbtClassMixin):
                     f'  Got: {index_config.index_type}.\n'
                     '  Type should be either: "join" or "aggregating."'
                 )
-            elif index_config.index_type.upper() == 'JOIN' and not (
+            if index_config.index_type.upper() == 'JOIN' and not (
                 index_config.join_column and index_config.dimension_column
             ):
                 dbt.exceptions.raise_compiler_error(
@@ -70,7 +70,7 @@ class FireboltIndexConfig(dbtClassMixin):
                     '  join_column and dimension_column must be specified '
                     'for join indexes.'
                 )
-            elif index_config.index_type.upper() == 'AGGREGATING' and not (
+            if index_config.index_type.upper() == 'AGGREGATING' and not (
                 index_config.key_column and index_config.aggregation
             ):
                 dbt.exceptions.raise_compiler_error(
@@ -79,8 +79,7 @@ class FireboltIndexConfig(dbtClassMixin):
                     '  key_column and aggregation must be specified '
                     'for aggregating indexes.'
                 )
-            else:
-                return index_config
+            return index_config
         except ValidationError as exc:
             msg = dbt.exceptions.validator_error_message(exc)
             dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}.')
