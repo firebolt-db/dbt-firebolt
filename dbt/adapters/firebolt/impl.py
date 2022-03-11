@@ -159,41 +159,35 @@ class FireboltAdapter(SQLAdapter):
         unpartitioned_columns = []
         partitioned_columns = []
         for column in columns:
-            if 'data_type' in column and column['data_type'] is not None:
-                unpartitioned_columns.append(
-                    self.quote(column['name']) + ' ' + column['data_type']
-                )
-            else:
+            # Don't need to check for name, as missing name fails at yaml parse time.
+            if column.get('data_type', None) is None:
                 raise dbt.exceptions.RuntimeException(
-                    f"Data type is missing for column `{column['name']}`."
+                    f'Data type is missing for column `{column["name"]}`.'
                 )
+            unpartitioned_columns.append(
+                self.quote(column['name']) + ' ' + column['data_type']
+            )
         if partitions:  # partitions may be empty.
             for partition in partitions:
-                # Todo: See if name is a required field.
-                if 'name' in partition and partition['name'] is not None:
-                    if (
-                        'data_type' in partition
-                        and 'regex' in partition
-                        and partition['data_type'] is not None
-                        and partition['regex'] is not None
-                    ):
-                        partitioned_columns.append(
-                            self.quote(partition['name'])
-                            + ' '
-                            + partition['data_type']
-                            + " PARTITION ('"
-                            + partition['regex']
-                            + "')"
-                        )
-                    else:
-                        raise dbt.exceptions.RuntimeException(
-                            'Either regex or data type is missing for '
-                            f"partition `{partition['name']}`."
-                        )
-                else:  # name is missing
+                # Don't need to check for name, as missing name fails at
+                # yaml parse time.
+                if partition.get('data_type', None) is None:
                     raise dbt.exceptions.RuntimeException(
-                        f'Partition name missing or misformatted.'
+                        f'Data type is missing for partition `{partition["name"]}`.'
                     )
+                if partition.get('regex', None) is None:
+                    raise dbt.exceptions.RuntimeException(
+                        f'Regex is missing for partition `{partition["name"]}`.'
+                    )
+                partitioned_columns.append(
+                    self.quote(partition['name'])
+                    + ' '
+                    + partition['data_type']
+                    + " PARTITION ('"
+                    + partition['regex']
+                    + "')"
+                )
+
         return unpartitioned_columns + partitioned_columns
 
     @available.parse_none
