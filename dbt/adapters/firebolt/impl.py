@@ -159,11 +159,26 @@ class FireboltAdapter(SQLAdapter):
         unpartitioned_columns = []
         partitioned_columns = []
         for column in columns:
+            # Don't need to check for name, as missing name fails at yaml parse time.
+            if column.get('data_type', None) is None:
+                raise dbt.exceptions.RuntimeException(
+                    f'Data type is missing for column `{column["name"]}`.'
+                )
             unpartitioned_columns.append(
                 self.quote(column['name']) + ' ' + column['data_type']
             )
         if partitions:  # partitions may be empty.
             for partition in partitions:
+                # Don't need to check for name, as missing name fails at
+                # yaml parse time.
+                if partition.get('data_type', None) is None:
+                    raise dbt.exceptions.RuntimeException(
+                        f'Data type is missing for partition `{partition["name"]}`.'
+                    )
+                if partition.get('regex', None) is None:
+                    raise dbt.exceptions.RuntimeException(
+                        f'Regex is missing for partition `{partition["name"]}`.'
+                    )
                 partitioned_columns.append(
                     self.quote(partition['name'])
                     + ' '
@@ -172,6 +187,7 @@ class FireboltAdapter(SQLAdapter):
                     + partition['regex']
                     + "')"
                 )
+
         return unpartitioned_columns + partitioned_columns
 
     @available.parse_none

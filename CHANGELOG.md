@@ -1,5 +1,12 @@
 # Changelog
 
+## v.1.0.2
+
+### Under the hood
+
+- Bug fix to check for `data_type` and `regex` fields when necessary on external tables.
+- Changed default behavior on external table insert to `DROP IF EXISTS`.
+
 ## v.1.0.1
 
 ### Under the hood
