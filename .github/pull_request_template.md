@@ -36,5 +36,7 @@ Resolves #
 - [ ] This PR includes tests, or tests are not required/relevant for this PR.
 - [ ] I have updated `CHANGELOG.md` and added information about my change.
 - [ ] If this PR requires a new PyPI release I have bumped the version number.
-- [ ] I have pulled/merged from the main branch if there are merge conflicts.
 - [ ] I have verified that this PR contains only code changes relevant to this PR.
+- [ ] If further integration tests are now passing I've edited firebolt.dbtspec to account for this.
+- [ ] I have pulled/merged from the main branch if there are merge conflicts.
+- [ ] After pulling/merging main I have run pytest on the included or updated firebolt.dbtspec.
