@@ -1,21 +1,16 @@
 # Changelog
 
-## v.1.0.4
-
-- dbt-firebolt now supports aggregating indexes with multiple-column keys. 
-
-## v.1.0.3
-
-### Under the hood
-
-- Added integration tests to PR workflow. Tests are limited now but will expand as more features are added.
-
 ## v.1.0.2
 
 ### Under the hood
 
+- dbt-firebolt now supports aggregating indexes with multiple-column keys. 
 - Bug fix to check for `data_type` and `regex` fields when necessary on external tables.
 - Changed default behavior on external table insert to `DROP IF EXISTS`.
+
+### Breaking changes
+
+- Models with aggregating and join indexes now require `index_type` field in index config blocks rather than `type`.
 
 ## v.1.0.1
 
