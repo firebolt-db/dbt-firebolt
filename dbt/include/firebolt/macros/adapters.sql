@@ -34,13 +34,13 @@
 
 {% macro firebolt__create_schema(relation) -%}
 {# stub. Not yet supported in Firebolt. #}
-    {%- call statement('create_schema') -%}
+    {%- call statement('create_schema') %}
         SELECT 1
     {% endcall %}
 {% endmacro %}
 
 
-{% macro firebolt__current_timestamp() -%}
+{% macro firebolt__current_timestamp() %}
     NOW()
 {%- endmacro %}
 
@@ -84,7 +84,7 @@
 
 
 {% macro drop_index(index_name, index_type) -%}
-    {% call statement('drop_index', auto_begin=False) -%}
+    {% call statement('drop_index', auto_begin=False) %}
         DROP {{ index_type | upper }} INDEX "{{ index_name }}"
     {%- endcall %}
 {% endmacro %}
@@ -129,7 +129,7 @@
 {% macro firebolt__list_relations_without_caching(schema_relation) %}
     {# TODO: schema_relation is ??
              What does "without caching" mean in this context? #}
-    {% call statement('list_tables_without_caching', fetch_result=True) -%}
+    {% call statement('list_tables_without_caching', fetch_result=True) %}
         SELECT '{{ schema_relation.database }}' AS "database",
                table_name AS "name",
                '{{ schema_relation.schema }}' AS "schema",
@@ -137,7 +137,7 @@
           FROM information_schema.tables
     {% endcall %}
     {% set table_info_table = load_result('list_tables_without_caching').table %}
-    {% call statement('list_views_without_caching', fetch_result=True) -%}
+    {% call statement('list_views_without_caching', fetch_result=True) %}
         SHOW VIEWS
     {% endcall %}
     {% set view_info_table = load_result('list_views_without_caching').table %}
@@ -174,7 +174,7 @@
 {%- endmacro %}
 
 
-{% macro firebolt__create_view_as(relation, sql) -%}
+{% macro firebolt__create_view_as(relation, sql) %}
     CREATE VIEW IF NOT EXISTS {{ relation.identifier }} AS (
         {{ sql }}
     )
@@ -186,14 +186,14 @@
    This should only be called from reset_csv_table, where it's followed by
    `create_csv_table`, so not recreating the table here. To retrieve old code,
    see commit f9984f6d61b8a1b877bc107b102eeb30eba54f35 #}
-    {% call statement('table_schema') -%}
+    {% call statement('table_schema') %}
         DROP TABLE {{ relation.identifier }} CASCADE
     {%- endcall %}
 {% endmacro %}
 
 
 {% macro firebolt__snapshot_string_as_time(timestamp) -%}
-    {% call statement('timestamp', fetch_result=True) -%}
+    {% call statement('timestamp', fetch_result=True) %}
         SELECT CAST('{{ timestamp }}' AS DATE)
     {% endcall %}
     {{ return(load_result('timestamp').table) }}

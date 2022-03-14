@@ -2,7 +2,7 @@
 the columns (for instance, `is_nullable` is missing) but more could be added later. #}
 
 {% macro firebolt__get_catalog(information_schemas, schemas) -%}
-  {%- call statement('catalog', fetch_result=True) -%}
+  {%- call statement('catalog', fetch_result=True) %}
     SELECT tbls.table_schema AS table_database
          , '{{ target.schema }}' AS table_schema
          , tbls.table_type
