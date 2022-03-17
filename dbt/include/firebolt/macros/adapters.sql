@@ -1,8 +1,9 @@
 {% macro firebolt__drop_schema(schema_relation) -%}
-  {# until schemas are supported #}
-  {# this macro will drop all tables and views #}
+  {# until schemas are supported
+     this macro will drop all tables and views #}
   {% set relations = (list_relations_without_caching(schema_relation)) %}
-
+  {{ log('\n\n** drop schema relations', True) }}
+  {{ log(relations, True) }}
   {% set vews = adapter.filter_table(relations, 'type', 'view') %}
   {% set tbls = adapter.filter_table(relations, 'type', 'table') %}
   {% do drop_relations_loop(vews) %}
@@ -35,13 +36,13 @@
 
 {% macro firebolt__create_schema(relation) -%}
 {# stub. Not yet supported in Firebolt. #}
-    {%- call statement('create_schema') -%}
+    {%- call statement('create_schema') %}
         SELECT 1
     {% endcall %}
 {% endmacro %}
 
 
-{% macro firebolt__current_timestamp() -%}
+{% macro firebolt__current_timestamp() %}
     NOW()
 {%- endmacro %}
 
@@ -85,7 +86,7 @@
 
 
 {% macro drop_index(index_name, index_type) -%}
-    {% call statement('drop_relation', auto_begin=False) -%}
+    {% call statement('drop_index', auto_begin=False) %}
         DROP {{ index_type | upper }} INDEX "{{ index_name }}"
     {%- endcall %}
 {% endmacro %}
@@ -134,22 +135,16 @@
                '{{ schema_relation.schema }}' AS "schema",
                'table' AS type
           FROM information_schema.tables
+        UNION
+        SELECT '{{ schema_relation.database }}' AS "database",
+               table_name AS "name",
+               '{{ schema_relation.schema }}' AS "schema",
+               'view' AS type
+          FROM information_schema.views
+
     {% endcall %}
-    {% set table_info_table = load_result('list_tables_without_caching').table %}
-    {% call statement('list_views_without_caching', fetch_result=True) -%}
-        SHOW VIEWS
-    {% endcall %}
-    {% set view_info_table = load_result('list_views_without_caching').table %}
-    {% set view_info_table_tweaked = adapter.reformat_view_results(
-                                         view_info_table,
-                                         schema_relation) %}
-    {% if (table_info_table.rows | length) > 0
-       or (view_info_table_tweaked.rows | length) > 0 %}
-          {{ return(adapter.stack_tables([table_info_table,
-                                          view_info_table_tweaked])) }}
-    {% else %}
-        {{ return(table_info_table) }}
-    {% endif %}
+    {% set info_table = load_result('list_views_without_caching').table %}
+    {{ return(info_table) }}
 {% endmacro %}
 
 
@@ -173,7 +168,7 @@
 {%- endmacro %}
 
 
-{% macro firebolt__create_view_as(relation, sql) -%}
+{% macro firebolt__create_view_as(relation, sql) %}
     CREATE VIEW IF NOT EXISTS {{ relation.identifier }} AS (
         {{ sql }}
     )
@@ -185,14 +180,14 @@
    This should only be called from reset_csv_table, where it's followed by
    `create_csv_table`, so not recreating the table here. To retrieve old code,
    see commit f9984f6d61b8a1b877bc107b102eeb30eba54f35 #}
-    {% call statement('table_schema') -%}
+    {% call statement('table_schema') %}
         DROP TABLE {{ relation.identifier }} CASCADE
     {%- endcall %}
 {% endmacro %}
 
 
 {% macro firebolt__snapshot_string_as_time(timestamp) -%}
-    {% call statement('timestamp', fetch_result=True) -%}
+    {% call statement('timestamp', fetch_result=True) %}
         SELECT CAST('{{ timestamp }}' AS DATE)
     {% endcall %}
     {{ return(load_result('timestamp').table) }}

@@ -18,7 +18,7 @@
           {%- endfor -%}
       )
     {% endset %}
-    {% call statement('_') -%}
+    {% call statement('_') %}
         {{ sql }}
     {%- endcall %}
     {{ return(sql) }}
