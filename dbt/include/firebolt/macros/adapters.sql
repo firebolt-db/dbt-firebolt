@@ -2,8 +2,7 @@
   {# until schemas are supported
      this macro will drop all tables and views #}
   {% set relations = (list_relations_without_caching(schema_relation)) %}
-  {{ log('\n\n** drop schema relations', True) }}
-  {{ log(relations, True) }}
+
   {% set vews = adapter.filter_table(relations, 'type', 'view') %}
   {% set tbls = adapter.filter_table(relations, 'type', 'table') %}
   {% do drop_relations_loop(vews) %}
