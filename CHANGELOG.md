@@ -1,10 +1,17 @@
 # Changelog
 
+## v.1.0.3
+
+### Under the hood
+
+- Updated the way internal code deals with schemas.
+
 ## v.1.0.2
 
 ### Under the hood
 
 - dbt-firebolt now supports aggregating indexes with multiple-column keys. 
+- Added integration tests to PR workflow. Tests are limited now but will expand as more features are added.
 - Bug fix to check for `data_type` and `regex` fields when necessary on external tables.
 - Changed default behavior on external table insert to `DROP IF EXISTS`.
 

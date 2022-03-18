@@ -1,9 +1,8 @@
 {% macro firebolt__drop_schema(schema_relation) -%}
-  {# until schemas are supported
-     this macro will drop all tables and views #}
+  {# Until schemas are supported this macro will drop
+     all tables and views prefixed with "target.schema_". #}
   {% set relations = (list_relations_without_caching(schema_relation)) %}
-  {{ log('\n\n** drop schema relations', True) }}
-  {{ log(relations, True) }}
+  {{ log('\n\n** drop schema\n' ~ schema_relation, True)}}
   {% set vews = adapter.filter_table(relations, 'type', 'view') %}
   {% set tbls = adapter.filter_table(relations, 'type', 'table') %}
   {% do drop_relations_loop(vews) %}
@@ -28,7 +27,8 @@
                                            "more than one thread.") }}
     {% endif %}
     {% call statement('list_schemas', fetch_result=True, auto_begin=False) %}
-        SELECT '{{target.schema}}' AS schema
+        SELECT split_part(table_name, '_', 1) as schema
+        FROM information_schema.tables
     {% endcall %}
     {{ return(load_result('list_schemas').table) }}
 {% endmacro %}
@@ -58,7 +58,8 @@
 {% macro firebolt__check_schema_exists(information_schema, schema) -%}
     {# stub. Not yet supported in Firebolt. #}
     {% call statement('check_schema_exists', fetch_result=True, auto_begin=True) %}
-        SELECT 1
+        SELECT {{ schema }} in (SELECT split_part(table_name, '_', 1)
+                                FROM information_schema.tables)
     {% endcall %}
     {{ return(load_result('check_schema_exists').table) }}
 {% endmacro %}
