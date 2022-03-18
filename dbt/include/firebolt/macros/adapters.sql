@@ -71,8 +71,6 @@
                                spine_col,
                                other_col) -%}
     {# Write SQL for generating a join or aggregating index. #}
-    {{ log("\n\n** make_create_index_sql: Spine column\n" ~ spine_col, True) }}
-
     {{ create_statement }} "{{ index_name }}" ON {{ relation }} (
         {% if spine_col is iterable and spine_col is not string -%}
             {{ spine_col | join(', ') }},
@@ -100,7 +98,6 @@
     {%- set index_config = adapter.parse_index(index_dict) -%}
     {%- set index_name = index_config.render_name(relation) -%}
     {%- set index_type = index_config.index_type | upper -%}
-    {{ log('\n\n** get_create_index_sql parsed config:\n' ~ index_config, True) }}
     {%- if index_type == "JOIN" -%}
         {{ make_create_index_sql(relation,
                                  index_name,
