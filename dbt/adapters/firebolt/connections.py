@@ -32,7 +32,7 @@ class FireboltCredentials(Credentials):
         in the `dbt debug` output.
         """
         return (
-            'api_endpoint',
+            'host',
             'account_name',
             'user',
             'schema',
@@ -92,7 +92,6 @@ class FireboltConnectionManager(SQLConnectionManager):
             self.release()
             raise RuntimeException(str(e))
 
-    # TODO: Decide how much metadata we want to return.
     @classmethod
     def get_response(cls, cursor) -> AdapterResponse:
         """
@@ -104,7 +103,6 @@ class FireboltConnectionManager(SQLConnectionManager):
         the rows_affected, which I suspect isn't working properly.
         """
         return AdapterResponse(
-            # TODO: get an actual status message and "code" from the cursor
             _message='OK',
             # code=code,
             rows_affected=cursor.rowcount,

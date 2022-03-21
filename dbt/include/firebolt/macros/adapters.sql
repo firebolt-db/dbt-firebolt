@@ -45,11 +45,6 @@
 {%- endmacro %}
 
 
---TODO
----add column to table
---  ALTER TABLE {{ relation }}
---  ADD COLUMN modify column {{ adapter.quote(column_name) }}
----    {{ new_column_type }} {{ on_cluster_clause(label="on cluster") }}
 {% macro firebolt__alter_column_type(relation, column_name, new_column_type) -%}
     {# stub #}
     {% call statement('alter_column_type') %}
@@ -72,14 +67,19 @@
                                create_statement,
                                spine_col,
                                other_col) -%}
-  {{ create_statement }} "{{ index_name }}" ON {{ relation }} (
-      {{ spine_col }},
-      {% if other_col is iterable and other_col is not string -%}
-          {{ other_col | join(', ') }}
-      {%- else -%}
-          {{ other_col }}
-      {%- endif -%}
-      );
+    {# Write SQL for generating a join or aggregating index. #}
+    {{ create_statement }} "{{ index_name }}" ON {{ relation }} (
+        {% if spine_col is iterable and spine_col is not string -%}
+            {{ spine_col | join(', ') }},
+        {% else -%}
+            {{ spine_col }},
+        {% endif -%}
+        {% if other_col is iterable and other_col is not string -%}
+            {{ other_col | join(', ') }}
+        {%- else -%}
+            {{ other_col }}
+        {%- endif -%}
+    );
 {%- endmacro %}
 
 
@@ -91,10 +91,10 @@
 
 
 {% macro firebolt__get_create_index_sql(relation, index_dict) -%}
+    {# Parse index inputs and send parsed input to make_create_index_sql #}
     {%- set index_config = adapter.parse_index(index_dict) -%}
-    {%- set index_name = index_config.render(relation) -%}
-    {%- set index_type = index_config.type | upper -%}
-
+    {%- set index_name = index_config.render_name(relation) -%}
+    {%- set index_type = index_config.index_type | upper -%}
     {%- if index_type == "JOIN" -%}
         {{ make_create_index_sql(relation,
                                  index_name,
@@ -127,8 +127,6 @@
 
 
 {% macro firebolt__list_relations_without_caching(schema_relation) %}
-    {# TODO: schema_relation is ??
-             What does "without caching" mean in this context? #}
     {% call statement('list_tables_without_caching', fetch_result=True) %}
         SELECT '{{ schema_relation.database }}' AS "database",
                table_name AS "name",
@@ -143,7 +141,7 @@
           FROM information_schema.views
 
     {% endcall %}
-    {% set info_table = load_result('list_views_without_caching').table %}
+    {% set info_table = load_result('list_tables_without_caching').table %}
     {{ return(info_table) }}
 {% endmacro %}
 
