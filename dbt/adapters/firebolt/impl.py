@@ -220,6 +220,11 @@ class FireboltAdapter(SQLAdapter):
         Filter agate table by column name and regex match expression.
         https://agate.readthedocs.io/en/latest/cookbook/filter.html#by-regex
         """
+        print('\n\n** row count of', col_name, len(agate_table.rows))
+        if len(agate_table.rows) == 1:
+            return agate_table.rows.values()[0].values()[0]
+        if len(agate_table.rows) == 0:
+            print('\n** which column:', col_name)
         return agate_table.where(lambda row: re.match(re_match_exp, str(row[col_name])))
 
     def get_renamed_view_ddl(input_ddl, replacement) -> str:

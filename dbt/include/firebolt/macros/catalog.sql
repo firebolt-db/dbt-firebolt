@@ -5,14 +5,25 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
   {%- call statement('catalog', fetch_result=True) -%}
     SELECT tbls.table_schema AS table_database
          , NULL as table_schema
-         , 'DIMENSION' AS table_type
+         , table_type AS table_type
          , tbls.table_name
          , cols.column_name
          , cols.data_type AS column_type
+         , 'table' AS type
     FROM "information_schema"."tables" tbls
         JOIN "information_schema"."columns" cols
             USING(table_name)
-    ORDER BY tbls.table_name, cols.column_name
+    --ORDER BY tbls.table_name, cols.column_name
+
+    UNION SELECT views.table_schema AS table_database
+      , NULL as table_schema
+      , NULL AS table_type
+      , views.table_name
+      , NULL AS column_name
+      , NULL AS column_type
+      , 'view' AS type
+    FROM "information_schema"."views" views
+
 
     -- WITH tbls AS (
     --     SELECT table_schema AS table_database
@@ -44,6 +55,6 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
   {{ log('\n\n** table view\n' ~ load_result('show_tables'), True) }}
   {{ log('\n\n** raw catalog\n' ~ load_result('catalog'), True) }}
   {{ log('\n\n** Agate catalog\n' ~ results, True) }}
-  {{ log('\n\n** rows:\n' ~ adapter.get_rows(results), True)}}
+  {# {{ log('\n\n** rows:\n' ~ adapter.get_rows(results), True)}} #}
   {{ return(load_result('catalog').table) }}
 {%- endmacro %}

@@ -1,7 +1,7 @@
 {% macro firebolt__drop_schema(schema_relation) -%}
   {# until schemas are supported
      this macro will drop all tables and views #}
-  {% set relations = (list_relations_without_caching(schema_relation)) %}
+  {% set relations = (list_relations_without_caching(schema_relation, 'table')) %}
 
   {% set vews = adapter.filter_table(relations, 'type', 'view') %}
   {% set tbls = adapter.filter_table(relations, 'type', 'table') %}
@@ -149,7 +149,7 @@
 {% macro firebolt__create_table_as(temporary, relation, sql) -%}
     {# Create table using CTAS #}
     {%- set table_type = config.get('table_type', default='dimension') | upper -%}
-    {%- set primary_index = config.get('primary_index') -%}
+    {%- set primary_index = config.get('primary_index') %}
 
     CREATE {{ table_type }} TABLE IF NOT EXISTS {{ relation }}
     {%- if primary_index %}

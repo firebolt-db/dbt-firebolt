@@ -5,41 +5,33 @@
   {# {% set target_name = adapter.quote_as_configured(to_relation.identifier, 'identifier') %}
   {% set source_name = adapter.quote_as_configured(from_relation.identifier, 'identifier') %} #}
   {# Have to figure out relation type first. #}
-  {% set all_relations = (list_relations_without_caching(from_relation)) %}
+  {% set all_relations = (list_relations_without_caching(from_relation.identifier)) %}
   {% set views = adapter.filter_table(all_relations, 'type', 'view') %}
   {% if (views.rows | length) > 0 %}
-    {% call statement('view_ddl', fetch_result=True) %}
+    {{ log('\n\n** number of rows: ' ~ (views.rows | length) ~ '\n', True) }}
+    {{ log('\n** from relation: ' ~ from_relation ~ '\n', True) }}
+    {{ log('** rows:\n') }}
+    {{ log(all_relations.rows, True) }}
+    {% call statement('views', fetch_result=True) %}
       SELECT view_definition FROM information_schema.views
       WHERE table_name = '{{ from_relation.identifier }}'
     {%- endcall %}
-    {{ log("\n\n Swappable view:\n" ~ load_result(view_ddl) ~ "\n" ~ adapter.filter_table(load_result(view_ddl),
-                                               'view_definition',
-                                               '.*'), True) }}
-    {% set this_sql = adapter.get_renamed_view_ddl(
-                          adapter.filter_table(load_result(view_ddl),
-                                               'view_definition',
-                                               '.*'),
-                          to_relation) %}
+    {% set view_ddl = adapter.filter_table(load_result('views').table, 'view_definition', '') %}
+    {% set view_dll = view_ddl.replace(from_relation.identifier, to_relation.identifier) %}
+    {{ log("\n\n Swappable view:\n" ~ view_ddl ~ "\n", True) }}
     {% call statement('new_view') %}
-    {{ this_sql }}
+    {{ view_ddl }};
+    DROP VIEW {{ from_relation.identifier }};
     {% endcall %}
-  {% else %}
-    {% set tables = adapter.filter_table(all_relations, 'type', 'table') %}
-    {% if (tables.rows | length) > 0 %}
-      {% call statement('table_type', fetch_result=True) %}
-        SELECT table_type FROM information_schema.tables
-        WHERE table_name = '{{ to_relation.identifier }}'
-      {% endcall %}
-      {% set table_type = load_result('table_type').table.collumns['table_type'] %}
-      {% call statement('rename_relation') %}
-        CREATE {{ table_type }} TABLE {{ to_relation.identifier }} AS
-        SELECT * FROM {{ from_relation.identifier }};
-        DROP TABLE {{ from_relation.identifier }};
-        --alter table {{ from_relation.identifier }} rename to {{ to_relation.identifier }}
-      {%- endcall %}
-    {% endif %}
+  {% else %} {# There were no views, so retrieve table. (There must be a table.) #}
+    {% set table_type = adapter.filter_table(all_relations, 'table_type', '') %}
+    {% call statement('tables') %}
+      CREATE {{ table_type }} TABLE {{ to_relation.identifier }} AS
+      SELECT * FROM {{ old_relation }};
+      DROP TABLE {{ from_relation.identifier }};
+    {%- endcall %}
   {% endif %}
-
+  {#
   {% for row in load_result('list_views_without_caching').table.rows %}
   {{ log("\n\n** table info table row " ~ row.get('table_type'), True) }}
   {% endfor %}
@@ -63,4 +55,5 @@
     --DROP TABLE {{ source_name }}_swap
     --alter table {{ from_relation }} rename to {{ target_name }}
   {%- endcall %}
+  #}
 {% endmacro %}
