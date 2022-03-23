@@ -22,5 +22,6 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
       , NULL AS column_type
       , 'view' AS type
     FROM information_schema.views views
+  {%- endcall -%}
   {{ return(load_result('catalog').table) }}
 {%- endmacro %}
