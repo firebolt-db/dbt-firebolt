@@ -1,10 +1,10 @@
 {% macro firebolt__drop_schema(schema_relation) -%}
   {# until schemas are supported
      this macro will drop all tables and views #}
-  {% set relations = (list_relations_without_caching(schema_relation, 'table')) %}
+  {% set all_relations = (list_relations_without_caching(schema_relation)) %}
 
-  {% set vews = adapter.filter_table(relations, 'type', 'view') %}
-  {% set tbls = adapter.filter_table(relations, 'type', 'table') %}
+  {% set vews = adapter.filter_table(all_relations, 'type', 'view') %}
+  {% set tbls = adapter.filter_table(all_relations, 'type', 'table') %}
   {% do drop_relations_loop(vews) %}
   {% do drop_relations_loop(tbls) %}
 {% endmacro %}
