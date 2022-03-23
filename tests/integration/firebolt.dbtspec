@@ -17,10 +17,10 @@ sequences:
  # test_dbt_data_test: data_test
 
 # These aren't passing yet.
-  test_dbt_base: base
+ # test_dbt_base: base
  # test_dbt_ephemeral: ephemeral
  # test_dbt_ephemeral_data_tests: data_test_ephemeral_models
- # test_dbt_incremental: incremental
+  test_dbt_incremental: incremental
 
 # These are only needed for saving state in the DB, so maybe not
 # necessary for v1.
