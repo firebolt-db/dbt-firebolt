@@ -7,13 +7,14 @@
   {% set tmp_relation = make_temp_relation(target_relation) %}
   {%- set full_refresh_mode = (should_full_refresh()) -%}
 
-  {% set on_schema_change = incremental_validate_on_schema_change(config.get('on_schema_change'), default='ignore') %}
+  {% set on_schema_change = incremental_validate_on_schema_change(config.get('on_schema_change'),
+                                                                  default='ignore') %}
 
   {% set tmp_identifier = model['name'] + '__dbt_tmp' %}
   {% set backup_identifier = model['name'] + "__dbt_backup" %}
 
-  -- the intermediate_ and backup_ relations should not already exist in the database; get_relation
-  -- will return None in that case. Otherwise, we get a relation that we can drop
+  -- the intermediate_ and backup_ relations should not already exist in the database;
+  -- get_relation will return None in that case. Otherwise, we get a relation that we can drop
   -- later, before we try to use this name for the current operation. This has to happen before
   -- BEGIN, in a separate transaction
   {% set preexisting_intermediate_relation = adapter.get_relation(identifier=tmp_identifier, 
