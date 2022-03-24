@@ -9,7 +9,7 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
          , tbls.table_name
          , cols.column_name
          , cols.data_type AS column_type
-         , 'table' AS type
+         , 'table' AS relation_type
     FROM information_schema.tables tbls
          JOIN information_schema.columns cols
             USING(table_name)
@@ -20,7 +20,7 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
       , views.table_name
       , NULL AS column_name
       , NULL AS column_type
-      , 'view' AS type
+      , 'view' AS relation_type
     FROM information_schema.views views
   {%- endcall -%}
   {{ return(load_result('catalog').table) }}
