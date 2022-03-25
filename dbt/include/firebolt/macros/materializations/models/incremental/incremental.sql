@@ -1,5 +1,6 @@
 {% materialization incremental, adapter='firebolt' -%}
-
+  {# This is largely copied from dbt-core. create_table_as was changed to
+     create_view_as for tmp views. #}
   {% set unique_key = config.get('unique_key') %}
 
   {% set target_relation = this.incorporate(type='table') %}
@@ -14,7 +15,7 @@
   {% set tmp_identifier = model['name'] + '__dbt_tmp' %}
   {% set backup_identifier = model['name'] + "__dbt_backup" %}
 
-  {# the intermediate_ and backup_ relations should not already exist in the
+  {# The intermediate_ and backup_ relations should not already exist in the
      database; get_relation will return None in that case. Otherwise, we get
      a relation that we can drop later, before we try to use this name for the
      current operation. This has to happen before BEGIN, in a separate transaction. #}
@@ -36,17 +37,14 @@
 
   {% set to_drop = [] %}
 
-  {# first check whether we want to full refresh for source view or config reasons #}
+  {# First check whether we want to full refresh for source view or config reasons #}
   {% set trigger_full_refresh = (full_refresh_mode or existing_relation.is_view) %}
 
   {% if existing_relation is none %}
       {% set build_sql = create_table_as(False, target_relation, sql) %}
   {% elif trigger_full_refresh %}
       {# Make sure the backup doesn't exist so we don't encounter
-         issues with the rename below #}
-      {# Shouldn't need these two lines, as set above.
-      {% set tmp_identifier = model['name'] + '__dbt_tmp' %}
-      {% set backup_identifier = model['name'] + '__dbt_backup' %} #}
+         issues with the rename below. #}
       {% set intermediate_relation = existing_relation.incorporate(
                                          path={"identifier": tmp_identifier}) %}
       {% set backup_relation = existing_relation.incorporate(
@@ -60,8 +58,8 @@
     {% do adapter.expand_target_column_types(
              from_relation=tmp_relation,
              to_relation=target_relation) %}
-    {#-- Process schema changes. Returns dict of changes if successful.
-         Use source columns for upserting/merging --#}
+    {# Process schema changes. Returns dict of changes if successful.
+       Use source columns for upserting/merging #}
     {% set dest_columns = process_schema_changes(on_schema_change,
                                                  tmp_relation,
                                                  existing_relation) %}
