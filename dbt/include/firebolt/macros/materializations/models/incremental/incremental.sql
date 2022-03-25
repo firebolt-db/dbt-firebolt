@@ -50,11 +50,11 @@
       {% set backup_relation = existing_relation.incorporate(
                                          path={"identifier": backup_identifier}) %}
 
-      {% set build_sql = create_view_as(intermediate_relation, sql) %}
+      {% set build_sql = create_table_as(False, intermediate_relation, sql) %}
       {% set need_swap = true %}
       {% do to_drop.append(backup_relation) %}
   {% else %}
-    {% do run_query(create_view_as(tmp_relation, sql)) %}
+    {% do run_query(create_table_as(False, tmp_relation, sql)) %}
     {% do adapter.expand_target_column_types(
              from_relation=tmp_relation,
              to_relation=target_relation) %}
