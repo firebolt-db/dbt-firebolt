@@ -1,6 +1,6 @@
 # Changelog
 
-## v.1.0.3
+## v.1.0.4
 
 ### Under the hood
 
