@@ -4,7 +4,7 @@
 
 ### Under the hood
 
-- dbt-firebolt now allows incremental models using the append-only strategy.
+- dbt-firebolt now supports append-only incremental models.
 
 ## v.1.0.3
 
