@@ -85,7 +85,7 @@
 
 
 {% macro drop_index(index_name, index_type) -%}
-    {% call statement('drop_relation', auto_begin=False) %}
+    {% call statement('drop_relation', auto_begin=False) -%}
         DROP {{ index_type | upper }} INDEX "{{ index_name }}"
     {%- endcall %}
 {% endmacro %}
@@ -128,7 +128,7 @@
 
 
 {% macro firebolt__list_relations_without_caching(schema_relation) %}
-    {% call statement('list_tables_without_caching', fetch_result=True) %}
+    {% call statement('list_tables_without_caching', fetch_result=True) -%}
         SELECT '{{ schema_relation.database }}' AS "database",
                table_name AS "name",
                '{{ schema_relation.schema }}' AS "schema",
@@ -136,7 +136,7 @@
           FROM information_schema.tables
     {% endcall %}
     {% set table_info_table = load_result('list_tables_without_caching').table %}
-    {% call statement('list_views_without_caching', fetch_result=True) %}
+    {% call statement('list_views_without_caching', fetch_result=True) -%}
         SHOW VIEWS
     {% endcall %}
     {% set view_info_table = load_result('list_views_without_caching').table %}
@@ -156,7 +156,7 @@
 {% macro firebolt__create_table_as(temporary, relation, sql) -%}
     {# Create table using CTAS #}
     {%- set table_type = config.get('table_type', default='dimension') | upper -%}
-    {%- set primary_index = config.get('primary_index') %}
+    {%- set primary_index = config.get('primary_index') -%}
 
     CREATE {{ table_type }} TABLE IF NOT EXISTS {{ relation }}
     {%- if primary_index %}
@@ -173,7 +173,7 @@
 {%- endmacro %}
 
 
-{% macro firebolt__create_view_as(relation, sql) %}
+{% macro firebolt__create_view_as(relation, sql) -%}
     CREATE VIEW IF NOT EXISTS {{ relation.identifier }} AS (
         {{ sql }}
     )
@@ -185,7 +185,7 @@
    This should only be called from reset_csv_table, where it's followed by
    `create_csv_table`, so not recreating the table here. To retrieve old code,
    see commit f9984f6d61b8a1b877bc107b102eeb30eba54f35 #}
-    {% call statement('table_schema') %}
+    {% call statement('table_schema') -%}
         DROP TABLE {{ relation.identifier }} CASCADE
     {%- endcall %}
 {% endmacro %}
