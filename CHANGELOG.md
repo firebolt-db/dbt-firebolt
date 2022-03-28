@@ -4,6 +4,12 @@
 
 ### Under the hood
 
+- dbt-firebolt now allows incremental models using the append-only strategy.
+
+## v.1.0.3
+
+### Under the hood
+
 - Dev requirements are now in setup.cfg and not dev-requirements.txt.
 - dbt-firebolt now requires firebolt-sdk v.0.6 to allow for SET variables to be set in pre-hooks.
 
