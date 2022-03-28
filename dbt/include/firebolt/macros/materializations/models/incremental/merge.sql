@@ -1,7 +1,4 @@
-{% macro get_merge_sql(target, source, unique_key, dest_columns, predicates=none) -%}
-  {{ adapter.dispatch('get_merge_sql', 'dbt')(target, source, unique_key, dest_columns, predicates) }}
-{%- endmacro %}
-
+{#
 {% macro firebolt__get_merge_sql(target, source, unique_key, dest_columns, predicates) -%}
     {%- set predicates = [] if predicates is none else [] + predicates -%}
     {%- set dest_cols_csv = get_quoted_csv(dest_columns | map(attribute="name")) -%}
@@ -79,3 +76,4 @@
         ({{ dest_cols_csv }})
 
 {% endmacro %}
+#}
