@@ -216,15 +216,6 @@ class FireboltAdapter(SQLAdapter):
         return agate_table.where(lambda row: re.match(re_match_exp, str(row[col_name])))
 
     @available.parse_none
-    def get_rows(cls, agate_table):
-        """
-        Filter agate table by column name and regex match expression.
-        https://agate.readthedocs.io/en/latest/cookbook/filter.html#by-regex
-        """
-        print('\n\n' + agate_table.rows.values() + '\n\n')
-        return ', '.join(agate_table.rows.values())
-
-    @available.parse_none
     def get_rows_different_sql(
         self,
         relation_a: BaseRelation,
