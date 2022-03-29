@@ -1,7 +1,7 @@
 <!---
   The PR title should indicate what has changed and should be in the active voice,
   e.g. "Added new macro to enable x" or "Fixed run twice bug".
-  This makes auto-generated release notes more valuable, as they use PR titles, 
+  This makes auto-generated release notes more valuable, as they use PR titles,
   not descriptions. Note that PR titles must be prefixed with specific _lowercased_
   prefixes followed by a colon. Allowable prefixes are:
   • feat: A new feature
@@ -35,6 +35,7 @@ Resolves #
 - [ ] I have run this code in development and it appears to resolve the stated issue.
 - [ ] This PR includes tests, or tests are not required/relevant for this PR.
 - [ ] I have updated `CHANGELOG.md` and added information about my change.
+- [ ] I have removed any print or log calls that were added for debugging.
 - [ ] If this PR requires a new PyPI release I have bumped the version number.
 - [ ] I have verified that this PR contains only code changes relevant to this PR.
 - [ ] If further integration tests are now passing I've edited firebolt.dbtspec to account for this.

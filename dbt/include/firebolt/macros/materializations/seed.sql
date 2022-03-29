@@ -8,6 +8,7 @@
     {%- set column_override = model['config'].get('column_types', {}) -%}
     {%- set quote_seed_column = model['config'].get('quote_columns', None) -%}
     {% set sql %}
+
       CREATE DIMENSION TABLE IF NOT EXISTS {{ this.render() }} (
           {%- for col_name in agate_table.column_names -%}
               {%- set inferred_type = adapter.convert_type(agate_table, loop.index0) -%}
@@ -18,13 +19,14 @@
           {%- endfor -%}
       )
     {% endset %}
-    {% call statement('_') -%}
+    {% call statement('_') %}
         {{ sql }}
     {%- endcall %}
     {{ return(sql) }}
 {% endmacro %}
 
 
+{# TODO: Make sure this is going to run correctly, or delete it. #}
 {% macro firebolt__reset_csv_table(model,
                                    full_refresh,
                                    old_relation,
