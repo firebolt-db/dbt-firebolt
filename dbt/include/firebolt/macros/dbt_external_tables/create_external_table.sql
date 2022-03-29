@@ -7,7 +7,6 @@
         {%- set columns = adapter.make_field_partition_pairs(source_node.columns.values(),
                                                              []) -%}
     {%- endif -%}
-    -- {%- set partitions = external.partitions -%}
     {%- set credentials = external.credentials -%}
     {# Leaving out "IF NOT EXISTS" because this should only be called by
        if no DROP IF is necessary. #}
