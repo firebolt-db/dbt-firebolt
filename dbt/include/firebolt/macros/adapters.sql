@@ -91,6 +91,7 @@
 
 {% macro drop_index(index_name, index_type) -%}
     {% call statement('drop_relation', auto_begin=False) %}
+
         DROP {{ index_type | upper }} INDEX "{{ index_name }}"
     {% endcall %}
 {% endmacro %}
@@ -202,7 +203,8 @@
 
 {% macro firebolt__snapshot_string_as_time(timestamp) -%}
     {% call statement('timestamp', fetch_result=True) %}
+
         SELECT CAST('{{ timestamp }}' AS DATE)
     {% endcall %}
     {{ return(load_result('timestamp').table) }}
-{%- endmacro %}
+{% endmacro %}
