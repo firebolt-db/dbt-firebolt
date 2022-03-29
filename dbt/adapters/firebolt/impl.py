@@ -188,7 +188,6 @@ class FireboltAdapter(SQLAdapter):
                     + partition['regex']
                     + "')"
                 )
-
         return unpartitioned_columns + partitioned_columns
 
     @available.parse_none

@@ -5,11 +5,10 @@
     {% set old_relation = adapter.get_relation(database=database,
                                                schema=schema,
                                                identifier=identifier) %}
-    {% set target_relation = api.Relation.create(
-        identifier=identifier,
-        schema=schema,
-        database=database,
-        type='table') -%}
+    {% set target_relation = api.Relation.create(identifier=identifier,
+                                                 schema=schema,
+                                                 database=database,
+                                                 type='table') -%}
 
     {%- set exists_as_table = (old_relation is not none and old_relation.is_table) -%}
     {%- set exists_as_view = (old_relation is not none and old_relation.is_view) -%}

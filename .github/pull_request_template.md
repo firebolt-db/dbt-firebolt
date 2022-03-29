@@ -1,7 +1,7 @@
 <!---
   The PR title should indicate what has changed and should be in the active voice,
   e.g. "Added new macro to enable x" or "Fixed run twice bug".
-  This makes auto-generated release notes more valuable, as they use PR titles, 
+  This makes auto-generated release notes more valuable, as they use PR titles,
   not descriptions. Note that PR titles must be prefixed with specific _lowercased_
   prefixes followed by a colon. Allowable prefixes are:
   • feat: A new feature
