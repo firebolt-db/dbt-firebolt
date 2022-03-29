@@ -8,6 +8,7 @@
     {%- set column_override = model['config'].get('column_types', {}) -%}
     {%- set quote_seed_column = model['config'].get('quote_columns', None) -%}
     {% set sql %}
+
       CREATE DIMENSION TABLE IF NOT EXISTS {{ this.render() }} (
           {%- for col_name in agate_table.column_names -%}
               {%- set inferred_type = adapter.convert_type(agate_table, loop.index0) -%}

@@ -1,10 +1,19 @@
 # Changelog
 
+## Under the hood
+
+- Updated the way internal code deals with schemas.
+
+## Under the hood
+
+- Rendering of SQL output was reformatted to increase legibility of debug output and log files.
+
 ## v.1.0.3
 
 ### Under the hood
 
-- Updated the way internal code deals with schemas.
+- Dev requirements are now in setup.cfg and not dev-requirements.txt.
+- dbt-firebolt now requires firebolt-sdk v.0.6 to allow for SET variables to be set in pre-hooks.
 
 ## v.1.0.2
 

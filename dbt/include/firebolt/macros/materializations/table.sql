@@ -1,5 +1,5 @@
 {% materialization table, adapter='firebolt' %}
-{# Note that a nearly identical materialization appears in table.sql #}
+  {# Note that a nearly identical materialization appears in table.sql. #}
   {%- set identifier = model['alias'] -%} {# alias comes from where? #}
 
   {# Temporary workaround to issue with adapter.get_relation() until

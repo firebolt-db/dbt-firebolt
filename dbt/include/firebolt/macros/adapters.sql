@@ -27,6 +27,7 @@
                                            "more than one thread.") }}
     {% endif %}
     {% call statement('list_schemas', fetch_result=True, auto_begin=False) %}
+
         SELECT split_part(table_name, '_', 1) as schema
         FROM information_schema.tables
     {% endcall %}
@@ -36,20 +37,22 @@
 
 {% macro firebolt__create_schema(relation) -%}
 {# stub. Not yet supported in Firebolt. #}
-    {%- call statement('create_schema') %}
+
         SELECT 1
     {% endcall %}
 {% endmacro %}
 
 
 {% macro firebolt__current_timestamp() %}
+
     NOW()
-{%- endmacro %}
+{% endmacro %}
 
 
 {% macro firebolt__alter_column_type(relation, column_name, new_column_type) -%}
     {# stub #}
     {% call statement('alter_column_type') %}
+
         SELECT 'alter_column_type'
     {% endcall %}
 {% endmacro %}
@@ -58,6 +61,7 @@
 {% macro firebolt__check_schema_exists(information_schema, schema) -%}
     {# stub. Not yet supported in Firebolt. #}
     {% call statement('check_schema_exists', fetch_result=True, auto_begin=True) %}
+
         SELECT {{ schema }} in (SELECT split_part(table_name, '_', 1)
                                 FROM information_schema.tables)
     {% endcall %}
@@ -83,13 +87,14 @@
             {{ other_col }}
         {%- endif -%}
     );
-{%- endmacro %}
+{% endmacro %}
 
 
 {% macro drop_index(index_name, index_type) -%}
     {% call statement('drop_index', auto_begin=False) %}
+
         DROP {{ index_type | upper }} INDEX "{{ index_name }}"
-    {%- endcall %}
+    {% endcall %}
 {% endmacro %}
 
 
@@ -116,6 +121,7 @@
 
 {% macro firebolt__get_columns_in_relation(relation) -%}
     {% call statement('get_columns_in_relation', fetch_result=True) %}
+
         SELECT column_name,
                data_type,
                character_maximum_length,
@@ -130,7 +136,8 @@
 
 
 {% macro firebolt__list_relations_without_caching(schema_relation) %}
-    {% call statement('list_tables_without_caching', fetch_result=True) -%}
+    {% call statement('list_tables_without_caching', fetch_result=True) %}
+
         SELECT '{{ schema_relation.database }}' AS "database",
                table_name AS "name",
                '{{ schema_relation.schema }}' AS "schema",
@@ -152,7 +159,7 @@
 {% macro firebolt__create_table_as(temporary, relation, sql) -%}
     {# Create table using CTAS #}
     {%- set table_type = config.get('table_type', default='dimension') | upper -%}
-    {%- set primary_index = config.get('primary_index') -%}
+    {%- set primary_index = config.get('primary_index') %}
 
     CREATE {{ table_type }} TABLE IF NOT EXISTS {{ relation }}
     {%- if primary_index %}
@@ -166,10 +173,11 @@
     AS (
         {{ sql }}
     )
-{%- endmacro %}
+{% endmacro %}
 
 
 {% macro firebolt__create_view_as(relation, sql) %}
+
     CREATE VIEW IF NOT EXISTS {{ relation.identifier }} AS (
         {{ sql }}
     )
@@ -182,14 +190,16 @@
    `create_csv_table`, so not recreating the table here. To retrieve old code,
    see commit f9984f6d61b8a1b877bc107b102eeb30eba54f35 #}
     {% call statement('table_schema') %}
+
         DROP TABLE {{ relation.identifier }} CASCADE
-    {%- endcall %}
+    {% endcall %}
 {% endmacro %}
 
 
 {% macro firebolt__snapshot_string_as_time(timestamp) -%}
     {% call statement('timestamp', fetch_result=True) %}
+
         SELECT CAST('{{ timestamp }}' AS DATE)
     {% endcall %}
     {{ return(load_result('timestamp').table) }}
-{%- endmacro %}
+{% endmacro %}
