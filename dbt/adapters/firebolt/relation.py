@@ -31,6 +31,6 @@ class FireboltRelation(BaseRelation):
         if self.include_policy.database and self.include_policy.schema:
             raise RuntimeException(
                 'Got a Firebolt relation with schema and database set to '
-                'include, but only one can be set.'
+                'include, but only one can be set'
             )
         return super().render()

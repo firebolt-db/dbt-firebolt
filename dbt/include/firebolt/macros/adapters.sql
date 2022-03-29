@@ -15,7 +15,8 @@
     {%- set relation = api.Relation.create(database=target.database,
                                            schema=target.schema,
                                            identifier=row[1],
-                                           type=row[3]) -%}
+                                           type=row[3]
+                                           ) -%}
     {% do drop_relation(relation) %}
   {%- endfor %}
 {% endmacro %}
@@ -23,8 +24,7 @@
 
 {% macro firebolt__list_schemas(database) %}
     {% if target.threads > 1 %}
-        {{ exceptions.raise_compiler_error("Firebolt does not currently support "
-                                           "more than one thread.") }}
+        {{ exceptions.raise_compiler_error("Firebolt does not currently support more than one thread.") }}
     {% endif %}
     {% call statement('list_schemas', fetch_result=True, auto_begin=False) %}
         SELECT '{{target.schema}}' AS schema
@@ -36,7 +36,7 @@
 {% macro firebolt__create_schema(relation) -%}
 {# stub. Not yet supported in Firebolt. #}
     {%- call statement('create_schema') -%}
-        SELECT 1
+        SELECT 'create_schema'
     {% endcall %}
 {% endmacro %}
 
@@ -57,7 +57,7 @@
 {% macro firebolt__check_schema_exists(information_schema, schema) -%}
     {# stub. Not yet supported in Firebolt. #}
     {% call statement('check_schema_exists', fetch_result=True, auto_begin=True) %}
-        SELECT 1
+        SELECT 'schema_exists'
     {% endcall %}
     {{ return(load_result('check_schema_exists').table) }}
 {% endmacro %}
@@ -145,8 +145,7 @@
                                          schema_relation) %}
     {% if (table_info_table.rows | length) > 0
        or (view_info_table_tweaked.rows | length) > 0 %}
-          {{ return(adapter.stack_tables([table_info_table,
-                                          view_info_table_tweaked])) }}
+          {{ return(adapter.stack_tables([table_info_table, view_info_table_tweaked])) }}
     {% else %}
         {{ return(table_info_table) }}
     {% endif %}

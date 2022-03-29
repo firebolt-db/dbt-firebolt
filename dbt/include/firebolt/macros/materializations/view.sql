@@ -15,9 +15,9 @@
                                                 identifier=identifier,
                                                 type='view') -%}
   {%- set target_relation_table = api.Relation.create(database=database,
-                                                      schema=schema,
-                                                      identifier=identifier,
-                                                      type='table') -%}
+                                                     schema=schema,
+                                                     identifier=identifier,
+                                                     type='table') -%}
 
   {{ run_hooks(pre_hooks) }}
 
