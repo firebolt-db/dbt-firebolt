@@ -38,7 +38,7 @@
 {# stub. Not yet supported in Firebolt. #}
     {%- call statement('create_schema') %}
 
-        SELECT 1
+        SELECT 'create_schema'
     {% endcall %}
 {% endmacro %}
 
@@ -62,7 +62,7 @@
     {# stub. Not yet supported in Firebolt. #}
     {% call statement('check_schema_exists', fetch_result=True, auto_begin=True) %}
 
-        SELECT 1
+        SELECT 'schema_exists'
     {% endcall %}
     {{ return(load_result('check_schema_exists').table) }}
 {% endmacro %}
@@ -198,3 +198,11 @@
         DROP TABLE {{ relation.identifier }} CASCADE
     {% endcall %}
 {% endmacro %}
+
+
+{% macro firebolt__snapshot_string_as_time(timestamp) -%}
+    {% call statement('timestamp', fetch_result=True) %}
+        SELECT CAST('{{ timestamp }}' AS DATE)
+    {% endcall %}
+    {{ return(load_result('timestamp').table) }}
+{%- endmacro %}
