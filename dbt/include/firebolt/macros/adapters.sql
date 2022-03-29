@@ -1,10 +1,10 @@
 {% macro firebolt__drop_schema(schema_relation) -%}
   {# Until schemas are supported this macro will drop
      all tables and views prefixed with "target.schema_". #}
-  {% set relations = (list_relations_without_caching(schema_relation)) %}
+  {% set all_relations = (list_relations_without_caching(schema_relation)) %}
   {{ log('\n\n** drop schema\n' ~ schema_relation, True)}}
-  {% set vews = adapter.filter_table(relations, 'type', 'view') %}
-  {% set tbls = adapter.filter_table(relations, 'type', 'table') %}
+  {% set vews = adapter.filter_table(all_relations, 'type', 'view') %}
+  {% set tbls = adapter.filter_table(all_relations, 'type', 'table') %}
   {% do drop_relations_loop(vews) %}
   {% do drop_relations_loop(tbls) %}
 {% endmacro %}
@@ -37,6 +37,7 @@
 
 {% macro firebolt__create_schema(relation) -%}
 {# stub. Not yet supported in Firebolt. #}
+    {%- call statement('create_schema') %}
 
         SELECT 1
     {% endcall %}
@@ -149,7 +150,6 @@
                '{{ schema_relation.schema }}' AS "schema",
                'view' AS type
           FROM information_schema.views
-
     {% endcall %}
     {% set info_table = load_result('list_views_without_caching').table %}
     {{ return(info_table) }}

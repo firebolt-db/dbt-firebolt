@@ -26,5 +26,3 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
   {{ log('\n\n** rows:\n' ~ adapter.get_rows(results), True)}}
   {{ return(load_result('catalog').table) }}
 {%- endmacro %}
-
-
