@@ -137,7 +137,7 @@
 
 
 {% macro firebolt__list_relations_without_caching(schema_relation) %}
-    {% call statement('list_tables_without_caching', fetch_result=True) %}
+    {% call statement('list_relations_without_caching', fetch_result=True) %}
 
         SELECT '{{ schema_relation.database }}' AS "database",
                table_name AS "name",
@@ -151,7 +151,7 @@
                'view' AS type
           FROM information_schema.views
     {% endcall %}
-    {% set info_table = load_result('list_views_without_caching').table %}
+    {% set info_table = load_result('list_relations_without_caching').table %}
     {{ return(info_table) }}
 {% endmacro %}
 
