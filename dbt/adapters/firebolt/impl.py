@@ -126,31 +126,6 @@ class FireboltAdapter(SQLAdapter):
         )
 
     @available.parse_none
-    def reformat_view_results(self, agate_table, schema_relation) -> agate.Table:
-        """
-        Tweak `SHOW VIEWS` to match the output of information_schema.tables
-        before they are unioned.
-        """
-
-        def form_sing_val_col(string_val) -> agate.Formula:
-            """Return wrapper for creating agate.Formula objects"""
-            return agate.Formula(agate.Text(), lambda r: string_val)
-
-        agate_new = (
-            agate_table.exclude(['schema'])
-            .rename(column_names={'view_name': 'name'})
-            .compute(
-                [
-                    ('database', form_sing_val_col(schema_relation.database)),
-                    ('schema', form_sing_val_col(schema_relation.schema)),
-                    ('type', form_sing_val_col('view')),
-                ]
-            )
-            .select(['database', 'name', 'schema', 'type'])
-        )
-        return agate_new
-
-    @available.parse_none
     def make_field_partition_pairs(self, columns, partitions) -> List[str]:
         """
         Return a list of strings of form "column column_type" or
@@ -214,15 +189,6 @@ class FireboltAdapter(SQLAdapter):
         https://agate.readthedocs.io/en/latest/cookbook/filter.html#by-regex
         """
         return agate_table.where(lambda row: re.match(re_match_exp, str(row[col_name])))
-
-    @available.parse_none
-    def get_rows(cls, agate_table):
-        """
-        Filter agate table by column name and regex match expression.
-        https://agate.readthedocs.io/en/latest/cookbook/filter.html#by-regex
-        """
-        print('\n\n' + agate_table.rows.values() + '\n\n')
-        return ', '.join(agate_table.rows.values())
 
     @available.parse_none
     def get_rows_different_sql(
