@@ -1,11 +1,16 @@
 # Changelog
 
-## Under the hood
+## v.1.0.5
 
-- Updated the way internal code deals with schemas.
+### Under the hood
 
-## Under the hood
+- Updated and debugged dbt-firebolt's handling of schemas.
 
+## v.1.0.4
+
+### Under the hood
+
+- dbt-firebolt now supports append-only incremental models.
 - Rendering of SQL output was reformatted to increase legibility of debug output and log files.
 
 ## v.1.0.3
