@@ -32,7 +32,7 @@ class FireboltCredentials(Credentials):
         in the `dbt debug` output.
         """
         return (
-            'host',
+            'api_endpoint',
             'account_name',
             'user',
             'schema',

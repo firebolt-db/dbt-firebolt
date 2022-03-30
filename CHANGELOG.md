@@ -1,7 +1,10 @@
 # Changelog
 
-## Under the hood
+## v.1.0.4
 
+### Under the hood
+
+- dbt-firebolt now supports append-only incremental models.
 - Rendering of SQL output was reformatted to increase legibility of debug output and log files.
 
 ## v.1.0.3
