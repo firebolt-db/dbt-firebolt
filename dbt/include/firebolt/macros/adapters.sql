@@ -2,21 +2,21 @@
   {# Until schemas are supported this macro will drop
      all tables and views prefixed with "target.schema_". #}
   {% call statement('get_table_names', fetch_result=True) %}
-
+      {{ schema_relation }}
       SELECT table_name
       FROM information_schema.tables
       WHERE table_name LIKE '{{schema_relation.schema}}%'
   {% endcall %}
+  {% set tables = load_result('get_table_names').table %}
   {{ log('\n\n** drop schema\n', True) }}
-  {{ log( schema_relation, True) }}
-  {{ log('\n\n** that was the schema relation.\n', True) }}
+  {{ log(tables.rows, True) }}
+  {{ log(schema_relation.schema, True) }}
+  {{ log('\n\n** that was the table followed by the schema.\n', True) }}
   {# {% set relations = adapter.filter_table(
                          list_relations_without_caching(schema_relation),
                          'table_name',
                          '{{schema_relation}}_%') %}
-  {% for relation in relations %}
-    {% do drop_relation(relation) %}
-  {% endfor %} #}
+  {% do drop_relation_loop(relations) %} #}
 {% endmacro %}
 
 
