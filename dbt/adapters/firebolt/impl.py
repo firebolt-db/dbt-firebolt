@@ -185,10 +185,12 @@ class FireboltAdapter(SQLAdapter):
     @available.parse_none
     def filter_table(cls, agate_table, col_name, re_match_exp) -> agate.Table:
         """
-        Filter agate table by column name and regex match expression.
+        Filter agate table by column name and regex fullmatch expression.
         https://agate.readthedocs.io/en/latest/cookbook/filter.html#by-regex
         """
-        return agate_table.where(lambda row: re.match(re_match_exp, str(row[col_name])))
+        return agate_table.where(
+            lambda row: re.fullmatch(re_match_exp, str(row[col_name]))
+        )
 
     @available.parse_none
     def get_rows_different_sql(

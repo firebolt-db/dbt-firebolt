@@ -1,23 +1,41 @@
 {% macro firebolt__drop_schema(schema_relation) -%}
   {# Until schemas are supported this macro will drop
      all tables and views prefixed with "target.schema_". #}
-  {% call statement('get_table_names', fetch_result=True) %}
-      {{ schema_relation }}
-      SELECT table_name
-      FROM information_schema.tables
-      WHERE table_name LIKE '{{schema_relation.schema}}%'
-  {% endcall %}
-  {% set tables = load_result('get_table_names').table %}
-  {{ log('\n\n** drop schema\n', True) }}
-  {{ log(tables.rows, True) }}
+  {% set all_relations = (list_relations_without_caching(schema_relation)) %}
+  {{ log('\n' ~ all_relations.rows ~ '\n', True) }}
+  {% set relations_to_drop = adapter.filter_table(
+                                 all_relations,
+                                 'schema',
+                                 '^' + schema_relation.schema) %}
+  {{ log('\n\n** drop schema table:\n', True) }}
+  {{ log(relations_to_drop, True) }}
+  {{ log('\n' ~ relations_to_drop.rows, True) }}
   {{ log(schema_relation.schema, True) }}
-  {{ log('\n\n** that was the table followed by the schema.\n', True) }}
+  {{ log('\n\n** that was the rows followed by the schema.\nHere come the values:\n', True) }}
+  {% for relation_to_drop in relations_to_drop.columns['table_name'] %}
+    {% do drop_relation(relation_to_drop) %}
+  {% endfor %}
   {# {% set relations = adapter.filter_table(
                          list_relations_without_caching(schema_relation),
                          'table_name',
                          '{{schema_relation}}_%') %}
-  {% do drop_relation_loop(relations) %} #}
+  {% do drop_relation_loop(tables) %} #}
 {% endmacro %}
+
+
+{% macro generate_alias_name(custom_alias_name=none, node=none) -%}
+
+    {%- if custom_alias_name is none -%}
+
+        {{ node.schema }}_{{ node.name }}
+
+    {%- else -%}
+
+        {{ node.schema }}_{{ custom_alias_name | trim }}
+
+    {%- endif -%}
+
+{%- endmacro %}
 
 
 {#
@@ -162,14 +180,16 @@
     {% call statement('list_relations_without_caching', fetch_result=True) %}
 
         SELECT '{{ schema_relation.database }}' AS "database",
-               table_name AS "name",
+               table_name,
                '{{ schema_relation.schema }}' AS "schema",
+               -- split_part(table_name, '_', 1) AS "schema",
                'table' AS type
           FROM information_schema.tables
         UNION
         SELECT '{{ schema_relation.database }}' AS "database",
-               table_name AS "name",
+               table_name,
                '{{ schema_relation.schema }}' AS "schema",
+               -- split_part(table_name, '_', 1) AS "schema",
                'view' AS type
           FROM information_schema.views
     {% endcall %}
