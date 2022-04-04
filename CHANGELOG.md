@@ -1,5 +1,11 @@
 # Changelog
 
+## v.1.0.5
+
+### Under the hood
+
+- Removed all uses of `SHOW VIEWS` and `SHOW TABLES` and replaced them with calls to information_schema.views and information_schema.tables, respectively.
+
 ## v.1.0.4
 
 ### Under the hood
