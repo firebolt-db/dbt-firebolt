@@ -16,7 +16,7 @@
                                            schema=target.schema,
                                            identifier=row[1],
                                            type=row[3]) -%}
-    {% do drop_relation(relation) %}
+    {{ adapter.drop_relation(relation) }}
   {%- endfor %}
 {% endmacro %}
 
@@ -194,10 +194,7 @@
    This should only be called from reset_csv_table, where it's followed by
    `create_csv_table`, so not recreating the table here. To retrieve old code,
    see commit f9984f6d61b8a1b877bc107b102eeb30eba54f35 #}
-    {% call statement('table_schema') %}
-
-        DROP TABLE {{ relation.identifier }} CASCADE
-    {% endcall %}
+    {{ adapter.drop_relation(relation) }}
 {% endmacro %}
 
 
