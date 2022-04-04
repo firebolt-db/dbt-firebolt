@@ -5,7 +5,7 @@
         schema = source_node.schema,
         identifier = source_node.identifier
     ) %}
-    {# var(variable, Boolean) defaults to Boolean value if variable isn't set.
+    {# var(variable, Boolean) defaults to Boolean value if variable isnt set.
        Firebolt doesn't do refresh because we don't need to—external tables will always
        pull most recent data from S3, so the default action below is to skip. #}
     {% if old_relation is none or var('ext_full_refresh', false) %}
