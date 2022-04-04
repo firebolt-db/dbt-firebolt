@@ -13,4 +13,3 @@
         SELECT {{ dest_cols_csv }}
         FROM {{ source }}
 {%- endmacro %}
-

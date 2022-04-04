@@ -142,22 +142,15 @@
                '{{ schema_relation.schema }}' AS "schema",
                'table' AS type
           FROM information_schema.tables
+        UNION
+        SELECT '{{ schema_relation.database }}' AS "database",
+               table_name AS "name",
+               '{{ schema_relation.schema }}' AS "schema",
+               'view' AS type
+          FROM information_schema.views
     {% endcall %}
-    {% set table_info_table = load_result('list_tables_without_caching').table %}
-    {% call statement('list_views_without_caching', fetch_result=True) -%}
-        SHOW VIEWS
-    {% endcall %}
-    {% set view_info_table = load_result('list_views_without_caching').table %}
-    {% set view_info_table_tweaked = adapter.reformat_view_results(
-                                         view_info_table,
-                                         schema_relation) %}
-    {% if (table_info_table.rows | length) > 0
-       or (view_info_table_tweaked.rows | length) > 0 %}
-          {{ return(adapter.stack_tables([table_info_table,
-                                          view_info_table_tweaked])) }}
-    {% else %}
-        {{ return(table_info_table) }}
-    {% endif %}
+    {% set info_table = load_result('list_tables_without_caching').table %}
+    {{ return(info_table) }}
 {% endmacro %}
 
 
