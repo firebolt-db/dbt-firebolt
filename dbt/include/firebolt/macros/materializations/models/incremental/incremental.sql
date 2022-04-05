@@ -27,8 +27,8 @@
                                            identifier=backup_identifier,
                                            schema=schema,
                                            database=database) %}
-  {{ adapter.drop_relation(preexisting_intermediate_relation) }}
-  {{ adapter.drop_relation(preexisting_backup_relation) }}
+  {{ drop_relation_if_exists(preexisting_intermediate_relation) }}
+  {{ drop_relation_if_exists(preexisting_backup_relation) }}
 
   {{ run_hooks(pre_hooks, inside_transaction=False) }}
 

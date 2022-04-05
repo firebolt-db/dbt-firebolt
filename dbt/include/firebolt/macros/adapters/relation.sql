@@ -31,3 +31,10 @@
     {%- endcall %}
   {% endif %}
 {% endmacro %}
+
+
+{% macro drop_relation(relation) %}
+  {% if relation is not none %}
+    DROP IF EXISTS {{ relation.type }} CASCADE
+  {% endif %}
+{% endmacro %}
