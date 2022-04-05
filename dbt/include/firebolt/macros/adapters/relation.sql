@@ -33,8 +33,10 @@
 {% endmacro %}
 
 
+{# Todo: Figure out why this isn't working when it gets called from incremental.
 {% macro drop_relation(relation) %}
   {% if relation is not none %}
     DROP IF EXISTS {{ relation.type }} CASCADE
   {% endif %}
 {% endmacro %}
+#}
