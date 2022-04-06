@@ -11,7 +11,7 @@
     {%- endcall %}
     {% if load_result('view_definition')['data'] %}
       {# For some reason this ocassionally returns an empty set.
-         In that case do nothing. Dont even ask why I have to jump through
+         In that case do nothing. Don't even ask why I have to jump through
          the stupid hoops to get the value out of the result in the next line. #}
       {% set view_ddl = load_result('view_definition')['data'][0][0] %}
       {% set view_ddl = view_ddl.replace(from_relation.identifier,
