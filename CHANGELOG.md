@@ -2,10 +2,14 @@
 
 ## v.1.0.4
 
-### Under the hood
+### Features
 
 - dbt-firebolt now supports append-only incremental models.
+
+### Under the hood
+
 - Rendering of SQL output was reformatted to increase legibility of debug output and log files.
+- Removed all uses of `SHOW VIEWS` and `SHOW TABLES` and replaced them with calls to information_schema.views and information_schema.tables, respectively.
 
 ## v.1.0.3
 
@@ -16,9 +20,12 @@
 
 ## v.1.0.2
 
-### Under the hood
+### Features
 
 - dbt-firebolt now supports aggregating indexes with multiple-column keys. 
+
+### Under the hood
+
 - Bug fix to check for `data_type` and `regex` fields when necessary on external tables.
 - Changed default behavior on external table insert to `DROP IF EXISTS`.
 
