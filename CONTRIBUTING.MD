@@ -21,11 +21,7 @@ Working Directory: $ProjectFileDir$
 ### Before Committing
 
 1. The pre-commit hook should catch linting errors
-2. run `mypy src` to check for type errors
-3. run `pytest tests/unit` to run unit tests
-
-Note: while there is a `mypy` hook for pre-commit, 
-I found it too buggy to be worthwhile, so I just run mypy manually. 
+2. run `pytest tests/unit` to run unit tests
 
 ### PR procedures
 
