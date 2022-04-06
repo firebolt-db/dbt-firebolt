@@ -3,6 +3,7 @@
      Must check whether relation is view or table, because process is
      different for the two. #}
   {% set all_relations = (list_relations_without_caching(from_relation)) %}
+  {% set tables = adapter.filter_table(all_relations, 'type', 'table') %}
   {% set views = adapter.filter_table(all_relations, 'type', 'view') %}
   {% if (views.rows | length) > 0 %}
     {% call statement('view_definition', fetch_result=True) %}

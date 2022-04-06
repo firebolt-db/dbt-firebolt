@@ -54,8 +54,6 @@
                                  path={"identifier": backup_identifier}) %}
 
     {% set build_sql = create_table_as(True, temp_relation, sql) %}
-    {{ log("\n\n** temp relation:\n", True) }}
-    {{ log(temp_relation, True) }}
     {% set need_swap = true %}
     {% do to_drop.append(temp_relation) %}
     {% do to_drop.append(backup_relation) %}
