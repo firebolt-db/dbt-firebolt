@@ -19,9 +19,9 @@
      a relation that we can drop later, before we try to use this name for the
      current operation. This has to happen before BEGIN, in a separate transaction. #}
   {% set preexisting_temp_relation = adapter.get_relation(
-                                        identifier=temp_identifier,
-                                        schema=schema,
-                                        database=database) %}
+                                         identifier=temp_identifier,
+                                         schema=schema,
+                                         database=database) %}
   {% set preexisting_backup_relation = adapter.get_relation(
                                            identifier=backup_identifier,
                                            schema=schema,
@@ -53,12 +53,14 @@
     {% set backup_relation = source_relation.incorporate(
                                  path={"identifier": backup_identifier}) %}
 
-    {% set build_sql = create_view_as(temp_relation, sql) %}
+    {% set build_sql = create_table_as(True, temp_relation, sql) %}
+    {{ log("\n\n** temp relation:\n", True) }}
+    {{ log(temp_relation, True) }}
     {% set need_swap = true %}
     {% do to_drop.append(temp_relation) %}
     {% do to_drop.append(backup_relation) %}
   {% else %}
-    {% do run_query(create_view_as(temp_relation, sql)) %}
+    {% do run_query(create_table_as(True, temp_relation, sql)) %}
     {% do adapter.expand_target_column_types(
              from_relation=temp_relation,
              to_relation=target_relation) %}
@@ -74,9 +76,7 @@
                                                    temp_relation,
                                                    unique_key,
                                                    dest_columns) %}
-    {% do to_drop.append(temp_relation) %}
   {% endif %}
-
   {% call statement("main") %}
     {{ build_sql }}
   {% endcall %}

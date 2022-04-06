@@ -90,7 +90,7 @@
 
 
 {% macro drop_index(index_name, index_type) -%}
-    {% call statement('drop_relation', auto_begin=False) %}
+    {% call statement('drop_index', auto_begin=False) %}
 
         DROP {{ index_type | upper }} INDEX "{{ index_name }}"
     {% endcall %}
