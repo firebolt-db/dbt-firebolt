@@ -47,12 +47,12 @@
     {% set build_sql = create_table_as(True, target_relation, sql) %}
   {% elif trigger_full_refresh %}
     {# Make sure the backup doesn't exist so we don't encounter
-       issues with the rename below. #}
+       issues with the rename below.
     {% set temp_relation = source_relation.incorporate(
                               path={"identifier": temp_identifier}) %}
     {% set backup_relation = source_relation.incorporate(
                                  path={"identifier": backup_identifier}) %}
-
+    #}
     {% set build_sql = create_table_as(True, temp_relation, sql) %}
     {% set need_swap = true %}
     {% do to_drop.append(temp_relation) %}
