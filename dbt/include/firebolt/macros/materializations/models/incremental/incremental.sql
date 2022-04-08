@@ -17,7 +17,9 @@
   {# The intermediate_ and backup_ relations should not already exist in the
      database; get_relation will return None in that case. Otherwise, we get
      a relation that we can drop later, before we try to use this name for the
-     current operation. This has to happen before BEGIN, in a separate transaction. #}
+     current operation. This has to happen before BEGIN, in a separate transaction.
+     For now I'm doing this separately for views and tables, until I figure
+     out how to pass a relation type into get_relation. #}
   {% set preexisting_temp_relation = adapter.get_relation(
                                          identifier=temp_identifier,
                                          schema=schema,
@@ -26,9 +28,9 @@
                                            identifier=backup_identifier,
                                            schema=schema,
                                            database=database) %}
-  {{ drop_relation_if_exists(preexisting_temp_relation) }}
-  {{ drop_relation_if_exists(preexisting_backup_relation) }}
-
+  {{ drop_relation(preexisting_backup_relation) }}
+  {{ drop_relation(preexisting_temp_relation) }}
+  {{ log('\n\n** dropped backup and temp relations.', True) }}
   {{ run_hooks(pre_hooks, inside_transaction=False) }}
 
   -- `BEGIN` happens here:
@@ -47,12 +49,11 @@
     {% set build_sql = create_table_as(True, target_relation, sql) %}
   {% elif trigger_full_refresh %}
     {# Make sure the backup doesn't exist so we don't encounter
-       issues with the rename below.
+       issues with the rename below. #}
     {% set temp_relation = source_relation.incorporate(
                               path={"identifier": temp_identifier}) %}
     {% set backup_relation = source_relation.incorporate(
                                  path={"identifier": backup_identifier}) %}
-    #}
     {% set build_sql = create_table_as(True, temp_relation, sql) %}
     {% set need_swap = true %}
     {% do to_drop.append(temp_relation) %}
