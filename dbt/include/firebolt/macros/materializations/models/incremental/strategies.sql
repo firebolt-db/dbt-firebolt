@@ -2,11 +2,9 @@
   {%- if strategy == 'append' -%}
     {# Only insert new records into existing table, relying on user to manage
        merges. #}
-    {{ get_insert_into_sql(source, target, unique_key, dest_columns) }}
+    {{ get_insert_sql(source, target, unique_key, dest_columns) }}
   {%- elif strategy is not none -%}
     {% do exceptions.raise_compiler_error('Incremental strategy {{ strategy }} is not supported.') %}
-  {%- else -%}
-    {% do exceptions.raise_compiler_error('No incremental strategy was provided.') %}
   {%- endif -%}
 {% endmacro %}
 

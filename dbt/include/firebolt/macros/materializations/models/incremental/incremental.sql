@@ -2,7 +2,7 @@
   {# This is largely copied from dbt-core. create_table_as was changed to
      create_view_as for temp views. #}
   {% set unique_key = config.get('unique_key') %}
-
+  {% set strategy = config.get('incremental_strategy', default='append') %}
   {# incorporate() adds columns to existing relation. #}
   {% set target_relation = this.incorporate(type='table') %}
   {% set source_relation = load_relation(this) %}
@@ -30,7 +30,7 @@
                                            database=database) %}
   {{ drop_relation(preexisting_backup_relation) }}
   {{ drop_relation(preexisting_temp_relation) }}
-  {{ log('\n\n** dropped backup and temp relations.', True) }}
+  {{ log('\n\n** Dropped backup and temp relations.', True) }}
   {{ run_hooks(pre_hooks, inside_transaction=False) }}
 
   -- `BEGIN` happens here:
@@ -71,10 +71,11 @@
     {% if not dest_columns %}
       {% set dest_columns = adapter.get_columns_in_relation(source_relation) %}
     {% endif %}
-    {% set build_sql = get_delete_insert_merge_sql(target_relation,
-                                                   temp_relation,
-                                                   unique_key,
-                                                   dest_columns) %}
+    {% set build_sql = get_incremental_sql(strategy,
+                                           temp_relation,
+                                           target_relation,
+                                           unique_key,
+                                           dest_columns) %}
   {% endif %}
   {% call statement("main") %}
     {{ build_sql }}
