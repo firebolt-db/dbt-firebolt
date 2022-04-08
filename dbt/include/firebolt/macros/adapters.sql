@@ -210,7 +210,8 @@
 
 
 {% macro firebolt__create_view_as(relation, sql) %}
-  {# Return SQL string to create view.
+  {#-
+  Return SQL string to create view.
      Args:
        relation (dict): dbt relation
        sql (str): pre-generated SQL
@@ -218,6 +219,18 @@
     CREATE VIEW IF NOT EXISTS {{ relation.identifier }} AS (
         {{ sql }}
     )
+{% endmacro %}
+
+
+{% macro firebolt__drop_relation(relation) -%}
+  {#-
+  Drop relation. Drop both table and view because relation doesn't always
+  have a table_type specified.
+  #}
+  {% call statement('drop') %}
+      DROP TABLE IF EXISTS {{ relation }} CASCADE;
+      DROP VIEW IF EXISTS {{ relation }} CASCADE
+  {% endcall %}
 {% endmacro %}
 
 

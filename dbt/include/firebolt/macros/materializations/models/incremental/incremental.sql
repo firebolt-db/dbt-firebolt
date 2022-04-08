@@ -1,6 +1,5 @@
 {% materialization incremental, adapter='firebolt' -%}
-  {# This is largely copied from dbt-core. create_table_as was changed to
-     create_view_as for tmp views. #}
+  {# This is largely copied from dbt-core and dbt-spark. #}
   {% set unique_key = config.get('unique_key') %}
 
   {% set target_relation = this.incorporate(type='table') %}
