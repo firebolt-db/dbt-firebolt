@@ -4,7 +4,7 @@
        merges. #}
     {{ get_insert_sql(source, target, unique_key, dest_columns) }}
   {%- elif strategy is not none -%}
-    {% do exceptions.raise_compiler_error('Incremental strategy {{ strategy }} is not supported.') %}
+    {% do exceptions.raise_compiler_error('Incremental strategy ' ~ strategy ~ ' is not supported.') %}
   {%- endif -%}
 {% endmacro %}
 
