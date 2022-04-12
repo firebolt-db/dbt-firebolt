@@ -103,8 +103,9 @@ class FireboltConnectionManager(SQLConnectionManager):
         the rows_affected, which I suspect isn't working properly.
         """
         return AdapterResponse(
-            _message='OK',
-            # code=code,
+            _message=cursor.status,
+            # code=cursor.description,
+            closed=cursor.closed,
             rows_affected=cursor.rowcount,
         )
 
