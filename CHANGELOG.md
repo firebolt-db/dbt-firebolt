@@ -5,6 +5,7 @@
 ### Under the hood
 
 - Removed all uses of `SHOW VIEWS` and `SHOW TABLES` and replaced them with calls to information_schema.views and information_schema.tables, respectively.
+- Updated to give better/more accurate responses from cursor.
 
 ## v.1.0.4
 
