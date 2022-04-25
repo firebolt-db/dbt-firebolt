@@ -63,6 +63,9 @@ The table below shows which dbt and Firebolt features are supported by the adapt
 
 For information on configuring dbt models and external tables for Firebolt, see the [dbt documentation for Firebolt configurations](https://docs.getdbt.com/reference/resource-configs/firebolt-configs).
 
+## Contributing
+
+See: [CONTRIBUTING.MD](https://github.com/firebolt-db/dbt-firebolt/tree/main/CONTRIBUTING.MD)
 
 ## Changelog
 
