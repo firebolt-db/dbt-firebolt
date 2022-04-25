@@ -25,7 +25,7 @@ Resolves #
 ### Description
 
 <!---
-  Describe the Pull Request here. Why were the changes mades?
+  Describe the Pull Request here. Why were the changes made?
   Add any references and info to help reviewers understand your changes.
   Include any tradeoffs you considered.
 -->

@@ -67,6 +67,9 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     TYPE = 'firebolt'
 
+    def __str__(self):
+        return self._message
+
     @classmethod
     def open(cls, connection):
         if connection.state == 'open':
@@ -95,17 +98,20 @@ class FireboltConnectionManager(SQLConnectionManager):
     @classmethod
     def get_response(cls, cursor) -> AdapterResponse:
         """
-        Return adapter-specific information about the last executed
-        command. Ideally, the return value is an AdapterResponse object
-        that includes items such as code, rows_affected, bytes_processed,
-        and a summary _message for logging to stdout.
-        For now, return "_message" hard-coded as "OK", and
-        the rows_affected, which I suspect isn't working properly.
+        Return an AdapterResponse object. Note that I can't overload/extend it
+        as it's defined in dbt core and other internal fns complain if it has extra
+        fields. code field is missing for Firebolt adapter, as it's not returned
+        from the SDK/API.
         """
+        success = 'False'
+        rowcount = cursor.rowcount
+        if cursor.rowcount == -1:
+            success = 'True'
+            rowcount = 0
         return AdapterResponse(
-            _message='OK',
-            # code=code,
-            rows_affected=cursor.rowcount,
+            _message=success,
+            rows_affected=rowcount,
+            code=None,
         )
 
     def begin(self):

@@ -5,6 +5,7 @@
 ### Features
 
 - dbt-firebolt now supports append-only incremental models.
+- We now return better/more accurate responses from the cursor for logging/debugging.
 
 ### Under the hood
 
