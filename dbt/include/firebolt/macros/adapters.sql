@@ -222,20 +222,10 @@
 {% endmacro %}
 
 
-{% macro firebolt__drop_relation(relation) -%}
-  {#-
-  Drop relation. Drop both table and view because relation doesn't always
-  have a table_type specified.
-  #}
-  {% call statement('drop') %}
-      DROP TABLE IF EXISTS {{ relation }} CASCADE;
-      DROP VIEW IF EXISTS {{ relation }} CASCADE
-  {% endcall %}
-{% endmacro %}
-
-
 {% macro firebolt__truncate_relation(relation) -%}
-  {# Truncate relation. #}
+  {#
+  Truncate relation. Actual macro is drop_relation in ./adapters/relation.sql.
+  #}
   {# Firebolt doesn't currently support TRUNCATE, so DROP CASCADE.
      This should only be called from reset_csv_table, where it's followed by
      `create_csv_table`, so not recreating the table here. To retrieve old code,

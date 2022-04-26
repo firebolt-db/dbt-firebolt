@@ -34,10 +34,13 @@
 {% endmacro %}
 
 
-{# Todo: Figure out why this isn't working when it gets called from incremental.
-{% macro drop_relation(relation) %}
-  {% if relation is not none %}
-    DROP IF EXISTS {{ relation.type }} CASCADE
-  {% endif %}
+{% macro firebolt__drop_relation(relation) -%}
+  {#-
+  Drop relation. Drop both table and view because relation doesn't always
+  have a table_type specified.
+  #}
+  {% call statement('drop') %}
+      DROP TABLE IF EXISTS {{ relation }} CASCADE;
+      DROP VIEW IF EXISTS {{ relation }} CASCADE
+  {% endcall %}
 {% endmacro %}
-#}
