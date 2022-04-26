@@ -28,19 +28,30 @@ class FireboltIndexConfig(dbtClassMixin):
     def render_name(self, relation):
         """
         Name an index according to the following format, joined by `_`:
-        index type, relation name, key/join column, timestamp (unix & UTC)
+        index type, relation name, key/join columns, timestamp (unix & UTC)
         example index name: join_my_model_customer_id_1633504263.
         """
         now_unix = time.mktime(datetime.utcnow().timetuple())
-        spine_col = '_'.join(self.key_column if self.key_column else self.join_column)
+        # If column_names is a list with > 1 members, do a string join,
+        #  otherwise do not. We were getting index names like
+        # join__idx__emf_customers__f_i_r_s_t___n_a_m_e__165093112.
+        if self.key_column:
+            column_names = self.key_column
+        else:
+            # Must be join column
+            column_names = self.join_column
+        spine_col = (
+            '_'.join(column_names)
+            if type(column_names) is list and type(column_names) > 1
+            else column_names
+        )
         inputs = [
-            str(self.index_type),
-            'idx',
+            f'{self.index_type}_idx',
             relation.identifier,
             spine_col,
             str(int(now_unix)),
         ]
-        string = '__'.join(inputs)[:254]
+        string = '__'.join(inputs)
         return string
 
     @classmethod
