@@ -40,11 +40,13 @@ class FireboltIndexConfig(dbtClassMixin):
         else:
             # Must be join column
             column_names = self.join_column
-        spine_col = (
-            '_'.join(column_names)
-            if type(column_names) is list and type(column_names) > 1
-            else column_names
-        )
+        if type(column_names) is str:
+            spine_col = column_names
+        elif len(column_names) > 1:
+            spine_col = '_'.join(column_names)
+        else:
+            # column_names is a list with a single member.
+            spine_col = column_names[0]
         inputs = [
             f'{self.index_type}_idx',
             relation.identifier,
