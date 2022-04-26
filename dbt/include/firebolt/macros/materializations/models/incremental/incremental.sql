@@ -1,6 +1,5 @@
 {% materialization incremental, adapter='firebolt' -%}
-  {# This is largely copied from dbt-core. create_table_as was changed to
-     create_view_as for tmp views. #}
+  {# This is largely copied from dbt-core and dbt-spark. #}
   {% set unique_key = config.get('unique_key') %}
 
   {% set target_relation = this.incorporate(type='table') %}
@@ -54,7 +53,7 @@
       {% set need_swap = true %}
       {% do to_drop.append(backup_relation) %}
   {% else %}
-    {% do run_query(create_table_as(False, tmp_relation, sql)) %}
+    {% do run_query(create_table_as(True, tmp_relation, sql)) %}
     {% do adapter.expand_target_column_types(
              from_relation=tmp_relation,
              to_relation=target_relation) %}

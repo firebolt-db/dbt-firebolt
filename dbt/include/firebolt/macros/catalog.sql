@@ -6,7 +6,7 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
 
     SELECT tbls.table_schema AS table_database
          , NULL as table_schema
-         , table_type AS table_type
+         , table_type
          , tbls.table_name
          , cols.column_name
          , cols.data_type AS column_type
