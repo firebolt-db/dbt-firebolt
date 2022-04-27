@@ -20,8 +20,8 @@ from dbt.adapters.firebolt.relation import FireboltRelation
 @dataclass
 class FireboltIndexConfig(dbtClassMixin):
     index_type: str
-    join_column: Optional[Union[str, List[str]]] = None
-    key_column: Optional[Union[str, List[str]]] = None
+    join_columns: Optional[Union[str, List[str]]] = None
+    key_columns: Optional[Union[str, List[str]]] = None
     dimension_column: Optional[Union[str, List[str]]] = None
     aggregation: Optional[Union[str, List[str]]] = None
 
@@ -31,27 +31,19 @@ class FireboltIndexConfig(dbtClassMixin):
         index type, relation name, key/join columns, timestamp (unix & UTC)
         example index name: join_my_model_customer_id_1633504263.
         """
-        now_unix = time.mktime(datetime.utcnow().timetuple())
-        # If column_names is a list with > 1 members, do a string join,
-        #  otherwise do not. We were getting index names like
+        now_unix = str(int(time.mktime(datetime.utcnow().timetuple())))
+        # If column_names is a list with > 1 members, join with _,
+        # otherwise do not. We were getting index names like
         # join__idx__emf_customers__f_i_r_s_t___n_a_m_e__165093112.
-        if self.key_column:
-            column_names = self.key_column
-        else:
-            # Must be join column
-            column_names = self.join_column
-        if type(column_names) is str:
-            spine_col = column_names
-        elif len(column_names) > 1:
-            spine_col = '_'.join(column_names)
-        else:
-            # column_names is a list with a single member.
-            spine_col = column_names[0]
+        column_names = self.key_columns or self.join_columns
+        spine_col = (
+            '_'.join(column_names) if isinstance(column_names, list) else column_names
+        )
         inputs = [
             f'{self.index_type}_idx',
             relation.identifier,
             spine_col,
-            str(int(now_unix)),
+            now_unix,
         ]
         string = '__'.join(inputs)
         return string
@@ -75,21 +67,21 @@ class FireboltIndexConfig(dbtClassMixin):
                     '  Type should be either: "join" or "aggregating."'
                 )
             if index_config.index_type.upper() == 'JOIN' and not (
-                index_config.join_column and index_config.dimension_column
+                index_config.join_columns and index_config.dimension_column
             ):
                 dbt.exceptions.raise_compiler_error(
                     'Invalid join index definition:\n'
                     f'  Got: {index_config}.\n'
-                    '  join_column and dimension_column must be specified '
+                    '  join_columns and dimension_column must be specified '
                     'for join indexes.'
                 )
             if index_config.index_type.upper() == 'AGGREGATING' and not (
-                index_config.key_column and index_config.aggregation
+                index_config.key_columns and index_config.aggregation
             ):
                 dbt.exceptions.raise_compiler_error(
                     'Invalid aggregating index definition:\n'
                     f'  Got: {index_config}.\n'
-                    '  key_column and aggregation must be specified '
+                    '  key_columns and aggregation must be specified '
                     'for aggregating indexes.'
                 )
             return index_config
