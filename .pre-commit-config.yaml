@@ -40,14 +40,3 @@ repos:
         additional_dependencies:
           - flake8-tidy-imports
           - flake8-quotes
-
-  - repo: local
-    hooks:
-      - id: mypy
-        name: mypy
-        entry: mypy
-        language: system
-        types: [python]
-        require_serial: true
-        verbose: true
-        pass_filenames: false
