@@ -216,7 +216,7 @@
        relation (dict): dbt relation
        sql (str): pre-generated SQL
   #}
-    CREATE VIEW IF NOT EXISTS {{ relation.identifier }} AS (
+    CREATE OR REPLACE VIEW {{ relation.identifier }} AS (
         {{ sql }}
     )
 {% endmacro %}
