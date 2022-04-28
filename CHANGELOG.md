@@ -14,6 +14,10 @@
 - Updated to give better/more accurate responses from cursor.
 - Fixed an error where names for aggregating and join indexes with only single values for indexes were being improperly generated.
 
+### Breaking changes
+
+- Join and key column field names in aggregating and join indexes are now pluralized: `join_column` becomes `join_columns` and `key_column` becomes `key_columns` in index config blocks.
+
 ## v.1.0.3
 
 ### Under the hood
