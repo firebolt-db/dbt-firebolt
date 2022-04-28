@@ -125,13 +125,13 @@
       {{ make_create_index_sql(relation,
                                index_name,
                                "CREATE JOIN INDEX",
-                               index_config.join_column,
+                               index_config.join_columns,
                                index_config.dimension_column) }}
   {%- elif index_type == "AGGREGATING" -%}
       {{ make_create_index_sql(relation,
                                index_name,
                                "CREATE AND GENERATE AGGREGATING INDEX",
-                               index_config.key_column,
+                               index_config.key_columns,
                                index_config.aggregation) }}
   {%- endif -%}
 {%- endmacro %}
