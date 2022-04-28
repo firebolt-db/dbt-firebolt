@@ -1,19 +1,19 @@
 {% materialization incremental, adapter='firebolt' -%}
   {#
   Incremental implementation. Actual strategy SQL is determined
-  outside this function, in strategies.sql.
+  outside this materialization, in strategies.sql.
 
   This function works by first creating a view, `new_records`, of type `BaseRelation`,
   then using a CTE defined in the project model to populate `new_records` with
-  any records that ought to be inserted into the original table (or view), `source`,
-  using an INSERT. This process is agnostic to the incremental strategy actually used:
-  the specific INSERT is defined in `strategies.sql`.
+  any records that ought to be inserted into the original table (views aren't currently
+  supported), `source`, using an INSERT. This process is agnostic to the incremental
+  strategy actually used: the specific INSERT is defined in `strategies.sql`.
 
   Note that all new relations must first be instantiated as BaseRelation objects,
   and that those objects are used to create and query actual relations in the DB.
   Care must be taken to correctly define each BaseRelation as either a view or
   a table, lest subsequent operations on the relations (be the they objects or
-  the DB tables the objects they abstract) fail.
+  the DB tables the objects abstract) fail.
   #}
 
   {# Not yet used
@@ -23,7 +23,7 @@
   -- load_relation() returns the BaseRelation associated with `this`, if it exists.
   {% set source = load_relation(this) %}
   -- incorporate() returns a new BaseRelation, an altered copy of `this`.
-  {% set target = this %}
+  {% set target = this.incorporate(type='table') %}
   {{ log("\n\n** source: " ~ source, True) }}
   {{ log("\n\n** source type: " ~ source.type, True) }}
   {{ log("\n** sql: " ~ sql, True) }}
@@ -47,8 +47,6 @@
     {% set build_sql = create_table_as(False, target, sql) %}
   {% else %}
     {# Actually do the incremental query here. #}
-    {# {% set new_records = make_temp_relation(this) %} #}
-    {% set new_records = this.incorporate(type='view') %}
     {% set build_sql = create_view_as(new_records, sql) %}
     {# Once we allow table schema changes the following will be uncommented.
        Will need to rewrite process_schema_changes.
