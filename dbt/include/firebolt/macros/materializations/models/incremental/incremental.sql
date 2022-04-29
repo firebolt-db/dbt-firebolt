@@ -31,6 +31,7 @@
      this does *not* create a table in the DB. #}
   {% set existing = load_relation(this) %}
   {% set new_records = make_temp_relation(target) %}
+  {% set new_records = new_records.incorporate(type='view') %}
 
   {# Todo: For now we don't allow table schema changes; just ignore them.
      {% set on_schema_change = incremental_validate_on_schema_change(
@@ -50,11 +51,9 @@
   {% elif should_full_refresh() or existing.is_view %}
     {{ drop_relation_if_exists(existing) }}
     {% set build_sql = create_table_as(False, target, sql) %}
-    }
   {% else %}
     {# Actually do the incremental query here. #}
     {# Instantiate new objects in dbt's internal list #}
-    {% set new_records = new_records.incorporate(type='view') %}
     {% do run_query(create_view_as(new_records, sql)) %}
     {# Once we allow table schema changes the following will be uncommented.
        Will need to rewrite process_schema_changes.
