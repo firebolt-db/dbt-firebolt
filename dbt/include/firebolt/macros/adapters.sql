@@ -216,6 +216,7 @@
        relation (dict): dbt relation
        sql (str): pre-generated SQL
   #}
+
     CREATE OR REPLACE VIEW {{ relation.identifier }} AS (
         {{ sql }}
     )

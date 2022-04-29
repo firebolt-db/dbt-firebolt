@@ -12,7 +12,8 @@
 
 
 {% macro get_append_only_sql(source, target, dest_columns) -%}
-  {%- set dest_cols_csv = get_quoted_csv(dest_columns | map(attribute="name")) -%}
+  {%- set dest_cols_csv = get_quoted_csv(dest_columns | map(attribute="name")) %}
+
   INSERT INTO {{ target }} ({{ dest_cols_csv }})
       SELECT {{ dest_cols_csv }}
       FROM {{ source }}

@@ -7,6 +7,7 @@
   {% set views = adapter.filter_table(all_relations, 'type', 'view') %}
   {% if (views.rows | length) > 0 %}
     {% call statement('view_definition', fetch_result=True) %}
+
       SELECT view_definition FROM information_schema.views
       WHERE table_name = '{{ source.identifier }}'
     {%- endcall %}
@@ -18,6 +19,7 @@
       {% set view_ddl = view_ddl.replace(source.identifier,
                                          target.identifier) %}
       {% call statement('new_view') %}
+
         DROP VIEW {{ source.identifier }};
         {{ view_ddl }};
       {% endcall %}
@@ -26,6 +28,7 @@
     {# There were no views, so retrieve table. (There must be a table.) #}
     {% set table_type = adapter.filter_table(all_relations, 'table_type', '') %}
     {% call statement('tables') %}
+
       CREATE {{ table_type }} TABLE {{ target.identifier }} AS
       SELECT * FROM {{ source.identifier }};
       DROP TABLE {{ source.identifier }};
@@ -40,7 +43,7 @@
   have a table_type specified.
   #}
   {% call statement('drop') %}
-      DROP TABLE IF EXISTS {{ relation }} CASCADE;
-      DROP VIEW IF EXISTS {{ relation }} CASCADE
+
+      DROP {{ relation.type | upper }} IF EXISTS {{ relation }} CASCADE;
   {% endcall %}
 {% endmacro %}
