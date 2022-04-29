@@ -15,6 +15,7 @@ sequences:
   test_dbt_empty: empty
   test_dbt_schema_test: schema_test
   test_dbt_data_test: data_test
+  test_dbt_incremental: incremental
 
 # These aren't passing yet.
  # test_dbt_base: base

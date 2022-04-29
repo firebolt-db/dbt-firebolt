@@ -30,6 +30,7 @@
      values of `this`, else None. Note that, as with incorporate(),
      this does *not* create a table in the DB. #}
   {% set existing = load_relation(this) %}
+  {% set new_records = make_temp_relation(target) %}
 
   {# Todo: For now we don't allow table schema changes; just ignore them.
      {% set on_schema_change = incremental_validate_on_schema_change(
@@ -53,7 +54,6 @@
   {% else %}
     {# Actually do the incremental query here. #}
     {# Instantiate new objects in dbt's internal list #}
-    {% set new_records = make_temp_relation(target) %}
     {% set new_records = new_records.incorporate(type='view') %}
     {% do run_query(create_view_as(new_records, sql)) %}
     {# Once we allow table schema changes the following will be uncommented.
@@ -92,6 +92,6 @@
 
   {{ run_hooks(post_hooks, inside_transaction=True) }}
 
-  {{ return({'relations': [existing]}) }}
+  {{ return({'relations': [target]}) }}
 
 {%- endmaterialization %}
