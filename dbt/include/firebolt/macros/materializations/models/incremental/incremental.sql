@@ -26,18 +26,23 @@
      We're doing this in case `this` is a view. Now we have a relation
      with all the same field values, but as a table. #}
   {% set target = this.incorporate(type='table') %}
-  {# If `this` exists, load_relation() returns BaseRelation with the dictionary
-     values of `this`, else None. Note that, as with incorporate(),
-     this does *not* create a table in the DB. #}
-  {% set existing = load_relation(this) %}
+  {# If a table with the name `this.identifier` already exists, load_relation()
+     returns a BaseRelation with the dictionary values of that table, else
+     None. Note that, as with incorporate(), this does *not* create a table
+     in the DB. #}
+  {% set existing = load_relation(this.identifier) %}
   {% set new_records = make_temp_relation(target) %}
   {% set new_records = new_records.incorporate(type='view') %}
 
-  {# Todo: For now we don't allow table schema changes; just ignore them.
-     {% set on_schema_change = incremental_validate_on_schema_change(
-      config.get('on_schema_change'),
-      default='ignore') %}
-  #}
+  {% set on_schema_change = incremental_validate_on_schema_change(
+                                config.get('on_schema_change'),
+                                default='ignore') %}
+  {% process_schema_changes(on_schema_change, target, existing) %}
+  {% set schema_changes_dict = check_for_schema_changes(existing, target) %}
+  {% if on_schema_change == 'fail' and schema_changes_dict['schema_changed'] %}
+    {% do exceptions.raise_compiler_error(
+              'on_schema_change was set to fail and a schema change was detected.') %}
+  {% endif %}
 
   -- `BEGIN` happens here:
   {{ run_hooks(pre_hooks, inside_transaction=True) }}
@@ -55,19 +60,14 @@
     {# Actually do the incremental query here. #}
     {# Instantiate new objects in dbt's internal list #}
     {% do run_query(create_view_as(new_records, sql)) %}
-    {# Once we allow table schema changes the following will be uncommented.
-       Will need to rewrite process_schema_changes.
+    {# Todo: do I need to rewrite expand_target_column_types?
        {% do adapter.expand_target_column_types(
                 from_relation=temp_relation,
-                to_relation=target) %}
-       {% set dest_columns = process_schema_changes(on_schema_change,
-                                                    new_records,
-                                                    existing) %}
-       {% if not dest_columns %}
-         {% set dest_columns = adapter.get_columns_in_relation(existing) %}
-       {% endif %}
-    #}
-    {% set dest_columns = adapter.get_columns_in_relation(existing) %}
+                to_relation=target) %} #}
+    {% set dest_columns = schema_changes_dict['common_columns'] %}
+    {% if not dest_columns %}
+      {% set dest_columns = adapter.get_columns_in_relation(existing) %}
+    {% endif %}
     {% set build_sql = get_incremental_sql(strategy,
                                            new_records,
                                            target,
