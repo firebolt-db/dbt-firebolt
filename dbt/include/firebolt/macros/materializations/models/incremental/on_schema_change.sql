@@ -7,7 +7,7 @@
   {% if on_schema_change == 'sync_all_columns' %}
     {% do exceptions.raise_compiler_error(
               'Firebolt does not support the on_schema_change value "sync_all_columns."') %}
-  {% set log_message = 'Invalid value for on_schema_change (%s) specified. Setting default value of %s.' %
+    {% set log_message = 'Invalid value for on_schema_change (%s) specified. Setting default value of %s.' %
                         (on_schema_change, default) %}
      {% do log(log_message, True) %}
     {{ return(default) }}
@@ -25,7 +25,7 @@
   {%- set target_not_in_source = diff_columns(target_columns, source_columns) -%}
   {% set new_target_types = diff_column_data_types(source_columns, target_columns) %}
   {% set common_columns = intersect_columns(source_columns, target_columns) %}
-
+  {{ log('\n\n** source_columns: ' ~ source_columns ~ '\n** target_columns: ' ~ target_columns, True) }}
   {% if source_not_in_target != [] %}
     {% set schema_changed = True %}
   {% elif target_not_in_source != [] or new_target_types != [] %}
@@ -76,11 +76,13 @@
     {% if on_schema_change == 'fail' %}
       {% do exceptions.raise_compiler_error(
           'on_schema_change was set to "fail" and a schema change was detected.') %}
+    {% endif %}
     {% if schema_changes_dict['source_not_in_target'] and schema_changes_dict['target_not_in_source'] %}
       {# Columns have been added *and* removed. #}
       {% do exceptions.raise_compiler_error(
         'Firebolt does not allow table schema changes involving both column additions and removals.') %}
       }
+    {% endif %}
     {% if schema_changes_dict['new_target_types'] %}
       {% do exceptions.raise_compiler_error(
         'Firebolt, does not allow column types to change.') %}

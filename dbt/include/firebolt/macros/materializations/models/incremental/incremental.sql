@@ -30,15 +30,15 @@
      returns a BaseRelation with the dictionary values of that table, else
      None. Note that, as with incorporate(), this does *not* create a table
      in the DB. #}
-  {% set existing = load_relation(this.identifier) %}
+  {% set existing = load_relation(this) %}
   {% set new_records = make_temp_relation(target) %}
   {% set new_records = new_records.incorporate(type='view') %}
 
   {% set on_schema_change = incremental_validate_on_schema_change(
                                 config.get('on_schema_change'),
                                 default='ignore') %}
-  {% process_schema_changes(on_schema_change, target, existing) %}
-  {% set schema_changes_dict = check_for_schema_changes(existing, target) %}
+  {{ log("\n\n** on_schema_change: " ~ on_schema_change, True) }}
+  {% set schema_changes_dict = process_schema_changes(on_schema_change, existing, target) %}
   {% if on_schema_change == 'fail' and schema_changes_dict['schema_changed'] %}
     {% do exceptions.raise_compiler_error(
               'on_schema_change was set to fail and a schema change was detected.') %}
