@@ -25,72 +25,65 @@
      Note that this does *not* create a table in the DB.
      We're doing this in case `this` is a view. Now we have a relation
      with all the same field values, but as a table. #}
-  {% set target = this.incorporate(type='table') %}
+  {% set source = this.incorporate(type='table') %}
   {# If a table with the name `this.identifier` already exists, load_relation()
      returns a BaseRelation with the dictionary values of that table, else
      None. Note that, as with incorporate(), this does *not* create a table
      in the DB. #}
   {% set existing = load_relation(this) %}
-  {% set new_records = make_temp_relation(target) %}
+  {% set new_records = make_temp_relation(source) %}
+  {{ drop_relation_if_exists(new_records) }}
+  {# Out of an abundance of caution, setting type to view and dropping,
+     the setting it back to table. #}
   {% set new_records = new_records.incorporate(type='view') %}
-
+  {{ drop_relation_if_exists(new_records) }}
+  {% set new_records = new_records.incorporate(type='table') %}
   {% set on_schema_change = incremental_validate_on_schema_change(
                                 config.get('on_schema_change'),
                                 default='ignore') %}
-  {{ log("\n\n** on_schema_change: " ~ on_schema_change, True) }}
-  {% set schema_changes_dict = process_schema_changes(on_schema_change, existing, target) %}
-  {% if on_schema_change == 'fail' and schema_changes_dict['schema_changed'] %}
-    {% do exceptions.raise_compiler_error(
-              'on_schema_change was set to fail and a schema change was detected.') %}
-  {% endif %}
 
   -- `BEGIN` happens here:
   {{ run_hooks(pre_hooks, inside_transaction=True) }}
 
   {# First check whether we want to full refresh for existing view or config reasons. #}
-  {% set do_full_refresh = (full_refresh_mode or existing.is_view) %}
+  {% set do_full_refresh = (should_full_refresh() or existing.is_view) %}
   {% if existing is none %}
-    {# I'm unclear how this would work: if `existing` is None it's because
-       `this` is None, so `target` will also be None. #}
-    {% set build_sql = create_table_as(False, target, sql) %}
-  {% elif should_full_refresh() or existing.is_view %}
+    {% set build_sql = create_table_as(False, source, sql) %}
+  {% elif do_full_refresh %}
     {{ drop_relation_if_exists(existing) }}
-    {% set build_sql = create_table_as(False, target, sql) %}
+    {% set build_sql = create_table_as(False, source, sql) %}
   {% else %}
     {# Actually do the incremental query here. #}
-    {# Instantiate new objects in dbt's internal list #}
-    {% do run_query(create_view_as(new_records, sql)) %}
-    {# Todo: do I need to rewrite expand_target_column_types?
-       {% do adapter.expand_target_column_types(
-                from_relation=temp_relation,
-                to_relation=target) %} #}
-    {% set dest_columns = schema_changes_dict['common_columns'] %}
-    {% if not dest_columns %}
-      {% set dest_columns = adapter.get_columns_in_relation(existing) %}
-    {% endif %}
+    {# Instantiate new objects in dbt's internal list. Have to
+       run this query so dbt can query the DB to get the columns in
+       new_records. #}
+    {% do run_query(create_table_as(True, new_records, sql)) %}
+    {# All errors involving schema changes are dealt with in `process_schema_changes`. #}
+    {% set schema_changes = process_schema_changes(on_schema_change,
+                                                   new_records,
+                                                   existing) %}
     {% set build_sql = get_incremental_sql(strategy,
                                            new_records,
-                                           target,
+                                           existing,
                                            unique_key,
-                                           dest_columns) %}
+                                           schema_changes['common_columns']) %}
   {% endif %}
   {% call statement("main") %}
     {{ build_sql }}
   {% endcall %}
 
-
   {# Todo: figure out what persist_docs and create_indexes do. #}
-  {% do persist_docs(target, model) %}
+  {% do persist_docs(source, model) %}
   {% if existing is none
       or existing.is_view
       or should_full_refresh() %}
-  {% do create_indexes(target) %}
+  {% do create_indexes(source) %}
   {% endif %}
 
   {{ drop_relation_if_exists(new_records) }}
 
   {{ run_hooks(post_hooks, inside_transaction=True) }}
 
-  {{ return({'relations': [target]}) }}
+  {{ return({'relations': [source]}) }}
 
 {%- endmaterialization %}
