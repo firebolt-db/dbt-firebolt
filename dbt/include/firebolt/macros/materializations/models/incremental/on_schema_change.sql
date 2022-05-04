@@ -76,25 +76,10 @@
     {% if on_schema_change == 'fail' %}
       {% do exceptions.raise_compiler_error(
           'A schema change was detected and `on_schema_change` was set to "fail".') %}
-    {% endif %}
-    {% if (schema_changes_dict['source_not_in_target']) %}
-      {# Columns have been added. #}
+    {% else %}
       {% do exceptions.raise_compiler_error(
-        'Firebolt does not allow table schema changes that add columns.') %}
-    {% endif %}
-    {% if schema_changes_dict['new_target_types'] %}
-      {% do exceptions.raise_compiler_error(
-              'Firebolt does not allow column types to change.') %}
-    {% endif %}
-    {# First, if columns were removed, if  #}
-    {% if (((schema_changes_dict['source_columns'] | length)
-             < (schema_changes_dict['target_columns'] | length))
-           and on_schema_change == 'append_new_columns') %}
-      {% set log_message = 'Columns were removed from the source table. ' ~
-             'Changing default schema change value from "append_new_columns" to "ignore."' %}
-      {{ log(log_message, True) }}
+          'Firebolt does not allow table schema changes.') %}
     {% endif %}
   {% endif %}
-  {{ return({'schema_changed': schema_changes_dict['schema_changed'],
-             'common_columns': schema_changes_dict['common_columns']}) }}
+  {{ return(schema_changes_dict['common_columns']) }}
 {% endmacro %}

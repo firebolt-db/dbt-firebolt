@@ -59,14 +59,14 @@
        new_records. #}
     {% do run_query(create_table_as(True, new_records, sql)) %}
     {# All errors involving schema changes are dealt with in `process_schema_changes`. #}
-    {% set schema_changes = process_schema_changes(on_schema_change,
+    {% set dest_columns = process_schema_changes(on_schema_change,
                                                    new_records,
                                                    existing) %}
     {% set build_sql = get_incremental_sql(strategy,
                                            new_records,
                                            existing,
                                            unique_key,
-                                           schema_changes['common_columns']) %}
+                                           dest_columns) %}
   {% endif %}
   {% call statement("main") %}
     {{ build_sql }}
