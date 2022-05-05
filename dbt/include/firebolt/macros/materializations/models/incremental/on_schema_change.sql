@@ -78,7 +78,10 @@
           'A schema change was detected and `on_schema_change` was set to "fail".') %}
     {% else %}
       {% do exceptions.raise_compiler_error(
-          'Firebolt does not allow table schema changes.') %}
+          'Schema changes detected. Either revert the change or run the model with the ' ~
+          '--full-refresh flag on the command line to recreate the model with the new ' ~
+          'schema definition. Running with the --full-refresh flag drops and recreates ' ~
+          'the database object.') %}
     {% endif %}
   {% endif %}
   {{ return(schema_changes_dict['common_columns']) }}
