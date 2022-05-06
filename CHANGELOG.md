@@ -1,5 +1,11 @@
 # Changelog
 
+## v.1.0.5
+
+### Under the hood
+
+- add FireboltColumn class to handle string type
+
 ## v.1.0.4
 
 ### Features
@@ -29,7 +35,7 @@
 
 ### Features
 
-- dbt-firebolt now supports aggregating indexes with multiple-column keys. 
+- dbt-firebolt now supports aggregating indexes with multiple-column keys.
 
 ### Under the hood
 
