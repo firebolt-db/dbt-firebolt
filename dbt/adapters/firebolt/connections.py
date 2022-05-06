@@ -28,7 +28,7 @@ class FireboltCredentials(Credentials):
 
     def _connection_keys(self):
         """
-        Return list of keys (i.e. not values) to display
+        Return tuple of keys (i.e. not values) to display
         in the `dbt debug` output.
         """
         return (

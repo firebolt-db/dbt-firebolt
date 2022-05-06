@@ -29,7 +29,7 @@
 
 ### Features
 
-- dbt-firebolt now supports aggregating indexes with multiple-column keys. 
+- dbt-firebolt now supports aggregating indexes with multiple-column keys.
 
 ### Under the hood
 
