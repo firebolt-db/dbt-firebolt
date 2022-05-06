@@ -32,7 +32,7 @@
       SELECT partition_columns FROM {{ source }}
   {% endcall %}
   {% set partition_vals_tbl = load_result('partition_vals').table %}
-  {% adapter.filter_table(partition_vals_tbl, 'type', 'view')}
+  {% adapter.filter_table(partition_vals_tbl, 'type', 'view') %}
   {{ return(load_result('timestamp').table) }}
   -- SELECT columns FROM source
   -- do stupid agate table to get partition_vals
