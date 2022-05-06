@@ -184,6 +184,22 @@
 {% endmacro %}
 
 
+{% macro partition_cols(label, required=false) %}
+  {%- set cols = config.get('partition_by', validator=validation.any[list, basestring]) -%}
+  {%- if cols is not none %}
+    {%- if cols is string -%}
+      {%- set cols = [cols] -%}
+    {%- endif -%}
+    {{ label }} (
+    {%- for item in cols -%}
+      {{ item }}
+      {%- if not loop.last -%},{%- endif -%}
+    {%- endfor -%}
+    )
+  {%- endif %}
+{%- endmacro -%}
+
+
 {% macro firebolt__create_table_as(temporary, relation, sql) -%}
   {# Create table using CTAS
      Args:
@@ -195,6 +211,9 @@
   {%- set primary_index = config.get('primary_index') %}
 
   CREATE {{ table_type }} TABLE IF NOT EXISTS {{ relation }}
+  AS (
+      {{ sql }}
+  )
   {%- if primary_index %}
       PRIMARY INDEX
       {% if primary_index is iterable and primary_index is not string -%}
@@ -203,9 +222,7 @@
           {{ primary_index }}
       {%- endif -%}
   {% endif %}
-  AS (
-      {{ sql }}
-  )
+
 {% endmacro %}
 
 
