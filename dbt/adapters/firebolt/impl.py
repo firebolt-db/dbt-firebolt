@@ -13,6 +13,7 @@ from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
 
+from dbt.adapters.firebolt.column import FireboltColumn
 from dbt.adapters.firebolt.connections import FireboltConnectionManager
 from dbt.adapters.firebolt.relation import FireboltRelation
 
@@ -98,6 +99,7 @@ class FireboltConfig(AdapterConfig):
 class FireboltAdapter(SQLAdapter):
     Relation = FireboltRelation
     ConnectionManager = FireboltConnectionManager
+    Column = FireboltColumn
 
     def is_cancelable(self):
         return False

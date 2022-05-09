@@ -185,7 +185,8 @@
 
 
 {% macro partition_cols(label, required=false) %}
-  {%- set cols = config.get('partition_by', validator=validation.any[list, basestring]) -%}
+  {%- set cols = config.get('partition_by', 
+                            validator=validation.any[list, basestring]) -%}
   {%- if cols is not none %}
     {%- if cols is string -%}
       {%- set cols = [cols] -%}
@@ -208,21 +209,34 @@
       relation (dbt relation/dict):
   #}
   {%- set table_type = config.get('table_type', default='dimension') | upper -%}
-  {%- set primary_index = config.get('primary_index') %}
-
-  CREATE {{ table_type }} TABLE IF NOT EXISTS {{ relation }}
-  AS (
-      {{ sql }}
-  )
-  {%- if primary_index %}
-      PRIMARY INDEX
-      {% if primary_index is iterable and primary_index is not string -%}
+  {%- set primary_index = config.get('primary_index') -%}
+  {%- set incremental_strategy = config.get('partitions') -%}
+  {%- set partitions = config.get('partition_by') -%}
+  {%- if incremental_strategy == 'insert_overwrite' and not partitions %}
+      {{ exceptions.raise_compiler_error("The insert/overwrite incremental "
+                                         "strategy requires that a partition "
+                                         "be specified.") }} 
+  {% endif %}
+    CREATE {{ table_type }} TABLE IF NOT EXISTS {{ relation }}
+    {%- if primary_index %}
+    PRIMARY INDEX 
+      {% if primary_index is iterable and primary_index is not string %}
           {{ primary_index | join(', ') }}
       {%- else -%}
           {{ primary_index }}
       {%- endif -%}
-  {% endif %}
-
+    {%- endif -%}
+    {% if partitions %}
+    PARTITION BY 
+      {% if partitions is iterable and partitions is not string %}
+          {{ partitions | join(', ') }}
+      {%- else -%}
+          {{ partitions }}
+      {%- endif -%}
+    {%- endif  %}
+    AS (
+        {{ sql }}
+    )
 {% endmacro %}
 
 

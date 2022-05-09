@@ -27,19 +27,19 @@
      'new_target_types': new_target_types,
      'common_columns': common_colums
   } %} #}
-  {% set schema_changed = False %}
+  {%- set schema_changed = False -%}
   {%- set source_columns = adapter.get_columns_in_relation(source_relation) -%}
   {%- set target_columns = adapter.get_columns_in_relation(target_relation) -%}
   {%- set source_not_in_target = diff_columns(source_columns, target_columns) -%}
   {%- set target_not_in_source = diff_columns(target_columns, source_columns) -%}
-  {% set new_target_types = diff_column_data_types(source_columns, target_columns) %}
-  {% set common_columns = intersect_columns(source_columns, target_columns) %}
+  {%- set new_target_types = diff_column_data_types(source_columns, target_columns) -%}
+  {%- set common_columns = intersect_columns(source_columns, target_columns) -%}
   {% if source_not_in_target != [] %}
-    {% set schema_changed = True %}
+    {%- set schema_changed = True -%}
   {% elif target_not_in_source != [] or new_target_types != [] %}
-    {% set schema_changed = True %}
+    {%- set schema_changed = True -%}
   {% elif new_target_types != [] %}
-    {% set schema_changed = True %}
+    {%- set schema_changed = True -%}
   {% endif %}
   {% set changes_dict = {
     'schema_changed': schema_changed,

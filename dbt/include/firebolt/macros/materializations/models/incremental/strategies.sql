@@ -5,7 +5,7 @@
     {# Only insert new records into existing table, relying on user to manage
        merges. #}
     {{ get_append_only_sql(source, target, dest_columns) }}
-  {%- if strategy == 'insert-overwrite' -%}
+  {%- elif strategy == 'insert_overwrite' -%}
     {# Only insert new records into existing table, relying on user to manage
        merges. #}
     {{ get_insert_overwrite_sql(source, target, dest_columns) }}
@@ -27,12 +27,17 @@
 {% macro get_insert_overwrite_sql(source, target, dest_columns) %}
   {# TODO: do I need to validate? See dbt-spark #}
   {%- set partition_columns = config.get('partition_by') | map(attribute='quoted') | join(', ') -%}
+  {% if partition_columns is none -%}
+    {{ exceptions.raise_compiler_error("The insert/overwrite incremental "
+                                       "strategy requires that a partition "
+                                       "be specified.") }}
+  {% endif %}
   {% call statement('partition_vals', fetch_result=True) %}
 
       SELECT partition_columns FROM {{ source }}
   {% endcall %}
   {% set partition_vals_tbl = load_result('partition_vals').table %}
-  {% adapter.filter_table(partition_vals_tbl, 'type', 'view') %}
+  {% set partitions = adapter.filter_table(partition_vals_tbl, 'type', 'view') %}
   {{ return(load_result('timestamp').table) }}
   -- SELECT columns FROM source
   -- do stupid agate table to get partition_vals

@@ -4,7 +4,11 @@
 
 ### Features
 
--- dbt-firebolt now supports the insert/overwrite incremental model.
+- dbt-firebolt now supports the insert/overwrite incremental model.
+
+### Under the hood
+
+- add FireboltColumn class to handle string type
 
 ## v.1.0.4
 
@@ -35,7 +39,7 @@
 
 ### Features
 
-- dbt-firebolt now supports aggregating indexes with multiple-column keys. 
+- dbt-firebolt now supports aggregating indexes with multiple-column keys.
 
 ### Under the hood
 
