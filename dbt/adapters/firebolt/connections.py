@@ -103,10 +103,9 @@ class FireboltConnectionManager(SQLConnectionManager):
         fields. code field is missing for Firebolt adapter, as it's not returned
         from the SDK/API.
         """
-        success = 'False'
+        success = 'Success'
         rowcount = cursor.rowcount
         if cursor.rowcount == -1:
-            success = 'True'
             rowcount = 0
         return AdapterResponse(
             _message=success,
