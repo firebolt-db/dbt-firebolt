@@ -10,7 +10,11 @@
        merges. #}
     {{ get_insert_overwrite_sql(source, target, dest_columns) }}
   {%- elif strategy is not none -%}
-    {% do exceptions.raise_compiler_error('Incremental strategy ' ~ strategy ~ ' is not supported.') %}
+    {% do exceptions.raise_compiler_error('Incremental strategy %s is not supported '
+                                          'on model %s.' % (strategy, target)) %}
+  {% else %}
+    {{ exceptions.raise_compiler_error('No incremental strategy was specified '
+                                       'for model %s.' % (target)) }}
   {%- endif -%}
 {% endmacro %}
 
@@ -25,38 +29,44 @@
 
 
 {% macro get_insert_overwrite_sql(source, target, dest_columns) %}
-  {# TODO: do I need to validate? See dbt-spark #}
-  {%- set partition_columns = config.get('partition_by') | map(attribute='quoted') | join(', ') -%}
-  {% if partition_columns is none -%}
-    {{ exceptions.raise_compiler_error("The insert/overwrite incremental "
-                                       "strategy requires that a partition "
-                                       "be specified.") }}
+  {# Compile SQL to drop correct partitions in target and insert from source. #}
+  {%- set partition_columns = config.get('partition_by') -%}
+  {% if not partition_columns -%}
+    {{ exceptions.raise_compiler_error('No partition was specified for model %s source: %s.' %
+                                       (target, source)) }}
   {% endif %}
-  {% call statement('partition_vals', fetch_result=True) %}
+  {# Get values of partition columns for each row that will be inserted from 
+     source. For each of those rows drop the partition in the target. #}
+  {% call statement('get_partition_cols', fetch_result=True) %}
 
-      SELECT partition_columns FROM {{ source }}
+    SELECT 
+    {% if partition_columns is iterable and partition_columns is not string -%}
+        {{ partition_columns | join(', ') }}
+    {%- else -%}
+        {{ partition_columns }}
+    {%- endif %}
+    FROM {{ source }}
   {% endcall %}
-  {% set partition_vals_tbl = load_result('partition_vals').table %}
-  {% set partitions = adapter.filter_table(partition_vals_tbl, 'type', 'view') %}
-  {{ return(load_result('timestamp').table) }}
-  -- SELECT columns FROM source
-  -- do stupid agate table to get partition_vals
-  --
-  {{ drop_partitions_sql(target, partition_vals) }}
+  {%- set partition_vals = load_result('get_partition_cols').table.rows -%}
+  {%- if partition_vals -%}
+    {{ log('\n\n** partition values: ' ~ partition_vals, True) }}
+    {{ drop_partitions_sql(target, partition_vals) }}
+  {%- endif -%}
   {%- set dest_columns = adapter.get_columns_in_relation(target) -%}
-  {%- set dest_cols_csv = dest_columns | map(attribute='quoted') | join(', ') %}
+  {%- set dest_cols_csv = dest_columns | map(attribute='quoted') | join(', ') -%}
 
   {{ get_append_only_sql(source, target, dest_columns) }}
 {% endmacro %}
 
 
 {% macro drop_partitions_sql(table, partition_vals) %}
-  {# Write SQL code to drop partition each partions in partions.
-     Args:
-       partition_vals: a list of tuples
+  {# 
+  Write SQL code to drop partition each partions in partions.
+  Args:
+    partition_vals: a list of tuples
   #}
-  {% for val in partition_vals %}
-    {%- set partition = val | join(', ') %}
-    ALTER TABLE {{table}} DROP PARTITION {{ partition }};
+  {%- for val in partition_vals -%}
+    {%- set partition = val | join(', ') -%}
+    ALTER TABLE {{table}} DROP PARTITION '{{ partition }}';
   {% endfor %}
 {% endmacro %}

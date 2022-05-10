@@ -184,8 +184,9 @@
 {% endmacro %}
 
 
+{# TODO: remove this. #}
 {% macro partition_cols(label, required=false) %}
-  {%- set cols = config.get('partition_by', 
+  {%- set cols = config.get('partition_by',
                             validator=validation.any[list, basestring]) -%}
   {%- if cols is not none %}
     {%- if cols is string -%}
@@ -210,16 +211,18 @@
   #}
   {%- set table_type = config.get('table_type', default='dimension') | upper -%}
   {%- set primary_index = config.get('primary_index') -%}
-  {%- set incremental_strategy = config.get('partitions') -%}
+  {%- set incremental_strategy = config.get('incremental_strategy') -%}
   {%- set partitions = config.get('partition_by') -%}
+  {{ log('\n\n** create_table_as' ~ '\n** relation: ' ~ relation ~ '\n** incremental_strategy ' ~ incremental_strategy ~ '\n** partitions: ' ~ partitions) }}
   {%- if incremental_strategy == 'insert_overwrite' and not partitions %}
-      {{ exceptions.raise_compiler_error("The insert/overwrite incremental "
-                                         "strategy requires that a partition "
-                                         "be specified.") }} 
+      {{ exceptions.raise_compiler_error('Model %s is materialized as incremental '
+                                         'using the insert_overwrite strategy, '
+                                         'but no partition is specified in the '
+                                         'commit block.' % (relation)) }}
   {% endif %}
     CREATE {{ table_type }} TABLE IF NOT EXISTS {{ relation }}
     {%- if primary_index %}
-    PRIMARY INDEX 
+    PRIMARY INDEX
       {% if primary_index is iterable and primary_index is not string %}
           {{ primary_index | join(', ') }}
       {%- else -%}
@@ -227,7 +230,7 @@
       {%- endif -%}
     {%- endif -%}
     {% if partitions %}
-    PARTITION BY 
+    PARTITION BY
       {% if partitions is iterable and partitions is not string %}
           {{ partitions | join(', ') }}
       {%- else -%}
