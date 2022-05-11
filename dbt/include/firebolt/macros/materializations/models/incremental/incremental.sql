@@ -20,20 +20,19 @@
     {% set unique_key = config.get('unique_key') %}
   #}
   {% set strategy = config.get('incremental_strategy', default='append') %}
-  {# In following lines: 
+  {# In following lines:
 
      `target` is just a dbt `BaseRelation` object, not a DB table.
-     
-     We're only retrieving `existing` to check for existence; `load_relation()` 
-     returns a `BaseRelation` with the dictionary values of any relations that exist 
-     in dbt's cache that share the identifier of the passed relation. If none 
-     exist, returns None. Note that this does *not* create a table in the DB. 
+
+     We're only retrieving `existing` to check for existence; `load_relation()`
+     returns a `BaseRelation` with the dictionary values of any relations that exist
+     in dbt's cache that share the identifier of the passed relation. If none
+     exist, returns None. Note that this does *not* create a table in the DB.
 
      `target` is a relation with all the same fields as `existing`, but guaranteed
      to be an actual `BaseRelation` object. #}
-  {% set target = this %}
+  {% set target = this.incorporate(type='table') %}
   {% set existing = load_relation(this) %}
-  {{ log('\n\n** incremental existing: ' ~ existing ~ ' **\n') }}
   {% set new_records = make_temp_relation(target) %}
   {{ drop_relation_if_exists(new_records) }}
   {% set new_records = new_records.incorporate(type='table') %}
@@ -72,17 +71,17 @@
   {% endcall %}
 
   {# Todo: figure out what persist_docs and create_indexes do. #}
-  {% do persist_docs(source, model) %}
+  {% do persist_docs(target, model) %}
   {% if existing is none
       or existing.is_view
       or should_full_refresh() %}
-  {% do create_indexes(source) %}
+  {% do create_indexes(target) %}
   {% endif %}
 
   {{ drop_relation_if_exists(new_records) }}
 
   {{ run_hooks(post_hooks, inside_transaction=True) }}
 
-  {{ return({'relations': [source]}) }}
+  {{ return({'relations': [target]}) }}
 
 {%- endmaterialization %}

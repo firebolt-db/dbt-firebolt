@@ -213,9 +213,6 @@
   {%- set primary_index = config.get('primary_index') -%}
   {%- set incremental_strategy = config.get('incremental_strategy') -%}
   {%- set partitions = config.get('partition_by') -%}
-  {{ log('\n\n** create_table_as' ~ '\n** relation: ' ~ relation ~ 
-         '\n** incremental_strategy ' ~ incremental_strategy ~ 
-         '\n** partitions: ' ~ partitions ~ ' **\n\n') }}
   {%- if incremental_strategy == 'insert_overwrite' and not partitions %}
     {{ exceptions.raise_compiler_error('Model %s is materialized as incremental '
                                        'using the insert_overwrite strategy, '

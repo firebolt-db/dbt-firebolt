@@ -8,7 +8,7 @@
 
 ### Under the hood
 
-- add FireboltColumn class to handle string type
+- Added FireboltColumn class to handle string type.
 
 ## v.1.0.4
 

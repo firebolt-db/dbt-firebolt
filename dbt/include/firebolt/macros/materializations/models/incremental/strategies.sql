@@ -41,15 +41,14 @@
 
     SELECT
     {% if partition_columns is iterable and partition_columns is not string -%}
-        {{ partition_columns | join(', ') }}
+        DISTINCT({{ partition_columns | join(', ') }})
     {%- else -%}
-        {{ partition_columns }}
+        DISTINCT {{ partition_columns }}
     {%- endif %}
     FROM {{ source }}
   {% endcall %}
   {%- set partition_vals = load_result('get_partition_cols').table.rows -%}
   {%- if partition_vals -%}
-    {{ log('\n\n** partition values: ' ~ partition_vals, True) }}
     {{ drop_partitions_sql(target, partition_vals) }}
   {%- endif -%}
   {%- set dest_columns = adapter.get_columns_in_relation(target) -%}
