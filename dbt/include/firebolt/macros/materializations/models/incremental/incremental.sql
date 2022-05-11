@@ -20,22 +20,21 @@
     {% set unique_key = config.get('unique_key') %}
   #}
   {% set strategy = config.get('incremental_strategy', default='append') %}
-  {# incorporate() returns a new BaseRelation, an altered copy of `this`.
-     If `this` is None, returns None.
-     Note that this does *not* create a table in the DB.
-     We're doing this in case `this` is a view. Now we have a relation
-     with all the same field values, but as a table. #}
-  {% set source = this.incorporate(type='table') %}
-  {# If a table with the name `this.identifier` already exists, load_relation()
-     returns a BaseRelation with the dictionary values of that table, else
-     None. Note that, as with incorporate(), this does *not* create a table
-     in the DB. #}
+  {# In following lines: 
+
+     `target` is just a dbt `BaseRelation` object, not a DB table.
+     
+     We're only retrieving `existing` to check for existence; `load_relation()` 
+     returns a `BaseRelation` with the dictionary values of any relations that exist 
+     in dbt's cache that share the identifier of the passed relation. If none 
+     exist, returns None. Note that this does *not* create a table in the DB. 
+
+     `target` is a relation with all the same fields as `existing`, but guaranteed
+     to be an actual `BaseRelation` object. #}
+  {% set target = this %}
   {% set existing = load_relation(this) %}
-  {% set new_records = make_temp_relation(source) %}
-  {{ drop_relation_if_exists(new_records) }}
-  {# Out of an abundance of caution, setting type to view and dropping,
-     the setting it back to table. #}
-  {% set new_records = new_records.incorporate(type='view') %}
+  {{ log('\n\n** incremental existing: ' ~ existing ~ ' **\n') }}
+  {% set new_records = make_temp_relation(target) %}
   {{ drop_relation_if_exists(new_records) }}
   {% set new_records = new_records.incorporate(type='table') %}
   {% set on_schema_change = incremental_validate_on_schema_change(
@@ -48,10 +47,10 @@
   {# First check whether we want to full refresh for existing view or config reasons. #}
   {% set do_full_refresh = (should_full_refresh() or existing.is_view) %}
   {% if existing is none %}
-    {% set build_sql = create_table_as(False, source, sql) %}
+    {% set build_sql = create_table_as(False, target, sql) %}
   {% elif do_full_refresh %}
     {{ drop_relation_if_exists(existing) }}
-    {% set build_sql = create_table_as(False, source, sql) %}
+    {% set build_sql = create_table_as(False, target, sql) %}
   {% else %}
     {# Actually do the incremental query here. #}
     {# Instantiate new objects in dbt's internal list. Have to
@@ -60,11 +59,11 @@
     {% do run_query(create_table_as(True, new_records, sql)) %}
     {# All errors involving schema changes are dealt with in `process_schema_changes`. #}
     {% set dest_columns = process_schema_changes(on_schema_change,
-                                                   new_records,
-                                                   existing) %}
+                                                 new_records,
+                                                 existing) %}
     {% set build_sql = get_incremental_sql(strategy,
                                            new_records,
-                                           existing,
+                                           target,
                                            unique_key,
                                            dest_columns) %}
   {% endif %}

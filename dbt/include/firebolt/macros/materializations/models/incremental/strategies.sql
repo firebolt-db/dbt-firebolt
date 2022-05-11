@@ -20,8 +20,7 @@
 
 
 {% macro get_append_only_sql(source, target, dest_columns) -%}
-  {%- set dest_cols_csv = get_quoted_csv(dest_columns | map(attribute="name")) %}
-
+  {%- set dest_cols_csv = get_quoted_csv(dest_columns | map(attribute="name")) -%}
   INSERT INTO {{ target }} ({{ dest_cols_csv }})
       SELECT {{ dest_cols_csv }}
       FROM {{ source }}
@@ -59,7 +58,7 @@
 {% endmacro %}
 
 
-{% macro drop_partitions_sql(table, partition_vals) %}
+{% macro drop_partitions_sql(relation, partition_vals) %}
   {# 
   Write SQL code to drop partition each partions in partions.
   Args:
@@ -67,6 +66,6 @@
   #}
   {%- for val in partition_vals -%}
     {%- set partition = val | join(', ') -%}
-    ALTER TABLE {{table}} DROP PARTITION '{{ partition }}';
-  {% endfor %}
+    ALTER TABLE {{relation}} DROP PARTITION '{{ partition }}';
+  {%- endfor -%}
 {% endmacro %}

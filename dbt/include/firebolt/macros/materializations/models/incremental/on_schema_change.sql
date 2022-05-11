@@ -7,9 +7,6 @@
   {% if on_schema_change == 'sync_all_columns' %}
     {% do exceptions.raise_compiler_error(
               'Firebolt does not support the on_schema_change value "sync_all_columns."') %}
-    {% set log_message = 'Invalid value for on_schema_change (%s) specified. Setting default value of %s.' %
-                        (on_schema_change, default) %}
-     {% do log(log_message, True) %}
     {{ return(default) }}
   {% else %}
     {{ return(on_schema_change) }}
@@ -50,14 +47,6 @@
     'new_target_types': new_target_types,
     'common_columns': common_columns
   } %}
-  {% set msg %}
-    In {{ target_relation }}:
-        Schema changed: {{ schema_changed }}
-        Source columns not in target: {{ source_not_in_target }}
-        Target columns not in source: {{ target_not_in_source }}
-        New column types: {{ new_target_types }}
-  {% endset %}
-  {% do log(msg) %}
   {{ return(changes_dict) }}
 {% endmacro %}
 
