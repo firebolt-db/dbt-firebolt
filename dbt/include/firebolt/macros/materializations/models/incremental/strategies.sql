@@ -10,8 +10,9 @@
        merges. #}
     {{ get_insert_overwrite_sql(source, target, dest_columns) }}
   {%- elif strategy is not none -%}
-    {% do exceptions.raise_compiler_error('Incremental strategy %s is not supported '
-                                          'on model %s.' % (strategy, target)) %}
+    {% do exceptions.raise_compiler_error('Model %s has incremental strategy %s '
+                                          'specified, but that strategy is not '
+                                          'supported.' % (target, strategy)) %}
   {% else %}
     {{ exceptions.raise_compiler_error('No incremental strategy was specified '
                                        'for model %s.' % (target)) }}
@@ -34,11 +35,11 @@
     {{ exceptions.raise_compiler_error('No partition was specified for model %s source: %s.' %
                                        (target, source)) }}
   {% endif %}
-  {# Get values of partition columns for each row that will be inserted from 
+  {# Get values of partition columns for each row that will be inserted from
      source. For each of those rows drop the partition in the target. #}
   {% call statement('get_partition_cols', fetch_result=True) %}
 
-    SELECT 
+    SELECT
     {% if partition_columns is iterable and partition_columns is not string -%}
         {{ partition_columns | join(', ') }}
     {%- else -%}
@@ -59,7 +60,7 @@
 
 
 {% macro drop_partitions_sql(relation, partition_vals) %}
-  {# 
+  {#
   Write SQL code to drop partition each partions in partions.
   Args:
     partition_vals: a list of tuples
