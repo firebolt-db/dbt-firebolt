@@ -1,10 +1,12 @@
 # Changelog
 
-## v.1.0.5
+## v.1.1.0
 
 ### Features
 
 - dbt-firebolt now supports the insert/overwrite incremental model.
+
+## v.1.0.5
 
 ### Under the hood
 
