@@ -127,9 +127,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         Firebolt does not yet support transactions.
         """
 
-    def cancel(
-        self, connection: SQLConnectionManager
-    ) -> dbt.exceptions.NotImplementedException:
+    def cancel(self, connection: SQLConnectionManager) -> None:
         """Cancel the last query on the given connection."""
         raise dbt.exceptions.NotImplementedException(
             '`cancel` is not implemented for this adapter!'
