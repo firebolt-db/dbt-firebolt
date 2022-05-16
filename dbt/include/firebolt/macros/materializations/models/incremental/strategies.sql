@@ -64,8 +64,8 @@
   Args:
     partition_vals: a list of tuples
   #}
-  {%- for val in partition_vals -%}
-    {%- set partition = val | join(', ') -%}
-    ALTER TABLE {{relation}} DROP PARTITION '{{ partition }}';
-  {%- endfor -%}
+  {%- for partition in partition_vals -%}
+    ALTER TABLE {{relation}} DROP PARTITION {{ vals[1:-1] }};
+
+  {% endfor -%}
 {% endmacro %}
