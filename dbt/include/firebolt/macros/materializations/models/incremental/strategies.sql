@@ -8,6 +8,7 @@
   {%- elif strategy == 'insert_overwrite' -%}
     {# Only insert new records into existing table, relying on user to manage
        merges. #}
+    {{ log('\n\n** insert_overwrite: ' ~ source ~ '\n', True) }}
     {{ get_insert_overwrite_sql(source, target, dest_columns) }}
   {%- elif strategy is not none -%}
     {% do exceptions.raise_compiler_error('Model %s has incremental strategy %s '
@@ -21,10 +22,11 @@
 
 
 {% macro get_append_only_sql(source, target, dest_columns) -%}
-  {%- set dest_cols_csv = get_quoted_csv(dest_columns | map(attribute="name")) -%}
+  {%- set dest_cols_csv = get_quoted_csv(dest_columns | map(attribute="name")) %}
+  
   INSERT INTO {{ target }} ({{ dest_cols_csv }})
-      SELECT {{ dest_cols_csv }}
-      FROM {{ source }}
+  SELECT {{ dest_cols_csv }}
+  FROM {{ source }}
 {%- endmacro %}
 
 
@@ -36,14 +38,14 @@
                                        (target, source)) }}
   {% endif %}
   {# Get values of partition columns for each row that will be inserted from
-     source. For each of those rows drop the partition in the target. #}
+     source. For each of those rows we'll drop the partition in the target. #}
   {% call statement('get_partition_cols', fetch_result=True) %}
 
     SELECT
     {% if partition_columns is iterable and partition_columns is not string -%}
-        DISTINCT({{ partition_columns | join(', ') }})
+      DISTINCT({{ partition_columns | join(', ') }})
     {%- else -%}
-        DISTINCT {{ partition_columns }}
+      DISTINCT {{ partition_columns }}
     {%- endif %}
     FROM {{ source }}
   {% endcall %}
@@ -58,14 +60,25 @@
 {% endmacro %}
 
 
-{% macro drop_partitions_sql(relation, partition_vals) %}
+{% macro drop_partitions_sql(relation, partitions) %}
   {#
   Write SQL code to drop partition each partions in partions.
   Args:
-    partition_vals: a list of tuples
+    partitions: a list of strings, each of which begins with a '['' and 
+    ends with a ']', as such: '[val1, val2]', and each of which represents 
+    a partition to be dropped.
   #}
-  {%- for partition in partition_vals -%}
-    ALTER TABLE {{relation}} DROP PARTITION {{ vals[1:-1] }};
-
-  {% endfor -%}
+  {{ log('\n\n** drop_partitions_sql: ' ~ partitions, True) }}
+  {%- for partition in partitions -%}
+    {%- set partition -%}
+      {%- if partition is iterable and partition is not string -%}
+        {{ partition | join(', ') }}
+      {%- else -%}
+        {{ partition }}
+      {%- endif -%}
+    {%- endset -%}
+    {%- set partition = partition.strip() -%}
+    {{ log('Partition to check leading whitespace: ' ~ partition, True) }}
+  ALTER TABLE {{relation}} DROP PARTITION {{ partition[1:-1] }};
+  {%- endfor -%}
 {% endmacro %}
