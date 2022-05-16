@@ -42,9 +42,23 @@
 
   -- `BEGIN` happens here:
   {{ run_hooks(pre_hooks, inside_transaction=True) }}
-
+  {%- set partitions = config.get('partitions') -%}
+  {%- set partition_by = config.get('partition_by') -%}
+  {%- if incremental_strategy == 'insert_overwrite' and not partition_by %}
+    {{ exceptions.raise_compiler_error('Model %s is materialized as incremental '
+                                       'using the insert_overwrite strategy, '
+                                       'but at least one of [partitions, partition_by] '
+                                       'must be specified in the commit block and '
+                                       'neither is.' % (relation)) }}
+  {% endif %}
   {# First check whether we want to full refresh for existing view or config reasons. #}
-  {% set do_full_refresh = (should_full_refresh() or existing.is_view) %}
+  {% set do_full_refresh = (should_full_refresh() 
+                            or existing.is_view 
+                            or not partition_by) %}
+  {% if not partition_by -%}
+    {{ log('`partition_by` is not specified for model %s source: %s. This '
+           'triggers a full refresh.' % (target, source), True) }}
+  {% endif %}
   {% if existing is none %}
     {% set build_sql = create_table_as(False, target, sql) %}
   {% elif do_full_refresh %}
