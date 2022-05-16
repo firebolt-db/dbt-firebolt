@@ -38,8 +38,11 @@
      the partition values provided. _If_ no partition values are provided, query 
      the DB to find all partition values in the source table and drop them. To 
      match format of SQL query results, we convert each sublist to a string. #}
-  {% if not partition_vals %} {# No partition values were set in config. #}
+  {% if partition_vals %}
+    {{ drop_partitions_sql(target, partition_vals, True) }}
+  {% else %} {# No partition values were set in config. #}
     {% call statement('get_partition_cols', fetch_result=True) %}
+
       SELECT
       {% if partition_columns is iterable and partition_columns is not string -%}
         DISTINCT({{ partition_columns | join(', ') }})
@@ -47,10 +50,10 @@
         DISTINCT {{ partition_columns }}
       {%- endif %}
       FROM {{ source }}
-    {% endcall %}
+    {%- endcall -%}
     {%- set partition_vals = load_result('get_partition_cols').table.rows -%}
+    {{ drop_partitions_sql(target, partition_vals, False) }}
   {%- endif -%}
-  {{ drop_partitions_sql(target, partition_vals) }}
   {%- set dest_columns = adapter.get_columns_in_relation(target) -%}
   {%- set dest_cols_csv = dest_columns | map(attribute='quoted') | join(', ') -%}
 
@@ -58,7 +61,7 @@
 {% endmacro %}
 
 
-{% macro drop_partitions_sql(relation, partitions) %}
+{% macro drop_partitions_sql(relation, partitions, set_in_config) %}
   {#
   Write SQL code to drop each partition in `partitions`.
   Args:
@@ -69,7 +72,11 @@
   {%- for partition in partitions -%}
     {%- set partition -%}
       {%- if partition is iterable and partition is not string -%}
-        {{ partition | join(', ') }}
+        {%- if set_in_config -%}
+          {{ partition | string() }}
+        {%- else -%}
+          {{ partition | join(', ') }}
+        {%- endif -%}
       {%- else -%}
         {{ partition }}
       {%- endif -%}
