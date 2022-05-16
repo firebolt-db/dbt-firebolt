@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-from setuptools.config import read_configuration
+from setuptools.config import setupcfg
 
-config = read_configuration('setup.cfg')
+config = setupcfg('setup.cfg')
 version = config['metadata']['version']
 install_requires = [config['options']['install_requires']]
 
