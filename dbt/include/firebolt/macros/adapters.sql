@@ -194,7 +194,7 @@
   {%- set table_type = config.get('table_type', default='dimension') | upper -%}
   {%- set primary_index = config.get('primary_index') -%}
   {%- set incremental_strategy = config.get('incremental_strategy') -%}
-  {%- set partition_by = config.get('partition_by') %}
+  {%- set partitions = config.get('partition_by') %}
 
   CREATE {{ table_type }} TABLE IF NOT EXISTS {{ relation }}
   {%- if primary_index %}

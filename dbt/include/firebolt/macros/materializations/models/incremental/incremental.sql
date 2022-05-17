@@ -42,13 +42,12 @@
 
   -- `BEGIN` happens here:
   {{ run_hooks(pre_hooks, inside_transaction=True) }}
-  {%- set partitions = config.get('partitions') -%}
   {%- set partition_by = config.get('partition_by') -%}
   {# First check whether we want to full refresh for existing view or config reasons. #}
-  {% set do_full_refresh = (should_full_refresh() 
-                            or existing.is_view 
-                            or not partition_by) %}
-  {% if not partition_by -%}
+  {% set do_full_refresh = (should_full_refresh()
+                            or existing.is_view
+                            or (strategy == 'insert_overwrite' and not partition_by)) %}
+  {% if strategy == 'insert_overwrite' and not partition_by -%}
     {{ log('`partition_by` is not specified for model %s. This '
            'triggers a full refresh.' % (target), True) }}
   {% endif %}

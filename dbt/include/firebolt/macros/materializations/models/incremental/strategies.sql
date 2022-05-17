@@ -34,10 +34,11 @@
   {%- set partition_columns = config.get('partition_by') -%}
   {%- set partition_vals = config.get('partitions') -%}
   {# Get values of partition columns for each row that will be inserted from
-     source. For each of those rows we'll drop the partition in the target. Use 
-     the partition values provided. _If_ no partition values are provided, query 
-     the DB to find all partition values in the source table and drop them. To 
-     match format of SQL query results, we convert each sublist to a string. #}
+     source. For each of those rows we'll drop the partition in the target. Use
+     the partition values provided in the confg block. _If_ no partition values
+     are provided, query the DB to find all partition values in the source table
+     and drop them. To match format of SQL query results, we convert each sublist
+     to a string. #}
   {% if partition_vals %}
     {{ drop_partitions_sql(target, partition_vals, True) }}
   {% else %} {# No partition values were set in config. #}
@@ -65,16 +66,21 @@
   {#
   Write SQL code to drop each partition in `partitions`.
   Args:
+    relation: a relation whose name will be used for `DROP PARTITION` queries.
     partitions: a list of strings, each of which begins with a '['' and
     ends with a ']', as such: '[val1, val2]', and each of which represents
     a partition to be dropped.
+    set_in_config: a boolean used to determine how to treat `partitions`,
+    whether as a list of strings or as a list of Agate rows.
   #}
   {%- for partition in partitions -%}
     {%- set partition -%}
       {%- if partition is iterable and partition is not string -%}
         {%- if set_in_config -%}
+          {# partition is a list of strings. #}
           {{ partition | string() }}
         {%- else -%}
+          {# partition is a list of Agate rows. #}
           {{ partition | join(', ') }}
         {%- endif -%}
       {%- else -%}
