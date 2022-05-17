@@ -1,5 +1,0 @@
-[run]
-relative_files=True
-
-[paths]
-source=dbt/adapters
