@@ -1,1 +1,1 @@
-from dbt.adapters.firebolt import __version__  # noqa
+from adapters.firebolt import __version__  # noqa
