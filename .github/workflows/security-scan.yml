@@ -16,8 +16,7 @@ jobs:
           fetch-depth: 0
 
       - name: "Security Scan"
-        uses: firebolt-db/action-security-scan@main
-        with:
-          github-key: ${{ secrets.GITHUB_TOKEN }}
-          fossa-key: ${{ secrets.FOSSA_TOKEN }}
-          sonar-key: ${{ secrets.SONARCLOUD_TOKEN }}
+        run: |
+          python3 -V
+          python3 -m pipenv --version
+          python3 -m pipenv install -e "."
