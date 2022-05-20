@@ -19,7 +19,7 @@
   {# Not yet used
     {% set unique_key = config.get('unique_key') %}
   #}
-  {% set strategy = config.get('incremental_strategy', default='append') %}
+  {%- set strategy = config.get('incremental_strategy', default='append') -%}
   {# In following lines:
 
      `target` is just a dbt `BaseRelation` object, not a DB table.
@@ -31,58 +31,58 @@
 
      `target` is a relation with all the same fields as `existing`, but guaranteed
      to be an actual `BaseRelation` object. #}
-  {% set target = this.incorporate(type='table') %}
-  {% set existing = load_relation(this) %}
-  {% set new_records = make_temp_relation(target) %}
+  {%- set target = this.incorporate(type='table') -%}
+  {%- set existing = load_relation(this) -%}
+  {%- set new_records = make_temp_relation(target) -%}
   {{ drop_relation_if_exists(new_records) }}
-  {% set new_records = new_records.incorporate(type='table') %}
-  {% set on_schema_change = incremental_validate_on_schema_change(
+  {%- set new_records = new_records.incorporate(type='table') -%}
+  {%- set on_schema_change = incremental_validate_on_schema_change(
                                 config.get('on_schema_change'),
-                                default='ignore') %}
+                                default='ignore') -%}
 
   -- `BEGIN` happens here:
   {{ run_hooks(pre_hooks, inside_transaction=True) }}
   {%- set partition_by = config.get('partition_by') -%}
   {# First check whether we want to full refresh for existing view or config reasons. #}
-  {% set do_full_refresh = (should_full_refresh()
+  {%- set do_full_refresh = (should_full_refresh()
                             or existing.is_view
                             or (strategy == 'insert_overwrite' and not partition_by)) %}
-  {% if strategy == 'insert_overwrite' and not partition_by -%}
+  {%- if strategy == 'insert_overwrite' and not partition_by -%}
     {{ log('`partition_by` is not specified for model %s. This '
            'triggers a full refresh.' % (target), True) }}
-  {% endif %}
+  {%- endif -%}
   {% if existing is none %}
-    {% set build_sql = create_table_as(False, target, sql) %}
-  {% elif do_full_refresh %}
+    {%- set build_sql = create_table_as(False, target, sql) -%}
+  {%- elif do_full_refresh -%}
     {{ drop_relation_if_exists(existing) }}
-    {% set build_sql = create_table_as(False, target, sql) %}
-  {% else %}
+    {%- set build_sql = create_table_as(False, target, sql) -%}
+  {%- else -%}
     {# Actually do the incremental query here. #}
     {# Instantiate new objects in dbt's internal list. Have to
        run this query so dbt can query the DB to get the columns in
        new_records. #}
-    {% do run_query(create_table_as(True, new_records, sql)) %}
+    {%- do run_query(create_table_as(True, new_records, sql)) -%}
     {# All errors involving schema changes are dealt with in `process_schema_changes`. #}
-    {% set dest_columns = process_schema_changes(on_schema_change,
+    {%- set dest_columns = process_schema_changes(on_schema_change,
                                                  new_records,
-                                                 existing) %}
-    {% set build_sql = get_incremental_sql(strategy,
+                                                 existing) -%}
+    {%- set build_sql = get_incremental_sql(strategy,
                                            new_records,
                                            target,
                                            unique_key,
-                                           dest_columns) %}
-  {% endif %}
-  {% call statement("main") %}
+                                           dest_columns) -%}
+  {%- endif -%}
+  {%- call statement("main") -%}
     {{ build_sql }}
-  {% endcall %}
+  {%- endcall -%}
 
   {# Todo: figure out what persist_docs and create_indexes do. #}
-  {% do persist_docs(target, model) %}
-  {% if existing is none
+  {%- do persist_docs(target, model) -%}
+  {%- if existing is none
       or existing.is_view
-      or should_full_refresh() %}
-  {% do create_indexes(target) %}
-  {% endif %}
+      or should_full_refresh() -%}
+  {%- do create_indexes(target) -%}
+  {%- endif %}
 
   {{ drop_relation_if_exists(new_records) }}
 

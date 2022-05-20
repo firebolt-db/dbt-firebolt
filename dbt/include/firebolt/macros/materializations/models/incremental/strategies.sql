@@ -62,23 +62,24 @@
 {% endmacro %}
 
 
-{% macro drop_partitions_sql(relation, partitions, set_in_config) %}
+{% macro drop_partitions_sql(relation, partitions_vals, set_in_config) %}
   {#
-  Write SQL code to drop each partition in `partitions`.
+  Write SQL code to drop each partition in `partitions_vals`.
   Args:
     relation: a relation whose name will be used for `DROP PARTITION` queries.
-    partitions: a list of strings, each of which begins with a '['' and
+    partitions_vals: a list of strings, each of which begins with a '['' and
     ends with a ']', as such: '[val1, val2]', and each of which represents
     a partition to be dropped.
-    set_in_config: a boolean used to determine how to treat `partitions`,
+    set_in_config: a boolean used to determine how to treat `partitions_vals`,
     whether as a list of strings or as a list of Agate rows.
   #}
-  {%- for partition in partitions -%}
+  {%- for partition in partitions_vals -%}
     {%- set partition -%}
       {%- if partition is iterable and partition is not string -%}
         {%- if set_in_config -%}
           {# partition is a list of strings. #}
-          {{ partition | string() }}
+          {{ partition | string() | strip() | slice(1, -1) }}
+
         {%- else -%}
           {# partition is a list of Agate rows. #}
           {{ partition | join(', ') }}
@@ -87,6 +88,7 @@
         {{ partition }}
       {%- endif -%}
     {%- endset %}
-  ALTER TABLE {{relation}} DROP PARTITION {{ partition.strip()[1:-1] }};
+
+  ALTER TABLE {{relation}} DROP PARTITION {{ partition.strip() }};
   {%- endfor -%}
 {% endmacro %}
