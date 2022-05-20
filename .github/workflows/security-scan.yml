@@ -17,7 +17,7 @@ jobs:
 
       - name: "Hack version attr for security scanning"
         run: |
-          cp dbt/adapters/firebolt/__init__.py dbt/
+          grep "__version__" dbt/adapters/firebolt/__init__.py > dbt/__init__.py
           sed -i 's#attr: dbt.adapters.firebolt.__version__#attr: dbt.__version__#' setup.cfg
           
       - name: "Security Scan"
