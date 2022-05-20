@@ -12,18 +12,16 @@ jobs:
     steps:
       - name: "Checkout Code"
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: "Hack version attr for security scanning"
         run: |
           grep "__version__" dbt/adapters/firebolt/__init__.py > dbt/__init__.py
           sed -i 's#attr: dbt.adapters.firebolt.__version__#attr: dbt.__version__#' setup.cfg
-          
+
       - name: "Security Scan"
-        run: |
-          python3 -V
-          python3 -m pip install pipenv
-          python3 -m pipenv --version
-          python3 -m pipenv install -e "."
+        uses: firebolt-db/action-security-scan@main
+        with:
+          github-key: ${{ secrets.GITHUB_TOKEN }}
+          fossa-key: ${{ secrets.FOSSA_TOKEN }}
+          sonar-key: ${{ secrets.SONARCLOUD_TOKEN }}
 
