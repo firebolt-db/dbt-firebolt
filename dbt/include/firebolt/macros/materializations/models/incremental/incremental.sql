@@ -19,7 +19,12 @@
   {# Not yet used
     {% set unique_key = config.get('unique_key') %}
   #}
-  {%- set strategy = config.get('incremental_strategy', default='append') -%}
+  {%- set strategy = config.get('incremental_strategy') -%}
+  {%- if is_incremental() and strategy is none -%}
+    {{ log('Model %s is set to incremental, but no incremental strategy is set. '
+           'Defaulting to append' % this, True) }}
+    {%- set strategy = 'append' -%}
+  {%- endif -%}
   {# In following lines:
 
      `target` is just a dbt `BaseRelation` object, not a DB table.

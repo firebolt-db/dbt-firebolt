@@ -1,13 +1,21 @@
 {% macro get_incremental_sql(strategy, source, target, unique_key, dest_columns) %}
-{# Retrieve appropriate sql for whichever incremental strategy is given.
-   unique_key is here only as a placeholder for future use. #}
+  {# 
+  Retrieve appropriate SQL for whichever incremental strategy is given. 
+  Args:
+    strategy: which incremental strategy is in to be used.
+    source: table from which queried results will be taken.
+    target: table into which results will be inserted.
+    unique_key: only as a placeholder for future use
+    dest_columns: list of the names of the columns which data will be 
+    inserted into.
+  #}
   {%- if strategy == 'append' -%}
-    {# Only insert new records into existing table, relying on user to manage
-       merges. #}
+    {#- Only insert new records into existing table, relying on user to manage
+       merges. -#}
     {{ get_append_only_sql(source, target, dest_columns) }}
   {%- elif strategy == 'insert_overwrite' -%}
-    {# Only insert new records into existing table, relying on user to manage
-       merges. #}
+    {#- Insert new data. If any data is duplicate, drop partition containing
+       previous data and insert new. -#}
     {{ get_insert_overwrite_sql(source, target, dest_columns) }}
   {%- elif strategy is not none -%}
     {% do exceptions.raise_compiler_error('Model %s has incremental strategy %s '
@@ -30,15 +38,22 @@
 
 
 {% macro get_insert_overwrite_sql(source, target, dest_columns) %}
-  {# Compile SQL to drop correct partitions in target and insert from source. #}
+  {# 
+  Compile SQL to drop correct partitions in target and insert from source. 
+  Args:
+    source: table from which queried results will be taken.
+    target: table into which results will be inserted.
+    dest_columns: list of the names of the columns which data will be 
+    inserted into.
+  #}
   {%- set partition_columns = config.get('partition_by') -%}
   {%- set partition_vals = config.get('partitions') -%}
-  {# Get values of partition columns for each row that will be inserted from
+  {#- Get values of partition columns for each row that will be inserted from
      source. For each of those rows we'll drop the partition in the target. Use
      the partition values provided in the confg block. _If_ no partition values
      are provided, query the DB to find all partition values in the source table
      and drop them. To match format of SQL query results, we convert each sublist
-     to a string. #}
+     to a string. -#}
   {% if partition_vals %}
     {{ drop_partitions_sql(target, partition_vals, True) }}
   {% else %} {# No partition values were set in config. #}
@@ -62,33 +77,45 @@
 {% endmacro %}
 
 
-{% macro drop_partitions_sql(relation, partitions_vals, set_in_config) %}
+{% macro drop_partitions_sql(relation, partition_vals, set_in_config) %}
   {#
-  Write SQL code to drop each partition in `partitions_vals`.
+  Write SQL code to drop each partition in `partition_vals`.
   Args:
     relation: a relation whose name will be used for `DROP PARTITION` queries.
-    partitions_vals: a list of strings, each of which begins with a '['' and
+    partition_vals: a list of strings, each of which begins with a '['' and
     ends with a ']', as such: '[val1, val2]', and each of which represents
     a partition to be dropped.
-    set_in_config: a boolean used to determine how to treat `partitions_vals`,
+    set_in_config: a boolean used to determine how to treat `partition_vals`,
     whether as a list of strings or as a list of Agate rows.
   #}
-  {%- for partition in partitions_vals -%}
-    {%- set partition -%}
-      {%- if partition is iterable and partition is not string -%}
+  {%- for vals in partition_vals -%}
+    {%- set vals -%}
+      {%- if vals is iterable and vals is not string -%}
         {%- if set_in_config -%}
-          {# partition is a list of strings. #}
-          {{ partition | string() | strip() | slice(1, -1) }}
-
+          {# `vals` is a list of strings. #}
+          {{ vals | string() | trim() | slice(1, -1) }}
         {%- else -%}
-          {# partition is a list of Agate rows. #}
-          {{ partition | join(', ') }}
+          {# `vals` is a list of Agate rows. #}
+          {%- if 1 == (vals | length) -%}
+            {#- There's a weird behavior where, if dbt
+                queries for only a single (text?) field `join()` removes the 
+                qoutes on the resulting string. So I have to do a little bit 
+                of extra magic.
+            -#}
+            '{{ vals | join(', ') }}'
+          {%- else -%}
+            {{ vals | join(', ') }}
+          {%- endif -%}
         {%- endif -%}
       {%- else -%}
-        {{ partition }}
+        {{ vals }}
       {%- endif -%}
-    {%- endset %}
-
-  ALTER TABLE {{relation}} DROP PARTITION {{ partition.strip() }};
+    {%- endset -%}
+  {%- if vals.startswith('[') -%}
+    {#- This should never happen, but just in case dbt does does something 
+        else weird. -#}
+    {%- set vals = vals.slice(1, -1) %}
+  {%- endif %}
+  ALTER TABLE {{relation}} DROP PARTITION {{ vals.strip() }};
   {%- endfor -%}
 {% endmacro %}
