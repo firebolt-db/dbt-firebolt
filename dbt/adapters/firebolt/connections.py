@@ -2,15 +2,14 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from firebolt.client import DEFAULT_API_URL
-from firebolt.db import connect
-
 import dbt.exceptions
 from dbt.adapters.base import Credentials
 from dbt.adapters.sql import SQLConnectionManager
 from dbt.contracts.connection import AdapterResponse
 from dbt.contracts.graph.manifest import Manifest
 from dbt.exceptions import RuntimeException
+from firebolt.client import DEFAULT_API_URL
+from firebolt.db import connect
 
 
 @dataclass

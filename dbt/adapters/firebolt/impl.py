@@ -5,17 +5,17 @@ from datetime import datetime
 from typing import Any, List, Optional, Union
 
 import agate
-
 import dbt.exceptions
 import dbt.utils
 from dbt.adapters.base import available
 from dbt.adapters.base.impl import AdapterConfig
 from dbt.adapters.base.relation import BaseRelation
+from dbt.adapters.sql import SQLAdapter
+from dbt.dataclass_schema import ValidationError, dbtClassMixin
+
 from dbt.adapters.firebolt.column import FireboltColumn
 from dbt.adapters.firebolt.connections import FireboltConnectionManager
 from dbt.adapters.firebolt.relation import FireboltRelation
-from dbt.adapters.sql import SQLAdapter
-from dbt.dataclass_schema import ValidationError, dbtClassMixin
 
 
 @dataclass
