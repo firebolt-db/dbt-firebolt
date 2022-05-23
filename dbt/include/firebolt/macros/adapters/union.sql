@@ -60,7 +60,7 @@
       {%- endset -%}
       {%- set error_message -%}
           There were no columns found to union for relations {{ relations_string }}
-      {%- endset -%
+      {%- endset -%}
       {{ exceptions.raise_compiler_error(error_message) }}
   {%- endif -%}
   {%- for relation in relations %}
