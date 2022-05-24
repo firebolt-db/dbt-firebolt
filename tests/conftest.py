@@ -21,5 +21,5 @@ def dbt_profile_target():
         'password': os.getenv('PASSWORD'),
         'schema': 'test',
         'port': '443',
-        'threads': '1',
+        'threads': 1,
     }
