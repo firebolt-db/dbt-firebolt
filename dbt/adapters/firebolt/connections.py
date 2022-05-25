@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Tuple
 
 import dbt.exceptions
 from dbt.adapters.base import Credentials
@@ -23,10 +23,10 @@ class FireboltCredentials(Credentials):
     account_name: Optional[str] = None
 
     @property
-    def type(self):
+    def type(self) -> str:
         return 'firebolt'
 
-    def _connection_keys(self):
+    def _connection_keys(self) -> Tuple[str, str, str, str, str, str, str]:
         """
         Return tuple of keys (i.e. not values) to display
         in the `dbt debug` output.
@@ -42,7 +42,7 @@ class FireboltCredentials(Credentials):
         )
 
     @property
-    def unique_field(self):
+    def unique_field(self) -> Optional[str]:
         """
         Return a field that can be hashed to uniquely identify one
         team/organization building with this adapter. This is called by
@@ -55,7 +55,8 @@ class FireboltCredentials(Credentials):
 
 
 class FireboltConnectionManager(SQLConnectionManager):
-    """Methods to implement:
+    """
+    Methods to implement:
     - exception_handler
     - cancel_open
     - open
@@ -67,11 +68,11 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     TYPE = 'firebolt'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self._message
 
     @classmethod
-    def open(cls, connection):
+    def open(cls, connection: SQLConnectionManager) -> SQLConnectionManager:
         if connection.state == 'open':
             return connection
         credentials = connection.credentials
@@ -88,7 +89,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         return connection
 
     @contextmanager
-    def exception_handler(self, sql: str):
+    def exception_handler(self, sql: str) -> RuntimeException:
         try:
             yield
         except Exception as e:
@@ -96,7 +97,7 @@ class FireboltConnectionManager(SQLConnectionManager):
             raise RuntimeException(str(e))
 
     @classmethod
-    def get_response(cls, cursor) -> AdapterResponse:
+    def get_response(cls, cursor: SQLConnectionManager) -> AdapterResponse:
         """
         Return an AdapterResponse object. Note that I can't overload/extend it
         as it's defined in dbt core and other internal fns complain if it has extra
@@ -114,19 +115,19 @@ class FireboltConnectionManager(SQLConnectionManager):
             code=None,
         )
 
-    def begin(self):
+    def begin(self) -> None:
         """
         Passing `SQLConnectionManager.begin()` because
         Firebolt does not yet support transactions.
         """
 
-    def commit(self):
+    def commit(self) -> None:
         """
         Passing `SQLConnectionManager.begin()` because
         Firebolt does not yet support transactions.
         """
 
-    def cancel(self, connection):
+    def cancel(self, connection: SQLConnectionManager) -> None:
         """Cancel the last query on the given connection."""
         raise dbt.exceptions.NotImplementedException(
             '`cancel` is not implemented for this adapter!'
