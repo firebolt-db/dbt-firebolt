@@ -167,7 +167,8 @@
        WHERE table_name = '{{ relation.identifier }}'
       ORDER BY column_name
   {% endcall %}
-  {% do return(load_result('get_columns_in_relation').table) %}
+  {{ log('\n\n**********\nget columns:\n' ~ load_result('get_columns_in_relation').table ~ '\n**********\n', True) }}
+  {% do return('hello') %}
   -- {{ log('\n\n**********\nget columns:\n' ~ columns ~ '\n**********\n', True) }}
   -- {{ log('\n\n**********\nrows:\n' ~ columns.rows ~ '\n**********\n', True) }}
   -- {{ log('\n\n**********\ncolumns:\n' ~ columns.columns ~ '\n**********\n', True) }}
