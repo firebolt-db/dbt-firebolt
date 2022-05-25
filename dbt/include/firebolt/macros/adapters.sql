@@ -137,6 +137,23 @@
 {%- endmacro %}
 
 
+{% macro sql_convert_columns_in_relation_firebolt(rows) -%}
+  {% set columns = [] %}
+  {{ log('\n\n** convert columns, rows: **\n' ~ rows, True) }}
+  {% for row in rows %}
+    {{ log('\n\nagate row: ' ~ row ~ '\nfinal row: ' ~ api.Column(*row), True) }}
+    {% do columns.append(api.Column(*row)) %}
+  {% endfor %}
+  {{ return(columns) }}
+{% endmacro %}
+
+{% macro spark__get_columns_in_relation(relation) -%}
+  {% call statement('get_columns_in_relation', fetch_result=True) %}
+      describe extended {{ relation.include(schema=(schema is not none)) }}
+  {% endcall %}
+  {% do return(load_result('get_columns_in_relation').table) %}
+{% endmacro %}
+
 {% macro firebolt__get_columns_in_relation(relation) -%}
   {# Return column information for table identified by relation
      as Agate table. #}
@@ -150,8 +167,13 @@
        WHERE table_name = '{{ relation.identifier }}'
       ORDER BY column_name
   {% endcall %}
-  {% set table = load_result('get_columns_in_relation').table %}
-  {{ return(sql_convert_columns_in_relation(table)) }}
+  {% do return(load_result('get_columns_in_relation').table) %}
+  -- {{ log('\n\n**********\nget columns:\n' ~ columns ~ '\n**********\n', True) }}
+  -- {{ log('\n\n**********\nrows:\n' ~ columns.rows ~ '\n**********\n', True) }}
+  -- {{ log('\n\n**********\ncolumns:\n' ~ columns.columns ~ '\n**********\n', True) }}
+  -- {{ log('\n\n**********\ncolumns returned:\n' ~ sql_convert_columns_in_relation_firebolt(columns.columns) ~
+  --        '\n**********\n\n', True) }}
+  -- {{ return(sql_convert_columns_in_relation_firebolt(columns)) }}
 {% endmacro %}
 
 
