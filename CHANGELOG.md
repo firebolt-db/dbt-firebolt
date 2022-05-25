@@ -15,7 +15,9 @@
 
 ### Under the hood
 
-- add FireboltColumn class to handle string type
+- Added FireboltColumn class to handle string type.
+- Added mypy to pre-commit tests.
+- Fixed output from dbt runs so that successful table creation outputs “Success” rather than “False.”
 
 ## v.1.0.4
 
