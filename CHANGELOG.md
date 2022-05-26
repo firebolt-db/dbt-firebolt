@@ -1,5 +1,16 @@
 # Changelog
 
+## v.1.1.0
+
+### Features
+
+- dbt-firebolt now supports the insert/overwrite incremental model.
+
+### Under the hood
+
+- Added mypy to pre-commit tests.
+- Fixed output from dbt runs so that successful table creation outputs “Success” rather than “False.”
+
 ## v.1.0.6
 
 ### Under the hood
@@ -16,14 +27,12 @@
 ### Under the hood
 
 - Added FireboltColumn class to handle string type.
-- Added mypy to pre-commit tests.
-- Fixed output from dbt runs so that successful table creation outputs “Success” rather than “False.”
 
 ## v.1.0.4
 
 ### Features
 
-- dbt-firebolt now supports append-only incremental models.
+- dbt-firebolt now supports the append-only incremental model.
 - We now return better/more accurate responses from the cursor for logging/debugging.
 
 ### Under the hood

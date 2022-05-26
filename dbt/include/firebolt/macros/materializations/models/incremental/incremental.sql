@@ -19,71 +19,80 @@
   {# Not yet used
     {% set unique_key = config.get('unique_key') %}
   #}
-  {% set strategy = config.get('incremental_strategy', default='append') %}
-  {# incorporate() returns a new BaseRelation, an altered copy of `this`.
-     If `this` is None, returns None.
-     Note that this does *not* create a table in the DB.
-     We're doing this in case `this` is a view. Now we have a relation
-     with all the same field values, but as a table. #}
-  {% set source = this.incorporate(type='table') %}
-  {# If a table with the name `this.identifier` already exists, load_relation()
-     returns a BaseRelation with the dictionary values of that table, else
-     None. Note that, as with incorporate(), this does *not* create a table
-     in the DB. #}
-  {% set existing = load_relation(this) %}
-  {% set new_records = make_temp_relation(source) %}
+  {%- set strategy = config.get('incremental_strategy') -%}
+  {%- if is_incremental() and strategy is none -%}
+    {{ log('Model %s is set to incremental, but no incremental strategy is set. '
+           'Defaulting to append' % this, True) }}
+    {%- set strategy = 'append' -%}
+  {%- endif -%}
+  {# In following lines:
+
+     `target` is just a dbt `BaseRelation` object, not a DB table.
+
+     We're only retrieving `existing` to check for existence; `load_relation()`
+     returns a `BaseRelation` with the dictionary values of any relations that exist
+     in dbt's cache that share the identifier of the passed relation. If none
+     exist, returns None. Note that this does *not* create a table in the DB.
+
+     `target` is a relation with all the same fields as `existing`, but guaranteed
+     to be an actual `BaseRelation` object. #}
+  {%- set target = this.incorporate(type='table') -%}
+  {%- set existing = load_relation(this) -%}
+  {%- set new_records = make_temp_relation(target) -%}
   {{ drop_relation_if_exists(new_records) }}
-  {# Out of an abundance of caution, setting type to view and dropping,
-     the setting it back to table. #}
-  {% set new_records = new_records.incorporate(type='view') %}
-  {{ drop_relation_if_exists(new_records) }}
-  {% set new_records = new_records.incorporate(type='table') %}
-  {% set on_schema_change = incremental_validate_on_schema_change(
+  {%- set new_records = new_records.incorporate(type='table') -%}
+  {%- set on_schema_change = incremental_validate_on_schema_change(
                                 config.get('on_schema_change'),
-                                default='ignore') %}
+                                default='ignore') -%}
 
   -- `BEGIN` happens here:
   {{ run_hooks(pre_hooks, inside_transaction=True) }}
-
+  {%- set partition_by = config.get('partition_by') -%}
   {# First check whether we want to full refresh for existing view or config reasons. #}
-  {% set do_full_refresh = (should_full_refresh() or existing.is_view) %}
+  {%- set do_full_refresh = (should_full_refresh()
+                            or existing.is_view
+                            or (strategy == 'insert_overwrite' and not partition_by)) %}
+  {%- if strategy == 'insert_overwrite' and not partition_by -%}
+    {{ log('`partition_by` is not specified for model %s. This '
+           'triggers a full refresh.' % (target), True) }}
+  {%- endif -%}
   {% if existing is none %}
-    {% set build_sql = create_table_as(False, source, sql) %}
-  {% elif do_full_refresh %}
+    {%- set build_sql = create_table_as(False, target, sql) -%}
+  {%- elif do_full_refresh -%}
     {{ drop_relation_if_exists(existing) }}
-    {% set build_sql = create_table_as(False, source, sql) %}
-  {% else %}
+    {%- set build_sql = create_table_as(False, target, sql) -%}
+  {%- else -%}
     {# Actually do the incremental query here. #}
     {# Instantiate new objects in dbt's internal list. Have to
        run this query so dbt can query the DB to get the columns in
        new_records. #}
-    {% do run_query(create_table_as(True, new_records, sql)) %}
+    {%- do run_query(create_table_as(True, new_records, sql)) -%}
     {# All errors involving schema changes are dealt with in `process_schema_changes`. #}
-    {% set dest_columns = process_schema_changes(on_schema_change,
-                                                   new_records,
-                                                   existing) %}
-    {% set build_sql = get_incremental_sql(strategy,
+    {%- set dest_columns = process_schema_changes(on_schema_change,
+                                                 new_records,
+                                                 existing) -%}
+    {%- set build_sql = get_incremental_sql(strategy,
                                            new_records,
-                                           existing,
+                                           target,
                                            unique_key,
-                                           dest_columns) %}
-  {% endif %}
-  {% call statement("main") %}
+                                           dest_columns) -%}
+  {%- endif -%}
+  {%- call statement("main") -%}
     {{ build_sql }}
-  {% endcall %}
+  {%- endcall -%}
 
   {# Todo: figure out what persist_docs and create_indexes do. #}
-  {% do persist_docs(source, model) %}
-  {% if existing is none
+  {%- do persist_docs(target, model) -%}
+  {%- if existing is none
       or existing.is_view
-      or should_full_refresh() %}
-  {% do create_indexes(source) %}
-  {% endif %}
+      or should_full_refresh() -%}
+  {%- do create_indexes(target) -%}
+  {%- endif %}
 
   {{ drop_relation_if_exists(new_records) }}
 
   {{ run_hooks(post_hooks, inside_transaction=True) }}
 
-  {{ return({'relations': [source]}) }}
+  {{ return({'relations': [target]}) }}
 
 {%- endmaterialization %}
