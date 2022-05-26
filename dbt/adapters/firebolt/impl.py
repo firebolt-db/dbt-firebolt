@@ -205,7 +205,7 @@ class FireboltAdapter(SQLAdapter):
         return agate_table.where(lambda row: re.match(re_match_exp, str(row[col_name])))
 
     @available.parse_none
-    def group_tuples(tuples: List[tuple]) -> List:
+    def group_tuples(tuples: List[tuple]) -> List[tuple]:
         """
         Return a list of all unique tuples.
         Args:
