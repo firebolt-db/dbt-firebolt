@@ -61,6 +61,9 @@
 
       SELECT
       {% if partition_columns is iterable and partition_columns is not string -%}
+          {%- for column in partition_columns -%}
+            {{ log('\n\n** partition column: ' ~ column, True) }}
+          {%- endfor -%}
         DISTINCT({{ partition_columns | join(', ') }})
       {%- else -%}
         DISTINCT {{ partition_columns }}
@@ -77,7 +80,7 @@
 {% endmacro %}
 
 
-{% macro drop_partitions_sql(relation, partition_vals, set_in_config) %}
+{% macro drop_partitions_sql(relation, partition_vals, vals_set_in_config) %}
   {#
   Write SQL code to drop each partition in `partition_vals`.
   Args:
@@ -85,13 +88,13 @@
     partition_vals: a list of strings, each of which begins with a '['' and
     ends with a ']', as such: '[val1, val2]', and each of which represents
     a partition to be dropped.
-    set_in_config: a boolean used to determine how to treat `partition_vals`,
+    vals_set_in_config: a boolean used to determine how to treat `partition_vals`,
     whether as a list of strings or as a list of Agate rows.
   #}
   {%- for vals in partition_vals -%}
     {%- set vals -%}
       {%- if vals is iterable and vals is not string -%}
-        {%- if set_in_config -%}
+        {%- if vals_set_in_config -%}
           {# `vals` is a list of strings. #}
           {{ vals | string() | trim() | slice(1, -1) }}
         {%- else -%}
@@ -100,10 +103,12 @@
             {#- There's a weird behavior where, if dbt
                 queries for only a single (text?) field `join()` removes the 
                 qoutes on the resulting string. So I have to do a little bit 
-                of extra magic.
+                of extra work.
             -#}
+            {{ log('\n\n** vals from agate table and length 1: ' ~ vals) }}
             '{{ vals | join(', ') }}'
           {%- else -%}
+            {{ log('\n\n** vals from agate table and length > 1: ' ~ vals) }}
             {{ vals | join(', ') }}
           {%- endif -%}
         {%- endif -%}
@@ -111,10 +116,12 @@
         {{ vals }}
       {%- endif -%}
     {%- endset -%}
-  {%- if vals.startswith('[') -%}
-    {#- This should never happen, but just in case dbt does does something 
-        else weird. -#}
-    {%- set vals = vals.slice(1, -1) %}
+  {{ log('\n\n** vals before stripping: ' ~ vals, True) }}
+  {%- set vals = vals.strip() -%}
+  {{ log('\n\n** final vals: ' ~ vals, true) }}
+  {%- if vals.startswith("'[") -%}
+    {#- If a single row is returned, but has  multiple values. -#}
+    {%- set vals = "'" ~ vals[2,-2] ~ "'" %}
   {%- endif %}
   ALTER TABLE {{relation}} DROP PARTITION {{ vals.strip() }};
   {%- endfor -%}
