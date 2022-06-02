@@ -54,10 +54,10 @@
      are provided, query the DB to find all partition values in the source table
      and drop them. To match format of SQL query results, we convert each sublist
      to a string. -#}
-  {% if partition_vals %}
+  {%- if partition_vals -%}
     {{ drop_partitions_sql(target, partition_vals, True) }}
-  {% else %} {# No partition values were set in config. #}
-    {% call statement('get_partition_cols', fetch_result=True) %}
+  {%- else -%} {# No partition values were set in config. #}
+    {%- call statement('get_partition_cols', fetch_result=True) %}
 
       SELECT
       {% if partition_columns is iterable and partition_columns is not string -%}
@@ -105,10 +105,8 @@
                 qoutes on the resulting string. So I have to do a little bit 
                 of extra work.
             -#}
-            {{ log('\n\n** vals from agate table and length 1: ' ~ vals) }}
             '{{ vals | join(', ') }}'
           {%- else -%}
-            {{ log('\n\n** vals from agate table and length > 1: ' ~ vals) }}
             {{ vals | join(', ') }}
           {%- endif -%}
         {%- endif -%}
@@ -116,13 +114,11 @@
         {{ vals }}
       {%- endif -%}
     {%- endset -%}
-  {{ log('\n\n** vals before stripping: ' ~ vals, True) }}
   {%- set vals = vals.strip() -%}
-  {{ log('\n\n** final vals: ' ~ vals, true) }}
   {%- if vals.startswith("'[") -%}
     {#- If a single row is returned, but has  multiple values. -#}
-    {%- set vals = "'" ~ vals[2,-2] ~ "'" %}
-  {%- endif %}
+    {%- set vals = vals[2:-2] -%}
+  {%- endif -%}
   ALTER TABLE {{relation}} DROP PARTITION {{ vals.strip() }};
   {%- endfor -%}
 {% endmacro %}

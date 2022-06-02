@@ -12,6 +12,7 @@ from dbt.adapters.base.impl import AdapterConfig
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
+from firebolt.async_db.connection import Connection
 
 from dbt.adapters.firebolt.column import FireboltColumn
 from dbt.adapters.firebolt.connections import FireboltConnectionManager
@@ -245,6 +246,46 @@ class FireboltAdapter(SQLAdapter):
         )
 
         return sql
+
+    @available.parse_none
+    def get_columns_in_relation(
+        relation_name: str,
+        engine_name: str,
+        database_name: str,
+        username: str,
+        password: str,
+        api_endpoint: str,
+        account_name: str,
+    ) -> agate.Table:
+        """
+        Return column names and types for `relation`. This is necessary
+        because information_schema.columns returns no columns for views.
+        Args:
+         relation_name: A string, the name of the relation, either a table or a view.
+         config: a dictionary of string pairs containing the configuration
+                 of a DB, and specifically the authentication information.
+        """
+        conn = Connection(
+            engine_name=engine_name,
+            database=database_name,
+            username=username,
+            password=password,
+            api_endpoint=api_endpoint,
+            account_name=account_name,
+        )
+        cursor = conn.cursor()
+
+        query = f'SELECT * FROM {relation_name} LIMIT 1'
+        cursor.execute(query)
+        cursor.fetch_one()
+        print(cursor.description())
+        column_names = ['name', 'type_code']
+        column_types = [agate.Text(), agate.Text()]
+        rows = [
+            {'name': row['name'], 'type_code': row['type_code']}
+            for row in cursor.description()
+        ]
+        return agate.Table(rows, column_names, column_types)
 
 
 COLUMNS_EQUAL_SQL = """
