@@ -165,15 +165,6 @@
      rather than checking the cache. So the name is a misnomer. Should
      be list_relations_bypassing_cache or something.
   #}
-  {%- set (conn, cursor) = do adapter.add_query(F'SELECT * FROM {relation} LIMIT 1;') -%}
-  {{ log(cursor['_description'], true) }}
-  {#{{ return(adapter.get_columns_in_relation(relation.identifier, 
-                                            config.get('engine_name'),
-                                            config.get('database'),
-                                            config.get('username'),
-                                            config.get('password'),
-                                            config.get('api_endpoint'),
-                                            config.get('account_name'))) }} #}
   {% call statement('list_tables_without_caching', fetch_result=True) %}
 
       SELECT '{{ relation.database }}' AS "database",
