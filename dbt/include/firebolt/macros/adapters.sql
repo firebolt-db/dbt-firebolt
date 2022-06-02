@@ -147,34 +147,22 @@
   {{ return(columns) }}
 {% endmacro %}
 
-{% macro spark__get_columns_in_relation(relation) -%}
-  {% call statement('get_columns_in_relation', fetch_result=True) %}
-      describe extended {{ relation.include(schema=(schema is not none)) }}
-  {% endcall %}
-  {% do return(load_result('get_columns_in_relation').table) %}
-{% endmacro %}
 
 {% macro firebolt__get_columns_in_relation(relation) -%}
   {# Return column information for table identified by relation
      as Agate table. #}
-  {% call statement('get_columns_in_relation', fetch_result=True) %}
+  {{ log('\n\n** get columns in relation: **\n' ~ relation, True) }}
+  {% set sql %} 
+  SELECT * FROM {{ relation }} LIMIT 1 
+  {% endset %}
+  {%- set (conn, cursor) = adapter.add_query(sql = sql, abridge_sql_log=True) -%}
+  {{ log('\n** columns:', True) }}
+  {% for column in cursor.description %}
+    {{ log(column['name'] ~ ' ' ~ column['type_code'][9:-2], true) }}
+  {% endfor %}
+  {{ return(adapter.get_columns_agate(cursor.description)) }}
 
-      SELECT column_name,
-             data_type,
-             character_maximum_length,
-             numeric_precision_radix
-        FROM information_schema.columns
-       WHERE table_name = '{{ relation.identifier }}'
-      ORDER BY column_name
-  {% endcall %}
-  {{ log('\n\n**********\nget columns:\n' ~ load_result('get_columns_in_relation').table ~ '\n**********\n', True) }}
-  {% do return('hello') %}
-  -- {{ log('\n\n**********\nget columns:\n' ~ columns ~ '\n**********\n', True) }}
-  -- {{ log('\n\n**********\nrows:\n' ~ columns.rows ~ '\n**********\n', True) }}
-  -- {{ log('\n\n**********\ncolumns:\n' ~ columns.columns ~ '\n**********\n', True) }}
-  -- {{ log('\n\n**********\ncolumns returned:\n' ~ sql_convert_columns_in_relation_firebolt(columns.columns) ~
-  --        '\n**********\n\n', True) }}
-  -- {{ return(sql_convert_columns_in_relation_firebolt(columns)) }}
+  {# {{ return(sql_convert_columns_in_relation_firebolt(columns)) }} #}
 {% endmacro %}
 
 

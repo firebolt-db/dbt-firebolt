@@ -12,6 +12,7 @@ from dbt.adapters.base.impl import AdapterConfig
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
+from firebolt.async_db._types import Column as C
 
 from dbt.adapters.firebolt.column import FireboltColumn
 from dbt.adapters.firebolt.connections import FireboltConnectionManager
@@ -193,6 +194,10 @@ class FireboltAdapter(SQLAdapter):
                 .merge()
                 .exclude(['group'])
             )
+
+    @available.parse_none
+    def get_columns_agate(self, columns: List[C]) -> agate.Table:
+        pass
 
     @available.parse_none
     def filter_table(
