@@ -139,9 +139,7 @@
 
 {% macro sql_convert_columns_in_relation_firebolt(rows) -%}
   {% set columns = [] %}
-  {{ log('\n\n** convert columns, rows: **\n' ~ rows, True) }}
   {% for row in rows %}
-    {{ log('\n\nagate row: ' ~ row ~ '\nfinal row: ' ~ api.Column(*row), True) }}
     {% do columns.append(api.Column(*row)) %}
   {% endfor %}
   {{ return(columns) }}
@@ -149,20 +147,21 @@
 
 
 {% macro firebolt__get_columns_in_relation(relation) -%}
-  {# Return column information for table identified by relation
-     as Agate table. #}
-  {{ log('\n\n** get columns in relation: **\n' ~ relation, True) }}
+  {#-
+  Return column information for table identified by relation as
+  list of dbt.adapters.base Columns (actually FireboltColumn).
+  -#}
   {% set sql %} 
+  
   SELECT * FROM {{ relation }} LIMIT 1 
   {% endset %}
+  {#- add_query returns a cursor object. The names and types of the table named 
+      by `relation` have to be converted to the correct type. -#}
   {%- set (conn, cursor) = adapter.add_query(sql = sql, abridge_sql_log=True) -%}
-  {{ log('\n** columns:', True) }}
-  {% for column in cursor.description %}
-    {{ log(column['name'] ~ ' ' ~ column['type_code'][9:-2], true) }}
-  {% endfor %}
-  {{ return(adapter.get_columns_agate(cursor.description)) }}
-
-  {# {{ return(sql_convert_columns_in_relation_firebolt(columns)) }} #}
+  {%- set ret_val = adapter.sdk_column_list_to_firebolt_column_list(
+                                cursor.description
+                            ) -%}
+  {{ return(ret_val) }}
 {% endmacro %}
 
 
@@ -248,6 +247,7 @@
   {#
   Truncate relation. Actual macro is drop_relation in ./adapters/relation.sql.
   #}
+
   {# Firebolt doesn't currently support TRUNCATE, so DROP CASCADE.
      This should only be called from reset_csv_table, where it's followed by
      `create_csv_table`, so not recreating the table here. To retrieve old code,
