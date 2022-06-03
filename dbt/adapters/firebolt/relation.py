@@ -25,9 +25,9 @@ class FireboltRelation(BaseRelation):
     include_policy: FireboltIncludePolicy = FireboltIncludePolicy()
     quote_character: str = '"'
     is_delta: Optional[bool] = None
-    information: str = None
+    information: Optional[str] = None
 
-    def render(self):
+    def render(self) -> str:
         if self.include_policy.database and self.include_policy.schema:
             raise RuntimeException(
                 'Got a Firebolt relation with schema and database set to '

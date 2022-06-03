@@ -12,7 +12,6 @@ from dbt.adapters.base.impl import AdapterConfig
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
-from firebolt.async_db.connection import Connection
 
 from dbt.adapters.firebolt.column import FireboltColumn
 from dbt.adapters.firebolt.connections import FireboltConnectionManager
@@ -27,7 +26,7 @@ class FireboltIndexConfig(dbtClassMixin):
     dimension_column: Optional[Union[str, List[str]]] = None
     aggregation: Optional[Union[str, List[str]]] = None
 
-    def render_name(self, relation):
+    def render_name(self, relation: FireboltRelation) -> str:
         """
         Name an index according to the following format, joined by `_`:
         index type, relation name, key/join columns, timestamp (unix & UTC)
@@ -51,7 +50,7 @@ class FireboltIndexConfig(dbtClassMixin):
         return string
 
     @classmethod
-    def parse(cls, raw_index) -> Optional['FireboltIndexConfig']:
+    def parse(cls, raw_index: Optional[str]) -> Optional['FireboltIndexConfig']:
         """
         Validate the JSON format of the provided index config.
         Ensure the config has the right elements.
@@ -90,6 +89,7 @@ class FireboltIndexConfig(dbtClassMixin):
         except ValidationError as exc:
             msg = dbt.exceptions.validator_error_message(exc)
             dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}.')
+        return None
 
 
 @dataclass
@@ -102,11 +102,11 @@ class FireboltAdapter(SQLAdapter):
     ConnectionManager = FireboltConnectionManager
     Column = FireboltColumn
 
-    def is_cancelable(self):
+    def is_cancelable(self) -> bool:
         return False
 
     @classmethod
-    def date_function(cls):
+    def date_function(cls) -> str:
         return 'now()'
 
     @available
@@ -128,13 +128,17 @@ class FireboltAdapter(SQLAdapter):
         return 'DATE'
 
     @classmethod
-    def convert_time_type(cls, agate_table: agate.Table, col_idx: int) -> str:
+    def convert_time_type(
+        cls, agate_table: agate.Table, col_idx: int
+    ) -> dbt.exceptions.NotImplementedException:
         raise dbt.exceptions.NotImplementedException(
             '`convert_time_type` is not implemented for this adapter!'
         )
 
     @available.parse_none
-    def make_field_partition_pairs(self, columns, partitions) -> List[str]:
+    def make_field_partition_pairs(
+        self, columns: agate.Column, partitions: FireboltRelation
+    ) -> List[str]:
         """
         Return a list of strings of form "column column_type" or
         "column column_type PARTITION(regex)" where the partitions
@@ -174,7 +178,7 @@ class FireboltAdapter(SQLAdapter):
         return unpartitioned_columns + partitioned_columns
 
     @available.parse_none
-    def stack_tables(self, tables_list) -> agate.Table:
+    def stack_tables(self, tables_list: List[agate.Table]) -> agate.Table:
         """
         Given a list of agate_tables with the same column names & types
         return a single unioned agate table.
@@ -191,24 +195,14 @@ class FireboltAdapter(SQLAdapter):
             )
 
     @available.parse_none
-    def filter_table(cls, agate_table, col_name, re_match_exp) -> agate.Table:
+    def filter_table(
+        cls, agate_table: agate.Table, col_name: str, re_match_exp: str
+    ) -> agate.Table:
         """
         Filter agate table by column name and regex match expression.
         https://agate.readthedocs.io/en/latest/cookbook/filter.html#by-regex
         """
         return agate_table.where(lambda row: re.match(re_match_exp, str(row[col_name])))
-
-    @available.parse_none
-    def group_tuples(tuples):
-        """
-        Return a list of all unique tuples.
-        Args:
-         tuples: A list of tuples.
-        """
-        output = set()
-        for tp in tuples:
-            output.add(tp)
-        return list(output)
 
     @available.parse_none
     def get_rows_different_sql(
@@ -246,46 +240,6 @@ class FireboltAdapter(SQLAdapter):
         )
 
         return sql
-
-    @available.parse_none
-    def get_columns_in_relation(
-        relation_name: str,
-        engine_name: str,
-        database_name: str,
-        username: str,
-        password: str,
-        api_endpoint: str,
-        account_name: str,
-    ) -> agate.Table:
-        """
-        Return column names and types for `relation`. This is necessary
-        because information_schema.columns returns no columns for views.
-        Args:
-         relation_name: A string, the name of the relation, either a table or a view.
-         config: a dictionary of string pairs containing the configuration
-                 of a DB, and specifically the authentication information.
-        """
-        conn = Connection(
-            engine_name=engine_name,
-            database=database_name,
-            username=username,
-            password=password,
-            api_endpoint=api_endpoint,
-            account_name=account_name,
-        )
-        cursor = conn.cursor()
-
-        query = f'SELECT * FROM {relation_name} LIMIT 1'
-        cursor.execute(query)
-        cursor.fetch_one()
-        print(cursor.description())
-        column_names = ['name', 'type_code']
-        column_types = [agate.Text(), agate.Text()]
-        rows = [
-            {'name': row['name'], 'type_code': row['type_code']}
-            for row in cursor.description()
-        ]
-        return agate.Table(rows, column_names, column_types)
 
 
 COLUMNS_EQUAL_SQL = """

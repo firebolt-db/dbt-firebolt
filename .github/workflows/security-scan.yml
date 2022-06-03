@@ -10,22 +10,18 @@ jobs:
   security-scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v1.6
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-      - name: "Fossa branch fix"
-        if: ${{ github.event_name == 'pull_request' }}
+      - name: "Checkout Code"
+        uses: actions/checkout@v2
+
+      - name: "Hack version attr for security scanning"
         run: |
-          git fetch
-          git branch --track ${GITHUB_HEAD_REF##*/} origin/${GITHUB_HEAD_REF##*/}
-          git checkout ${GITHUB_HEAD_REF##*/}
-        shell: bash
-      - name: "Run FOSSA Scan"
-        uses: fossas/fossa-action@v1
+          grep "__version__" dbt/adapters/firebolt/__init__.py > dbt/__init__.py
+          sed -i 's#attr: dbt.adapters.firebolt.__version__#attr: dbt.__version__#' setup.cfg
+
+      - name: "Security Scan"
+        uses: firebolt-db/action-security-scan@main
         with:
-          api-key: ${{ secrets.FOSSA_TOKEN }}
+          github-key: ${{ secrets.GITHUB_TOKEN }}
+          fossa-key: ${{ secrets.FOSSA_TOKEN }}
+          sonar-key: ${{ secrets.SONARCLOUD_TOKEN }}
+
