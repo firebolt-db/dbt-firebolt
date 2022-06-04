@@ -1,18 +1,18 @@
 {% macro get_incremental_sql(strategy, source, target, unique_key, dest_columns) %}
-  {# 
-  Retrieve appropriate SQL for whichever incremental strategy is given. 
+  {#
+  Retrieve appropriate SQL for whichever incremental strategy is given.
   Args:
-    strategy: which incremental strategy is in to be used.
-    source: table from which queried results will be taken.
-    target: table into which results will be inserted.
-    unique_key: only as a placeholder for future use
-    dest_columns: list of the names of the columns which data will be 
+    strategy: string, which incremental strategy is in to be used.
+    source: string, table from which queried results will be taken.
+    target: string, table into which results will be inserted.
+    unique_key: string, only as a placeholder for future use
+    dest_columns: list[string] of the names of the columns which data will be
     inserted into.
   #}
   {%- if strategy == 'append' -%}
     {#- Only insert new records into existing table, relying on user to manage
        merges. -#}
-    {{ get_append_only_sql(source, target, dest_columns) }}
+    {{ get_insert_only_sql(source, target, dest_columns) }}
   {%- elif strategy == 'insert_overwrite' -%}
     {#- Insert new data. If any data is duplicate, drop partition containing
        previous data and insert new. -#}
@@ -28,7 +28,7 @@
 {% endmacro %}
 
 
-{% macro get_append_only_sql(source, target, dest_columns) -%}
+{% macro get_insert_only_sql(source, target, dest_columns) -%}
   {%- set dest_cols_csv = get_quoted_csv(dest_columns | map(attribute="name")) %}
 
   INSERT INTO {{ target }} ({{ dest_cols_csv }})
@@ -38,12 +38,12 @@
 
 
 {% macro get_insert_overwrite_sql(source, target, dest_columns) %}
-  {# 
-  Compile SQL to drop correct partitions in target and insert from source. 
+  {#
+  Compile SQL to drop correct partitions in target and insert from source.
   Args:
-    source: table from which queried results will be taken.
-    target: table into which results will be inserted.
-    dest_columns: list of the names of the columns which data will be 
+    source: Relation from which queried results will be taken.
+    target: Relation into which results will be inserted.
+    dest_columns: list of the names of the columns which data will be
     inserted into.
   #}
   {%- set partition_columns = config.get('partition_by') -%}
@@ -55,6 +55,7 @@
      and drop them. To match format of SQL query results, we convert each sublist
      to a string. -#}
   {%- if partition_vals -%}
+    {# partition vals are set in config. #}
     {{ drop_partitions_sql(target, partition_vals, True) }}
   {%- else -%} {# No partition values were set in config. #}
     {%- call statement('get_partition_cols', fetch_result=True) %}
@@ -76,7 +77,7 @@
   {%- set dest_columns = adapter.get_columns_in_relation(target) -%}
   {%- set dest_cols_csv = dest_columns | map(attribute='quoted') | join(', ') -%}
 
-  {{ get_append_only_sql(source, target, dest_columns) }}
+  {{ get_insert_only_sql(source, target, dest_columns) }}
 {% endmacro %}
 
 
@@ -101,10 +102,9 @@
           {# `vals` is a list of Agate rows. #}
           {%- if 1 == (vals | length) -%}
             {#- There's a weird behavior where, if dbt
-                queries for only a single (text?) field `join()` removes the 
-                qoutes on the resulting string. So I have to do a little bit 
-                of extra work.
-            -#}
+                queries for only a single (text?) field `join()` removes the
+                qoutes on the resulting string. So I have to do a little bit
+                of extra work. -#}
             '{{ vals | join(', ') }}'
           {%- else -%}
             {{ vals | join(', ') }}

@@ -246,6 +246,7 @@
   {#
   Truncate relation. Actual macro is drop_relation in ./adapters/relation.sql.
   #}
+
   {# Firebolt doesn't currently support TRUNCATE, so DROP CASCADE.
      This should only be called from reset_csv_table, where it's followed by
      `create_csv_table`, so not recreating the table here. To retrieve old code,

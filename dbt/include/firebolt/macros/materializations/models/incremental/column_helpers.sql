@@ -1,5 +1,10 @@
+{# Todo: Should this be moved to impl.py? #}
 {% macro intersect_columns(source_columns, target_columns) %}
-  {# Return list of columns that appear in both source and target. #}
+  {# Return a list of columns (List[FireboltColumn]) that appear in both source and target.
+     Args:
+       source_columns: List[FireboltColumn]
+       target_columns: List[FireboltColumn]
+  #}
   {% set result = [] %}
   {% set source_names = source_columns | map(attribute = 'column') | list %}
   {% set target_names = target_columns | map(attribute = 'column') | list %}
