@@ -12,6 +12,7 @@ from dbt.adapters.base.impl import AdapterConfig
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
+from firebolt.async_db._types import Column as SDKColumn
 
 from dbt.adapters.firebolt.column import FireboltColumn
 from dbt.adapters.firebolt.connections import FireboltConnectionManager
@@ -193,6 +194,20 @@ class FireboltAdapter(SQLAdapter):
                 .merge()
                 .exclude(['group'])
             )
+
+    @available.parse_none
+    def sdk_column_list_to_firebolt_column_list(
+        self, columns: List[SDKColumn]
+    ) -> List[FireboltColumn]:
+        """
+        Extract and return list of FireboltColumns with names and data types
+        extracted from SDKColumns.
+        Args:
+          columns: list of Column types as defined in the Python SDK
+        """
+        [agate.Text(), agate.Text()]
+        rows = [FireboltColumn(column=col.name, dtype=col.type_code) for col in columns]
+        return rows
 
     @available.parse_none
     def filter_table(

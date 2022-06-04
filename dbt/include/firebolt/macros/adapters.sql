@@ -137,6 +137,15 @@
 {%- endmacro %}
 
 
+{% macro sql_convert_columns_in_relation_firebolt(rows) -%}
+  {% set columns = [] %}
+  {% for row in rows %}
+    {% do columns.append(api.Column(*row)) %}
+  {% endfor %}
+  {{ return(columns) }}
+{% endmacro %}
+
+
 {% macro firebolt__get_columns_in_relation(relation) -%}
   {# Return column information for table identified by relation
      as Agate table. #}
