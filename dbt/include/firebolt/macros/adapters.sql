@@ -147,20 +147,21 @@
 
 
 {% macro firebolt__get_columns_in_relation(relation) -%}
-  {# Return column information for table identified by relation
-     as Agate table. #}
-  {% call statement('get_columns_in_relation', fetch_result=True) %}
+  {#-
+  Return column information for table identified by relation
+  as List[FireboltColumn].
+  -#}
+  {% set sql %}
 
-      SELECT column_name,
-             data_type,
-             character_maximum_length,
-             numeric_precision_radix
-        FROM information_schema.columns
-       WHERE table_name = '{{ relation.identifier }}'
-      ORDER BY column_name
-  {% endcall %}
-  {% set table = load_result('get_columns_in_relation').table %}
-  {{ return(sql_convert_columns_in_relation(table)) }}
+  SELECT * FROM {{ relation }} LIMIT 1
+  {% endset %}
+  {#- add_query returns a cursor object. The names and types of the table named
+      by `relation` have to be converted to the correct type. -#}
+  {%- set (conn, cursor) = adapter.add_query(sql = sql, abridge_sql_log=True) -%}
+  {%- set ret_val = adapter.sdk_column_list_to_firebolt_column_list(
+                                cursor.description
+                            ) -%}
+  {{ return(ret_val) }}
 {% endmacro %}
 
 

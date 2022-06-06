@@ -244,17 +244,32 @@ class FireboltAdapter(SQLAdapter):
             f'{relation_a}.{name} = {relation_b}.{name}' for name in names
         ]
         where_clause = ' AND '.join(where_expressions)
-
         columns_csv = ', '.join(names)
-
         sql = COLUMNS_EQUAL_SQL.format(
             columns=columns_csv,
             relation_a=str(relation_a),
             relation_b=str(relation_b),
             where_clause=where_clause,
         )
-
         return sql
+
+    @available.parse_none
+    def cast_date_val_columns_types(
+        self,
+        vals: str,
+        col_names: Union[List[str], str],
+        col_types: List[FireboltColumn],
+    ) -> str:
+        vals_list = vals.split(',')
+        # It's possible that col_names will be single column, in which case
+        # it might come in as a string.
+        if type(col_names) is str:
+            col_names = [col_names]
+        type_dict = {c.column: c.dtype for c in col_types}
+        for i in range(len(vals_list)):
+            if type(type_dict[col_names[i]]) is datetime.date:
+                vals_list[i] += '::DATE'
+        return ','.join(vals_list)
 
 
 COLUMNS_EQUAL_SQL = """

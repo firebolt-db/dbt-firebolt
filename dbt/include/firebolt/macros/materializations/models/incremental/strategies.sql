@@ -7,7 +7,7 @@
     target: string, table into which results will be inserted.
     unique_key: string, only as a placeholder for future use
     dest_columns: list[string] of the names of the columns which data will be
-    inserted into.
+      inserted into.
   #}
   {%- if strategy == 'append' -%}
     {#- Only insert new records into existing table, relying on user to manage
@@ -44,9 +44,9 @@
     source: Relation from which queried results will be taken.
     target: Relation into which results will be inserted.
     dest_columns: list of the names of the columns which data will be
-    inserted into.
+      inserted into.
   #}
-  {%- set partition_columns = config.get('partition_by') -%}
+  {%- set partition_cols = config.get('partition_by') -%}
   {%- set partition_vals = config.get('partitions') -%}
   {#- Get values of partition columns for each row that will be inserted from
      source. For each of those rows we'll drop the partition in the target. Use
@@ -61,18 +61,15 @@
     {%- call statement('get_partition_cols', fetch_result=True) %}
 
       SELECT
-      {% if partition_columns is iterable and partition_columns is not string -%}
-          {%- for column in partition_columns -%}
-            {{ log('\n\n** partition column: ' ~ column, True) }}
-          {%- endfor -%}
-        DISTINCT({{ partition_columns | join(', ') }})
+      {% if partition_cols is iterable and partition_cols is not string -%}
+        DISTINCT({{ partition_cols | join(', ') }})
       {%- else -%}
-        DISTINCT {{ partition_columns }}
+        DISTINCT {{ partition_cols }}
       {%- endif %}
       FROM {{ source }}
     {%- endcall -%}
     {%- set partition_vals = load_result('get_partition_cols').table.rows -%}
-    {{ drop_partitions_sql(target, partition_vals, False) }}
+    {{ drop_partitions_sql(target, partition_vals, partition_cols, False) }}
   {%- endif -%}
   {%- set dest_columns = adapter.get_columns_in_relation(target) -%}
   {%- set dest_cols_csv = dest_columns | map(attribute='quoted') | join(', ') -%}
@@ -81,16 +78,20 @@
 {% endmacro %}
 
 
-{% macro drop_partitions_sql(relation, partition_vals, vals_set_in_config) %}
+{% macro drop_partitions_sql(relation, 
+                             partition_vals, 
+                             part_col_names, 
+                             vals_set_in_config) %}
   {#
   Write SQL code to drop each partition in `partition_vals`.
   Args:
     relation: a relation whose name will be used for `DROP PARTITION` queries.
     partition_vals: a list of strings, each of which begins with a '['' and
-    ends with a ']', as such: '[val1, val2]', and each of which represents
-    a partition to be dropped.
+      ends with a ']', as such: '[val1, val2]', and each of which represents
+      a partition to be dropped.
+    part_col_names: a list of string, the names of the partition columns.
     vals_set_in_config: a boolean used to determine how to treat `partition_vals`,
-    whether as a list of strings or as a list of Agate rows.
+      whether as a list of strings or as a list of Agate rows.
   #}
   {%- for vals in partition_vals -%}
     {%- set vals -%}
@@ -119,6 +120,11 @@
     {#- If a single row is returned, but has  multiple values. -#}
     {%- set vals = vals[2:-2] -%}
   {%- endif -%}
+  {#- At this point, vals is a simple string of values separated by commas. -#}
+  {%- set col_types = adapter.get_columns_in_relation(relation) -%}
+  {%- set vals = adapter.cast_date_val_columns_types(vals, 
+                                                     part_col_names, 
+                                                     col_types) %}
   ALTER TABLE {{relation}} DROP PARTITION {{ vals.strip() }};
   {%- endfor -%}
 {% endmacro %}
