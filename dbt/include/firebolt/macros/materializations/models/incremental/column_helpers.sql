@@ -23,11 +23,12 @@
 {% macro diff_column_data_types(source_columns, target_columns) %}
   {% set result = [] %}
   {% for sc in source_columns %}
-    {% for tc in target_columns %}
-      {% if tc.column == sc.column and tc.dtype != sc.dtype %}
-        {{ result.append({'column_name': sc.column, 'new_type': sc.dtype}) }}
+    {% set tc = target_columns | selectattr('column', 'equalto', sc.column) | list | first %}
+    {% if tc %}
+      {% if tc.dtype != sc.dtype %}
+      {{ result.append({'column_name': tc.column, 'new_type': sc.dtype}) }}
       {% endif %}
-    {% endfor %}
+    {% endif %}
   {% endfor %}
   {{ return(result) }}
 {% endmacro %}
