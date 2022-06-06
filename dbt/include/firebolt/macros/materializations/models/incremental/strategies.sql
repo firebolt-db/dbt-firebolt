@@ -6,7 +6,7 @@
     source: string, table from which queried results will be taken.
     target: string, table into which results will be inserted.
     unique_key: string, only as a placeholder for future use
-    dest_columns: list[string] of the names of the columns which data will be
+    dest_columns: List[string] of the names of the columns which data will be
       inserted into.
   #}
   {%- if strategy == 'append' -%}
@@ -55,7 +55,7 @@
      and drop them. To match format of SQL query results, we convert each sublist
      to a string. -#}
   {%- if partition_vals -%}
-    {# partition vals are set in config. #}
+    {# Partition vals are set in config. #}
     {{ drop_partitions_sql(target, partition_vals, True) }}
   {%- else -%} {# No partition values were set in config. #}
     {%- call statement('get_partition_cols', fetch_result=True) %}
@@ -78,9 +78,9 @@
 {% endmacro %}
 
 
-{% macro drop_partitions_sql(relation, 
-                             partition_vals, 
-                             part_col_names, 
+{% macro drop_partitions_sql(relation,
+                             partition_vals,
+                             part_col_names,
                              vals_set_in_config) %}
   {#
   Write SQL code to drop each partition in `partition_vals`.
@@ -122,8 +122,8 @@
   {%- endif -%}
   {#- At this point, vals is a simple string of values separated by commas. -#}
   {%- set col_types = adapter.get_columns_in_relation(relation) -%}
-  {%- set vals = adapter.cast_date_val_columns_types(vals, 
-                                                     part_col_names, 
+  {%- set vals = adapter.cast_date_val_columns_types(vals,
+                                                     part_col_names,
                                                      col_types) %}
   ALTER TABLE {{relation}} DROP PARTITION {{ vals.strip() }};
   {%- endfor -%}

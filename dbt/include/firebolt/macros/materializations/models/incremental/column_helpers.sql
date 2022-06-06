@@ -1,6 +1,6 @@
 {# Todo: Should this be moved to impl.py? #}
 {% macro intersect_columns(source_columns, target_columns) %}
-  {# Return a list of columns (List[FireboltColumn]) that appear in both source and target.
+  {# Return a List[FireboltColumn] of columns that appear in both source and target.
      Args:
        source_columns: List[FireboltColumn]
        target_columns: List[FireboltColumn]
@@ -30,7 +30,4 @@
     {% endfor %}
   {% endfor %}
   {{ return(result) }}
-{% endmacro %}
-
-
 {% endmacro %}
