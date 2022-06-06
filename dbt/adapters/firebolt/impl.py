@@ -205,7 +205,6 @@ class FireboltAdapter(SQLAdapter):
         Args:
           columns: list of Column types as defined in the Python SDK
         """
-        [agate.Text(), agate.Text()]
         rows = [FireboltColumn(column=col.name, dtype=col.type_code) for col in columns]
         return rows
 
