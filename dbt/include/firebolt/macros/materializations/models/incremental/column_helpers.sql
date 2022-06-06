@@ -19,7 +19,7 @@
   {{ return(result) }}
 {% endmacro %}
 
-
+{#
 {% macro diff_column_data_types(source_columns, target_columns) %}
   {% set result = [] %}
   {% for sc in source_columns %}
@@ -32,3 +32,4 @@
   {% endfor %}
   {{ return(result) }}
 {% endmacro %}
+#}

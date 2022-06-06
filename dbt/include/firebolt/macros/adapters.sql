@@ -147,6 +147,24 @@
 
 
 {% macro firebolt__get_columns_in_relation(relation) -%}
+  {# Return column information for table identified by relation
+     as Agate table. #}
+  {% call statement('get_columns_in_relation', fetch_result=True) %}
+
+      SELECT column_name,
+             data_type,
+             character_maximum_length,
+             numeric_precision_radix
+        FROM information_schema.columns
+       WHERE table_name = '{{ relation.identifier }}'
+      ORDER BY column_name
+  {% endcall %}
+  {% set table = load_result('get_columns_in_relation').table %}
+  {{ return(sql_convert_columns_in_relation(table)) }}
+{% endmacro %}
+
+{#
+{% macro firebolt__get_columns_in_relation(relation) -%}
   {#-
   Return column information for table identified by relation
   as List[FireboltColumn].
@@ -163,7 +181,7 @@
                             ) -%}
   {{ return(ret_val) }}
 {% endmacro %}
-
+#}
 
 {% macro firebolt__list_relations_without_caching(relation) %}
   {# Return all views and tables as agate table.
