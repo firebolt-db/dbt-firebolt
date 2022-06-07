@@ -196,16 +196,25 @@ class FireboltAdapter(SQLAdapter):
             )
 
     @available.parse_none
-    def sdk_column_list_to_firebolt_column_list(
+    def get_datatype_table_from_SDKColumns(
         self, columns: List[SDKColumn]
-    ) -> List[FireboltColumn]:
+    ) -> agate.Table:
         """
         Extract and return list of FireboltColumns with names and data types
         extracted from SDKColumns.
         Args:
           columns: list of Column types as defined in the Python SDK
         """
-        [agate.Text(), agate.Text()]
+        column_names = ['name', 'data_type']
+        column_types = [agate.Text(), agate.Text()]
+        for col in columns:
+            print(
+                f'\n\n** data types: {type(col)}, '
+                f'{col}, {col.type_code}, {col.type_code.__name__}'
+            )
+        rows = [{'name': col.name, 'data_type': col.type_code} for col in columns]
+
+        agate.Table(rows, column_names, column_types)
         rows = [FireboltColumn(column=col.name, dtype=col.type_code) for col in columns]
         return rows
 

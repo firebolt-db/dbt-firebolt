@@ -15,7 +15,8 @@
 
 
 {% macro check_for_schema_changes(source_relation, target_relation) %}
-  {# Return a dict = {
+  {#
+  Return a dict = {
      'schema_changed': schema_changed,
      'source_not_in_target': source_not_in_target,
      'target_not_in_source': target_not_in_source,
@@ -23,7 +24,8 @@
      'target_columns': target_columns,
      'new_target_types': new_target_types,
      'common_columns': common_colums
-  } %} #}
+    }
+  #}
   {%- set schema_changed = False -%}
   {%- set source_columns = adapter.get_columns_in_relation(source_relation) -%}
   {%- set target_columns = adapter.get_columns_in_relation(target_relation) -%}
