@@ -122,9 +122,9 @@
   {%- endif -%}
   {#- At this point, vals is a simple string of values separated by commas. -#}
   {%- set col_types = adapter.get_columns_in_relation(relation) -%}
-  {%- set vals = adapter.cast_date_val_columns_types(vals,
-                                                     part_col_names,
-                                                     col_types) %}
+  {%- set vals = adapter.annotate_date_columns_for_partitions(vals,
+                                                              part_col_names,
+                                                              col_types) %}
   ALTER TABLE {{relation}} DROP PARTITION {{ vals.strip() }};
   {%- endfor -%}
 {% endmacro %}

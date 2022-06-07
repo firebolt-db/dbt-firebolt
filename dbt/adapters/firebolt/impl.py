@@ -205,8 +205,10 @@ class FireboltAdapter(SQLAdapter):
         Args:
           columns: list of Column types as defined in the Python SDK
         """
-        rows = [FireboltColumn(column=col.name, dtype=col.type_code) for col in columns]
-        return rows
+        return [
+            FireboltColumn(column=col.name, dtype=col.type_code.__name__)
+            for col in columns
+        ]
 
     @available.parse_none
     def filter_table(
@@ -253,20 +255,31 @@ class FireboltAdapter(SQLAdapter):
         return sql
 
     @available.parse_none
-    def cast_date_val_columns_types(
+    def annotate_date_columns_for_partitions(
         self,
         vals: str,
         col_names: Union[List[str], str],
         col_types: List[FireboltColumn],
     ) -> str:
+        """
+        Return a list of partition values as a single string. All columns with
+        date types will be be suffixed with ::DATE.
+        Args:
+          vals: a string of values separated by commas
+          col_names: either a list of strings or a single string, of the
+            names of the columns
+          col_types: Each FireboltColumn has fields for the name of the column
+            and its type.
+        """
         vals_list = vals.split(',')
         # It's possible that col_names will be single column, in which case
         # it might come in as a string.
         if type(col_names) is str:
             col_names = [col_names]
-        type_dict = {c.column: c.dtype for c in col_types}
+        # Now map from column name to column type.
+        type_dict = {c.name: c.dtype for c in col_types}
         for i in range(len(vals_list)):
-            if type(type_dict[col_names[i]]) is datetime.date:
+            if type(type_dict[col_names[i]]) in ['datetime', 'date']:
                 vals_list[i] += '::DATE'
         return ','.join(vals_list)
 
