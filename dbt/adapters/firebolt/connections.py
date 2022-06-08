@@ -9,6 +9,7 @@ from dbt.contracts.connection import AdapterResponse
 from dbt.contracts.graph.manifest import Manifest
 from dbt.exceptions import RuntimeException
 from firebolt.client import DEFAULT_API_URL
+from firebolt.client.auth import UsernamePassword
 from firebolt.db import connect
 
 
@@ -78,10 +79,9 @@ class FireboltConnectionManager(SQLConnectionManager):
         credentials = connection.credentials
         # Create a connection based on provided credentials.
         connection.handle = connect(
+            auth=UsernamePassword(credentials.user, credentials.password),
             engine_name=credentials.engine_name,
             database=credentials.database,
-            username=credentials.user,
-            password=credentials.password,
             api_endpoint=credentials.api_endpoint,
             account_name=credentials.account_name,
         )
