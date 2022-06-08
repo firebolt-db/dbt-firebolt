@@ -149,7 +149,8 @@
 {% macro firebolt__get_columns_in_relation(relation) -%}
   {#-
   Return column information for table identified by relation as
-  list of dbt.adapters.base Columns (actually FireboltColumn).
+  List[FireboltColumn].
+    Args: relation: dbt Relation
   -#}
   {% set sql %}
 
@@ -158,7 +159,9 @@
   {#- add_query returns a cursor object. The names and types of the table named
       by `relation` have to be converted to the correct type. -#}
   {%- set (conn, cursor) = adapter.add_query(sql = sql, abridge_sql_log=True) -%}
-  {%- set ret_val = adapter.get_datatype_from_SDKColumns(cursor.description) -%}
+  {%- set ret_val = adapter.sdk_column_list_to_firebolt_column_list(
+                        cursor.description
+                    ) -%}
   {{ return(ret_val) }}
 {% endmacro %}
 

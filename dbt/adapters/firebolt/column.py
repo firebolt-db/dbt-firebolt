@@ -8,3 +8,9 @@ class FireboltColumn(Column):
     @classmethod
     def string_type(cls, size: int) -> str:
         return 'text'
+
+    @classmethod
+    def is_date(self) -> bool:
+        if self.dtype.lower() == 'date':
+            return True
+        return False

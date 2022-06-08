@@ -18,13 +18,16 @@
   {#
   Return a dict = {
      'schema_changed': schema_changed,
-     'source_not_in_target': source_not_in_target,
-     'target_not_in_source': target_not_in_source,
-     'source_columns': source_columns,
-     'target_columns': target_columns,
+     'source_not_in_target': source_not_in_target (List[FireboltColumn]),
+     'target_not_in_source': target_not_in_source (List[FireboltColumn]),
+     'source_columns': source_columns (List[FireboltColumn]),
+     'target_columns': target_columns (List[FireboltColumn]),
      'new_target_types': new_target_types,
      'common_columns': common_colums
-    }
+  }
+  Args:
+      source_relation: dbt Relation
+      target_relation: dbt Relation
   #}
   {%- set schema_changed = False -%}
   {%- set source_columns = adapter.get_columns_in_relation(source_relation) -%}
