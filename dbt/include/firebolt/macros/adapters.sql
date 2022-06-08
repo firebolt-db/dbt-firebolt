@@ -146,7 +146,7 @@
 {% endmacro %}
 
 
-% macro firebolt__get_columns_in_relation(relation) -%}
+{% macro firebolt__get_columns_in_relation(relation) -%}
   {#-
   Return column information for table identified by relation as
   List[FireboltColumn].
