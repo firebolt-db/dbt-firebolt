@@ -6,6 +6,10 @@
 
 - dbt-firebolt now supports the insert/overwrite incremental model.
 
+### Under the hood
+
+- dbt-firebolt now requires firebolt-sdk>=0.8
+
 ## v.1.0.6
 
 ### Under the hood
