@@ -205,8 +205,18 @@ class FireboltAdapter(SQLAdapter):
         Args:
           columns: list of Column types as defined in the Python SDK
         """
+        types = {
+            'str': 'TEXT',
+            'int': 'INT',
+            'float': 'FLOAT',
+            'date': 'DATE',
+            'datetime': 'DATE',
+            'bool': 'BOOLEAN',
+            'list': 'ARRAY',
+            'Decimal': 'DECIMAL',
+        }
         return [
-            FireboltColumn(column=col.name, dtype=col.type_code.__name__)
+            FireboltColumn(column=col.name, dtype=types[col.type_code.__name__])
             for col in columns
         ]
 
