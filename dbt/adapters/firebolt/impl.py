@@ -223,7 +223,7 @@ class FireboltAdapter(SQLAdapter):
         types = {
             'str': 'TEXT',
             'int': 'LONG',
-            'float': 'FLOAT',
+            'float': 'DOUBLE',
             'date': 'DATE',
             'datetime': 'DATE',
             'bool': 'BOOLEAN',
