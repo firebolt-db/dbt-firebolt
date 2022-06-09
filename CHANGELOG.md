@@ -10,6 +10,10 @@
 
 - dbt-firebolt now requires firebolt-sdk>=0.8
 
+### Breaking changes
+
+- dbt-firebolt uses firebolt-sdk's new auth token method and requires firebolt-sdk >= 0.8
+
 ## v.1.0.6
 
 ### Under the hood

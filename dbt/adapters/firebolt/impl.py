@@ -205,20 +205,35 @@ class FireboltAdapter(SQLAdapter):
         Args:
           columns: list of Column types as defined in the Python SDK
         """
+
+        return [
+            FireboltColumn(
+                column=col.name, dtype=self.create_type_string(col.type_code)
+            )
+            for col in columns
+        ]
+
+    @available.parse_none
+    def create_type_string(self, type_code: Any) -> str:
+        """
+        Return properly formatted type string for SQL DDL.
+        Args: type_code is technically a type, but mypy complained that `type`
+        does not have an attribute `subtype`.
+        """
         types = {
             'str': 'TEXT',
-            'int': 'INT',
+            'int': 'LONG',
             'float': 'FLOAT',
             'date': 'DATE',
             'datetime': 'DATE',
             'bool': 'BOOLEAN',
-            'list': 'ARRAY',
             'Decimal': 'DECIMAL',
         }
-        return [
-            FireboltColumn(column=col.name, dtype=types[col.type_code.__name__])
-            for col in columns
-        ]
+        type_code_str = '{}'
+        while str(type_code).lower().find('array') > -1:
+            type_code_str = f'ARRAY({type_code_str})'
+            type_code = type_code.subtype
+        return type_code_str.format(types[type_code.__name__])
 
     @available.parse_none
     def filter_table(
