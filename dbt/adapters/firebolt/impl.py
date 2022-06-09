@@ -206,7 +206,6 @@ class FireboltAdapter(SQLAdapter):
         Args:
           columns: list of Column types as defined in the Python SDK
         """
-
         return [
             FireboltColumn(
                 column=col.name, dtype=self.create_type_string(col.type_code)
@@ -305,7 +304,10 @@ class FireboltAdapter(SQLAdapter):
         # Now map from column name to column type.
         type_dict = {c.name: c.dtype for c in col_types}
         for i in range(len(vals_list)):
-            if type(type_dict[col_names[i]]) in ['datetime', 'date']:
+            if col_names[i] in type_dict and type(type_dict[col_names[i]]) in [
+                'datetime',
+                'date',
+            ]:
                 vals_list[i] += '::DATE'
         return ','.join(vals_list)
 
