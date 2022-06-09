@@ -12,6 +12,7 @@ from dbt.adapters.base.impl import AdapterConfig
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
+from firebolt.async_db._types import ARRAY
 from firebolt.async_db._types import Column as SDKColumn
 
 from dbt.adapters.firebolt.column import FireboltColumn
@@ -230,7 +231,7 @@ class FireboltAdapter(SQLAdapter):
             'Decimal': 'DECIMAL',
         }
         type_code_str = '{}'
-        while str(type_code).lower().find('array') > -1:
+        while isinstance(type_code, ARRAY):
             type_code_str = f'ARRAY({type_code_str})'
             type_code = type_code.subtype
         return type_code_str.format(types[type_code.__name__])
