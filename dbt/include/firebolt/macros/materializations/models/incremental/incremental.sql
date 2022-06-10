@@ -49,13 +49,13 @@
   {{ run_hooks(pre_hooks, inside_transaction=True) }}
   {%- set partition_by = config.get('partition_by') -%}
   {# First check whether we want to full refresh for existing view or config reasons. #}
-  {%- set do_full_refresh = (should_full_refresh()
-                            or existing.is_view
-                            or (strategy == 'insert_overwrite' and not partition_by)) %}
   {%- if strategy == 'insert_overwrite' and not partition_by -%}
-    {{ log('`partition_by` is not specified for model %s. This '
-           'triggers a full refresh.' % (target), True) }}
+    {% do exceptions.raise_compiler_error('`insert_overwrite` is specified for model %s, '
+                                          'but `partition_by` is not. `insert_overwrite` '
+                                          'requires a partition.' % (target)) %}
   {%- endif -%}
+  {%- set do_full_refresh = (should_full_refresh()
+                             or existing.is_view) %}
   {% if existing is none %}
     {%- set build_sql = create_table_as(False, target, sql) -%}
   {%- elif do_full_refresh -%}
