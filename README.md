@@ -43,7 +43,7 @@ The table below shows which dbt and Firebolt features are supported by the adapt
 | Ephemeral materializations   | :white_check_mark: |
 | View materializations        | :white_check_mark: |
 | Incremental materializations - append | :white_check_mark: |
-| Incremental materializations - insert_overwrite | :x: |
+| Incremental materializations - insert_overwrite | :white_check_mark: |
 | Incremental materializations - merge | :x: |
 | Snapshots                    | :x: |
 | Seeds                        | :white_check_mark: |

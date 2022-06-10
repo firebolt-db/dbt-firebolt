@@ -12,6 +12,8 @@ from dbt.adapters.base.impl import AdapterConfig
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
+from firebolt.async_db._types import ARRAY
+from firebolt.async_db._types import Column as SDKColumn
 
 from dbt.adapters.firebolt.column import FireboltColumn
 from dbt.adapters.firebolt.connections import FireboltConnectionManager
@@ -195,6 +197,45 @@ class FireboltAdapter(SQLAdapter):
             )
 
     @available.parse_none
+    def sdk_column_list_to_firebolt_column_list(
+        self, columns: List[SDKColumn]
+    ) -> List[FireboltColumn]:
+        """
+        Extract and return list of FireboltColumns with names and data types
+        extracted from SDKColumns.
+        Args:
+          columns: list of Column types as defined in the Python SDK
+        """
+        return [
+            FireboltColumn(
+                column=col.name, dtype=self.create_type_string(col.type_code)
+            )
+            for col in columns
+        ]
+
+    @available.parse_none
+    def create_type_string(self, type_code: Any) -> str:
+        """
+        Return properly formatted type string for SQL DDL.
+        Args: type_code is technically a type, but mypy complained that `type`
+        does not have an attribute `subtype`.
+        """
+        types = {
+            'str': 'TEXT',
+            'int': 'LONG',
+            'float': 'DOUBLE',
+            'date': 'DATE',
+            'datetime': 'DATE',
+            'bool': 'BOOLEAN',
+            'Decimal': 'DECIMAL',
+        }
+        type_code_str = '{}'
+        while isinstance(type_code, ARRAY):
+            type_code_str = f'ARRAY({type_code_str})'
+            type_code = type_code.subtype
+        return type_code_str.format(types[type_code.__name__])
+
+    @available.parse_none
     def filter_table(
         cls, agate_table: agate.Table, col_name: str, re_match_exp: str
     ) -> agate.Table:
@@ -229,17 +270,46 @@ class FireboltAdapter(SQLAdapter):
             f'{relation_a}.{name} = {relation_b}.{name}' for name in names
         ]
         where_clause = ' AND '.join(where_expressions)
-
         columns_csv = ', '.join(names)
-
         sql = COLUMNS_EQUAL_SQL.format(
             columns=columns_csv,
             relation_a=str(relation_a),
             relation_b=str(relation_b),
             where_clause=where_clause,
         )
-
         return sql
+
+    @available.parse_none
+    def annotate_date_columns_for_partitions(
+        self,
+        vals: str,
+        col_names: Union[List[str], str],
+        col_types: List[FireboltColumn],
+    ) -> str:
+        """
+        Return a list of partition values as a single string. All columns with
+        date types will be be suffixed with ::DATE.
+        Args:
+          vals: a string of values separated by commas
+          col_names: either a list of strings or a single string, of the
+            names of the columns
+          col_types: Each FireboltColumn has fields for the name of the column
+            and its type.
+        """
+        vals_list = vals.split(',')
+        # It's possible that col_names will be single column, in which case
+        # it might come in as a string.
+        if type(col_names) is str:
+            col_names = [col_names]
+        # Now map from column name to column type.
+        type_dict = {c.name: c.dtype for c in col_types}
+        for i in range(len(vals_list)):
+            if col_names[i] in type_dict and type(type_dict[col_names[i]]) in [
+                'datetime',
+                'date',
+            ]:
+                vals_list[i] += '::DATE'
+        return ','.join(vals_list)
 
 
 COLUMNS_EQUAL_SQL = """

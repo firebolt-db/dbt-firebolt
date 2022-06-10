@@ -137,28 +137,39 @@
 {%- endmacro %}
 
 
-{% macro firebolt__get_columns_in_relation(relation) -%}
-  {# Return column information for table identified by relation
-     as Agate table. #}
-  {% call statement('get_columns_in_relation', fetch_result=True) %}
-
-      SELECT column_name,
-             data_type,
-             character_maximum_length,
-             numeric_precision_radix
-        FROM information_schema.columns
-       WHERE table_name = '{{ relation.identifier }}'
-      ORDER BY column_name
-  {% endcall %}
-  {% set table = load_result('get_columns_in_relation').table %}
-  {{ return(sql_convert_columns_in_relation(table)) }}
+{% macro sql_convert_columns_in_relation_firebolt(rows) -%}
+  {% set columns = [] %}
+  {% for row in rows %}
+    {% do columns.append(api.Column(*row)) %}
+  {% endfor %}
+  {{ return(columns) }}
 {% endmacro %}
 
 
-{% macro firebolt__list_relations_without_caching(schema_relation) %}
+{% macro firebolt__get_columns_in_relation(relation) -%}
+  {#-
+  Return column information for table identified by relation as
+  List[FireboltColumn].
+    Args: relation: dbt Relation
+  -#}
+  {% set sql %}
+
+  SELECT * FROM {{ relation }} LIMIT 1
+  {% endset %}
+  {#- add_query returns a cursor object. The names and types of the table named
+      by `relation` have to be converted to the correct type. -#}
+  {%- set (conn, cursor) = adapter.add_query(sql = sql, abridge_sql_log=True) -%}
+  {%- set ret_val = adapter.sdk_column_list_to_firebolt_column_list(
+                        cursor.description
+                    ) -%}
+  {{ return(ret_val) }}
+{% endmacro %}
+
+
+{% macro firebolt__list_relations_without_caching(relation) %}
   {# Return all views and tables as agate table.
      Args:
-       schema_relation (dict): Contains values for database and schema.
+       relation (dict): Contains values for database and schema.
 
      dbt has a relations cache. Using this macro will list all
      the relations in the current schema using a direct DB query,
@@ -167,15 +178,15 @@
   #}
   {% call statement('list_tables_without_caching', fetch_result=True) %}
 
-      SELECT '{{ schema_relation.database }}' AS "database",
+      SELECT '{{ relation.database }}' AS "database",
              table_name AS "name",
-             '{{ schema_relation.schema }}' AS "schema",
+             '{{ relation.schema }}' AS "schema",
              'table' AS type
         FROM information_schema.tables
       UNION
-      SELECT '{{ schema_relation.database }}' AS "database",
+      SELECT '{{ relation.database }}' AS "database",
              table_name AS "name",
-             '{{ schema_relation.schema }}' AS "schema",
+             '{{ relation.schema }}' AS "schema",
              'view' AS type
         FROM information_schema.views
   {% endcall %}
@@ -184,41 +195,56 @@
 {% endmacro %}
 
 
-{% macro firebolt__create_table_as(temporary, relation, sql) -%}
+{% macro firebolt__create_table_as(temporary,
+                                   relation,
+                                   select_sql) -%}
   {# Create table using CTAS
      Args:
       temporary (bool): Unused, included so macro signature matches
-          that of dbt's default macro
-      relation (dbt relation/dict):
+        that of dbt's default macro
+      relation (dbt relation/dict)
+      select_sql (string): The SQL query that will be used to generate 
+        the internal query of the CTAS
   #}
   {%- set table_type = config.get('table_type', default='dimension') | upper -%}
-  {%- set primary_index = config.get('primary_index') %}
+  {%- set primary_index = config.get('primary_index') -%}
+  {%- set incremental_strategy = config.get('incremental_strategy') -%}
+  {%- set partitions = config.get('partition_by') %}
 
   CREATE {{ table_type }} TABLE IF NOT EXISTS {{ relation }}
   {%- if primary_index %}
-      PRIMARY INDEX
-      {% if primary_index is iterable and primary_index is not string -%}
-          {{ primary_index | join(', ') }}
-      {%- else -%}
-          {{ primary_index }}
-      {%- endif -%}
-  {% endif %}
+  PRIMARY INDEX
+    {% if primary_index is iterable and primary_index is not string %}
+      {{ primary_index | join(', ') }}
+    {%- else -%}
+      {{ primary_index }}
+    {%- endif -%}
+  {%- endif -%}
+  {% if partitions %}
+  PARTITION BY
+    {% if partitions is iterable and partitions is not string %}
+      {{ partitions | join(', ') }}
+    {%- else -%}
+      {{ partitions }}
+    {%- endif -%}
+  {%- endif  %}
   AS (
-      {{ sql }}
+    {{ select_sql }}
   )
 {% endmacro %}
 
 
-{% macro firebolt__create_view_as(relation, sql) %}
+{% macro firebolt__create_view_as(relation, select_sql) %}
   {#-
   Return SQL string to create view.
-     Args:
-       relation (dict): dbt relation
-       sql (str): pre-generated SQL
+    Args:
+      relation (dict): dbt relation
+      select_sql (string): The SQL query that will be used to generate 
+        the internal query of the CTAS
   #}
 
     CREATE OR REPLACE VIEW {{ relation.identifier }} AS (
-        {{ sql }}
+      {{ select_sql }}
     )
 {% endmacro %}
 
@@ -227,6 +253,7 @@
   {#
   Truncate relation. Actual macro is drop_relation in ./adapters/relation.sql.
   #}
+
   {# Firebolt doesn't currently support TRUNCATE, so DROP CASCADE.
      This should only be called from reset_csv_table, where it's followed by
      `create_csv_table`, so not recreating the table here. To retrieve old code,

@@ -7,9 +7,6 @@
   {% if on_schema_change == 'sync_all_columns' %}
     {% do exceptions.raise_compiler_error(
               'Firebolt does not support the on_schema_change value "sync_all_columns."') %}
-    {% set log_message = 'Invalid value for on_schema_change (%s) specified. Setting default value of %s.' %
-                        (on_schema_change, default) %}
-     {% do log(log_message, True) %}
     {{ return(default) }}
   {% else %}
     {{ return(on_schema_change) }}
@@ -18,28 +15,33 @@
 
 
 {% macro check_for_schema_changes(source_relation, target_relation) %}
-  {# Return a dict = {
+  {#
+  Return a dict = {
      'schema_changed': schema_changed,
-     'source_not_in_target': source_not_in_target,
-     'target_not_in_source': target_not_in_source,
-     'source_columns': source_columns,
-     'target_columns': target_columns,
+     'source_not_in_target': source_not_in_target (List[FireboltColumn]),
+     'target_not_in_source': target_not_in_source (List[FireboltColumn]),
+     'source_columns': source_columns (List[FireboltColumn]),
+     'target_columns': target_columns (List[FireboltColumn]),
      'new_target_types': new_target_types,
      'common_columns': common_colums
-  } %} #}
-  {% set schema_changed = False %}
+  }
+  Args:
+      source_relation: dbt Relation
+      target_relation: dbt Relation
+  #}
+  {%- set schema_changed = False -%}
   {%- set source_columns = adapter.get_columns_in_relation(source_relation) -%}
   {%- set target_columns = adapter.get_columns_in_relation(target_relation) -%}
   {%- set source_not_in_target = diff_columns(source_columns, target_columns) -%}
   {%- set target_not_in_source = diff_columns(target_columns, source_columns) -%}
-  {% set new_target_types = diff_column_data_types(source_columns, target_columns) %}
-  {% set common_columns = intersect_columns(source_columns, target_columns) %}
+  {%- set new_target_types = diff_column_data_types(source_columns, target_columns) -%}
+  {%- set common_columns = intersect_columns(source_columns, target_columns) -%}
   {% if source_not_in_target != [] %}
-    {% set schema_changed = True %}
+    {%- set schema_changed = True -%}
   {% elif target_not_in_source != [] or new_target_types != [] %}
-    {% set schema_changed = True %}
+    {%- set schema_changed = True -%}
   {% elif new_target_types != [] %}
-    {% set schema_changed = True %}
+    {%- set schema_changed = True -%}
   {% endif %}
   {% set changes_dict = {
     'schema_changed': schema_changed,
@@ -50,14 +52,6 @@
     'new_target_types': new_target_types,
     'common_columns': common_columns
   } %}
-  {% set msg %}
-    In {{ target_relation }}:
-        Schema changed: {{ schema_changed }}
-        Source columns not in target: {{ source_not_in_target }}
-        Target columns not in source: {{ target_not_in_source }}
-        New column types: {{ new_target_types }}
-  {% endset %}
-  {% do log(msg) %}
   {{ return(changes_dict) }}
 {% endmacro %}
 

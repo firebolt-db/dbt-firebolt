@@ -9,6 +9,7 @@ from dbt.contracts.connection import AdapterResponse
 from dbt.contracts.graph.manifest import Manifest
 from dbt.exceptions import RuntimeException
 from firebolt.client import DEFAULT_API_URL
+from firebolt.client.auth import UsernamePassword
 from firebolt.db import connect
 
 
@@ -78,10 +79,9 @@ class FireboltConnectionManager(SQLConnectionManager):
         credentials = connection.credentials
         # Create a connection based on provided credentials.
         connection.handle = connect(
+            auth=UsernamePassword(credentials.user, credentials.password),
             engine_name=credentials.engine_name,
             database=credentials.database,
-            username=credentials.user,
-            password=credentials.password,
             api_endpoint=credentials.api_endpoint,
             account_name=credentials.account_name,
         )
@@ -101,16 +101,14 @@ class FireboltConnectionManager(SQLConnectionManager):
         """
         Return an AdapterResponse object. Note that I can't overload/extend it
         as it's defined in dbt core and other internal fns complain if it has extra
-        fields. code field is missing for Firebolt adapter, as it's not returned
+        fields. `code` field is missing for Firebolt adapter, as it's not returned
         from the SDK/API.
         """
-        success = 'False'
         rowcount = cursor.rowcount
         if cursor.rowcount == -1:
-            success = 'True'
             rowcount = 0
         return AdapterResponse(
-            _message=success,
+            _message='SUCCESS',
             rows_affected=rowcount,
             code=None,
         )
@@ -123,7 +121,7 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     def commit(self) -> None:
         """
-        Passing `SQLConnectionManager.begin()` because
+        Passing `SQLConnectionManager.commit()` because
         Firebolt does not yet support transactions.
         """
 
