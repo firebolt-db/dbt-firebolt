@@ -11,6 +11,4 @@ class FireboltColumn(Column):
 
     @classmethod
     def is_date(self) -> bool:
-        if self.dtype.lower() == 'date':
-            return True
-        return False
+        return self.dtype.lower() == 'date'

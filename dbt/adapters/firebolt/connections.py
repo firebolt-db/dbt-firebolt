@@ -101,15 +101,14 @@ class FireboltConnectionManager(SQLConnectionManager):
         """
         Return an AdapterResponse object. Note that I can't overload/extend it
         as it's defined in dbt core and other internal fns complain if it has extra
-        fields. code field is missing for Firebolt adapter, as it's not returned
+        fields. `code` field is missing for Firebolt adapter, as it's not returned
         from the SDK/API.
         """
-        success = 'Success'
         rowcount = cursor.rowcount
         if cursor.rowcount == -1:
             rowcount = 0
         return AdapterResponse(
-            _message=success,
+            _message='SUCCESS',
             rows_affected=rowcount,
             code=None,
         )
@@ -122,7 +121,7 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     def commit(self) -> None:
         """
-        Passing `SQLConnectionManager.begin()` because
+        Passing `SQLConnectionManager.commit()` because
         Firebolt does not yet support transactions.
         """
 

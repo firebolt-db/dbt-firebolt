@@ -12,6 +12,7 @@ from dbt.adapters.base.impl import AdapterConfig
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
+from firebolt.async_db._types import ARRAY
 from firebolt.async_db._types import Column as SDKColumn
 
 from dbt.adapters.firebolt.column import FireboltColumn
@@ -205,20 +206,34 @@ class FireboltAdapter(SQLAdapter):
         Args:
           columns: list of Column types as defined in the Python SDK
         """
+        return [
+            FireboltColumn(
+                column=col.name, dtype=self.create_type_string(col.type_code)
+            )
+            for col in columns
+        ]
+
+    @available.parse_none
+    def create_type_string(self, type_code: Any) -> str:
+        """
+        Return properly formatted type string for SQL DDL.
+        Args: type_code is technically a type, but mypy complained that `type`
+        does not have an attribute `subtype`.
+        """
         types = {
             'str': 'TEXT',
-            'int': 'INT',
-            'float': 'FLOAT',
+            'int': 'LONG',
+            'float': 'DOUBLE',
             'date': 'DATE',
             'datetime': 'DATE',
             'bool': 'BOOLEAN',
-            'list': 'ARRAY',
             'Decimal': 'DECIMAL',
         }
-        return [
-            FireboltColumn(column=col.name, dtype=types[col.type_code.__name__])
-            for col in columns
-        ]
+        type_code_str = '{}'
+        while isinstance(type_code, ARRAY):
+            type_code_str = f'ARRAY({type_code_str})'
+            type_code = type_code.subtype
+        return type_code_str.format(types[type_code.__name__])
 
     @available.parse_none
     def filter_table(
@@ -289,7 +304,10 @@ class FireboltAdapter(SQLAdapter):
         # Now map from column name to column type.
         type_dict = {c.name: c.dtype for c in col_types}
         for i in range(len(vals_list)):
-            if type(type_dict[col_names[i]]) in ['datetime', 'date']:
+            if col_names[i] in type_dict and type(type_dict[col_names[i]]) in [
+                'datetime',
+                'date',
+            ]:
                 vals_list[i] += '::DATE'
         return ','.join(vals_list)
 

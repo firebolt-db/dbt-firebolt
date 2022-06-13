@@ -195,12 +195,16 @@
 {% endmacro %}
 
 
-{% macro firebolt__create_table_as(temporary, relation, ctas_sql) -%}
+{% macro firebolt__create_table_as(temporary,
+                                   relation,
+                                   select_sql) -%}
   {# Create table using CTAS
      Args:
       temporary (bool): Unused, included so macro signature matches
-          that of dbt's default macro
-      relation (dbt relation/dict):
+        that of dbt's default macro
+      relation (dbt relation/dict)
+      select_sql (string): The SQL query that will be used to generate
+        the internal query of the CTAS
   #}
   {%- set table_type = config.get('table_type', default='dimension') | upper -%}
   {%- set primary_index = config.get('primary_index') -%}
@@ -225,21 +229,22 @@
     {%- endif -%}
   {%- endif  %}
   AS (
-    {{ ctas_sql }}
+    {{ select_sql }}
   )
 {% endmacro %}
 
 
-{% macro firebolt__create_view_as(relation, ctas_sql) %}
+{% macro firebolt__create_view_as(relation, select_sql) %}
   {#-
   Return SQL string to create view.
-     Args:
-       relation (dict): dbt relation
-       sql (str): pre-generated SQL
+    Args:
+      relation (dict): dbt relation
+      select_sql (string): The SQL query that will be used to generate
+        the internal query of the CTAS
   #}
 
     CREATE OR REPLACE VIEW {{ relation.identifier }} AS (
-      {{ ctas_sql }}
+      {{ select_sql }}
     )
 {% endmacro %}
 
