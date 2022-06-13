@@ -1,105 +1,98 @@
 {% materialization incremental, adapter='firebolt' -%}
-  {# This is largely copied from dbt-core and dbt-spark. #}
-  {% set unique_key = config.get('unique_key') %}
+  {#
+  Incremental implementation. Actual strategy SQL is determined
+  outside this materialization, in strategies.sql.
 
-  {% set target_relation = this.incorporate(type='table') %}
-  {% set existing_relation = load_relation(this) %}
-  {% set tmp_relation = make_temp_relation(target_relation) %}
-  {%- set full_refresh_mode = (should_full_refresh()) -%}
+  This function works by first creating a view, `new_records`, of type `BaseRelation`,
+  then using a CTE defined in the project model to populate `new_records` with
+  any records that ought to be inserted into the original table (views aren't currently
+  supported), `existing`, using an INSERT. This process is agnostic to the incremental
+  strategy actually used: the specific INSERT is defined in `strategies.sql`.
 
-  {% set on_schema_change = incremental_validate_on_schema_change(
-      config.get('on_schema_change'),
-      default='ignore') %}
+  Note that all new relations must first be instantiated as BaseRelation objects,
+  and that those objects are used to create and query actual relations in the DB.
+  Care must be taken to correctly define each BaseRelation as either a view or
+  a table, lest subsequent operations on the relations (be the they objects or
+  the DB tables the objects abstract) fail.
+  #}
 
-  {% set tmp_identifier = model['name'] + '__dbt_tmp' %}
-  {% set backup_identifier = model['name'] + "__dbt_backup" %}
+  {# Not yet used
+    {% set unique_key = config.get('unique_key') %}
+  #}
+  {%- set strategy = config.get('incremental_strategy') -%}
+  {%- if is_incremental() and strategy is none -%}
+    {{ log('Model %s is set to incremental, but no incremental strategy is set. '
+           'Defaulting to append' % this, True) }}
+    {%- set strategy = 'append' -%}
+  {%- endif -%}
+  {# In following lines:
 
-  {# The intermediate_ and backup_ relations should not already exist in the
-     database; get_relation will return None in that case. Otherwise, we get
-     a relation that we can drop later, before we try to use this name for the
-     current operation. This has to happen before BEGIN, in a separate transaction. #}
-  {% set preexisting_intermediate_relation = adapter.get_relation(
-                                                 identifier=tmp_identifier,
-                                                 schema=schema,
-                                                 database=database) %}
-  {% set preexisting_backup_relation = adapter.get_relation(
-                                           identifier=backup_identifier,
-                                           schema=schema,
-                                           database=database) %}
-  {{ drop_relation_if_exists(preexisting_intermediate_relation) }}
-  {{ drop_relation_if_exists(preexisting_backup_relation) }}
+     `target` is just a dbt `BaseRelation` object, not a DB table.
 
-  {{ run_hooks(pre_hooks, inside_transaction=False) }}
+     We're only retrieving `existing` to check for existence; `load_relation()`
+     returns a `BaseRelation` with the dictionary values of any relations that exist
+     in dbt's cache that share the identifier of the passed relation. If none
+     exist, returns None. Note that this does *not* create a table in the DB.
+
+     `target` is a relation with all the same fields as `existing`, but guaranteed
+     to be an actual `BaseRelation` object. #}
+  {%- set target = this.incorporate(type='table') -%}
+  {%- set existing = load_relation(this) -%}
+  {%- set new_records = make_temp_relation(target) -%}
+  {{ drop_relation_if_exists(new_records) }}
+  {%- set new_records = new_records.incorporate(type='table') -%}
+  {%- set on_schema_change = incremental_validate_on_schema_change(
+                                config.get('on_schema_change'),
+                                default='ignore') -%}
 
   -- `BEGIN` happens here:
   {{ run_hooks(pre_hooks, inside_transaction=True) }}
+  {%- set partition_by = config.get('partition_by') -%}
+  {# First check whether we want to full refresh for existing view or config reasons. #}
+  {%- if strategy == 'insert_overwrite' and not partition_by -%}
+    {% do exceptions.raise_compiler_error('`insert_overwrite` is specified for model %s, '
+                                          'but `partition_by` is not. `insert_overwrite` '
+                                          'requires a partition.' % (target)) %}
+  {%- endif -%}
+  {%- set do_full_refresh = (should_full_refresh()
+                             or existing.is_view) %}
+  {% if existing is none %}
+    {%- set build_sql = create_table_as(False, target, sql) -%}
+  {%- elif do_full_refresh -%}
+    {{ drop_relation_if_exists(existing) }}
+    {%- set build_sql = create_table_as(False, target, sql) -%}
+  {%- else -%}
+    {# Actually do the incremental query here. #}
+    {# Instantiate new objects in dbt's internal list. Have to
+       run this query so dbt can query the DB to get the columns in
+       new_records. #}
+    {%- do run_query(create_table_as(True, new_records, sql)) -%}
+    {# All errors involving schema changes are dealt with in `process_schema_changes`. #}
+    {%- set dest_columns = process_schema_changes(on_schema_change,
+                                                  new_records,
+                                                  existing) -%}
+    {%- set build_sql = get_incremental_sql(strategy,
+                                            new_records,
+                                            target,
+                                            unique_key,
+                                            dest_columns) -%}
+  {%- endif -%}
+  {%- call statement("main") -%}
+    {{ build_sql }}
+  {%- endcall -%}
 
-  {% set to_drop = [] %}
+  {# Todo: figure out what persist_docs and create_indexes do. #}
+  {%- do persist_docs(target, model) -%}
+  {%- if existing is none
+      or existing.is_view
+      or should_full_refresh() -%}
+  {%- do create_indexes(target) -%}
+  {%- endif %}
 
-  {# First check whether we want to full refresh for source view or config reasons #}
-  {% set trigger_full_refresh = (full_refresh_mode or existing_relation.is_view) %}
-
-  {% if existing_relation is none %}
-      {% set build_sql = create_table_as(False, target_relation, sql) %}
-  {% elif trigger_full_refresh %}
-      {# Make sure the backup doesn't exist so we don't encounter
-         issues with the rename below. #}
-      {% set intermediate_relation = existing_relation.incorporate(
-                                         path={"identifier": tmp_identifier}) %}
-      {% set backup_relation = existing_relation.incorporate(
-                                         path={"identifier": backup_identifier}) %}
-
-      {% set build_sql = create_table_as(False, intermediate_relation, sql) %}
-      {% set need_swap = true %}
-      {% do to_drop.append(backup_relation) %}
-  {% else %}
-    {% do run_query(create_table_as(True, tmp_relation, sql)) %}
-    {% do adapter.expand_target_column_types(
-             from_relation=tmp_relation,
-             to_relation=target_relation) %}
-    {# Process schema changes. Returns dict of changes if successful.
-       Use source columns for upserting/merging #}
-    {% set dest_columns = process_schema_changes(on_schema_change,
-                                                 tmp_relation,
-                                                 existing_relation) %}
-    {% if not dest_columns %}
-      {% set dest_columns = adapter.get_columns_in_relation(existing_relation) %}
-    {% endif %}
-    {% set build_sql = get_delete_insert_merge_sql(target_relation,
-                                                   tmp_relation,
-                                                   unique_key,
-                                                   dest_columns) %}
-
-  {% endif %}
-
-  {% call statement("main") %}
-      {{ build_sql }}
-  {% endcall %}
-
-  {% if need_swap %}
-      {% do adapter.rename_relation(target_relation, backup_relation) %}
-      {% do adapter.rename_relation(intermediate_relation, target_relation) %}
-  {% endif %}
-
-  {% do persist_docs(target_relation, model) %}
-
-  {% if existing_relation is none
-        or existing_relation.is_view
-        or should_full_refresh() %}
-    {% do create_indexes(target_relation) %}
-  {% endif %}
+  {{ drop_relation_if_exists(new_records) }}
 
   {{ run_hooks(post_hooks, inside_transaction=True) }}
 
-  -- `COMMIT` happens here
-  {% do adapter.commit() %}
-
-  {% for rel in to_drop %}
-      {% do adapter.drop_relation(rel) %}
-  {% endfor %}
-
-  {{ run_hooks(post_hooks, inside_transaction=False) }}
-
-  {{ return({'relations': [target_relation]}) }}
+  {{ return({'relations': [target]}) }}
 
 {%- endmaterialization %}

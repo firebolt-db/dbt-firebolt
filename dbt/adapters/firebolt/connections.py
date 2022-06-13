@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Tuple
 
 import dbt.exceptions
 from dbt.adapters.base import Credentials
@@ -9,6 +9,7 @@ from dbt.contracts.connection import AdapterResponse
 from dbt.contracts.graph.manifest import Manifest
 from dbt.exceptions import RuntimeException
 from firebolt.client import DEFAULT_API_URL
+from firebolt.client.auth import UsernamePassword
 from firebolt.db import connect
 
 
@@ -23,12 +24,12 @@ class FireboltCredentials(Credentials):
     account_name: Optional[str] = None
 
     @property
-    def type(self):
+    def type(self) -> str:
         return 'firebolt'
 
-    def _connection_keys(self):
+    def _connection_keys(self) -> Tuple[str, str, str, str, str, str, str]:
         """
-        Return list of keys (i.e. not values) to display
+        Return tuple of keys (i.e. not values) to display
         in the `dbt debug` output.
         """
         return (
@@ -42,7 +43,7 @@ class FireboltCredentials(Credentials):
         )
 
     @property
-    def unique_field(self):
+    def unique_field(self) -> Optional[str]:
         """
         Return a field that can be hashed to uniquely identify one
         team/organization building with this adapter. This is called by
@@ -55,7 +56,8 @@ class FireboltCredentials(Credentials):
 
 
 class FireboltConnectionManager(SQLConnectionManager):
-    """Methods to implement:
+    """
+    Methods to implement:
     - exception_handler
     - cancel_open
     - open
@@ -67,20 +69,19 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     TYPE = 'firebolt'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self._message
 
     @classmethod
-    def open(cls, connection):
+    def open(cls, connection: SQLConnectionManager) -> SQLConnectionManager:
         if connection.state == 'open':
             return connection
         credentials = connection.credentials
         # Create a connection based on provided credentials.
         connection.handle = connect(
+            auth=UsernamePassword(credentials.user, credentials.password),
             engine_name=credentials.engine_name,
             database=credentials.database,
-            username=credentials.user,
-            password=credentials.password,
             api_endpoint=credentials.api_endpoint,
             account_name=credentials.account_name,
         )
@@ -88,7 +89,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         return connection
 
     @contextmanager
-    def exception_handler(self, sql: str):
+    def exception_handler(self, sql: str) -> RuntimeException:
         try:
             yield
         except Exception as e:
@@ -96,37 +97,35 @@ class FireboltConnectionManager(SQLConnectionManager):
             raise RuntimeException(str(e))
 
     @classmethod
-    def get_response(cls, cursor) -> AdapterResponse:
+    def get_response(cls, cursor: SQLConnectionManager) -> AdapterResponse:
         """
         Return an AdapterResponse object. Note that I can't overload/extend it
         as it's defined in dbt core and other internal fns complain if it has extra
-        fields. code field is missing for Firebolt adapter, as it's not returned
+        fields. `code` field is missing for Firebolt adapter, as it's not returned
         from the SDK/API.
         """
-        success = 'False'
         rowcount = cursor.rowcount
         if cursor.rowcount == -1:
-            success = 'True'
             rowcount = 0
         return AdapterResponse(
-            _message=success,
+            _message='SUCCESS',
             rows_affected=rowcount,
             code=None,
         )
 
-    def begin(self):
+    def begin(self) -> None:
         """
         Passing `SQLConnectionManager.begin()` because
         Firebolt does not yet support transactions.
         """
 
-    def commit(self):
+    def commit(self) -> None:
         """
-        Passing `SQLConnectionManager.begin()` because
+        Passing `SQLConnectionManager.commit()` because
         Firebolt does not yet support transactions.
         """
 
-    def cancel(self, connection):
+    def cancel(self, connection: SQLConnectionManager) -> None:
         """Cancel the last query on the given connection."""
         raise dbt.exceptions.NotImplementedException(
             '`cancel` is not implemented for this adapter!'

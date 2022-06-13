@@ -1,1 +1,3 @@
-from dbt.adapters.firebolt import __version__ as version  # noqa
+from dbt.adapters.firebolt import __version__
+
+version = __version__

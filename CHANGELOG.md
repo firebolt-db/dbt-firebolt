@@ -1,13 +1,55 @@
 # Changelog
 
-## v.1.0.4
+## v.1.1.0
+
+### Features
+
+- dbt-firebolt now supports the insert/overwrite incremental model.
 
 ### Under the hood
 
-- dbt-firebolt now supports append-only incremental models.
+- dbt-firebolt now requires firebolt-sdk>=0.8.1.
+
+### Breaking changes
+
+- dbt-firebolt uses firebolt-sdk's new auth token method, thus requires firebolt-sdk >= 0.8.1.
+
+## v.1.0.6
+
+### Under the hood
+
+- dbt-firebolt now requires dbt v1.1.
+- dbt-firebolt now requires firebolt-sdk>=0.7.
+
+### Breaking changes
+
+- dbt-firebolt now requires dbt v1.1
+
+## v.1.0.5
+
+### Under the hood
+
+- Added FireboltColumn class to handle string type.
+- Added mypy to pre-commit tests.
+- Fixed output from dbt runs so that successful table creation outputs “Success” rather than “False.”
+
+## v.1.0.4
+
+### Features
+
+- dbt-firebolt now supports the append-only incremental model.
+- We now return better/more accurate responses from the cursor for logging/debugging.
+
+### Under the hood
+
 - Rendering of SQL output was reformatted to increase legibility of debug output and log files.
 - Removed all uses of `SHOW VIEWS` and `SHOW TABLES` and replaced them with calls to information_schema.views and information_schema.tables, respectively.
 - Updated to give better/more accurate responses from cursor.
+- Fixed an error where names for aggregating and join indexes with only single values for indexes were being improperly generated.
+
+### Breaking changes
+
+- Join and key column field names in aggregating and join indexes are now pluralized: `join_column` becomes `join_columns` and `key_column` becomes `key_columns` in index config blocks.
 
 ## v.1.0.3
 
@@ -18,9 +60,12 @@
 
 ## v.1.0.2
 
+### Features
+
+- dbt-firebolt now supports aggregating indexes with multiple-column keys.
+
 ### Under the hood
 
-- dbt-firebolt now supports aggregating indexes with multiple-column keys. 
 - Bug fix to check for `data_type` and `regex` fields when necessary on external tables.
 - Changed default behavior on external table insert to `DROP IF EXISTS`.
 

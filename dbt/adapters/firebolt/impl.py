@@ -12,7 +12,10 @@ from dbt.adapters.base.impl import AdapterConfig
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
+from firebolt.async_db._types import ARRAY
+from firebolt.async_db._types import Column as SDKColumn
 
+from dbt.adapters.firebolt.column import FireboltColumn
 from dbt.adapters.firebolt.connections import FireboltConnectionManager
 from dbt.adapters.firebolt.relation import FireboltRelation
 
@@ -20,31 +23,36 @@ from dbt.adapters.firebolt.relation import FireboltRelation
 @dataclass
 class FireboltIndexConfig(dbtClassMixin):
     index_type: str
-    join_column: Optional[Union[str, List[str]]] = None
-    key_column: Optional[Union[str, List[str]]] = None
+    join_columns: Optional[Union[str, List[str]]] = None
+    key_columns: Optional[Union[str, List[str]]] = None
     dimension_column: Optional[Union[str, List[str]]] = None
     aggregation: Optional[Union[str, List[str]]] = None
 
-    def render_name(self, relation):
+    def render_name(self, relation: FireboltRelation) -> str:
         """
         Name an index according to the following format, joined by `_`:
-        index type, relation name, key/join column, timestamp (unix & UTC)
+        index type, relation name, key/join columns, timestamp (unix & UTC)
         example index name: join_my_model_customer_id_1633504263.
         """
-        now_unix = time.mktime(datetime.utcnow().timetuple())
-        spine_col = '_'.join(self.key_column if self.key_column else self.join_column)
+        now_unix = str(int(time.mktime(datetime.utcnow().timetuple())))
+        # If column_names is a list with > 1 members, join with _,
+        # otherwise do not. We were getting index names like
+        # join__idx__emf_customers__f_i_r_s_t___n_a_m_e__165093112.
+        column_names = self.key_columns or self.join_columns
+        spine_col = (
+            '_'.join(column_names) if isinstance(column_names, list) else column_names
+        )
         inputs = [
-            str(self.index_type),
-            'idx',
+            f'{self.index_type}_idx',
             relation.identifier,
             spine_col,
-            str(int(now_unix)),
+            now_unix,
         ]
-        string = '__'.join(inputs)[:254]
+        string = '__'.join(inputs)
         return string
 
     @classmethod
-    def parse(cls, raw_index) -> Optional['FireboltIndexConfig']:
+    def parse(cls, raw_index: Optional[str]) -> Optional['FireboltIndexConfig']:
         """
         Validate the JSON format of the provided index config.
         Ensure the config has the right elements.
@@ -62,27 +70,28 @@ class FireboltIndexConfig(dbtClassMixin):
                     '  Type should be either: "join" or "aggregating."'
                 )
             if index_config.index_type.upper() == 'JOIN' and not (
-                index_config.join_column and index_config.dimension_column
+                index_config.join_columns and index_config.dimension_column
             ):
                 dbt.exceptions.raise_compiler_error(
                     'Invalid join index definition:\n'
                     f'  Got: {index_config}.\n'
-                    '  join_column and dimension_column must be specified '
+                    '  join_columns and dimension_column must be specified '
                     'for join indexes.'
                 )
             if index_config.index_type.upper() == 'AGGREGATING' and not (
-                index_config.key_column and index_config.aggregation
+                index_config.key_columns and index_config.aggregation
             ):
                 dbt.exceptions.raise_compiler_error(
                     'Invalid aggregating index definition:\n'
                     f'  Got: {index_config}.\n'
-                    '  key_column and aggregation must be specified '
+                    '  key_columns and aggregation must be specified '
                     'for aggregating indexes.'
                 )
             return index_config
         except ValidationError as exc:
             msg = dbt.exceptions.validator_error_message(exc)
             dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}.')
+        return None
 
 
 @dataclass
@@ -93,12 +102,13 @@ class FireboltConfig(AdapterConfig):
 class FireboltAdapter(SQLAdapter):
     Relation = FireboltRelation
     ConnectionManager = FireboltConnectionManager
+    Column = FireboltColumn
 
-    def is_cancelable(self):
+    def is_cancelable(self) -> bool:
         return False
 
     @classmethod
-    def date_function(cls):
+    def date_function(cls) -> str:
         return 'now()'
 
     @available
@@ -147,10 +157,9 @@ class FireboltAdapter(SQLAdapter):
         """
         Return the type in the database that best maps to the
         agate.TimeDelta type for the given agate table and column index.
-
-        :param agate_table: The table
-        :param col_idx: The index into the agate table for the column.
-        :return: The name of the type in the database
+        Args:
+          agate_table: The table
+          col_idx: The index into the agate table for the column.
 
         Firebolt doesn't have a TIME type. Closest is DATETIME. Likewise, as
         there's only one available type, don't need the agate table, class, etc.
@@ -158,7 +167,9 @@ class FireboltAdapter(SQLAdapter):
         return 'DATETIME'
 
     @available.parse_none
-    def make_field_partition_pairs(self, columns, partitions) -> List[str]:
+    def make_field_partition_pairs(
+        self, columns: agate.Column, partitions: FireboltRelation
+    ) -> List[str]:
         """
         Return a list of strings of form "column column_type" or
         "column column_type PARTITION(regex)" where the partitions
@@ -198,7 +209,7 @@ class FireboltAdapter(SQLAdapter):
         return unpartitioned_columns + partitioned_columns
 
     @available.parse_none
-    def stack_tables(self, tables_list) -> agate.Table:
+    def stack_tables(self, tables_list: List[agate.Table]) -> agate.Table:
         """
         Given a list of agate_tables with the same column names & types
         return a single unioned agate table.
@@ -215,21 +226,53 @@ class FireboltAdapter(SQLAdapter):
             )
 
     @available.parse_none
-    def filter_table(cls, agate_table, col_name, re_match_exp) -> agate.Table:
+    def sdk_column_list_to_firebolt_column_list(
+        self, columns: List[SDKColumn]
+    ) -> List[FireboltColumn]:
+        """
+        Extract and return list of FireboltColumns with names and data types
+        extracted from SDKColumns.
+        Args:
+          columns: list of Column types as defined in the Python SDK
+        """
+        return [
+            FireboltColumn(
+                column=col.name, dtype=self.create_type_string(col.type_code)
+            )
+            for col in columns
+        ]
+
+    @available.parse_none
+    def create_type_string(self, type_code: Any) -> str:
+        """
+        Return properly formatted type string for SQL DDL.
+        Args: type_code is technically a type, but mypy complained that `type`
+        does not have an attribute `subtype`.
+        """
+        types = {
+            'str': 'TEXT',
+            'int': 'LONG',
+            'float': 'DOUBLE',
+            'date': 'DATE',
+            'datetime': 'DATE',
+            'bool': 'BOOLEAN',
+            'Decimal': 'DECIMAL',
+        }
+        type_code_str = '{}'
+        while isinstance(type_code, ARRAY):
+            type_code_str = f'ARRAY({type_code_str})'
+            type_code = type_code.subtype
+        return type_code_str.format(types[type_code.__name__])
+
+    @available.parse_none
+    def filter_table(
+        cls, agate_table: agate.Table, col_name: str, re_match_exp: str
+    ) -> agate.Table:
         """
         Filter agate table by column name and regex match expression.
         https://agate.readthedocs.io/en/latest/cookbook/filter.html#by-regex
         """
-        #  print('\n\n** row count of', col_name, len(agate_table.rows))
-        #         if len(agate_table.rows) == 1:
-        #             return agate_table.rows.values()[0].values()[0]
-        #         if len(agate_table.rows) == 0:
-        #             print('\n** which column:', col_name)
         return agate_table.where(lambda row: re.match(re_match_exp, str(row[col_name])))
-
-    def get_renamed_view_ddl(input_ddl, replacement) -> str:
-        """Use re.sub to replace view name in input_ddl with replacement."""
-        return re.sub('"[^"]*"', f'"{replacement}"', input_ddl, count=1)
 
     @available.parse_none
     def get_rows_different_sql(
@@ -256,17 +299,46 @@ class FireboltAdapter(SQLAdapter):
             f'{relation_a}.{name} = {relation_b}.{name}' for name in names
         ]
         where_clause = ' AND '.join(where_expressions)
-
         columns_csv = ', '.join(names)
-
         sql = COLUMNS_EQUAL_SQL.format(
             columns=columns_csv,
             relation_a=str(relation_a),
             relation_b=str(relation_b),
             where_clause=where_clause,
         )
-
         return sql
+
+    @available.parse_none
+    def annotate_date_columns_for_partitions(
+        self,
+        vals: str,
+        col_names: Union[List[str], str],
+        col_types: List[FireboltColumn],
+    ) -> str:
+        """
+        Return a list of partition values as a single string. All columns with
+        date types will be be suffixed with ::DATE.
+        Args:
+          vals: a string of values separated by commas
+          col_names: either a list of strings or a single string, of the
+            names of the columns
+          col_types: Each FireboltColumn has fields for the name of the column
+            and its type.
+        """
+        vals_list = vals.split(',')
+        # It's possible that col_names will be single column, in which case
+        # it might come in as a string.
+        if type(col_names) is str:
+            col_names = [col_names]
+        # Now map from column name to column type.
+        type_dict = {c.name: c.dtype for c in col_types}
+        for i in range(len(vals_list)):
+            if col_names[i] in type_dict and type(type_dict[col_names[i]]) in [
+                'datetime',
+                'date',
+            ]:
+                vals_list[i] += '::DATE'
+        return ','.join(vals_list)
 
 
 COLUMNS_EQUAL_SQL = """

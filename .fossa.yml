@@ -2,4 +2,4 @@ version: 3
 
 targets:
   only:
-    - type: setuptools
+    - type: pipenv

@@ -42,7 +42,8 @@
 {%- endmaterialization -%}
 
 
-{% macro default__get_test_sql(main_sql, fail_calc, warn_if, error_if, limit) -%}
+{% macro default__get_test_sql(main_sql, fail_calc, warn_if, error_if, limit) %}
+
     SELECT
       CAST({{ fail_calc }} AS INT) AS failures,
       CASE WHEN {{ fail_calc }} {{ warn_if }}
