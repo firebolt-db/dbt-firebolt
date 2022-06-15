@@ -173,8 +173,9 @@
 
      dbt has a relations cache. Using this macro will list all
      the relations in the current schema using a direct DB query,
-     rather than checking the cache. So the name is a misnomer. Should
-     be list_relations_bypassing_cache or something.
+     rather than checking the cache. So the name seems to be a 
+     misnomer. Maybe should be list_relations_bypassing_cache or 
+     something.
   #}
   {% call statement('list_tables_without_caching', fetch_result=True) %}
 

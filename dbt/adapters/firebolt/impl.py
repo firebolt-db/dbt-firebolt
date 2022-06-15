@@ -226,6 +226,42 @@ class FireboltAdapter(SQLAdapter):
             )
 
     @available.parse_none
+    def create_relation_agate_table(
+        self,
+        database_name: str,
+        schema: str,
+        table_type: str,
+        table_name: str,
+        relation_type: str,
+        columns: List[FireboltColumn],
+    ) -> agate.Table:
+        """Return an agate table."""
+        column_names = [
+            'table_database',
+            'table_schema',
+            'table_type',
+            'table_name',
+            'column_name',
+            'column_type',
+            'relation_type',
+        ]
+        column_types = [agate.Text()] * 7
+
+        rows = [
+            (
+                database_name,
+                schema,
+                table_type,
+                table_name,
+                c.name,
+                c.dtype,
+                relation_type,
+            )
+            for c in columns
+        ]
+        return agate.Table(rows, column_names, column_types)
+
+    @available.parse_none
     def sdk_column_list_to_firebolt_column_list(
         self, columns: List[SDKColumn]
     ) -> List[FireboltColumn]:
