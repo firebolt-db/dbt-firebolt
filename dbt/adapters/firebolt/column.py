@@ -1,10 +1,10 @@
-from dataclasses import dataclass
-
 from dbt.adapters.base.column import Column
 
 
-@dataclass
 class FireboltColumn(Column):
+    # Building a catalog requires that all columns are indexed.
+    column_index: int = 0
+
     @classmethod
     def string_type(cls, size: int) -> str:
         return 'text'

@@ -211,19 +211,36 @@ class FireboltAdapter(SQLAdapter):
     @available.parse_none
     def stack_tables(self, tables_list: List[agate.Table]) -> agate.Table:
         """
-        Given a list of agate_tables with the same column names & types
+        Given a list of agate tables with the same column names & types
         return a single unioned agate table.
         """
         non_empty_tables = [table for table in tables_list if len(table.rows) > 0]
-
+        print('\n\n** stack_tables', len(non_empty_tables))
         if len(non_empty_tables) == 0:
             return tables_list[0]
         else:
+            print('non_empty_tables type', type(non_empty_tables))
+            for col in non_empty_tables[:1]:
+                print(col)
+                for c in col:
+                    for cc in c:
+                        print(type(cc), cc)
             return (
-                agate.TableSet(non_empty_tables, keys=range(len(non_empty_tables)))
+                agate.TableSet(non_empty_tables[:2], keys=range(len(non_empty_tables)))
                 .merge()
                 .exclude(['group'])
             )
+            # final_table = agate.TableSet(non_empty_tables).merge()
+            # for row in final_table.rows:
+            #     print('\n\n** final_table: ', row.values(), '\n', final_table)
+            # for (i, table) in enumerate(non_empty_tables[1:]):
+            #     for row in table.rows:
+            #         print(f'** stack_tables {i}: ', '\n', row.values(), table)
+            #         for item in row:
+            #             print(f'** type: {type(item)}')
+            #     final_table = agate.Table.merge([final_table, table])
+            # # print(ret_val)
+            # return final_table
 
     @available.parse_none
     def create_relation_agate_table(
@@ -235,7 +252,26 @@ class FireboltAdapter(SQLAdapter):
         relation_type: str,
         columns: List[FireboltColumn],
     ) -> agate.Table:
-        """Return an agate table."""
+        """
+        Given list of columns, return a single agate table with those columns.
+        The returned table will be a description of the columns in a view or
+        table in the database. The column keys are standardized for all
+        relation types.
+        Args:
+          database_name: name of the DB the table exists on
+          schema: the DB schema
+          table_type: FACT or DIMENSION
+          table_name: name of the relation
+          relation_type: TABLE or VIEW
+          columns: list of columns in the relation
+        """
+        # print('\n\n** create agate table inputs', database_name,
+        # schema,
+        # table_type,
+        # table_name,
+        # relation_type,
+        # columns,
+        # sep='\n')
         column_names = [
             'table_database',
             'table_schema',
@@ -243,22 +279,36 @@ class FireboltAdapter(SQLAdapter):
             'table_name',
             'column_name',
             'column_type',
+            # 'column_index',
             'relation_type',
         ]
-        column_types = [agate.Text()] * 7
+        column_types = [
+            agate.Text(),
+            agate.Text(),
+            agate.Text(),
+            agate.Text(),
+            agate.Text(),
+            agate.Text(),
+            # agate.Number(),
+            agate.Text(),
+        ]
 
         rows = [
             (
                 database_name,
                 schema,
-                table_type,
+                'VIEW' if relation_type.lower() == 'view' else table_type,
                 table_name,
                 c.name,
                 c.dtype,
+                # i if relation_type.lower() == 'view' else int(c.column_index),
                 relation_type,
             )
-            for c in columns
+            for (i, c) in enumerate(columns)
         ]
+
+        for row in rows:
+            print(row)
         return agate.Table(rows, column_names, column_types)
 
     @available.parse_none
@@ -267,15 +317,19 @@ class FireboltAdapter(SQLAdapter):
     ) -> List[FireboltColumn]:
         """
         Extract and return list of FireboltColumns with names and data types
-        extracted from SDKColumns.
+        extracted from SDKColumns. Impotant! Note that SDKColumns do not have
+        a column index field, so it will be filled via enumerate(). Therefore,
+        do not call this function if canonical column indices are necessary.
         Args:
           columns: list of Column types as defined in the Python SDK
         """
         return [
             FireboltColumn(
-                column=col.name, dtype=self.create_type_string(col.type_code)
+                column=col.name,
+                column_index=i,
+                dtype=self.create_type_string(col.type_code),
             )
-            for col in columns
+            for (i, col) in enumerate(columns)
         ]
 
     @available.parse_none
@@ -283,7 +337,7 @@ class FireboltAdapter(SQLAdapter):
         """
         Return properly formatted type string for SQL DDL.
         Args: type_code is technically a type, but mypy complained that `type`
-        does not have an attribute `subtype`.
+          does not have an attribute `subtype`.
         """
         types = {
             'str': 'TEXT',
