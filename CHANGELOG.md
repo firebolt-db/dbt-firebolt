@@ -1,5 +1,11 @@
 # Changelog
 
+## v.1.1.1
+
+### Under the hood
+
+- dbt-firebolt now requires firebolt-sdk>=0.9.2.
+
 ## v.1.1.0
 
 ### Features
