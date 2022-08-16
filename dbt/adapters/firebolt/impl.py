@@ -279,7 +279,7 @@ class FireboltAdapter(SQLAdapter):
             'table_name',
             'column_name',
             'column_type',
-            # 'column_index',
+            'column_index',
             'relation_type',
         ]
         column_types = [
@@ -289,7 +289,7 @@ class FireboltAdapter(SQLAdapter):
             agate.Text(),
             agate.Text(),
             agate.Text(),
-            # agate.Number(),
+            agate.Number(),
             agate.Text(),
         ]
 
@@ -301,7 +301,7 @@ class FireboltAdapter(SQLAdapter):
                 table_name,
                 c.name,
                 c.dtype,
-                # i if relation_type.lower() == 'view' else int(c.column_index),
+                i if relation_type.lower() == 'view' else int(c.column_index),
                 relation_type,
             )
             for (i, c) in enumerate(columns)
@@ -323,11 +323,14 @@ class FireboltAdapter(SQLAdapter):
         Args:
           columns: list of Column types as defined in the Python SDK
         """
+        print('\n\n****made it here!!!!')
+        for (i, val) in enumerate(columns):
+            print(val.name, i, self.create_type_string(val.type_code))
         return [
             FireboltColumn(
-                column=col.name,
+                column_name=col.name,
                 column_index=i,
-                dtype=self.create_type_string(col.type_code),
+                dtype=self.col.type_code,
             )
             for (i, col) in enumerate(columns)
         ]
