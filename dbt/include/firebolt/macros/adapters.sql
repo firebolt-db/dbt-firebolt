@@ -27,10 +27,6 @@
 {% macro firebolt__list_schemas(database) %}
   {# Return current schema. Name is a misnomer.
      TODO: Should this actually return all schemas? #}
-  {% if target.threads > 1 %}
-    {{ exceptions.raise_compiler_error("Firebolt does not currently support "
-                                       "more than one thread.") }}
-  {% endif %}
   {% call statement('list_schemas', fetch_result=True, auto_begin=False) %}
 
       SELECT '{{target.schema}}' AS schema
@@ -203,7 +199,7 @@
       temporary (bool): Unused, included so macro signature matches
         that of dbt's default macro
       relation (dbt relation/dict)
-      select_sql (string): The SQL query that will be used to generate 
+      select_sql (string): The SQL query that will be used to generate
         the internal query of the CTAS
   #}
   {%- set table_type = config.get('table_type', default='dimension') | upper -%}
@@ -239,7 +235,7 @@
   Return SQL string to create view.
     Args:
       relation (dict): dbt relation
-      select_sql (string): The SQL query that will be used to generate 
+      select_sql (string): The SQL query that will be used to generate
         the internal query of the CTAS
   #}
 
