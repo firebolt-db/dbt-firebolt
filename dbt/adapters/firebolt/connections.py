@@ -22,6 +22,7 @@ class FireboltCredentials(Credentials):
     driver: str = 'com.firebolt.FireboltDriver'
     engine_name: Optional[str] = None
     account_name: Optional[str] = None
+    release_connection: Optional[bool] = False
 
     @property
     def type(self) -> str:
@@ -67,6 +68,8 @@ class FireboltConnectionManager(SQLConnectionManager):
     - execute
     """
 
+    _keep_connection_open: Optional[bool] = True
+
     TYPE = 'firebolt'
 
     def __str__(self) -> str:
@@ -76,14 +79,16 @@ class FireboltConnectionManager(SQLConnectionManager):
     def open(cls, connection: SQLConnectionManager) -> SQLConnectionManager:
         if connection.state == 'open':
             return connection
-        credentials = connection.credentials
+        creds = connection.credentials
+        if creds.keep_connection_open is not None and not creds.keep_connection_open:
+            cls._keep_connection_open = False
         # Create a connection based on provided credentials.
         connection.handle = connect(
-            auth=UsernamePassword(credentials.user, credentials.password),
-            engine_name=credentials.engine_name,
-            database=credentials.database,
-            api_endpoint=credentials.api_endpoint,
-            account_name=credentials.account_name,
+            auth=UsernamePassword(creds.user, creds.password),
+            engine_name=creds.engine_name,
+            database=creds.database,
+            api_endpoint=creds.api_endpoint,
+            account_name=creds.account_name,
         )
         connection.state = 'open'
         return connection
@@ -133,3 +138,20 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     def set_query_header(self, manifest: Manifest) -> None:
         self.query_header = None
+
+    def release(self) -> None:
+        if not self._keep_connection_open:
+            return
+
+        with self.lock:
+            conn = self.get_if_exists()
+            if conn is None:
+                return
+
+        try:
+            # always close the connection.
+            self.close(conn)
+        except Exception:
+            # if rollback or close failed, remove our busted connection
+            self.clear_thread_connection()
+            raise
