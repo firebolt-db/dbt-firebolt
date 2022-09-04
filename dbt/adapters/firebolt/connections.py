@@ -22,7 +22,7 @@ class FireboltCredentials(Credentials):
     driver: str = 'com.firebolt.FireboltDriver'
     engine_name: Optional[str] = None
     account_name: Optional[str] = None
-    release_connection: Optional[bool] = False
+    keep_connection_open: Optional[bool] = True
 
     @property
     def type(self) -> str:
@@ -80,9 +80,11 @@ class FireboltConnectionManager(SQLConnectionManager):
         if connection.state == 'open':
             return connection
         creds = connection.credentials
+        print('\n** credentials', creds.keep_connection_open)
         if creds.keep_connection_open is not None and not creds.keep_connection_open:
-            cls._keep_connection_open = False
+            cls._keep_connection_open = True
         # Create a connection based on provided credentials.
+        print("\'\n** keep connection open", cls._keep_connection_open, '****\n')
         connection.handle = connect(
             auth=UsernamePassword(creds.user, creds.password),
             engine_name=creds.engine_name,
@@ -140,7 +142,8 @@ class FireboltConnectionManager(SQLConnectionManager):
         self.query_header = None
 
     def release(self) -> None:
-        if not self._keep_connection_open:
+        if self._keep_connection_open:
+            print('\n** kept it open\n')
             return
 
         with self.lock:
