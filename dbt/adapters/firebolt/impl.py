@@ -330,7 +330,7 @@ class FireboltAdapter(SQLAdapter):
             FireboltColumn(
                 column_name=col.name,
                 column_index=i,
-                dtype=self.col.type_code,
+                dtype=col.type_code,
             )
             for (i, col) in enumerate(columns)
         ]
