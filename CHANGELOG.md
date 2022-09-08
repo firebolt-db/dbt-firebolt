@@ -1,5 +1,15 @@
 # Changelog
 
+## v.1.1.2
+
+### Features
+
+- dbt-firebolt now passes through more useful error messages on API timeouts.
+
+### Under the hood
+
+- dbt-firebolt now requires firebolt-sdk>=0.10.0.
+
 ## v.1.1.1
 
 ### Under the hood
