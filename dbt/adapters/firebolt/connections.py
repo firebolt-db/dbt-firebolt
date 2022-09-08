@@ -142,18 +142,22 @@ class FireboltConnectionManager(SQLConnectionManager):
         self.query_header = None
 
     def release(self) -> None:
-        if self._keep_connection_open:
-            print('\n** kept it open\n')
-            return
+        # if self._keep_connection_open:
+        #     print(f'\n** kept {self.thread_connections} open\n')
+        #     return
 
         with self.lock:
+            print(f'\n** Locked {self.thread_connections}\n')
             conn = self.get_if_exists()
+            print('\n** Conn:', conn)
             if conn is None:
                 return
 
         try:
             # always close the connection.
+            print(f'\n** Before closing {self.thread_connections}\n')
             self.close(conn)
+            print(f'\n** Closed {self.thread_connections}\n')
         except Exception:
             # if rollback or close failed, remove our busted connection
             self.clear_thread_connection()
