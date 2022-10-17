@@ -7,7 +7,7 @@ from dbt.exceptions import RuntimeException
 
 @dataclass
 class FireboltQuotePolicy(Policy):
-    database: bool = False
+    database: bool = True
     schema: bool = False
     identifier: bool = False
 
