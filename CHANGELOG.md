@@ -1,5 +1,14 @@
 # Changelog
 
+## v.1.1.3
+
+### Features
+
+- dbt-firebolt now quotes database name allowing for case-sensitive operations.
+
+### Under the hood
+
+
 ## v.1.1.2
 
 ### Features
