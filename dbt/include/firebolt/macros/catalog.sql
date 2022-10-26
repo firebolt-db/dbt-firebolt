@@ -3,28 +3,29 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
 
 {% macro firebolt__get_catalog(information_schemas, schemas) -%}
   {%- call statement('catalog', fetch_result=True) %}
+     SELECT *, ROW_NUMBER() OVER ( PARTITION BY table_name ORDER BY table_name ASC ) as column_index FROM (
+          SELECT tbls.table_catalog AS table_database
+               , tbls.table_schema as table_schema
+               , table_type
+               , tbls.table_name
+               , cols.column_name
+               , cols.data_type AS column_type
+               , 'table' AS relation_type
+          FROM information_schema.tables tbls
+               JOIN information_schema.columns cols
+                    USING(table_name)
 
-    SELECT tbls.table_schema AS table_database
-         , NULL as table_schema
-         , table_type
-         , tbls.table_name
-         , cols.column_name
-         , cols.data_type AS column_type
-         , 'table' AS relation_type
-    FROM information_schema.tables tbls
-         JOIN information_schema.columns cols
-            USING(table_name)
+          UNION
 
-    UNION
-
-    SELECT views.table_schema AS table_database
-         , NULL as table_schema
-         , NULL AS table_type
-         , views.table_name
-         , NULL AS column_name
-         , NULL AS column_type
-         , 'view' AS relation_type
-    FROM information_schema.views views
+          SELECT views.table_catalog AS table_database
+               , views.table_schema as table_schema
+               , NULL AS table_type
+               , views.table_name
+               , NULL AS column_name
+               , NULL AS column_type
+               , 'view' AS relation_type
+          FROM information_schema.views views
+     )
   {% endcall -%}
   {{ return(load_result('catalog').table) }}
 {%- endmacro %}

@@ -17,7 +17,6 @@ from dbt.tests.adapter.basic.test_snapshot_timestamp import (
 from pytest import mark
 
 
-@mark.skip('Requires investigation')
 class TestSimpleMaterializationsFirebolt(BaseSimpleMaterializations):
     pass
 
