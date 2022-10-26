@@ -33,12 +33,10 @@ class TestEmptyFirebolt(BaseEmpty):
     pass
 
 
-@mark.skip('Requires catalog fix')
 class TestEphemeralFirebolt(BaseEphemeral):
     pass
 
 
-@mark.skip('Requires catalog fix')
 class TestIncrementalFirebolt(BaseIncremental):
     pass
 
