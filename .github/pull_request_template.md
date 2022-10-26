@@ -38,6 +38,6 @@ Resolves #
 - [ ] I have removed any print or log calls that were added for debugging.
 - [ ] If this PR requires a new PyPI release I have bumped the version number.
 - [ ] I have verified that this PR contains only code changes relevant to this PR.
-- [ ] If further integration tests are now passing I've edited firebolt.dbtspec to account for this.
+- [ ] If further integration tests are now passing I've edited tests/functional/adapter/test_basic.py to account for this.
 - [ ] I have pulled/merged from the main branch if there are merge conflicts.
-- [ ] After pulling/merging main I have run pytest on the included or updated firebolt.dbtspec.
+- [ ] After pulling/merging main I have run pytest on the included or updated tests/functional/adapter/test_basic.py.
