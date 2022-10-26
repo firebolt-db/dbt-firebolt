@@ -24,25 +24,23 @@ def dbt_profile_target():
     }
 
 
-@pytest.fixture(scope="class")
+# Overriding dbt_profile_data in order to set the schema to public.
+# Firebolt does not have concept of schemas so this is necessary for
+# the test to pass.
+@pytest.fixture(scope='class')
 def dbt_profile_data(dbt_profile_target, profiles_config_update):
-    """
-    Overriding dbt_profile_data in order to set the schema to public.
-    Firebolt does not have concept of schemas so this is necessary for
-    the test to pass.
-    """
     profile = {
-        "config": {"send_anonymous_usage_stats": False},
-        "test": {
-            "outputs": {
-                "default": {},
+        'config': {'send_anonymous_usage_stats': False},
+        'test': {
+            'outputs': {
+                'default': {},
             },
-            "target": "default",
+            'target': 'default',
         },
     }
     target = dbt_profile_target
-    target["schema"] = 'public' # Different from dbt-core in here
-    profile["test"]["outputs"]["default"] = target
+    target['schema'] = 'public'  # Different from dbt-core in here
+    profile['test']['outputs']['default'] = target
 
     if profiles_config_update:
         profile.update(profiles_config_update)
