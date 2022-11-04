@@ -25,17 +25,12 @@
 
 
 {% macro firebolt__list_schemas(database) %}
-  {# Return current schema. Name is a misnomer.
-     TODO: Should this actually return all schemas? #}
-  {% if target.threads > 1 %}
-    {{ exceptions.raise_compiler_error("Firebolt does not currently support "
-                                       "more than one thread.") }}
-  {% endif %}
-  {% call statement('list_schemas', fetch_result=True, auto_begin=False) %}
-
-      SELECT '{{target.schema}}' AS schema
-  {% endcall %}
-  {{ return(load_result('list_schemas').table) }}
+  {# Return current schema. #}
+  {% set all_relations = (list_relations_without_caching(schema_relation)) %}
+  {% set schemas = [] %}
+  {% for relation in relations %}
+    {% do schemas.append(relation.schema) %}
+  {%- endfor %}
 {% endmacro %}
 
 
