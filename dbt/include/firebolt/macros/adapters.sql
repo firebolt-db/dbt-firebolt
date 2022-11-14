@@ -26,11 +26,12 @@
 
 {% macro firebolt__list_schemas(database) %}
   {# Return current schema. #}
-  {% set all_relations = (list_relations_without_caching(schema_relation)) %}
+  {% set all_relations = (list_relations_without_caching(database.relation)) %}
   {% set schemas = [] %}
   {% for relation in relations %}
     {% do schemas.append(relation.schema) %}
   {%- endfor %}
+  {{ return(schemas) }}
 {% endmacro %}
 
 
