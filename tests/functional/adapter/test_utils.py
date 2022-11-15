@@ -32,6 +32,10 @@ from dbt.tests.adapter.utils.fixture_right import (
     models__test_right_sql,
     models__test_right_yml,
 )
+from dbt.tests.adapter.utils.fixture_safe_cast import (
+    models__test_safe_cast_sql,
+    models__test_safe_cast_yml,
+)
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
 from dbt.tests.adapter.utils.test_bool_or import BaseBoolOr
 from dbt.tests.adapter.utils.test_cast_bool_to_text import BaseCastBoolToText
@@ -345,8 +349,30 @@ class TestRight(BaseRight):
         }
 
 
+schema_seed_safe_cast_yml = """
+version: 2
+seeds:
+  - name: data_safe_cast
+    config:
+      column_types:
+        field: TEXT NULL
+        output: TEXT NULL
+"""
+
+
 class TestSafeCast(BaseSafeCast):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'test_safe_cast.yml': models__test_safe_cast_yml,
+            'test_safe_cast.sql': self.interpolate_macro_namespace(
+                self.interpolate_macro_namespace(
+                    models__test_safe_cast_sql, 'safe_cast'
+                ),
+                'type_string',
+            ),
+            'seeds.yml': schema_seed_safe_cast_yml,
+        }
 
 
 class TestSplitPart(BaseSplitPart):
