@@ -7,6 +7,10 @@ from dbt.tests.adapter.utils.fixture_concat import (
     models__test_concat_sql,
     models__test_concat_yml,
 )
+from dbt.tests.adapter.utils.fixture_dateadd import (
+    models__test_dateadd_sql,
+    models__test_dateadd_yml,
+)
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
 from dbt.tests.adapter.utils.test_bool_or import BaseBoolOr
 from dbt.tests.adapter.utils.test_cast_bool_to_text import BaseCastBoolToText
@@ -87,8 +91,29 @@ class TestConcat(BaseConcat):
         }
 
 
+schema_seed_date_add_yml = """
+version: 2
+seeds:
+  - name: data_dateadd
+    config:
+      column_types:
+        from_time: TIMESTAMP NULL
+        interval_length: INT
+        datepart: TEXT
+        result: TIMESTAMP NULL
+"""
+
+
 class TestDateAdd(BaseDateAdd):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'test_dateadd.yml': models__test_dateadd_yml,
+            'test_dateadd.sql': self.interpolate_macro_namespace(
+                models__test_dateadd_sql, 'dateadd'
+            ),
+            'seeds.yml': schema_seed_date_add_yml,
+        }
 
 
 class TestDateDiff(BaseDateDiff):
