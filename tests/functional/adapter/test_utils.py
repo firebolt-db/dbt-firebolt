@@ -11,6 +11,7 @@ from dbt.tests.adapter.utils.fixture_dateadd import (
     models__test_dateadd_sql,
     models__test_dateadd_yml,
 )
+from dbt.tests.adapter.utils.fixture_datediff import models__test_datediff_yml
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
 from dbt.tests.adapter.utils.test_bool_or import BaseBoolOr
 from dbt.tests.adapter.utils.test_cast_bool_to_text import BaseCastBoolToText
@@ -116,8 +117,65 @@ class TestDateAdd(BaseDateAdd):
         }
 
 
+schema_seed_date_diff_yml = """
+version: 2
+seeds:
+  - name: data_datediff
+    config:
+      column_types:
+        first_date: TIMESTAMP NULL
+        second_date: TIMESTAMP NULL
+        datepart: TEXT
+        result: INT NULL
+"""
+
+# microsecond and millisecond are not supported
+models__overridden_test_datediff_sql = """
+with data as (
+
+    select * from {{ ref('data_datediff') }}
+
+)
+
+select
+
+    case
+        when datepart = 'second' then {{ datediff('first_date', 'second_date', 'second') }}
+        when datepart = 'minute' then {{ datediff('first_date', 'second_date', 'minute') }}
+        when datepart = 'hour' then {{ datediff('first_date', 'second_date', 'hour') }}
+        when datepart = 'day' then {{ datediff('first_date', 'second_date', 'day') }}
+        when datepart = 'week' then {{ datediff('first_date', 'second_date', 'week') }}
+        when datepart = 'month' then {{ datediff('first_date', 'second_date', 'month') }}
+        when datepart = 'year' then {{ datediff('first_date', 'second_date', 'year') }}
+        else null
+    end as actual,
+    result as expected
+
+from data
+
+-- Also test correct casting of literal values.
+
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "second") }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "minute") }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "hour") }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "day") }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-03 00:00:00.000000'", "week") }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "month") }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "quarter") }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "year") }} as actual, 1 as expected
+"""
+
+
 class TestDateDiff(BaseDateDiff):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'test_datediff.yml': models__test_datediff_yml,
+            'test_datediff.sql': self.interpolate_macro_namespace(
+                models__overridden_test_datediff_sql, 'datediff'
+            ),
+            'seeds.yml': schema_seed_date_diff_yml,
+        }
 
 
 class TestDateTrunc(BaseDateTrunc):
