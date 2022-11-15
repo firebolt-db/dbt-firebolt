@@ -243,6 +243,7 @@ class TestHash(BaseHash):
         }
 
 
+@mark.skip('Intersect is not supported yet')
 class TestIntersect(BaseIntersect):
     pass
 
