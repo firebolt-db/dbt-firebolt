@@ -3,6 +3,10 @@ from dbt.tests.adapter.utils.fixture_bool_or import (
     models__test_bool_or_sql,
     models__test_bool_or_yml,
 )
+from dbt.tests.adapter.utils.fixture_concat import (
+    models__test_concat_sql,
+    models__test_concat_yml,
+)
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
 from dbt.tests.adapter.utils.test_bool_or import BaseBoolOr
 from dbt.tests.adapter.utils.test_cast_bool_to_text import BaseCastBoolToText
@@ -31,7 +35,7 @@ class TestAnyValue(BaseAnyValue):
     pass
 
 
-schema_seed_added_yml = """
+schema_seed_bool_or_yml = """
 version: 2
 seeds:
   - name: data_bool_or
@@ -44,14 +48,14 @@ seeds:
 
 
 class TestBoolOr(BaseBoolOr):
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope='class')
     def models(self):
         return {
-            "test_bool_or.yml": models__test_bool_or_yml,
-            "test_bool_or.sql": self.interpolate_macro_namespace(
-                models__test_bool_or_sql, "bool_or"
+            'test_bool_or.yml': models__test_bool_or_yml,
+            'test_bool_or.sql': self.interpolate_macro_namespace(
+                models__test_bool_or_sql, 'bool_or'
             ),
-            "seeds.yml": schema_seed_added_yml,
+            'seeds.yml': schema_seed_bool_or_yml,
         }
 
 
@@ -59,8 +63,28 @@ class TestCastBoolToText(BaseCastBoolToText):
     pass
 
 
+schema_seed_concat_yml = """
+version: 2
+seeds:
+  - name: data_concat
+    config:
+      column_types:
+        input_1: TEXT NULL
+        input_2: TEXT NULL
+        output: TEXT NULL
+"""
+
+
 class TestConcat(BaseConcat):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'test_concat.yml': models__test_concat_yml,
+            'test_concat.sql': self.interpolate_macro_namespace(
+                models__test_concat_sql, 'concat'
+            ),
+            'seeds.yml': schema_seed_concat_yml,
+        }
 
 
 class TestDateAdd(BaseDateAdd):
