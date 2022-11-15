@@ -16,6 +16,10 @@ from dbt.tests.adapter.utils.fixture_dateadd import (
     models__test_dateadd_yml,
 )
 from dbt.tests.adapter.utils.fixture_datediff import models__test_datediff_yml
+from dbt.tests.adapter.utils.fixture_hash import (
+    models__test_hash_sql,
+    models__test_hash_yml,
+)
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
 from dbt.tests.adapter.utils.test_bool_or import BaseBoolOr
 from dbt.tests.adapter.utils.test_cast_bool_to_text import BaseCastBoolToText
@@ -216,8 +220,27 @@ class TestExcept(BaseExcept):
     pass
 
 
+schema_seed_hash_yml = """
+version: 2
+seeds:
+  - name: data_hash
+    config:
+      column_types:
+        input_1: TEXT NULL
+        output: TEXT
+"""
+
+
 class TestHash(BaseHash):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'test_hash.yml': models__test_hash_yml,
+            'test_hash.sql': self.interpolate_macro_namespace(
+                models__test_hash_sql, 'hash'
+            ),
+            'seeds.yml': schema_seed_hash_yml,
+        }
 
 
 class TestIntersect(BaseIntersect):
