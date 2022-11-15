@@ -24,6 +24,10 @@ from dbt.tests.adapter.utils.fixture_last_day import (
     models__test_last_day_sql,
     models__test_last_day_yml,
 )
+from dbt.tests.adapter.utils.fixture_replace import (
+    models__test_replace_sql,
+    models__test_replace_yml,
+)
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
 from dbt.tests.adapter.utils.test_bool_or import BaseBoolOr
 from dbt.tests.adapter.utils.test_cast_bool_to_text import BaseCastBoolToText
@@ -288,8 +292,29 @@ class TestPosition(BasePosition):
     pass
 
 
+schema_seed_replace_yml = """
+version: 2
+seeds:
+  - name: data_replace
+    config:
+      column_types:
+        string_text: TEXT
+        search_chars: TEXT
+        replace_chars: TEXT NULL
+        result: TEXT
+"""
+
+
 class TestReplace(BaseReplace):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'test_replace.yml': models__test_replace_yml,
+            'test_replace.sql': self.interpolate_macro_namespace(
+                models__test_replace_sql, 'replace'
+            ),
+            'seeds.yml': schema_seed_replace_yml,
+        }
 
 
 class TestRight(BaseRight):
