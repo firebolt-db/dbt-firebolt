@@ -28,6 +28,10 @@ from dbt.tests.adapter.utils.fixture_replace import (
     models__test_replace_sql,
     models__test_replace_yml,
 )
+from dbt.tests.adapter.utils.fixture_right import (
+    models__test_right_sql,
+    models__test_right_yml,
+)
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
 from dbt.tests.adapter.utils.test_bool_or import BaseBoolOr
 from dbt.tests.adapter.utils.test_cast_bool_to_text import BaseCastBoolToText
@@ -317,8 +321,28 @@ class TestReplace(BaseReplace):
         }
 
 
+schema_seed_right_yml = """
+version: 2
+seeds:
+  - name: data_right
+    config:
+      column_types:
+        string_text: TEXT
+        length_expression: INT
+        output: TEXT NULL
+"""
+
+
 class TestRight(BaseRight):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'test_right.yml': models__test_right_yml,
+            'test_right.sql': self.interpolate_macro_namespace(
+                models__test_right_sql, 'right'
+            ),
+            'seeds.yml': schema_seed_right_yml,
+        }
 
 
 class TestSafeCast(BaseSafeCast):
