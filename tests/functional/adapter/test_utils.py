@@ -20,6 +20,10 @@ from dbt.tests.adapter.utils.fixture_hash import (
     models__test_hash_sql,
     models__test_hash_yml,
 )
+from dbt.tests.adapter.utils.fixture_last_day import (
+    models__test_last_day_sql,
+    models__test_last_day_yml,
+)
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
 from dbt.tests.adapter.utils.test_bool_or import BaseBoolOr
 from dbt.tests.adapter.utils.test_cast_bool_to_text import BaseCastBoolToText
@@ -248,8 +252,28 @@ class TestIntersect(BaseIntersect):
     pass
 
 
+schema_seed_last_day_yml = """
+version: 2
+seeds:
+  - name: data_last_day
+    config:
+      column_types:
+        date_day: DATE NULL
+        date_part: TEXT
+        result: DATE NULL
+"""
+
+
 class TestLastDay(BaseLastDay):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'test_last_day.yml': models__test_last_day_yml,
+            'test_last_day.sql': self.interpolate_macro_namespace(
+                models__test_last_day_sql, 'last_day'
+            ),
+            'seeds.yml': schema_seed_last_day_yml,
+        }
 
 
 class TestLength(BaseLength):
