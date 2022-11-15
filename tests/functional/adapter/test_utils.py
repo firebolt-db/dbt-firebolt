@@ -7,6 +7,10 @@ from dbt.tests.adapter.utils.fixture_concat import (
     models__test_concat_sql,
     models__test_concat_yml,
 )
+from dbt.tests.adapter.utils.fixture_date_trunc import (
+    models__test_date_trunc_sql,
+    models__test_date_trunc_yml,
+)
 from dbt.tests.adapter.utils.fixture_dateadd import (
     models__test_dateadd_sql,
     models__test_dateadd_yml,
@@ -178,8 +182,28 @@ class TestDateDiff(BaseDateDiff):
         }
 
 
+schema_seed_date_trunc_yml = """
+version: 2
+seeds:
+  - name: data_date_trunc
+    config:
+      column_types:
+        updated_at: TIMESTAMP NULL
+        day: DATE NULL
+        month: DATE NULL
+"""
+
+
 class TestDateTrunc(BaseDateTrunc):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'test_date_trunc.yml': models__test_date_trunc_yml,
+            'test_date_trunc.sql': self.interpolate_macro_namespace(
+                models__test_date_trunc_sql, 'date_trunc'
+            ),
+            'seeds.yml': schema_seed_date_trunc_yml,
+        }
 
 
 class TestEscapeSingleQuotes(BaseEscapeSingleQuotesBackslash):
