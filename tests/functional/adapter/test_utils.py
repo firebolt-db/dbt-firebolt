@@ -38,6 +38,7 @@ from dbt.tests.adapter.utils.test_right import BaseRight
 from dbt.tests.adapter.utils.test_safe_cast import BaseSafeCast
 from dbt.tests.adapter.utils.test_split_part import BaseSplitPart
 from dbt.tests.adapter.utils.test_string_literal import BaseStringLiteral
+from pytest import mark
 
 
 class TestAnyValue(BaseAnyValue):
@@ -210,6 +211,7 @@ class TestEscapeSingleQuotes(BaseEscapeSingleQuotesBackslash):
     pass
 
 
+@mark.skip('Except is not supported yet')
 class TestExcept(BaseExcept):
     pass
 
