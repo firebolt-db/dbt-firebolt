@@ -296,6 +296,7 @@ class TestLength(BaseLength):
     pass
 
 
+@mark.skip('ORDER BY in ARRAY_AGG is not supported. FIR-8828')
 class TestListagg(BaseListagg):
     pass
 
@@ -393,7 +394,7 @@ seeds:
 """
 
 
-@mark.skip('Firebolt does not support reading delimiter from a column')
+@mark.skip('Firebolt does not support reading delimiter from a column. FIR-16783')
 class TestSplitPart(BaseSplitPart):
     @pytest.fixture(scope='class')
     def models(self):
