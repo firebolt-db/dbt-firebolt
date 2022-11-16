@@ -36,6 +36,10 @@ from dbt.tests.adapter.utils.fixture_safe_cast import (
     models__test_safe_cast_sql,
     models__test_safe_cast_yml,
 )
+from dbt.tests.adapter.utils.fixture_split_part import (
+    models__test_split_part_sql,
+    models__test_split_part_yml,
+)
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
 from dbt.tests.adapter.utils.test_bool_or import BaseBoolOr
 from dbt.tests.adapter.utils.test_cast_bool_to_text import BaseCastBoolToText
@@ -375,8 +379,31 @@ class TestSafeCast(BaseSafeCast):
         }
 
 
+schema_seed_split_part_yml = """
+version: 2
+seeds:
+  - name: data_split_part
+    config:
+      column_types:
+        parts: TEXT NULL
+        split_on: TEXT
+        result_1: TEXT NULL
+        result_2: TEXT NULL
+        result_3: TEXT NULL
+"""
+
+
+@mark.skip('Firebolt does not support reading delimiter from a column')
 class TestSplitPart(BaseSplitPart):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'test_split_part.yml': models__test_split_part_yml,
+            'test_split_part.sql': self.interpolate_macro_namespace(
+                models__test_split_part_sql, 'split_part'
+            ),
+            'seeds.yml': schema_seed_split_part_yml,
+        }
 
 
 class TestStringLiteral(BaseStringLiteral):
