@@ -4,6 +4,8 @@
 
 ### Features
 
+- get_catalog now returns database and schema names along with the column indexes
+
 ### Under the hood
 
 - Using new test framework

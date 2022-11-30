@@ -17,7 +17,6 @@ from dbt.tests.adapter.basic.test_snapshot_timestamp import (
 from pytest import mark
 
 
-@mark.skip('Requires investigation')
 class TestSimpleMaterializationsFirebolt(BaseSimpleMaterializations):
     pass
 
@@ -34,12 +33,10 @@ class TestEmptyFirebolt(BaseEmpty):
     pass
 
 
-@mark.skip('Requires catalog fix')
 class TestEphemeralFirebolt(BaseEphemeral):
     pass
 
 
-@mark.skip('Requires catalog fix')
 class TestIncrementalFirebolt(BaseIncremental):
     pass
 
