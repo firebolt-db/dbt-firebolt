@@ -1,5 +1,17 @@
+from dbt.tests.adapter.basic.expected_catalog import (
+    base_expected_catalog,
+    expected_references_catalog,
+    no_stats,
+)
 from dbt.tests.adapter.basic.test_adapter_methods import BaseAdapterMethod
 from dbt.tests.adapter.basic.test_base import BaseSimpleMaterializations
+from dbt.tests.adapter.basic.test_docs_generate import (
+    BaseDocsGenerate,
+    BaseDocsGenReferences,
+    models__model_sql,
+    models__readme_md,
+    models__schema_yml,
+)
 from dbt.tests.adapter.basic.test_empty import BaseEmpty
 from dbt.tests.adapter.basic.test_ephemeral import BaseEphemeral
 from dbt.tests.adapter.basic.test_generic_tests import BaseGenericTests
@@ -14,7 +26,7 @@ from dbt.tests.adapter.basic.test_snapshot_check_cols import (
 from dbt.tests.adapter.basic.test_snapshot_timestamp import (
     BaseSnapshotTimestamp,
 )
-from pytest import mark
+from pytest import fixture, mark
 
 
 class TestSimpleMaterializationsFirebolt(BaseSimpleMaterializations):
@@ -58,3 +70,73 @@ class TestSnapshotTimestampFirebolt(BaseSnapshotTimestamp):
 @mark.skip('Requires investigation')
 class TestBaseAdapterMethod(BaseAdapterMethod):
     pass
+
+
+# Removing schema here in order for the second model to be written
+# to catalog. Firebolt does not support any schemas apart from
+# public. TODO: remove this override once schema support is added.
+models__second_model_sql = """
+{{
+    config(
+        materialized='view',
+    )
+}}
+
+select * from {{ ref('seed') }}
+"""
+
+
+class TestDocsGenerateFirebolt(BaseDocsGenerate):
+
+    # TODO: remove this override once schema support is added.
+    @fixture(scope='class')
+    def unique_schema(request, prefix) -> str:
+        return 'public'
+
+    @fixture(scope='class')
+    def models(self):
+        return {
+            'schema.yml': models__schema_yml,
+            'second_model.sql': models__second_model_sql,
+            'readme.md': models__readme_md,
+            'model.sql': models__model_sql,
+        }
+
+    @fixture(scope='class')
+    def expected_catalog(self, project, profile_user):
+        catalog = base_expected_catalog(
+            project,
+            role=None,  # No per-table roles in Firebolt
+            id_type='INT',
+            text_type='TEXT',
+            time_type='DATE',
+            view_type='VIEW',
+            table_type='DIMENSION',
+            model_stats=no_stats(),
+        )
+        # Can't have any other schema apart from public at the moment.
+        # TODO: remove once Firebolt supports schemas
+        catalog['nodes']['model.test.second_model']['metadata']['schema'] = 'public'
+        return catalog
+
+
+class TestDocsGenReferencesFirebolt(BaseDocsGenReferences):
+
+    # TODO: remove this override once schema support is added.
+    @fixture(scope='class')
+    def unique_schema(request, prefix) -> str:
+        return 'public'
+
+    @fixture(scope='class')
+    def expected_catalog(self, project, profile_user):
+        return expected_references_catalog(
+            project,
+            role=None,  # No per-table roles in Firebolt
+            id_type='INT',
+            text_type='TEXT',
+            time_type='DATE',
+            bigint_type='LONG',
+            view_type='VIEW',
+            table_type='DIMENSION',
+            model_stats=no_stats(),
+        )

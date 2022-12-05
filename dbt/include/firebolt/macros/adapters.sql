@@ -33,7 +33,7 @@
   {% endif %}
   {% call statement('list_schemas', fetch_result=True, auto_begin=False) %}
 
-      SELECT '{{target.schema}}' AS schema
+      SELECT 'public' AS schema
   {% endcall %}
   {{ return(load_result('list_schemas').table) }}
 {% endmacro %}
