@@ -7,10 +7,15 @@ from dbt.adapters.base import Credentials
 from dbt.adapters.sql import SQLConnectionManager
 from dbt.contracts.connection import AdapterResponse
 from dbt.contracts.graph.manifest import Manifest
+from dbt.events import AdapterLogger
 from dbt.exceptions import RuntimeException
 from firebolt.client import DEFAULT_API_URL
 from firebolt.client.auth import UsernamePassword
-from firebolt.db import connect
+from firebolt.db import connect as sdk_connect
+from firebolt.utils.exception import ConnectionError as FireboltConnectionError
+from firebolt.utils.exception import FireboltDatabaseError, InterfaceError
+
+logger = AdapterLogger('Firebolt')
 
 
 @dataclass
@@ -22,6 +27,7 @@ class FireboltCredentials(Credentials):
     driver: str = 'com.firebolt.FireboltDriver'
     engine_name: Optional[str] = None
     account_name: Optional[str] = None
+    retries: int = 1
 
     @property
     def type(self) -> str:
@@ -77,16 +83,31 @@ class FireboltConnectionManager(SQLConnectionManager):
         if connection.state == 'open':
             return connection
         credentials = connection.credentials
-        # Create a connection based on provided credentials.
-        connection.handle = connect(
-            auth=UsernamePassword(credentials.user, credentials.password),
-            engine_name=credentials.engine_name,
-            database=credentials.database,
-            api_endpoint=credentials.api_endpoint,
-            account_name=credentials.account_name,
+
+        def connect():
+            handle = sdk_connect(
+                auth=UsernamePassword(credentials.user, credentials.password),
+                engine_name=credentials.engine_name,
+                database=credentials.database,
+                api_endpoint=credentials.api_endpoint,
+                account_name=credentials.account_name,
+            )
+            handle.cursor().execute('SELECT 1')
+            return handle
+
+        retryable_exceptions = [
+            FireboltDatabaseError,
+            FireboltConnectionError,
+            InterfaceError,
+        ]
+
+        return cls.retry_connection(
+            connection,
+            connect=connect,
+            logger=logger,
+            retry_limit=credentials.retries,
+            retryable_exceptions=retryable_exceptions,
         )
-        connection.state = 'open'
-        return connection
 
     @contextmanager
     def exception_handler(self, sql: str) -> RuntimeException:
