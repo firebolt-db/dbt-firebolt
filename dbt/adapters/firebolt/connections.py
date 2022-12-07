@@ -7,11 +7,12 @@ from dbt.adapters.base import Credentials
 from dbt.adapters.sql import SQLConnectionManager
 from dbt.contracts.connection import AdapterResponse
 from dbt.contracts.graph.manifest import Manifest
-from dbt.events import AdapterLogger
+from dbt.events import AdapterLogger  # type: ignore
 from dbt.exceptions import RuntimeException
 from firebolt.client import DEFAULT_API_URL
 from firebolt.client.auth import UsernamePassword
 from firebolt.db import connect as sdk_connect
+from firebolt.db.connection import Connection as SDKConnection
 from firebolt.utils.exception import ConnectionError as FireboltConnectionError
 from firebolt.utils.exception import FireboltDatabaseError, InterfaceError
 
@@ -84,7 +85,7 @@ class FireboltConnectionManager(SQLConnectionManager):
             return connection
         credentials = connection.credentials
 
-        def connect():
+        def connect() -> SDKConnection:
             handle = sdk_connect(
                 auth=UsernamePassword(credentials.user, credentials.password),
                 engine_name=credentials.engine_name,
