@@ -11,8 +11,8 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
           , cols.data_type AS column_type
           , UPPER(tbls.table_type) as relation_type
           , cols.ordinal_position as column_index
-     FROM information_schema.columns cols
-          JOIN information_schema.tables tbls
+     FROM  information_schema.tables tbls
+          JOIN information_schema.columns cols
                USING(table_name)
 
      UNION
@@ -25,8 +25,8 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
           , cols.data_type AS column_type
           , 'VIEW' as relation_type
           , cols.ordinal_position as column_index
-     FROM information_schema.columns cols
-          JOIN information_schema.views views
+     FROM information_schema.views views
+          JOIN information_schema.columns cols
                USING(table_name)
   {% endcall -%}
   {{ return(load_result('catalog').table) }}
