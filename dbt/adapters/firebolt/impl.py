@@ -197,6 +197,17 @@ class FireboltAdapter(SQLAdapter):
             )
 
     @available.parse_none
+    def raise_grant_error(self) -> None:
+        """
+        Grant is not currently supported so this function
+            raises an error.
+        """
+        dbt.exceptions.raise_compiler_error(
+            'Firebolt does not support table-level permission grants.'
+            ' Please remove grants section from the config.'
+        )
+
+    @available.parse_none
     def sdk_column_list_to_firebolt_column_list(
         self, columns: List[SDKColumn]
     ) -> List[FireboltColumn]:

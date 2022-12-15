@@ -18,6 +18,7 @@
                                                       schema=schema,
                                                       identifier=identifier,
                                                       type='table') -%}
+  {%- set grant_config = config.get('grants') -%}
 
   {{ run_hooks(pre_hooks) }}
 
@@ -29,6 +30,9 @@
     {{ create_view_as(target_relation, sql) }}
   {%- endcall %}
   {{ run_hooks(post_hooks) }}
+
+  {% set should_revoke = should_revoke(old_relation, full_refresh_mode=True) %}
+  {% do apply_grants(target_relation, grant_config, should_revoke) %}
 
   {% do persist_docs(target_relation, model) %}
   {{ return({'relations': [target_relation]}) }}
