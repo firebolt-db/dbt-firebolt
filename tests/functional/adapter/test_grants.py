@@ -1,3 +1,6 @@
+import os
+from unittest import mock
+
 from dbt.tests.adapter.grants.base_grants import BaseGrants
 from dbt.tests.adapter.grants.test_incremental_grants import (
     BaseIncrementalGrants,
@@ -24,6 +27,18 @@ class TestGrantsFailWithException(BaseGrants):
     Verify compile-time errors when trying to use
     grant functionality in Firebolt.
     """
+
+    @fixture(autouse=True)
+    def env_setup(monkeypatch):
+        with mock.patch.dict(
+            os.environ,
+            {
+                'DBT_TEST_USER_1': 'dummy-user1',
+                'DBT_TEST_USER_2': 'dummy-user2',
+                'DBT_TEST_USER_3': 'dummy-user3',
+            },
+        ):
+            yield
 
     @fixture(scope='class')
     def models(self):
