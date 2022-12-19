@@ -4,11 +4,22 @@
 
 ### Features
 
+### Under the hood
+
+## v.1.2.0
+
+### Features
+
 - get_catalog now returns database and schema names along with the column indexes
+- Implemented firebolt-specific macros: bool_or, cast_bool_to_text, dateadd, datediff, listagg, position, right, split_part
+- Fixed doc generation
+- Implemented connection retry
+- Added explicit error for grants
 
 ### Under the hood
 
 - Using new test framework
+- Added clarifications for skipped tests
 
 ## v.1.1.3
 
