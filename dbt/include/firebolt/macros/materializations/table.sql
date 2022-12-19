@@ -18,6 +18,8 @@
                                                      identifier=identifier,
                                                      type='view') -%}
 
+  {%- set grant_config = config.get('grants') -%}
+
   {{ run_hooks(pre_hooks) }}
 
   {% do adapter.drop_relation(target_relation) %}
@@ -29,6 +31,9 @@
   {%- endcall %}
   {% do create_indexes(target_relation) %}
   {{ run_hooks(post_hooks) }}
+
+  {% set should_revoke = should_revoke(old_relation, full_refresh_mode=True) %}
+  {% do apply_grants(target_relation, grant_config, should_revoke) %}
 
   {% do persist_docs(target_relation, model) %}
   {{ return({'relations': [target_relation]}) }}

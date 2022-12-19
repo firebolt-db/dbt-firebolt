@@ -19,6 +19,9 @@
   {# Not yet used
     {% set unique_key = config.get('unique_key') %}
   #}
+
+  {% set grant_config = config.get('grants') %}
+
   {%- set strategy = config.get('incremental_strategy') -%}
   {%- if is_incremental() and strategy is none -%}
     {{ log('Model %s is set to incremental, but no incremental strategy is set. '
@@ -80,6 +83,9 @@
   {%- call statement("main") -%}
     {{ build_sql }}
   {%- endcall -%}
+
+  {% set should_revoke = should_revoke(existing_relation, full_refresh_mode) %}
+  {% do apply_grants(target_relation, grant_config, should_revoke) %}
 
   {# Todo: figure out what persist_docs and create_indexes do. #}
   {%- do persist_docs(target, model) -%}
