@@ -121,13 +121,8 @@ class FireboltAdapter(SQLAdapter):
         return 'FLOAT' if decimals else 'INT'
 
     @classmethod
-    def convert_boolean_type(cls, agate_table: agate.Table, col_idx: int) -> str:
-        return 'INT'
-
-    @classmethod
     def convert_datetime_type(cls, agate_table: agate.Table, col_idx: int) -> str:
-        # there's an issue with timestamp currently
-        return 'DATE'
+        return 'DATETIME'
 
     @classmethod
     def convert_time_type(
