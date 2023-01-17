@@ -109,7 +109,7 @@ class TestDocsGenerateFirebolt(BaseDocsGenerate):
             role=None,  # No per-table roles in Firebolt
             id_type='INT',
             text_type='TEXT',
-            time_type='DATE',
+            time_type='TIMESTAMP',
             view_type='VIEW',
             table_type='DIMENSION',
             model_stats=no_stats(),
@@ -134,7 +134,7 @@ class TestDocsGenReferencesFirebolt(BaseDocsGenReferences):
             role=None,  # No per-table roles in Firebolt
             id_type='INT',
             text_type='TEXT',
-            time_type='DATE',
+            time_type='TIMESTAMP',
             bigint_type='LONG',
             view_type='VIEW',
             table_type='DIMENSION',
