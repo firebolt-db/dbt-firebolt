@@ -9,6 +9,9 @@ on:
       major-release:
         required: false
         description: 'Trigger a major release (optional). Leave empty for regular release.'
+      version:
+        required: true
+        description: 'Version to release. Should be aligned with dbt-core.'
 
 jobs:
   integration-tests:
@@ -29,11 +32,41 @@ jobs:
         fetch-depth: 0
         token: ${{ secrets.RELEASE_PAT }}
 
+    - name: Apply Changie changelog
+      uses: miniscruff/changie-action@v0.2.0
+      with:
+        version: v1.10.2
+        args: batch ${{ inputs.version }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Merge into CHANGELOG.md
+      uses: miniscruff/changie-action@v0.2.0
+      with:
+        version: v1.10.2
+        args: merge
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup git config
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
+      shell: bash
+
+    - name: Commit changelog
+      run: |
+        git add .changes/
+        git add CHANGELOG.md
+        git commit -m "Changelog update"
+        git push origin master
+
     - name: 'Publish action'
-      uses: firebolt-db/action-python-release@main
+      uses: firebolt-db/action-python-release@feat-version-override # TODO: change to master once action PR is merged
       with:
         pre-release-tag: ${{ inputs.pre-release-tag }}
         major-release: ${{ inputs.major-release }}
         pypi-username: ${{ secrets.PYPI_USERNAME }}
         pypi-password: ${{ secrets.PYPI_PASSWORD }}
         version-file-path: dbt/adapters/firebolt/__init__.py
+        version-override: ${{ inputs.version }}
