@@ -12,4 +12,4 @@ jaffle_shop:
       user: "{{ env_var('USER_NAME') }}"
       password: "{{ env_var('PASSWORD') }}"
       schema: jaffle_shop
-      threads: 1
+      threads: 4
