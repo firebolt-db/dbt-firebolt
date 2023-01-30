@@ -27,10 +27,6 @@
 {% macro firebolt__list_schemas(database) %}
   {# Return current schema. Name is a misnomer.
      TODO: Should this actually return all schemas? #}
-  {% if target.threads > 1 %}
-    {{ exceptions.raise_compiler_error("Firebolt does not currently support "
-                                       "more than one thread.") }}
-  {% endif %}
   {% call statement('list_schemas', fetch_result=True, auto_begin=False) %}
 
       SELECT 'public' AS schema
