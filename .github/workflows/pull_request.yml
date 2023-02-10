@@ -11,6 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check title name convention
-        uses: jef/conventional-commits-pr-action@v1.0.0
+        uses: jef/conventional-commits-pr-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
