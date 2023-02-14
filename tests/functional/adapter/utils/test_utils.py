@@ -41,8 +41,16 @@ from dbt.tests.adapter.utils.fixture_split_part import (
     models__test_split_part_yml,
 )
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
-from dbt.tests.adapter.utils.test_array_append import BaseArrayAppend
-from dbt.tests.adapter.utils.test_array_concat import BaseArrayConcat
+from dbt.tests.adapter.utils.test_array_append import (
+    BaseArrayAppend,
+    models__array_append_actual_sql,
+    models__array_append_expected_sql,
+)
+from dbt.tests.adapter.utils.test_array_concat import (
+    BaseArrayConcat,
+    models__array_concat_actual_sql,
+    models__array_concat_expected_sql,
+)
 from dbt.tests.adapter.utils.test_array_construct import (
     BaseArrayConstruct,
     models__array_construct_actual_sql,
@@ -442,11 +450,25 @@ class TestCurrentTimestamp(BaseCurrentTimestampNaive):
 
 
 class TestArrayAppend(BaseArrayAppend):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'actual.yml': schema_actual_table_yml,
+            'actual.sql': models__array_append_actual_sql,
+            'expected.yml': schema_expected_table_yml,
+            'expected.sql': models__array_append_expected_sql,
+        }
 
 
 class TestArrayConcat(BaseArrayConcat):
-    pass
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'actual.yml': schema_actual_table_yml,
+            'actual.sql': models__array_concat_actual_sql,
+            'expected.yml': schema_expected_table_yml,
+            'expected.sql': models__array_concat_expected_sql,
+        }
 
 
 class TestArrayConstruct(BaseArrayConstruct):
