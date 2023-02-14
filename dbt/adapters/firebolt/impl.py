@@ -317,6 +317,9 @@ class FireboltAdapter(SQLAdapter):
                 vals_list[i] += '::DATE'
         return ','.join(vals_list)
 
+    def valid_incremental_strategies(self) -> List[str]:
+        return ['append', 'insert_overwrite']
+
 
 COLUMNS_EQUAL_SQL = """
 WITH diff_count AS (
