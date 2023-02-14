@@ -15,7 +15,10 @@ from dbt.tests.adapter.basic.test_docs_generate import (
 from dbt.tests.adapter.basic.test_empty import BaseEmpty
 from dbt.tests.adapter.basic.test_ephemeral import BaseEphemeral
 from dbt.tests.adapter.basic.test_generic_tests import BaseGenericTests
-from dbt.tests.adapter.basic.test_incremental import BaseIncremental
+from dbt.tests.adapter.basic.test_incremental import (
+    BaseIncremental,
+    BaseIncrementalNotSchemaChange,
+)
 from dbt.tests.adapter.basic.test_singular_tests import BaseSingularTests
 from dbt.tests.adapter.basic.test_singular_tests_ephemeral import (
     BaseSingularTestsEphemeral,
@@ -140,3 +143,8 @@ class TestDocsGenReferencesFirebolt(BaseDocsGenReferences):
             table_type='DIMENSION',
             model_stats=no_stats(),
         )
+
+
+@mark.skip('Firebolt does not support schema change yet')
+class TestIncrementalNotSchemaChange(BaseIncrementalNotSchemaChange):
+    pass
