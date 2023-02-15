@@ -1,3 +1,25 @@
+{% macro dbt_firebolt_get_tmp_relation_type(strategy) %}
+  {#
+    Determine whether to use a temporary view or a table based on
+    specified strategy and config. Users can override the behaviour
+    by setting tmp_replation_type. Default is to use a view (more efficient).
+
+    Arguments:
+      strategy: incremental strategy from config. e.g. "append"
+  #}
+  {%- set tmp_relation_type = config.get('tmp_relation_type') -%}
+
+  {% if tmp_relation_type == "table" %}
+    {{ return("table") }}
+  {% elif tmp_relation_type == "view" %}
+    {{ return("view") }}
+  {% elif strategy in ("default", "append", "insert_overwrite") %}
+    {{ return("view") }}
+  {% else %}
+    {{ return("table") }}
+  {% endif %}
+{% endmacro %}
+
 {% materialization incremental, adapter='firebolt' -%}
   {#
   Incremental implementation. Actual strategy SQL is determined
@@ -41,9 +63,10 @@
      to be an actual `BaseRelation` object. #}
   {%- set target = this.incorporate(type='table') -%}
   {%- set existing = load_relation(this) -%}
+  {%- set tmp_relation_type = dbt_firebolt_get_tmp_relation_type(strategy) -%}
   {%- set new_records = make_temp_relation(target) -%}
   {{ drop_relation_if_exists(new_records) }}
-  {%- set new_records = new_records.incorporate(type='table') -%}
+  {%- set new_records = new_records.incorporate(type=tmp_relation_type) -%}
   {%- set on_schema_change = incremental_validate_on_schema_change(
                                 config.get('on_schema_change'),
                                 default='ignore') -%}
@@ -69,7 +92,11 @@
     {# Instantiate new objects in dbt's internal list. Have to
        run this query so dbt can query the DB to get the columns in
        new_records. #}
-    {%- do run_query(create_table_as(True, new_records, sql)) -%}
+    {%- if tmp_relation_type=='view' -%}
+      {%- do run_query(create_view_as(new_records, sql)) -%}
+    {%- else -%}
+      {%- do run_query(create_table_as(True, new_records, sql)) -%}
+    {%- endif -%}
     {# All errors involving schema changes are dealt with in `process_schema_changes`. #}
     {%- set dest_columns = process_schema_changes(on_schema_change,
                                                   new_records,
