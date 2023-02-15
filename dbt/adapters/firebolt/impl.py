@@ -348,18 +348,18 @@ WITH diff_count AS (
             ))
         ) AS a
 ),
-table_num_rows_relation_a AS (
+table_a__dbt_tmp AS (
     SELECT COUNT(*) AS num_rows FROM {relation_a}
 ),
-table_num_rows_relation_b AS (
+table_b__dbt_tmp AS (
     SELECT COUNT(*) AS num_rows FROM {relation_b}
 ),
 row_count_diff AS (
     SELECT
         1 AS id,
-        table_num_rows_relation_a.num_rows -
-            table_num_rows_relation_b.num_rows AS difference
-    FROM table_num_rows_relation_a, table_num_rows_relation_b
+        table_a__dbt_tmp.num_rows -
+            table_b__dbt_tmp.num_rows AS difference
+    FROM table_a__dbt_tmp, table_b__dbt_tmp
 )
 SELECT
     row_count_diff.difference AS row_count_difference,
