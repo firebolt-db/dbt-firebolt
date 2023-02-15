@@ -320,7 +320,9 @@ class FireboltAdapter(SQLAdapter):
     def valid_incremental_strategies(self) -> List[str]:
         return ['append', 'insert_overwrite']
 
-    def get_columns_in_relation(self, relation: BaseRelation) -> Union[agate.Table, List]:
+    def get_columns_in_relation(
+        self, relation: BaseRelation
+    ) -> Union[agate.Table, List]:
         try:
             return super().get_columns_in_relation(relation)
         except dbt.exceptions.RuntimeException as e:
