@@ -320,6 +320,15 @@ class FireboltAdapter(SQLAdapter):
     def valid_incremental_strategies(self) -> List[str]:
         return ['append', 'insert_overwrite']
 
+    def get_columns_in_relation(self, relation):
+        try:
+            return super().get_columns_in_relation(relation)
+        except dbt.exceptions.RuntimeException as e:
+            if 'Did not find a table or view' in str(e):
+                return []
+            else:
+                raise
+
 
 COLUMNS_EQUAL_SQL = """
 WITH diff_count AS (
@@ -339,17 +348,18 @@ WITH diff_count AS (
             ))
         ) AS a
 ),
-table_a AS (
+table_num_rows_relation_a AS (
     SELECT COUNT(*) AS num_rows FROM {relation_a}
 ),
-table_b AS (
+table_num_rows_relation_b AS (
     SELECT COUNT(*) AS num_rows FROM {relation_b}
 ),
 row_count_diff AS (
     SELECT
         1 AS id,
-        table_a.num_rows - table_b.num_rows AS difference
-    FROM table_a, table_b
+        table_num_rows_relation_a.num_rows -
+            table_num_rows_relation_b.num_rows AS difference
+    FROM table_num_rows_relation_a, table_num_rows_relation_b
 )
 SELECT
     row_count_diff.difference AS row_count_difference,
