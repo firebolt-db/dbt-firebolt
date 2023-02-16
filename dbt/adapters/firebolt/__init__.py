@@ -10,7 +10,7 @@ from dbt.include import firebolt
 __version__ = "1.2.0"
 
 Plugin = AdapterPlugin(
-    adapter=FireboltAdapter,
+    adapter=FireboltAdapter,  # type: ignore
     credentials=FireboltCredentials,
     include_path=firebolt.PACKAGE_PATH,
 )

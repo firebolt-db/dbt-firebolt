@@ -1,11 +1,11 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Generator, Optional, Tuple
 
 import dbt.exceptions
 from dbt.adapters.base import Credentials
 from dbt.adapters.sql import SQLConnectionManager
-from dbt.contracts.connection import AdapterResponse
+from dbt.contracts.connection import AdapterResponse, Connection
 from dbt.contracts.graph.manifest import Manifest
 from dbt.events import AdapterLogger  # type: ignore
 from dbt.exceptions import RuntimeException
@@ -13,6 +13,7 @@ from firebolt.client import DEFAULT_API_URL
 from firebolt.client.auth import UsernamePassword
 from firebolt.db import connect as sdk_connect
 from firebolt.db.connection import Connection as SDKConnection
+from firebolt.db.cursor import Cursor
 from firebolt.utils.exception import ConnectionError as FireboltConnectionError
 from firebolt.utils.exception import FireboltDatabaseError, InterfaceError
 
@@ -50,16 +51,13 @@ class FireboltCredentials(Credentials):
         )
 
     @property
-    def unique_field(self) -> Optional[str]:
+    def unique_field(self) -> str:
         """
         Return a field that can be hashed to uniquely identify one
         team/organization building with this adapter. This is called by
         `hashed_unique_field()`.
         """
-        # Is this safe, or is it too much information? It should only be
-        # called by `hashed_unique_field()` as stated in the docstring,
-        # but I'm asking here for noting in the PR of this branch.
-        return self.engine_name
+        return self.database
 
 
 class FireboltConnectionManager(SQLConnectionManager):
@@ -77,10 +75,10 @@ class FireboltConnectionManager(SQLConnectionManager):
     TYPE = 'firebolt'
 
     def __str__(self) -> str:
-        return self._message
+        return 'FireboltConnectionManager()'
 
     @classmethod
-    def open(cls, connection: SQLConnectionManager) -> SQLConnectionManager:
+    def open(cls, connection: Connection) -> Connection:
         if connection.state == 'open':
             return connection
         credentials = connection.credentials
@@ -111,7 +109,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         )
 
     @contextmanager
-    def exception_handler(self, sql: str) -> RuntimeException:
+    def exception_handler(self, sql: str) -> Generator:
         try:
             yield
         except Exception as e:
@@ -119,7 +117,7 @@ class FireboltConnectionManager(SQLConnectionManager):
             raise RuntimeException(str(e))
 
     @classmethod
-    def get_response(cls, cursor: SQLConnectionManager) -> AdapterResponse:
+    def get_response(cls, cursor: Cursor) -> AdapterResponse:
         """
         Return an AdapterResponse object. Note that I can't overload/extend it
         as it's defined in dbt core and other internal fns complain if it has extra
@@ -147,7 +145,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         Firebolt does not yet support transactions.
         """
 
-    def cancel(self, connection: SQLConnectionManager) -> None:
+    def cancel(self, connection: Connection) -> None:
         """Cancel the last query on the given connection."""
         raise dbt.exceptions.NotImplementedException(
             '`cancel` is not implemented for this adapter!'

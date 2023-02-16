@@ -2,7 +2,7 @@ import re
 import time
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any, List, Optional, Union
+from typing import Any, List, Mapping, Optional, Union
 
 import agate
 import dbt.exceptions
@@ -48,11 +48,11 @@ class FireboltIndexConfig(dbtClassMixin):
             spine_col,
             now_unix,
         ]
-        string = '__'.join(inputs)
+        string = '__'.join([x for x in inputs if x is not None])
         return string
 
     @classmethod
-    def parse(cls, raw_index: Optional[str]) -> Optional['FireboltIndexConfig']:
+    def parse(cls, raw_index: Optional[Mapping]) -> Optional['FireboltIndexConfig']:
         """
         Validate the JSON format of the provided index config.
         Ensure the config has the right elements.
@@ -104,7 +104,8 @@ class FireboltAdapter(SQLAdapter):
     ConnectionManager = FireboltConnectionManager
     Column = FireboltColumn
 
-    def is_cancelable(self) -> bool:
+    @classmethod
+    def is_cancelable(cls) -> bool:
         return False
 
     @classmethod
@@ -125,9 +126,7 @@ class FireboltAdapter(SQLAdapter):
         return 'DATETIME'
 
     @classmethod
-    def convert_time_type(
-        cls, agate_table: agate.Table, col_idx: int
-    ) -> dbt.exceptions.NotImplementedException:
+    def convert_time_type(cls, agate_table: agate.Table, col_idx: int) -> str:
         raise dbt.exceptions.NotImplementedException(
             '`convert_time_type` is not implemented for this adapter!'
         )
