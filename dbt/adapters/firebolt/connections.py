@@ -8,7 +8,7 @@ from dbt.adapters.sql import SQLConnectionManager
 from dbt.contracts.connection import AdapterResponse, Connection
 from dbt.contracts.graph.manifest import Manifest
 from dbt.events import AdapterLogger  # type: ignore
-from dbt.exceptions import RuntimeException
+from dbt.exceptions import DbtRuntimeError
 from firebolt.client import DEFAULT_API_URL
 from firebolt.client.auth import UsernamePassword
 from firebolt.db import connect as sdk_connect
@@ -114,7 +114,7 @@ class FireboltConnectionManager(SQLConnectionManager):
             yield
         except Exception as e:
             self.release()
-            raise RuntimeException(str(e))
+            raise DbtRuntimeError(str(e))
 
     @classmethod
     def get_response(cls, cursor: Cursor) -> AdapterResponse:

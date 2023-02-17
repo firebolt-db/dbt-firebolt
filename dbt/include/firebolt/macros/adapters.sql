@@ -48,12 +48,6 @@
 {% endmacro %}
 
 
-{% macro firebolt__current_timestamp() %}
-
-    NOW()
-{% endmacro %}
-
-
 {% macro firebolt__alter_column_type(relation, column_name, new_column_type) -%}
   {# Stub: alter statements not currently available in Firebolt. #}
   {% call statement('alter_column_type') %}
@@ -153,16 +147,15 @@
     Args: relation: dbt Relation
   -#}
   {% set sql %}
-
-  SELECT * FROM {{ relation }} LIMIT 1
+    SELECT column_name, data_type from information_schema.columns
+    WHERE table_name = '{{ relation }}'
   {% endset %}
-  {#- add_query returns a cursor object. The names and types of the table named
-      by `relation` have to be converted to the correct type. -#}
-  {%- set (conn, cursor) = adapter.add_query(sql = sql, abridge_sql_log=True) -%}
-  {%- set ret_val = adapter.sdk_column_list_to_firebolt_column_list(
-                        cursor.description
-                    ) -%}
-  {{ return(ret_val) }}
+  {%- set result = run_query(sql) -%}
+  {% set columns = [] %}
+  {% for row in result %}
+    {% do columns.append(api.Column.from_description(row['column_name'], row['data_type'])) %}
+  {% endfor %}
+  {% do return(columns) %}
 {% endmacro %}
 
 
@@ -270,15 +263,4 @@
      see commit f9984f6d61b8a1b877bc107b102eeb30eba54f35
      This will be replaced by `CREATE OR REPLACE`. #}
   {{ adapter.drop_relation(relation) }}
-{% endmacro %}
-
-
-{# TODO: Do we still need this?
-   See https://packboard.atlassian.net/browse/FIR-12156 #}
-{% macro firebolt__snapshot_string_as_time(timestamp) -%}
-  {% call statement('timestamp', fetch_result=True) %}
-
-      SELECT CAST('{{ timestamp }}' AS DATE)
-  {% endcall %}
-  {{ return(load_result('timestamp').table) }}
 {% endmacro %}

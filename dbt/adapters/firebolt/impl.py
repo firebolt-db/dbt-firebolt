@@ -145,7 +145,7 @@ class FireboltAdapter(SQLAdapter):
         for column in columns:
             # Don't need to check for name, as missing name fails at yaml parse time.
             if column.get('data_type', None) is None:
-                raise dbt.exceptions.RuntimeException(
+                raise dbt.exceptions.DbtRuntimeError(
                     f'Data type is missing for column `{column["name"]}`.'
                 )
             unpartitioned_columns.append(
@@ -156,11 +156,11 @@ class FireboltAdapter(SQLAdapter):
                 # Don't need to check for name, as missing name fails at
                 # yaml parse time.
                 if partition.get('data_type', None) is None:
-                    raise dbt.exceptions.RuntimeException(
+                    raise dbt.exceptions.DbtRuntimeError(
                         f'Data type is missing for partition `{partition["name"]}`.'
                     )
                 if partition.get('regex', None) is None:
-                    raise dbt.exceptions.RuntimeException(
+                    raise dbt.exceptions.DbtRuntimeError(
                         f'Regex is missing for partition `{partition["name"]}`.'
                     )
                 partitioned_columns.append(
@@ -230,7 +230,7 @@ class FireboltAdapter(SQLAdapter):
             'int': 'LONG',
             'float': 'DOUBLE',
             'date': 'DATE',
-            'datetime': 'DATE',
+            'datetime': 'TIMESTAMP',
             'bool': 'BOOLEAN',
             'Decimal': 'DECIMAL',
         }
@@ -324,7 +324,7 @@ class FireboltAdapter(SQLAdapter):
     ) -> Union[agate.Table, List]:
         try:
             return super().get_columns_in_relation(relation)
-        except dbt.exceptions.RuntimeException as e:
+        except dbt.exceptions.DbtRuntimeError as e:
             if 'Did not find a table or view' in str(e):
                 return []
             else:
