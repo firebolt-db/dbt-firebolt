@@ -5,13 +5,17 @@ from datetime import datetime
 from typing import Any, List, Mapping, Optional, Union
 
 import agate
-import dbt.exceptions
-import dbt.utils
 from dbt.adapters.base import available
 from dbt.adapters.base.impl import AdapterConfig
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
+from dbt.exceptions import (
+    CompilationError,
+    DbtRuntimeError,
+    NotImplementedException,
+    validator_error_message,
+)
 from firebolt.async_db._types import ARRAY
 from firebolt.async_db._types import Column as SDKColumn
 
@@ -64,7 +68,7 @@ class FireboltIndexConfig(dbtClassMixin):
             cls.validate(raw_index)
             index_config = cls.from_dict(raw_index)
             if index_config.index_type.upper() not in ['JOIN', 'AGGREGATING']:
-                dbt.exceptions.raise_compiler_error(
+                raise CompilationError(
                     'Invalid index type:\n'
                     f'  Got: {index_config.index_type}.\n'
                     '  Type should be either: "join" or "aggregating."'
@@ -72,7 +76,7 @@ class FireboltIndexConfig(dbtClassMixin):
             if index_config.index_type.upper() == 'JOIN' and not (
                 index_config.join_columns and index_config.dimension_column
             ):
-                dbt.exceptions.raise_compiler_error(
+                raise CompilationError(
                     'Invalid join index definition:\n'
                     f'  Got: {index_config}.\n'
                     '  join_columns and dimension_column must be specified '
@@ -81,7 +85,7 @@ class FireboltIndexConfig(dbtClassMixin):
             if index_config.index_type.upper() == 'AGGREGATING' and not (
                 index_config.key_columns and index_config.aggregation
             ):
-                dbt.exceptions.raise_compiler_error(
+                raise CompilationError(
                     'Invalid aggregating index definition:\n'
                     f'  Got: {index_config}.\n'
                     '  key_columns and aggregation must be specified '
@@ -89,8 +93,8 @@ class FireboltIndexConfig(dbtClassMixin):
                 )
             return index_config
         except ValidationError as exc:
-            msg = dbt.exceptions.validator_error_message(exc)
-            dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}.')
+            msg = validator_error_message(exc)
+            raise CompilationError(f'Could not parse index config: {msg}.')
         return None
 
 
@@ -127,7 +131,7 @@ class FireboltAdapter(SQLAdapter):
 
     @classmethod
     def convert_time_type(cls, agate_table: agate.Table, col_idx: int) -> str:
-        raise dbt.exceptions.NotImplementedException(
+        raise NotImplementedException(
             '`convert_time_type` is not implemented for this adapter!'
         )
 
@@ -145,7 +149,7 @@ class FireboltAdapter(SQLAdapter):
         for column in columns:
             # Don't need to check for name, as missing name fails at yaml parse time.
             if column.get('data_type', None) is None:
-                raise dbt.exceptions.DbtRuntimeError(
+                raise DbtRuntimeError(
                     f'Data type is missing for column `{column["name"]}`.'
                 )
             unpartitioned_columns.append(
@@ -156,11 +160,11 @@ class FireboltAdapter(SQLAdapter):
                 # Don't need to check for name, as missing name fails at
                 # yaml parse time.
                 if partition.get('data_type', None) is None:
-                    raise dbt.exceptions.DbtRuntimeError(
+                    raise DbtRuntimeError(
                         f'Data type is missing for partition `{partition["name"]}`.'
                     )
                 if partition.get('regex', None) is None:
-                    raise dbt.exceptions.DbtRuntimeError(
+                    raise DbtRuntimeError(
                         f'Regex is missing for partition `{partition["name"]}`.'
                     )
                 partitioned_columns.append(
@@ -196,7 +200,7 @@ class FireboltAdapter(SQLAdapter):
         Grant is not currently supported so this function
             raises an error.
         """
-        dbt.exceptions.raise_compiler_error(
+        raise CompilationError(
             'Firebolt does not support table-level permission grants.'
             ' Please remove grants section from the config.'
         )
@@ -324,7 +328,7 @@ class FireboltAdapter(SQLAdapter):
     ) -> Union[agate.Table, List]:
         try:
             return super().get_columns_in_relation(relation)
-        except dbt.exceptions.DbtRuntimeError as e:
+        except DbtRuntimeError as e:
             if 'Did not find a table or view' in str(e):
                 return []
             else:
