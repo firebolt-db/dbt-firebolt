@@ -1,3 +1,0 @@
-kind: Changed
-body: Using temp views instead of temp tables in incremental for performance
-time: 2023-02-13T14:08:52.423048Z
