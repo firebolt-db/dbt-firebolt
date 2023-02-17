@@ -2,7 +2,7 @@ import re
 import time
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any, List, Optional, Union
+from typing import Any, List, Mapping, Optional, Union
 
 import agate
 import dbt.exceptions
@@ -48,11 +48,11 @@ class FireboltIndexConfig(dbtClassMixin):
             spine_col,
             now_unix,
         ]
-        string = '__'.join(inputs)
+        string = '__'.join([x for x in inputs if x is not None])
         return string
 
     @classmethod
-    def parse(cls, raw_index: Optional[str]) -> Optional['FireboltIndexConfig']:
+    def parse(cls, raw_index: Optional[Mapping]) -> Optional['FireboltIndexConfig']:
         """
         Validate the JSON format of the provided index config.
         Ensure the config has the right elements.
@@ -104,7 +104,8 @@ class FireboltAdapter(SQLAdapter):
     ConnectionManager = FireboltConnectionManager
     Column = FireboltColumn
 
-    def is_cancelable(self) -> bool:
+    @classmethod
+    def is_cancelable(cls) -> bool:
         return False
 
     @classmethod
@@ -125,9 +126,7 @@ class FireboltAdapter(SQLAdapter):
         return 'DATETIME'
 
     @classmethod
-    def convert_time_type(
-        cls, agate_table: agate.Table, col_idx: int
-    ) -> dbt.exceptions.NotImplementedException:
+    def convert_time_type(cls, agate_table: agate.Table, col_idx: int) -> str:
         raise dbt.exceptions.NotImplementedException(
             '`convert_time_type` is not implemented for this adapter!'
         )
@@ -317,6 +316,20 @@ class FireboltAdapter(SQLAdapter):
                 vals_list[i] += '::DATE'
         return ','.join(vals_list)
 
+    def valid_incremental_strategies(self) -> List[str]:
+        return ['append', 'insert_overwrite']
+
+    def get_columns_in_relation(
+        self, relation: BaseRelation
+    ) -> Union[agate.Table, List]:
+        try:
+            return super().get_columns_in_relation(relation)
+        except dbt.exceptions.RuntimeException as e:
+            if 'Did not find a table or view' in str(e):
+                return []
+            else:
+                raise
+
 
 COLUMNS_EQUAL_SQL = """
 WITH diff_count AS (
@@ -336,17 +349,18 @@ WITH diff_count AS (
             ))
         ) AS a
 ),
-table_a AS (
+table_a__dbt_tmp AS (
     SELECT COUNT(*) AS num_rows FROM {relation_a}
 ),
-table_b AS (
+table_b__dbt_tmp AS (
     SELECT COUNT(*) AS num_rows FROM {relation_b}
 ),
 row_count_diff AS (
     SELECT
         1 AS id,
-        table_a.num_rows - table_b.num_rows AS difference
-    FROM table_a, table_b
+        table_a__dbt_tmp.num_rows -
+            table_b__dbt_tmp.num_rows AS difference
+    FROM table_a__dbt_tmp, table_b__dbt_tmp
 )
 SELECT
     row_count_diff.difference AS row_count_difference,

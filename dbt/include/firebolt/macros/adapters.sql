@@ -197,7 +197,8 @@
 
 {% macro firebolt__create_table_as(temporary,
                                    relation,
-                                   select_sql) -%}
+                                   select_sql,
+                                   language='sql') -%}
   {# Create table using CTAS
      Args:
       temporary (bool): Unused, included so macro signature matches
@@ -205,7 +206,16 @@
       relation (dbt relation/dict)
       select_sql (string): The SQL query that will be used to generate 
         the internal query of the CTAS
+      language (string): sql or python models. Firebolt only supports sql.
   #}
+  {%- if language == 'python' -%}
+    {{ exceptions.raise_compiler_error("Firebolt does not currently support "
+                                       "Python models.") }}
+  {%- elif language not in ['python', 'sql'] -%}
+    {{ exceptions.raise_compiler_error("Unexpected language parameter supplied: %s "
+                                       "Must be either 'sql' or 'python'." % (language)) }}
+  {%- endif -%}
+
   {%- set table_type = config.get('table_type', default='dimension') | upper -%}
   {%- set primary_index = config.get('primary_index') -%}
   {%- set incremental_strategy = config.get('incremental_strategy') -%}

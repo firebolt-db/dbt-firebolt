@@ -41,9 +41,27 @@ from dbt.tests.adapter.utils.fixture_split_part import (
     models__test_split_part_yml,
 )
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
+from dbt.tests.adapter.utils.test_array_append import (
+    BaseArrayAppend,
+    models__array_append_actual_sql,
+    models__array_append_expected_sql,
+)
+from dbt.tests.adapter.utils.test_array_concat import (
+    BaseArrayConcat,
+    models__array_concat_actual_sql,
+    models__array_concat_expected_sql,
+)
+from dbt.tests.adapter.utils.test_array_construct import (
+    BaseArrayConstruct,
+    models__array_construct_actual_sql,
+    models__array_construct_expected_sql,
+)
 from dbt.tests.adapter.utils.test_bool_or import BaseBoolOr
 from dbt.tests.adapter.utils.test_cast_bool_to_text import BaseCastBoolToText
 from dbt.tests.adapter.utils.test_concat import BaseConcat
+from dbt.tests.adapter.utils.test_current_timestamp import (
+    BaseCurrentTimestampNaive,
+)
 from dbt.tests.adapter.utils.test_date_trunc import BaseDateTrunc
 from dbt.tests.adapter.utils.test_dateadd import BaseDateAdd
 from dbt.tests.adapter.utils.test_datediff import BaseDateDiff
@@ -63,6 +81,22 @@ from dbt.tests.adapter.utils.test_safe_cast import BaseSafeCast
 from dbt.tests.adapter.utils.test_split_part import BaseSplitPart
 from dbt.tests.adapter.utils.test_string_literal import BaseStringLiteral
 from pytest import mark
+
+schema_actual_table_yml = """
+version: 2
+models:
+  - name: actual
+    config:
+      materialized: table
+"""
+
+schema_expected_table_yml = """
+version: 2
+models:
+  - name: expected
+    config:
+      materialized: table
+"""
 
 
 class TestAnyValue(BaseAnyValue):
@@ -409,3 +443,40 @@ class TestSplitPart(BaseSplitPart):
 
 class TestStringLiteral(BaseStringLiteral):
     pass
+
+
+class TestCurrentTimestamp(BaseCurrentTimestampNaive):
+    pass
+
+
+class TestArrayAppend(BaseArrayAppend):
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'actual.yml': schema_actual_table_yml,
+            'actual.sql': models__array_append_actual_sql,
+            'expected.yml': schema_expected_table_yml,
+            'expected.sql': models__array_append_expected_sql,
+        }
+
+
+class TestArrayConcat(BaseArrayConcat):
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'actual.yml': schema_actual_table_yml,
+            'actual.sql': models__array_concat_actual_sql,
+            'expected.yml': schema_expected_table_yml,
+            'expected.sql': models__array_concat_expected_sql,
+        }
+
+
+class TestArrayConstruct(BaseArrayConstruct):
+    @pytest.fixture(scope='class')
+    def models(self):
+        return {
+            'actual.yml': schema_actual_table_yml,
+            'actual.sql': models__array_construct_actual_sql,
+            'expected.yml': schema_expected_table_yml,
+            'expected.sql': models__array_construct_expected_sql,
+        }
