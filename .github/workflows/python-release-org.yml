@@ -59,10 +59,10 @@ jobs:
         git add .changes/
         git add CHANGELOG.md
         git commit -m "Changelog update"
-        git push origin master
+        git push origin main
 
     - name: 'Publish action'
-      uses: firebolt-db/action-python-release@feat-version-override # TODO: change to master once action PR is merged
+      uses: firebolt-db/action-python-release@main
       with:
         pre-release-tag: ${{ inputs.pre-release-tag }}
         major-release: ${{ inputs.major-release }}
