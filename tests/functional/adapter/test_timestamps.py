@@ -3,13 +3,13 @@ from dbt.tests.adapter.utils.test_timestamps import BaseCurrentTimestamps
 
 # current_timestamp is a keyword, need to quote it
 _MODEL_CURRENT_TIMESTAMP = """
-select {{ current_timestamp() }} as 'current_timestamp',
+select {{ current_timestamp() }} as "current_timestamp",
     {{ current_timestamp_in_utc_backcompat() }} as current_timestamp_in_utc_backcompat,
     {{ current_timestamp_backcompat() }} as current_timestamp_backcompat
 """
 
 _MODEL_EXPECTED_SQL = """
-select now() as 'current_timestamp',
+select now() as "current_timestamp",
     current_timestamp::TIMESTAMP as current_timestamp_in_utc_backcompat,
     current_timestamp::TIMESTAMP as current_timestamp_backcompat
 """

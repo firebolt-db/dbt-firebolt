@@ -153,7 +153,8 @@
   {%- set result = run_query(sql) -%}
   {% set columns = [] %}
   {% for row in result %}
-    {% do columns.append(api.Column.from_description(row['column_name'], row['data_type'])) %}
+    {% do columns.append(adapter.get_column_class().from_description(row['column_name'],
+                         adapter.resolve_special_columns(row['data_type']))) %}
   {% endfor %}
   {% do return(columns) %}
 {% endmacro %}
@@ -176,7 +177,7 @@
              '{{ relation.schema }}' AS "schema",
              'table' AS type
         FROM information_schema.tables
-      UNION
+      UNION ALL
       SELECT '{{ relation.database }}' AS "database",
              table_name AS "name",
              '{{ relation.schema }}' AS "schema",
