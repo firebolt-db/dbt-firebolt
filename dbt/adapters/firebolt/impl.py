@@ -13,7 +13,7 @@ from dbt.dataclass_schema import ValidationError, dbtClassMixin
 from dbt.exceptions import (
     CompilationError,
     DbtRuntimeError,
-    NotImplementedException,
+    NotImplementedError,
     validator_error_message,
 )
 from firebolt.async_db._types import ARRAY
@@ -131,7 +131,7 @@ class FireboltAdapter(SQLAdapter):
 
     @classmethod
     def convert_time_type(cls, agate_table: agate.Table, col_idx: int) -> str:
-        raise NotImplementedException(
+        raise NotImplementedError(
             '`convert_time_type` is not implemented for this adapter!'
         )
 

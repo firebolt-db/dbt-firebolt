@@ -6,7 +6,6 @@ import dbt.exceptions
 from dbt.adapters.base import Credentials
 from dbt.adapters.sql import SQLConnectionManager
 from dbt.contracts.connection import AdapterResponse, Connection
-from dbt.contracts.graph.manifest import Manifest
 from dbt.events import AdapterLogger  # type: ignore
 from dbt.exceptions import DbtRuntimeError
 from firebolt.client import DEFAULT_API_URL
@@ -147,9 +146,6 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     def cancel(self, connection: Connection) -> None:
         """Cancel the last query on the given connection."""
-        raise dbt.exceptions.NotImplementedException(
+        raise dbt.exceptions.NotImplementedError(
             '`cancel` is not implemented for this adapter!'
         )
-
-    def set_query_header(self, manifest: Manifest) -> None:
-        self.query_header = None
