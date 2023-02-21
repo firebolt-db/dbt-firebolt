@@ -40,15 +40,15 @@ class TestMacroArgsQueryCommentsFirebolt(
             'app': 'dbt++',
             'dbt_version': dbt_version,
             'macro_version': '0.1.0',
-            'message': 'blah: default2',
+            'message': 'blah: default',
         }
-        expected = '/* {} */\n'.format(json.dumps(expected_dct, sort_keys=True))
+        expected = '/* {} */'.format(
+            json.dumps(expected_dct, sort_keys=True).replace('"', '\\"')
+        )
         assert expected in logs
 
 
-class TestMacroInvalidQueryCommentsFirebolt(
-    FireboltTestFixMixin, BaseMacroInvalidQueryComments
-):
+class TestMacroInvalidQueryCommentsFirebolt(BaseMacroInvalidQueryComments):
     pass
 
 

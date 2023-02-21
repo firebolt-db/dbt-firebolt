@@ -5,7 +5,11 @@ from typing import Generator, Optional, Tuple
 import dbt.exceptions
 from dbt.adapters.base import Credentials
 from dbt.adapters.sql import SQLConnectionManager
-from dbt.contracts.connection import AdapterResponse, Connection
+from dbt.contracts.connection import (
+    AdapterRequiredConfig,
+    AdapterResponse,
+    Connection,
+)
 from dbt.events import AdapterLogger  # type: ignore
 from dbt.exceptions import DbtRuntimeError
 from firebolt.client import DEFAULT_API_URL
@@ -72,6 +76,13 @@ class FireboltConnectionManager(SQLConnectionManager):
     """
 
     TYPE = 'firebolt'
+
+    def __init__(self, profile: AdapterRequiredConfig):
+        # Default to append query comment if not overridden
+        # This allows clearer view of queries in query_history
+        if not profile.query_comment.append:
+            profile.query_comment.append = True
+        super().__init__(profile)
 
     def __str__(self) -> str:
         return 'FireboltConnectionManager()'
