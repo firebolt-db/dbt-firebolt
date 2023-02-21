@@ -12,23 +12,28 @@ from dbt.version import __version__ as dbt_version
 
 
 class FireboltTestFixMixin:
+    """
+    Fixing Base class test_comments method to actually
+    assert that the logs contain the expected string.
+    """
+
     def test_comments(self, project):
         logs = self.run_assert_comments()
         self.matches_comment(logs)
 
 
-class TestQueryCommentsFirebolt(BaseQueryComments, FireboltTestFixMixin):
+class TestQueryCommentsFirebolt(FireboltTestFixMixin, BaseQueryComments):
     def matches_comment(self, logs) -> bool:
         assert '/* dbt\\nrules! */\\n' in logs
 
 
-class TestMacroQueryCommentsFirebolt(BaseMacroQueryComments, FireboltTestFixMixin):
+class TestMacroQueryCommentsFirebolt(FireboltTestFixMixin, BaseMacroQueryComments):
     def matches_comment(self, logs) -> bool:
         assert '/* dbt macros\\nare pretty cool */\\n' in logs
 
 
 class TestMacroArgsQueryCommentsFirebolt(
-    BaseMacroArgsQueryComments, FireboltTestFixMixin
+    FireboltTestFixMixin, BaseMacroArgsQueryComments
 ):
     def matches_comment(self, logs) -> bool:
         expected_dct = {
@@ -42,14 +47,14 @@ class TestMacroArgsQueryCommentsFirebolt(
 
 
 class TestMacroInvalidQueryCommentsFirebolt(
-    BaseMacroInvalidQueryComments, FireboltTestFixMixin
+    FireboltTestFixMixin, BaseMacroInvalidQueryComments
 ):
     pass
 
 
-class TestNullQueryCommentsFirebolt(BaseNullQueryComments, FireboltTestFixMixin):
+class TestNullQueryCommentsFirebolt(FireboltTestFixMixin, BaseNullQueryComments):
     pass
 
 
-class TestEmptyQueryCommentsFirebolt(BaseEmptyQueryComments, FireboltTestFixMixin):
+class TestEmptyQueryCommentsFirebolt(FireboltTestFixMixin, BaseEmptyQueryComments):
     pass
