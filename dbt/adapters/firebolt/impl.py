@@ -16,8 +16,6 @@ from dbt.exceptions import (
     NotImplementedError,
     validator_error_message,
 )
-from firebolt.async_db._types import ARRAY
-from firebolt.async_db._types import Column as SDKColumn
 
 from dbt.adapters.firebolt.column import FireboltColumn
 from dbt.adapters.firebolt.connections import FireboltConnectionManager
@@ -206,43 +204,19 @@ class FireboltAdapter(SQLAdapter):
         )
 
     @available.parse_none
-    def sdk_column_list_to_firebolt_column_list(
-        self, columns: List[SDKColumn]
-    ) -> List[FireboltColumn]:
+    def resolve_special_columns(self, column: str) -> str:
         """
-        Extract and return list of FireboltColumns with names and data types
-        extracted from SDKColumns.
-        Args:
-          columns: list of Column types as defined in the Python SDK
+        Resolve special columns types that dbt is unable to parse natively.
         """
-        return [
-            FireboltColumn(
-                column=col.name, dtype=self.create_type_string(col.type_code)
+        if column.startswith('ARRAY'):
+            return (
+                column.removeprefix('ARRAY(')
+                .removesuffix(')')
+                .removesuffix('NOT NULL')
+                .removesuffix('NULL')
+                .rstrip()
             )
-            for col in columns
-        ]
-
-    @available.parse_none
-    def create_type_string(self, type_code: Any) -> str:
-        """
-        Return properly formatted type string for SQL DDL.
-        Args: type_code is technically a type, but mypy complained that `type`
-        does not have an attribute `subtype`.
-        """
-        types = {
-            'str': 'TEXT',
-            'int': 'LONG',
-            'float': 'DOUBLE',
-            'date': 'DATE',
-            'datetime': 'TIMESTAMP',
-            'bool': 'BOOLEAN',
-            'Decimal': 'DECIMAL',
-        }
-        type_code_str = '{}'
-        while isinstance(type_code, ARRAY):
-            type_code_str = f'ARRAY({type_code_str})'
-            type_code = type_code.subtype
-        return type_code_str.format(types[type_code.__name__])
+        return column
 
     @available.parse_none
     def filter_table(

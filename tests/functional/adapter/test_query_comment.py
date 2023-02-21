@@ -24,12 +24,12 @@ class FireboltTestFixMixin:
 
 class TestQueryCommentsFirebolt(FireboltTestFixMixin, BaseQueryComments):
     def matches_comment(self, logs) -> bool:
-        assert '/* dbt\\nrules! */\\n' in logs
+        assert '\\n/* dbt\\nrules! */' in logs
 
 
 class TestMacroQueryCommentsFirebolt(FireboltTestFixMixin, BaseMacroQueryComments):
     def matches_comment(self, logs) -> bool:
-        assert '/* dbt macros\\nare pretty cool */\\n' in logs
+        assert '\\n/* dbt macros\\nare pretty cool */' in logs
 
 
 class TestMacroArgsQueryCommentsFirebolt(
