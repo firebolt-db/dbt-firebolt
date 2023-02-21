@@ -208,14 +208,22 @@ class FireboltAdapter(SQLAdapter):
         """
         Resolve special columns types that dbt is unable to parse natively.
         """
+
+        def remove_suffix(input_string: str, suffix: str) -> str:
+            """
+            Added for backwards compatibility with Python < 3.9
+            """
+            if suffix and input_string.endswith(suffix):
+                return input_string[: -len(suffix)]
+            return input_string
+
         if column.startswith('ARRAY'):
-            return (
-                column.removeprefix('ARRAY(')
-                .removesuffix(')')
-                .removesuffix('NOT NULL')
-                .removesuffix('NULL')
-                .rstrip()
-            )
+            # Strip ARRAY()
+            column = remove_suffix(column.removeprefix('ARRAY('), ')')
+            # Strip NULL/NOT NULL
+            column = remove_suffix(column, 'NOT NULL')
+            column = remove_suffix(column, 'NULL')
+            return column.rstrip()
         return column
 
     @available.parse_none
