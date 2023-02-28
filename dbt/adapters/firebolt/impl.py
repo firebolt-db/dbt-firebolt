@@ -209,14 +209,21 @@ class FireboltAdapter(SQLAdapter):
         Resolve special columns types that dbt is unable to parse natively.
         """
 
-        if column.startswith('ARRAY'):
-            column = column[6:-1]
-            if column.endswith('NOT NULL'):
-                column = column[:-8]
-            if column.endswith('NULL'):
-                column = column[:-4]
-            return column.rstrip()
-        return column
+        def strip_suffix(s: str, suffix: str) -> str:
+            """
+            Defined for backwards-compatibility with python 3.7
+            """
+            if s.endswith(suffix):
+                return s[: -len(suffix)]
+            return s
+
+        type_code_str = '{}'
+        while column.startswith('ARRAY'):
+            type_code_str = f'ARRAY({type_code_str})'
+            column = column[6:-1]  # Strip ARRAY()
+            column = strip_suffix(column, ' NOT NULL')
+            column = strip_suffix(column, ' NULL')
+        return type_code_str.format(column)
 
     @available.parse_none
     def filter_table(
