@@ -3,5 +3,5 @@ from dbt.tests.adapter.relations.test_changing_relation_type import (
 )
 
 
-class TestRedshiftChangeRelationTypes(BaseChangeRelationTypeValidator):
+class TestFireboltChangeRelationTypes(BaseChangeRelationTypeValidator):
     pass
