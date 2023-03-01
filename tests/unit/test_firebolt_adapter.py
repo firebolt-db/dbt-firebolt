@@ -67,3 +67,17 @@ def adapter():
 )
 def test_resolve_columns(adapter, column, expected):
     assert adapter.resolve_special_columns(column) == expected
+
+
+@mark.parametrize(
+    'profile,expected',
+    [
+        (MagicMock(query_comment=MagicMock(append=None)), True),
+        (MagicMock(query_comment=MagicMock(append=True)), True),
+        (MagicMock(query_comment=MagicMock(append=False)), False),
+        (MagicMock(query_comment=MagicMock(append='dummy')), 'dummy'),
+    ],
+)
+def test_setting_append(profile, expected):
+    adapter = FireboltAdapter(profile)
+    assert adapter.config.query_comment.append == expected
