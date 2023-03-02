@@ -12,3 +12,9 @@ class FireboltColumn(Column):
     @classmethod
     def is_date(self) -> bool:
         return self.dtype.lower() == 'date'
+
+    @classmethod
+    def from_description(cls, name: str, raw_data_type: str) -> 'FireboltColumn':
+        if raw_data_type.startswith('ARRAY'):
+            return cls(name, raw_data_type)
+        return Column.from_description(name, raw_data_type)

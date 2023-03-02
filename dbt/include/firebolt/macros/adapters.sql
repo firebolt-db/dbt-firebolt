@@ -153,7 +153,7 @@
   {%- set result = run_query(sql) -%}
   {% set columns = [] %}
   {% for row in result %}
-    {% do columns.append(api.Column.from_description(row['column_name'],
+    {% do columns.append(adapter.get_column_class().from_description(row['column_name'],
                          adapter.resolve_special_columns(row['data_type']))) %}
   {% endfor %}
   {% do return(columns) %}

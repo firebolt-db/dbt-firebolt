@@ -315,6 +315,13 @@ class FireboltAdapter(SQLAdapter):
             else:
                 raise
 
+    @available.parse_none
+    def get_column_class(self) -> type:
+        """
+        Method to expose FireboltColumn to jinja
+        """
+        return self.Column
+
 
 COLUMNS_EQUAL_SQL = """
 WITH diff_count AS (
