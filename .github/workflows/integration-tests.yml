@@ -61,15 +61,15 @@ jobs:
         id: setup
         uses: firebolt-db/integration-testing-setup@master
         with:
-          firebolt-username: ${{ secrets.USERNAME }}
-          firebolt-password: ${{ secrets.PASSWORD }}
+          firebolt-username: ${{ env.USERNAME }}
+          firebolt-password: ${{ env.PASSWORD }}
           api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
           region: "us-east-1"
 
       - name: Run integration tests
         env:
-          USER_NAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          USER_NAME: ${{ env.USERNAME }}
+          PASSWORD: ${{ env.PASSWORD }}
           DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
           ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
           API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
