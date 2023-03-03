@@ -74,8 +74,8 @@ def test_resolve_columns(adapter, column, expected):
     [
         (MagicMock(query_comment=MagicMock(append=None)), True),
         (MagicMock(query_comment=MagicMock(append=True)), True),
-        (MagicMock(query_comment=MagicMock(append=False)), False),
-        (MagicMock(query_comment=MagicMock(append='dummy')), 'dummy'),
+        (MagicMock(query_comment=MagicMock(append=False)), True),
+        (MagicMock(query_comment=MagicMock(append='dummy')), True),
     ],
 )
 def test_setting_append(profile, expected):

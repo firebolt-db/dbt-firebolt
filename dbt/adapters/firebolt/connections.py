@@ -78,10 +78,9 @@ class FireboltConnectionManager(SQLConnectionManager):
     TYPE = 'firebolt'
 
     def __init__(self, profile: AdapterRequiredConfig):
-        # Default to append query comment if not overridden
+        # Query comment in appent mode only
         # This allows clearer view of queries in query_history
-        if profile.query_comment.append is None:
-            profile.query_comment.append = True
+        profile.query_comment.append = True
         super().__init__(profile)
 
     def __str__(self) -> str:
