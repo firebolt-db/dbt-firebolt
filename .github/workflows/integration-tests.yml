@@ -12,7 +12,8 @@ on:
           - dev
           - staging
   workflow_call:
-    environment:
+    inputs:
+      environment:
         default: 'staging'
         required: false
         type: string
