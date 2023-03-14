@@ -29,6 +29,12 @@ from dbt.tests.adapter.basic.test_snapshot_check_cols import (
 from dbt.tests.adapter.basic.test_snapshot_timestamp import (
     BaseSnapshotTimestamp,
 )
+from dbt.tests.util import (
+    AnyStringWith,
+    check_relations_equal,
+    relation_from_name,
+    run_dbt,
+)
 from pytest import fixture, mark
 
 
@@ -53,7 +59,46 @@ class TestEphemeralFirebolt(BaseEphemeral):
 
 
 class TestIncrementalFirebolt(BaseIncremental):
-    pass
+    def test_incremental(self, project):
+        # seed command
+        results = run_dbt(['seed'])
+        assert len(results) == 2
+
+        # base table rowcount
+        relation = relation_from_name(project.adapter, 'base')
+        result = project.run_sql(
+            f'select count(*) as num_rows from {relation}', fetch='one'
+        )
+        assert result[0] == 10
+
+        # added table rowcount
+        relation = relation_from_name(project.adapter, 'added')
+        result = project.run_sql(
+            f'select count(*) as num_rows from {relation}', fetch='one'
+        )
+        assert result[0] == 20
+
+        # run command
+        # the 'seed_name' var changes the seed identifier in the schema file
+        results = run_dbt(['run', '--vars', 'seed_name: base'])
+        assert len(results) == 1
+
+        # check relations equal
+        check_relations_equal(project.adapter, ['base', 'incremental'])
+
+        # change seed_name var
+        # the 'seed_name' var changes the seed identifier in the schema file
+        # adding --full-refresh because schema changes are not allowed
+        results = run_dbt(['run', '--full-refresh', '--vars', 'seed_name: added'])
+        assert len(results) == 1
+
+        # check relations equal
+        check_relations_equal(project.adapter, ['added', 'incremental'])
+
+        # get catalog from docs generate
+        catalog = run_dbt(['docs', 'generate'])
+        assert len(catalog.nodes) == 3
+        assert len(catalog.sources) == 1
 
 
 class TestGenericTestsFirebolt(BaseGenericTests):
@@ -110,7 +155,7 @@ class TestDocsGenerateFirebolt(BaseDocsGenerate):
         catalog = base_expected_catalog(
             project,
             role=None,  # No per-table roles in Firebolt
-            id_type='INT',
+            id_type=AnyStringWith('INT'),
             text_type='TEXT',
             time_type='TIMESTAMP',
             view_type='VIEW',
@@ -135,7 +180,7 @@ class TestDocsGenReferencesFirebolt(BaseDocsGenReferences):
         return expected_references_catalog(
             project,
             role=None,  # No per-table roles in Firebolt
-            id_type='INT',
+            id_type=AnyStringWith('INT'),
             text_type='TEXT',
             time_type='TIMESTAMP',
             bigint_type='LONG',

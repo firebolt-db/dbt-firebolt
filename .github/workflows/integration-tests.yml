@@ -2,12 +2,30 @@ name: Run integration tests
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run the tests against'
+        type: choice
+        required: true
+        default: 'dev'
+        options:
+          - dev
+          - staging
   workflow_call:
+    inputs:
+      environment:
+        default: 'staging'
+        required: false
+        type: string
     secrets:
-      FIREBOLT_USERNAME:
-        required: true
-      FIREBOLT_PASSWORD:
-        required: true
+      FIREBOLT_USERNAME_STAGING:
+        required: false
+      FIREBOLT_PASSWORD_STAGING:
+        required: false
+      FIREBOLT_USERNAME_DEV:
+        required: false
+      FIREBOLT_PASSWORD_DEV:
+        required: false
 
 jobs:
   tests:
@@ -24,25 +42,37 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ".[dev]"
+          pip install ".[dev]" --no-cache-dir
+
+      - name: Determine env variables
+        run: |
+          if [ "${{ inputs.environment }}" == 'staging' ]; then
+             echo "USERNAME=${{ secrets.FIREBOLT_USERNAME_STAGING }}" >> "$GITHUB_ENV"
+             echo "PASSWORD=${{ secrets.FIREBOLT_PASSWORD_STAGING }}" >> "$GITHUB_ENV"
+          else
+             echo "USERNAME=${{ secrets.FIREBOLT_USERNAME_DEV }}" >> "$GITHUB_ENV"
+             echo "PASSWORD=${{ secrets.FIREBOLT_PASSWORD_DEV }}" >> "$GITHUB_ENV"
+          fi
+
+      - name: Keep environment name in the summary
+        run: echo '### Ran integration tests against ${{ inputs.environment }} ' >> $GITHUB_STEP_SUMMARY
 
       - name: Setup database and engine
         id: setup
         uses: firebolt-db/integration-testing-setup@master
         with:
-          firebolt-username: ${{ secrets.FIREBOLT_USERNAME }}
-          firebolt-password: ${{ secrets.FIREBOLT_PASSWORD }}
-          api-endpoint: "api.dev.firebolt.io"
+          firebolt-username: ${{ env.USERNAME }}
+          firebolt-password: ${{ env.PASSWORD }}
+          api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
           region: "us-east-1"
 
       - name: Run integration tests
         env:
-          USER_NAME: ${{ secrets.FIREBOLT_USERNAME }}
-          PASSWORD: ${{ secrets.FIREBOLT_PASSWORD }}
+          USER_NAME: ${{ env.USERNAME }}
+          PASSWORD: ${{ env.PASSWORD }}
           DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
           ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
-          API_ENDPOINT: "api.dev.firebolt.io"
+          API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
           ACCOUNT_NAME: "firebolt"
         run: |
           pytest -o log_cli=true -o log_cli_level=INFO tests/functional/
-        

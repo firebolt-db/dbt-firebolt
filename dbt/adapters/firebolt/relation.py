@@ -1,8 +1,8 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional
 
 from dbt.adapters.base.relation import BaseRelation, Policy
-from dbt.exceptions import RuntimeException
+from dbt.exceptions import DbtRuntimeError
 
 
 @dataclass
@@ -21,15 +21,19 @@ class FireboltIncludePolicy(Policy):
 
 @dataclass(frozen=True, eq=False, repr=False)
 class FireboltRelation(BaseRelation):
-    quote_policy: FireboltQuotePolicy = FireboltQuotePolicy()
-    include_policy: FireboltIncludePolicy = FireboltIncludePolicy()
+    quote_policy: FireboltQuotePolicy = field(
+        default_factory=lambda: FireboltQuotePolicy()
+    )
+    include_policy: FireboltIncludePolicy = field(
+        default_factory=lambda: FireboltIncludePolicy()
+    )
     quote_character: str = '"'
     is_delta: Optional[bool] = None
     information: Optional[str] = None
 
     def render(self) -> str:
         if self.include_policy.database and self.include_policy.schema:
-            raise RuntimeException(
+            raise DbtRuntimeError(
                 'Got a Firebolt relation with schema and database set to '
                 'include, but only one can be set.'
             )

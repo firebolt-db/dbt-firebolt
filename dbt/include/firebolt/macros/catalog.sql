@@ -15,7 +15,7 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
           JOIN information_schema.columns cols
                USING(table_name)
 
-     UNION
+     UNION ALL
 
      SELECT views.table_catalog AS table_database
           , views.table_schema as table_schema

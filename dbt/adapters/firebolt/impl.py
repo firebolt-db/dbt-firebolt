@@ -5,15 +5,17 @@ from datetime import datetime
 from typing import Any, List, Mapping, Optional, Union
 
 import agate
-import dbt.exceptions
-import dbt.utils
 from dbt.adapters.base import available
 from dbt.adapters.base.impl import AdapterConfig
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
-from firebolt.async_db._types import ARRAY
-from firebolt.async_db._types import Column as SDKColumn
+from dbt.exceptions import (
+    CompilationError,
+    DbtRuntimeError,
+    NotImplementedError,
+    validator_error_message,
+)
 
 from dbt.adapters.firebolt.column import FireboltColumn
 from dbt.adapters.firebolt.connections import FireboltConnectionManager
@@ -64,7 +66,7 @@ class FireboltIndexConfig(dbtClassMixin):
             cls.validate(raw_index)
             index_config = cls.from_dict(raw_index)
             if index_config.index_type.upper() not in ['JOIN', 'AGGREGATING']:
-                dbt.exceptions.raise_compiler_error(
+                raise CompilationError(
                     'Invalid index type:\n'
                     f'  Got: {index_config.index_type}.\n'
                     '  Type should be either: "join" or "aggregating."'
@@ -72,7 +74,7 @@ class FireboltIndexConfig(dbtClassMixin):
             if index_config.index_type.upper() == 'JOIN' and not (
                 index_config.join_columns and index_config.dimension_column
             ):
-                dbt.exceptions.raise_compiler_error(
+                raise CompilationError(
                     'Invalid join index definition:\n'
                     f'  Got: {index_config}.\n'
                     '  join_columns and dimension_column must be specified '
@@ -81,7 +83,7 @@ class FireboltIndexConfig(dbtClassMixin):
             if index_config.index_type.upper() == 'AGGREGATING' and not (
                 index_config.key_columns and index_config.aggregation
             ):
-                dbt.exceptions.raise_compiler_error(
+                raise CompilationError(
                     'Invalid aggregating index definition:\n'
                     f'  Got: {index_config}.\n'
                     '  key_columns and aggregation must be specified '
@@ -89,8 +91,8 @@ class FireboltIndexConfig(dbtClassMixin):
                 )
             return index_config
         except ValidationError as exc:
-            msg = dbt.exceptions.validator_error_message(exc)
-            dbt.exceptions.raise_compiler_error(f'Could not parse index config: {msg}.')
+            msg = validator_error_message(exc)
+            raise CompilationError(f'Could not parse index config: {msg}.')
         return None
 
 
@@ -127,7 +129,7 @@ class FireboltAdapter(SQLAdapter):
 
     @classmethod
     def convert_time_type(cls, agate_table: agate.Table, col_idx: int) -> str:
-        raise dbt.exceptions.NotImplementedException(
+        raise NotImplementedError(
             '`convert_time_type` is not implemented for this adapter!'
         )
 
@@ -145,7 +147,7 @@ class FireboltAdapter(SQLAdapter):
         for column in columns:
             # Don't need to check for name, as missing name fails at yaml parse time.
             if column.get('data_type', None) is None:
-                raise dbt.exceptions.RuntimeException(
+                raise DbtRuntimeError(
                     f'Data type is missing for column `{column["name"]}`.'
                 )
             unpartitioned_columns.append(
@@ -156,11 +158,11 @@ class FireboltAdapter(SQLAdapter):
                 # Don't need to check for name, as missing name fails at
                 # yaml parse time.
                 if partition.get('data_type', None) is None:
-                    raise dbt.exceptions.RuntimeException(
+                    raise DbtRuntimeError(
                         f'Data type is missing for partition `{partition["name"]}`.'
                     )
                 if partition.get('regex', None) is None:
-                    raise dbt.exceptions.RuntimeException(
+                    raise DbtRuntimeError(
                         f'Regex is missing for partition `{partition["name"]}`.'
                     )
                 partitioned_columns.append(
@@ -196,49 +198,32 @@ class FireboltAdapter(SQLAdapter):
         Grant is not currently supported so this function
             raises an error.
         """
-        dbt.exceptions.raise_compiler_error(
+        raise CompilationError(
             'Firebolt does not support table-level permission grants.'
             ' Please remove grants section from the config.'
         )
 
     @available.parse_none
-    def sdk_column_list_to_firebolt_column_list(
-        self, columns: List[SDKColumn]
-    ) -> List[FireboltColumn]:
+    def resolve_special_columns(self, column: str) -> str:
         """
-        Extract and return list of FireboltColumns with names and data types
-        extracted from SDKColumns.
-        Args:
-          columns: list of Column types as defined in the Python SDK
+        Resolve special columns types that dbt is unable to parse natively.
         """
-        return [
-            FireboltColumn(
-                column=col.name, dtype=self.create_type_string(col.type_code)
-            )
-            for col in columns
-        ]
 
-    @available.parse_none
-    def create_type_string(self, type_code: Any) -> str:
-        """
-        Return properly formatted type string for SQL DDL.
-        Args: type_code is technically a type, but mypy complained that `type`
-        does not have an attribute `subtype`.
-        """
-        types = {
-            'str': 'TEXT',
-            'int': 'LONG',
-            'float': 'DOUBLE',
-            'date': 'DATE',
-            'datetime': 'DATE',
-            'bool': 'BOOLEAN',
-            'Decimal': 'DECIMAL',
-        }
+        def strip_suffix(string: str, suffix: str) -> str:
+            """
+            Defined for backwards-compatibility with python 3.7
+            """
+            if string.endswith(suffix):
+                return string[: -len(suffix)]
+            return string
+
         type_code_str = '{}'
-        while isinstance(type_code, ARRAY):
+        while column.startswith('ARRAY'):
             type_code_str = f'ARRAY({type_code_str})'
-            type_code = type_code.subtype
-        return type_code_str.format(types[type_code.__name__])
+            column = column[6:-1]  # Strip ARRAY()
+            column = strip_suffix(column, ' NOT NULL')
+            column = strip_suffix(column, ' NULL')
+        return type_code_str.format(column)
 
     @available.parse_none
     def filter_table(
@@ -324,11 +309,18 @@ class FireboltAdapter(SQLAdapter):
     ) -> Union[agate.Table, List]:
         try:
             return super().get_columns_in_relation(relation)
-        except dbt.exceptions.RuntimeException as e:
+        except DbtRuntimeError as e:
             if 'Did not find a table or view' in str(e):
                 return []
             else:
                 raise
+
+    @available.parse_none
+    def get_column_class(self) -> type:
+        """
+        Method to expose FireboltColumn to jinja
+        """
+        return self.Column
 
 
 COLUMNS_EQUAL_SQL = """
