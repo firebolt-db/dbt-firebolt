@@ -7,7 +7,7 @@ from dbt.adapters.firebolt.connections import (
 from dbt.adapters.firebolt.impl import FireboltAdapter
 from dbt.include import firebolt
 
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 
 Plugin = AdapterPlugin(
     adapter=FireboltAdapter,  # type: ignore
