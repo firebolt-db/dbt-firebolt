@@ -59,7 +59,7 @@ jobs:
         git add .changes/
         git add CHANGELOG.md
         git commit -m "Changelog update"
-        git push origin main
+        git push origin 1.3.0-grant-fix
 
     - name: 'Publish action'
       uses: firebolt-db/action-python-release@main
@@ -70,3 +70,4 @@ jobs:
         pypi-password: ${{ secrets.PYPI_PASSWORD }}
         version-file-path: dbt/adapters/firebolt/__init__.py
         version-override: ${{ inputs.version }}
+        main-branch: 1.3.0-grant-fix
