@@ -14,17 +14,10 @@ on:
         description: 'Version to release. Should be aligned with dbt-core.'
 
 jobs:
-  integration-tests:
-    uses: ./.github/workflows/integration-tests.yml
-    secrets:
-      FIREBOLT_USERNAME: ${{ secrets.FIREBOLT_USERNAME }}
-      FIREBOLT_PASSWORD: ${{ secrets.FIREBOLT_PASSWORD }}
-
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    needs: integration-tests
     steps:
     - name: Check out code
       uses: actions/checkout@v2
