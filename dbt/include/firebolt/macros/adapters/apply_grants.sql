@@ -14,7 +14,7 @@
 
 
 {% macro firebolt__copy_grants() %}
-    {{ adapter.raise_grant_error() }}
+    {{ return(True) }}
 {% endmacro %}
 
 
@@ -23,3 +23,12 @@
         {{ adapter.raise_grant_error() }}
     {% endif %}
 {% endmacro %}
+
+
+{%- macro firebolt__get_dcl_statement_list(relation, grant_config, get_dcl_macro) -%}
+    {# Firebolt does not support DCL statements yet #}
+    {% if grant_config %}
+        {{ adapter.raise_grant_error() }}
+    {% endif %}
+    {{ return([]) }}
+{%- endmacro %}
