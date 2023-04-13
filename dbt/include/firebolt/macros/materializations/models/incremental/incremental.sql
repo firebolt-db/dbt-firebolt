@@ -38,9 +38,7 @@
   the DB tables the objects abstract) fail.
   #}
 
-  {# Not yet used
-    {% set unique_key = config.get('unique_key') %}
-  #}
+  {% set unique_key = config.get('unique_key') %}
 
   {% set grant_config = config.get('grants') %}
 
