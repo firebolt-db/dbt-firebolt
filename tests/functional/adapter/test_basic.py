@@ -29,13 +29,27 @@ from dbt.tests.adapter.basic.test_snapshot_check_cols import (
 from dbt.tests.adapter.basic.test_snapshot_timestamp import (
     BaseSnapshotTimestamp,
 )
-from dbt.tests.util import (
-    AnyStringWith,
-    check_relations_equal,
-    relation_from_name,
-    run_dbt,
-)
+from dbt.tests.util import check_relations_equal, relation_from_name, run_dbt
 from pytest import fixture, mark
+
+
+class AnySpecifiedType:
+    """AnySpecifiedType("AUTO")"""
+
+    def __init__(self, types=[]):
+        self.types = types
+
+    def __eq__(self, other):
+        if not isinstance(other, str):
+            return False
+
+        if not self.types:
+            return False
+
+        return other in self.types
+
+    def __repr__(self):
+        return 'AnySpecifiedType<{!r}>'.format(self.types)
 
 
 class TestSimpleMaterializationsFirebolt(BaseSimpleMaterializations):
@@ -155,7 +169,7 @@ class TestDocsGenerateFirebolt(BaseDocsGenerate):
         catalog = base_expected_catalog(
             project,
             role=None,  # No per-table roles in Firebolt
-            id_type=AnyStringWith('INT'),
+            id_type=AnySpecifiedType(['INT', 'INTEGER']),
             text_type='TEXT',
             time_type='TIMESTAMP',
             view_type='VIEW',
@@ -180,10 +194,10 @@ class TestDocsGenReferencesFirebolt(BaseDocsGenReferences):
         return expected_references_catalog(
             project,
             role=None,  # No per-table roles in Firebolt
-            id_type=AnyStringWith('INT'),
+            id_type=AnySpecifiedType(['INT', 'INTEGER']),
             text_type='TEXT',
             time_type='TIMESTAMP',
-            bigint_type='LONG',
+            bigint_type=AnySpecifiedType(['BIGINT', 'LONG']),
             view_type='VIEW',
             table_type='DIMENSION',
             model_stats=no_stats(),
