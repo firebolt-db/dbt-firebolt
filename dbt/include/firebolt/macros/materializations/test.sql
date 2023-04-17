@@ -1,7 +1,7 @@
-{% macro default__get_test_sql(main_sql, fail_calc, warn_if, error_if, limit) %}
+{% macro firebolt__get_test_sql(main_sql, fail_calc, warn_if, error_if, limit) %}
 
     SELECT
-      CAST({{ fail_calc }} AS INT) AS failures,
+      COALESCE(CAST({{ fail_calc }} AS INT), 0) AS failures,
       CASE WHEN {{ fail_calc }} {{ warn_if }}
         THEN 'true' ELSE 'false'
       END AS should_warn,
