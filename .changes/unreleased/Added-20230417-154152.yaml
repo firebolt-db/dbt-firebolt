@@ -1,0 +1,3 @@
+kind: Added
+body: Allowed multithreaded execution of dbt models
+time: 2023-04-17T15:41:52.057578+01:00
