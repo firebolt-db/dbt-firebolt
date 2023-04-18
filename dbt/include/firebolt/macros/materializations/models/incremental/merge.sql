@@ -4,7 +4,7 @@
 
     {% if unique_key %}
         {% if unique_key is sequence and unique_key is not string %}
-            delete from {{target }}
+            delete from {{ target }}
             where (
                 {% for key in unique_key %}
                     {{ target }}.{{ key }} in (select {{ key }} from {{ source }})
