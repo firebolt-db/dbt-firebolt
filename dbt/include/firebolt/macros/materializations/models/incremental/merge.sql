@@ -5,11 +5,10 @@
     {% if unique_key %}
         {% if unique_key is sequence and unique_key is not string %}
             delete from {{target }}
-            using {{ source }}
             where (
                 {% for key in unique_key %}
-                    {{ source }}.{{ key }} = {{ target }}.{{ key }}
-                    {{ "and " if not loop.last}}
+                    {{ target }}.{{ key }} in (select {{ key }} from {{ source }})
+                    {{ "and " if not loop.last }}
                 {% endfor %}
                 {% if incremental_predicates %}
                     {% for predicate in incremental_predicates %}

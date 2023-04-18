@@ -99,11 +99,13 @@
     {%- set dest_columns = process_schema_changes(on_schema_change,
                                                   new_records,
                                                   existing) -%}
+    {%- set incremental_predicates = config.get('predicates', none) or config.get('incremental_predicates', none) -%}
     {%- set build_sql = get_incremental_sql(strategy,
                                             new_records,
                                             target,
                                             unique_key,
-                                            dest_columns) -%}
+                                            dest_columns,
+                                            incremental_predicates) -%}
   {%- endif -%}
   {%- call statement("main") -%}
     {{ build_sql }}

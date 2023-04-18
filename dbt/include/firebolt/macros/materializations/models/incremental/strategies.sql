@@ -1,4 +1,4 @@
-{% macro get_incremental_sql(strategy, source, target, unique_key, dest_columns) %}
+{% macro get_incremental_sql(strategy, source, target, unique_key, dest_columns, incremental_predicates) %}
   {#
   Retrieve appropriate SQL for whichever incremental strategy is given.
   Args:
@@ -18,7 +18,7 @@
        previous data and insert new. -#}
     {{ get_insert_overwrite_sql(source, target, dest_columns) }}
   {%- elif strategy == 'delete+insert' -%}
-    {% do return(get_delete_insert_merge_sql(target, source, unique_key, dest_columns, none)) %}
+    {% do return(get_delete_insert_merge_sql(target, source, unique_key, dest_columns, incremental_predicates)) %}
   {%- elif strategy is not none -%}
     {% do exceptions.raise_compiler_error('Model %s has incremental strategy %s '
                                           'specified, but that strategy is not '
