@@ -1,0 +1,3 @@
+kind: Fixed
+body: Incorrect column resolution when using get_columns_in_relation macro
+time: 2023-04-26T16:22:50.308029+01:00
