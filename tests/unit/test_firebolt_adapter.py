@@ -10,6 +10,7 @@ from dbt.adapters.firebolt import (
     FireboltConnectionManager,
     FireboltCredentials,
 )
+from dbt.adapters.firebolt.column import FireboltColumn
 
 
 @fixture
@@ -81,3 +82,32 @@ def test_resolve_columns(adapter, column, expected):
 def test_setting_append(profile, expected):
     adapter = FireboltAdapter(profile)
     assert adapter.config.query_comment.append == expected
+
+
+@mark.parametrize(
+    'c_type,expected',
+    [
+        ('STRING', 'TEXT'),
+        ('TIMESTAMP', 'TIMESTAMP'),
+        ('FLOAT', 'FLOAT'),
+        ('INTEGER', 'INT'),
+        ('BOOLEAN', 'BOOLEAN'),
+        ('DUMMY_TYPE', 'DUMMY_TYPE'),
+        ('TEXT', 'TEXT'),
+    ],
+)
+def test_column_translate_type(adapter, c_type, expected):
+    Column = adapter.get_column_class()
+    assert Column.translate_type(c_type) == expected
+
+
+def test_column_class_init(adapter):
+    Column = adapter.get_column_class()
+    assert Column == FireboltColumn
+    assert Column('Name', 'TEXT') == Column.from_description('Name', 'TEXT')
+    assert Column('Name', 'INT') == Column.from_description('Name', 'INT')
+
+
+def test_column_string_type(adapter):
+    Column = adapter.get_column_class()
+    assert Column.string_type(111) == 'text'
