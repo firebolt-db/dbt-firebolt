@@ -75,4 +75,19 @@ jobs:
           API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
           ACCOUNT_NAME: "firebolt"
         run: |
-          pytest -o log_cli=true -o log_cli_level=INFO tests/functional/
+          pytest -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
+
+      - name: Get Allure history
+        uses: actions/checkout@v2
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Allure Report
+        uses: firebolt-db/action-allure-report@v1
+        if: always()
+        with:
+          github-key: ${{ secrets.GITHUB_TOKEN }}
+          test-type: integration
