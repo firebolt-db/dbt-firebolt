@@ -71,11 +71,19 @@
       {% do exceptions.raise_compiler_error(
           'A schema change was detected and `on_schema_change` was set to "fail".') %}
     {% else %}
-      {% do exceptions.raise_compiler_error(
-          'Schema changes detected. Either revert the change or run the model with the ' ~
-          '--full-refresh flag on the command line to recreate the model with the new ' ~
-          'schema definition. Running with the --full-refresh flag drops and recreates ' ~
-          'the database object.') %}
+      {% set fail_msg %}
+          Schema changes detected on this incremental!
+          Either revert the change or run the model with the --full-refresh flag
+          on the command line to recreate the model with the new schema definition.
+          Running with the --full-refresh flag drops and recreates the database object.
+
+          Additional troubleshooting context:
+              Source columns not in target: {{ schema_changes_dict['source_not_in_target'] }}
+              Target columns not in source: {{ schema_changes_dict['target_not_in_source'] }}
+              New column types: {{ schema_changes_dict['new_target_types'] }}
+      {% endset %}
+
+      {% do exceptions.raise_compiler_error(fail_msg) %}
     {% endif %}
   {% endif %}
   {{ return(schema_changes_dict['common_columns']) }}
