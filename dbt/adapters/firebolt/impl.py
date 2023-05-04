@@ -90,7 +90,7 @@ class FireboltIndexConfig(dbtClassMixin):
                 )
             return index_config
         except ValidationError as exc:
-            msg = DbtRuntimeError().validator_error_message(exc)
+            msg = DbtRuntimeError('').validator_error_message(exc)
             raise CompilationError(f'Could not parse index config: {msg}.')
         return None
 
