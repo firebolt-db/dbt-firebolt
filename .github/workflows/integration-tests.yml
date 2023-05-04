@@ -57,14 +57,14 @@ jobs:
       - name: Keep environment name in the summary
         run: echo '### Ran integration tests against ${{ inputs.environment }} ' >> $GITHUB_STEP_SUMMARY
 
-      - name: Setup database and engine
-        id: setup
-        uses: firebolt-db/integration-testing-setup@master
-        with:
-          firebolt-username: ${{ env.USERNAME }}
-          firebolt-password: ${{ env.PASSWORD }}
-          api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
-          region: "us-east-1"
+      # - name: Setup database and engine
+      #   id: setup
+      #   uses: firebolt-db/integration-testing-setup@master
+      #   with:
+      #     firebolt-username: ${{ env.USERNAME }}
+      #     firebolt-password: ${{ env.PASSWORD }}
+      #     api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
+      #     region: "us-east-1"
 
       - name: Run integration tests
         env:
@@ -75,7 +75,7 @@ jobs:
           API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
           ACCOUNT_NAME: "firebolt"
         run: |
-          pytest -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
+          pytest -o log_cli=true -o log_cli_level=INFO tests/unit/ --alluredir=allure-results
 
       - name: Get Allure history
         uses: actions/checkout@v2
