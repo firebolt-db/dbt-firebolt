@@ -86,7 +86,7 @@ jobs:
           path: gh-pages
 
       - name: Allure Report
-        uses: firebolt-db/action-allure-report@v1
+        uses: firebolt-db/action-allure-report@test-fix
         if: always()
         with:
           github-key: ${{ secrets.GITHUB_TOKEN }}
