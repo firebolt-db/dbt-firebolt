@@ -14,7 +14,6 @@ from dbt.exceptions import (
     CompilationError,
     DbtRuntimeError,
     NotImplementedError,
-    validator_error_message,
 )
 
 from dbt.adapters.firebolt.column import FireboltColumn
@@ -91,7 +90,7 @@ class FireboltIndexConfig(dbtClassMixin):
                 )
             return index_config
         except ValidationError as exc:
-            msg = validator_error_message(exc)
+            msg = DbtRuntimeError('').validator_error_message(exc)
             raise CompilationError(f'Could not parse index config: {msg}.')
         return None
 
