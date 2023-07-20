@@ -83,7 +83,7 @@ jobs:
           API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
           ACCOUNT_NAME: "firebolt"
         run: |
-          pytest -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
+          pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
       - name: Save failed tests
         id: cache-tests-save
