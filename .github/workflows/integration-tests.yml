@@ -66,6 +66,14 @@ jobs:
           api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
           region: "us-east-1"
 
+      - name: Restore cached failed tests
+        id: cache-tests-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            .pytest_cache/v/cache/lastfailed
+          key: ${{ runner.os }}-pytest-restore-failed-${{ github.ref }}-${{ github.sha }}
+
       - name: Run integration tests
         env:
           USER_NAME: ${{ env.USERNAME }}
@@ -75,8 +83,17 @@ jobs:
           API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
           ACCOUNT_NAME: "firebolt"
         run: |
-          pytest -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
+          pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
+      - name: Save failed tests
+        id: cache-tests-save
+        uses: actions/cache/save@v3
+        if: failure()
+        with:
+          path: |
+            .pytest_cache/v/cache/lastfailed
+          key: ${{ steps.cache-tests-restore.outputs.cache-primary-key }}
+      
       - name: Get Allure history
         uses: actions/checkout@v2
         if: always()
