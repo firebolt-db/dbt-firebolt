@@ -81,7 +81,7 @@ jobs:
           DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
           ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
           API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
-          ACCOUNT_NAME: "firebolt"
+          ACCOUNT_NAME: "developer"
         run: |
           pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
