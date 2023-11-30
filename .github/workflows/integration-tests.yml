@@ -19,92 +19,30 @@ on:
         type: string
     secrets:
       FIREBOLT_USERNAME_STAGING:
-        required: false
+        required: true
       FIREBOLT_PASSWORD_STAGING:
-        required: false
+        required: true
       FIREBOLT_USERNAME_DEV:
-        required: false
+        required: true
       FIREBOLT_PASSWORD_DEV:
-        required: false
+        required: true
+      FIREBOLT_CLIENT_ID_DEV_NEW_IDN:
+        required: true
+      FIREBOLT_CLIENT_SECRET_DEV_NEW_IDN:
+        required: true
+      FIREBOLT_CLIENT_ID_STG_NEW_IDN:
+        required: true
+      FIREBOLT_CLIENT_SECRET_STG_NEW_IDN:
+        required: true
 
 jobs:
-  tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Set up Python 3.7
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install ".[dev]" --no-cache-dir
-
-      - name: Determine env variables
-        run: |
-          if [ "${{ inputs.environment }}" == 'staging' ]; then
-             echo "USERNAME=${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}" >> "$GITHUB_ENV"
-             echo "PASSWORD=${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}" >> "$GITHUB_ENV"
-          else
-             echo "USERNAME=${{ secrets.FIREBOLT_USERNAME_DEV }}" >> "$GITHUB_ENV"
-             echo "PASSWORD=${{ secrets.FIREBOLT_PASSWORD_DEV }}" >> "$GITHUB_ENV"
-          fi
-
-      - name: Keep environment name in the summary
-        run: echo '### Ran integration tests against ${{ inputs.environment }} ' >> $GITHUB_STEP_SUMMARY
-
-      - name: Setup database and engine
-        id: setup
-        uses: firebolt-db/integration-testing-setup@v2
-        with:
-          firebolt-client-id: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
-          firebolt-client-secret: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
-          account: "developer"
-          api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
-
-      - name: Restore cached failed tests
-        id: cache-tests-restore
-        uses: actions/cache/restore@v3
-        with:
-          path: |
-            .pytest_cache/v/cache/lastfailed
-          key: ${{ runner.os }}-pytest-restore-failed-${{ github.ref }}-${{ github.sha }}
-
-      - name: Run integration tests
-        env:
-          USER_NAME: ${{ env.USERNAME }}
-          PASSWORD: ${{ env.PASSWORD }}
-          DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
-          ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
-          API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
-          ACCOUNT_NAME: "developer"
-        run: |
-          pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
-
-      - name: Save failed tests
-        id: cache-tests-save
-        uses: actions/cache/save@v3
-        if: failure()
-        with:
-          path: |
-            .pytest_cache/v/cache/lastfailed
-          key: ${{ steps.cache-tests-restore.outputs.cache-primary-key }}
-
-      - name: Get Allure history
-        uses: actions/checkout@v2
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Allure Report
-        uses: firebolt-db/action-allure-report@v1
-        if: always()
-        with:
-          github-key: ${{ secrets.GITHUB_TOKEN }}
-          test-type: integration
+  integration-test-v1:
+    uses: ./.github/workflows/integration-tests-v1.yml
+    with:
+      environment: ${{ inputs.environment }}
+    secrets: inherit
+  integration-test-v2:
+    uses: ./.github/workflows/integration-tests-v2.yml
+    with:
+      environment: ${{ inputs.environment }}
+    secrets: inherit
