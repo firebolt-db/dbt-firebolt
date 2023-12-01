@@ -67,9 +67,9 @@ jobs:
         id: setup
         uses: firebolt-db/integration-testing-setup@v2
         with:
-          firebolt-client-id: ${{ secrets.KEY }}
-          firebolt-client-secret: ${{ secrets.SECRET }}
-          account: "developer"
+          firebolt-client-id: ${{ env.KEY }}
+          firebolt-client-secret: ${{ env.SECRET }}
+          account: "automation"
           api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
 
 
@@ -80,7 +80,7 @@ jobs:
           DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
           ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
           API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
-          ACCOUNT_NAME: "developer"
+          ACCOUNT_NAME: "automation"
           DBT_PROFILES_DIR: "../dbt-firebolt/.github/workflows/jaffle_shop"
         working-directory: jaffle-shop
         run:

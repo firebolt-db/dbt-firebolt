@@ -47,11 +47,11 @@ jobs:
       - name: Determine env variables
         run: |
           if [ "${{ inputs.environment }}" == 'staging' ]; then
-             echo "SECRET=${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}" >> "$GITHUB_ENV"
-             echo "KEY=${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}" >> "$GITHUB_ENV"
+             echo "KEY=${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}" >> "$GITHUB_ENV"
+             echo "SECRET=${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}" >> "$GITHUB_ENV"
           else
-             echo "SECRET=${{ secrets.FIREBOLT_CLIENT_ID_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
-             echo "KEY=${{ secrets.FIREBOLT_CLIENT_SECRET_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
+             echo "KEY=${{ secrets.FIREBOLT_CLIENT_ID_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
+             echo "SECRET=${{ secrets.FIREBOLT_CLIENT_SECRET_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
           fi
 
       - name: Keep environment name in the summary
@@ -61,9 +61,9 @@ jobs:
         id: setup
         uses: firebolt-db/integration-testing-setup@v2
         with:
-          firebolt-client-id: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
-          firebolt-client-secret: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
-          account: "developer"
+          firebolt-client-id: ${{ env.KEY }}
+          firebolt-client-secret: ${{ env.SECRET }}
+          account: "automation"
           api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
 
       - name: Restore cached failed tests
@@ -76,12 +76,12 @@ jobs:
 
       - name: Run integration tests
         env:
-          USER_NAME: ${{ env.SECRET }}
-          PASSWORD: ${{ env.KEY }}
+          USER_NAME: ${{ env.KEY }}
+          PASSWORD: ${{ env.SECRET }}
           DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
           ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
           API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
-          ACCOUNT_NAME: "developer"
+          ACCOUNT_NAME: "automation"
         run: |
           pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
