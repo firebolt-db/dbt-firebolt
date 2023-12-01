@@ -107,4 +107,4 @@ jobs:
         if: always()
         with:
           github-key: ${{ secrets.GITHUB_TOKEN }}
-          test-type: integration
+          test-type: integration-v2
