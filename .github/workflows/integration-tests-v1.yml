@@ -19,13 +19,13 @@ on:
         type: string
     secrets:
       FIREBOLT_USERNAME_STAGING:
-        required: false
+        required: true
       FIREBOLT_PASSWORD_STAGING:
-        required: false
+        required: true
       FIREBOLT_USERNAME_DEV:
-        required: false
+        required: true
       FIREBOLT_PASSWORD_DEV:
-        required: false
+        required: true
 
 jobs:
   tests:
