@@ -115,14 +115,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         credentials = connection.credentials
         auth: Auth  # mypy typecheck
         # client id and client secret are the new way to authenticate
-        if hasattr(credentials, 'client_id') and hasattr(credentials, 'client_secret'):
-            auth = ClientCredentials(credentials.client_id, credentials.client_secret)
-        elif '@' in credentials.user:
-            # email auth can only be used with UsernamePassword
-            auth = UsernamePassword(credentials.user, credentials.password)
-        else:
-            # assume user provided id and secret in the user/password fields
-            auth = ClientCredentials(credentials.user, credentials.password)
+        auth = _determine_auth(credentials)
 
         def connect() -> SDKConnection:
             handle = sdk_connect(
@@ -191,3 +184,22 @@ class FireboltConnectionManager(SQLConnectionManager):
         raise dbt.exceptions.NotImplementedError(
             '`cancel` is not implemented for this adapter!'
         )
+
+
+def _determine_auth(credentials: FireboltCredentials) -> Auth:
+    auth: Auth
+    if credentials.client_id and credentials.client_secret:
+        auth = ClientCredentials(credentials.client_id, credentials.client_secret)
+    elif '@' in credentials.user:  # type: ignore # checked in the dataclass
+        # email auth can only be used with UsernamePassword
+        auth = UsernamePassword(
+            credentials.user,  # type: ignore[arg-type]
+            credentials.password,  # type: ignore[arg-type]
+        )
+    else:
+        # assume user provided id and secret in the user/password fields
+        auth = ClientCredentials(
+            credentials.user,  # type: ignore[arg-type]
+            credentials.password,  # type: ignore[arg-type]
+        )
+    return auth
