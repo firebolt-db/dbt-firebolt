@@ -95,10 +95,14 @@ class FireboltConnectionManager(SQLConnectionManager):
             return connection
         credentials = connection.credentials
         auth: Auth  # mypy typecheck
-        # check if we're using email and use the appropriate auth
-        if '@' in credentials.user:
+        # client id and client secret are the new way to authenticate
+        if hasattr(credentials, 'client_id') and hasattr(credentials, 'client_secret'):
+            auth = ClientCredentials(credentials.client_id, credentials.client_secret)
+        elif '@' in credentials.user:
+            # email auth can only be used with UsernamePassword
             auth = UsernamePassword(credentials.user, credentials.password)
         else:
+            # assume user provided id and secret in the user/password fields
             auth = ClientCredentials(credentials.user, credentials.password)
 
         def connect() -> SDKConnection:

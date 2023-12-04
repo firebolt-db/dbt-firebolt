@@ -11,17 +11,25 @@ pytest_plugins = ['dbt.tests.fixtures.project']
 # dbt will supply a unique schema per test, so we do not specify 'schema' here
 @pytest.fixture(scope='class')
 def dbt_profile_target():
-    return {
+    profile = {
         'type': 'firebolt',
         'threads': 2,
         'api_endpoint': os.getenv('API_ENDPOINT'),
         'account_name': os.getenv('ACCOUNT_NAME'),
         'database': os.getenv('DATABASE_NAME'),
         'engine_name': os.getenv('ENGINE_NAME'),
-        'user': os.getenv('USER_NAME'),
-        'password': os.getenv('PASSWORD'),
         'port': 443,
     }
+    # add credentials to the profile keys
+    if os.getenv('USER_NAME') and os.getenv('PASSWORD'):
+        profile['user'] = os.getenv('USER_NAME')
+        profile['password'] = os.getenv('PASSWORD')
+    elif os.getenv('CLIENT_ID') and os.getenv('CLIENT_SECRET'):
+        profile['client_id'] = os.getenv('CLIENT_ID')
+        profile['client_secret'] = os.getenv('CLIENT_SECRET')
+    else:
+        raise Exception('No credentials found in environment')
+    return profile
 
 
 # Overriding dbt_profile_data in order to set the schema to public.

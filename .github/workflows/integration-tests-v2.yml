@@ -47,11 +47,11 @@ jobs:
       - name: Determine env variables
         run: |
           if [ "${{ inputs.environment }}" == 'staging' ]; then
-             echo "KEY=${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}" >> "$GITHUB_ENV"
-             echo "SECRET=${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}" >> "$GITHUB_ENV"
+             echo "CLIENT_ID=${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}" >> "$GITHUB_ENV"
+             echo "CLIENT_SECRET=${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}" >> "$GITHUB_ENV"
           else
-             echo "KEY=${{ secrets.FIREBOLT_CLIENT_ID_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
-             echo "SECRET=${{ secrets.FIREBOLT_CLIENT_SECRET_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
+             echo "CLIENT_ID=${{ secrets.FIREBOLT_CLIENT_ID_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
+             echo "CLIENT_SECRET=${{ secrets.FIREBOLT_CLIENT_SECRET_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
           fi
 
       - name: Keep environment name in the summary
@@ -61,8 +61,8 @@ jobs:
         id: setup
         uses: firebolt-db/integration-testing-setup@v2
         with:
-          firebolt-client-id: ${{ env.KEY }}
-          firebolt-client-secret: ${{ env.SECRET }}
+          firebolt-client-id: ${{ env.CLIENT_ID }}
+          firebolt-client-secret: ${{ env.CLIENT_SECRET }}
           account: "automation"
           api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
 
@@ -76,8 +76,8 @@ jobs:
 
       - name: Run integration tests
         env:
-          USER_NAME: ${{ env.KEY }}
-          PASSWORD: ${{ env.SECRET }}
+          CLIENT_ID: ${{ env.CLIENT_ID }}
+          CLIENT_SECRET: ${{ env.CLIENT_SECRET }}
           DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
           ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
           API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
