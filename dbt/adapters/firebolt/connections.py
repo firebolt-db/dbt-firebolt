@@ -27,13 +27,32 @@ logger = AdapterLogger('Firebolt')
 @dataclass
 class FireboltCredentials(Credentials):
     # These values all come from either profiles.yml or dbt_project.yml.
-    user: str
-    password: str
+    user: Optional[str] = None
+    password: Optional[str] = None
+    # New way to authenticate
+    client_id: Optional[str] = None
+    client_secret: Optional[str] = None
     api_endpoint: Optional[str] = DEFAULT_API_URL
     driver: str = 'com.firebolt.FireboltDriver'
     engine_name: Optional[str] = None
     account_name: Optional[str] = None
     retries: int = 1
+
+    def __post_init__(self) -> None:
+        # If user and password are not provided, assume client_id and client_secret
+        # are provided instead
+        if not self.user and not self.password:
+            if not self.client_id or not self.client_secret:
+                raise dbt.exceptions.DbtProfileError(
+                    'Either user and password or client_id and client_secret'
+                    ' must be provided'
+                )
+        else:
+            if self.client_id or self.client_secret:
+                raise dbt.exceptions.DbtProfileError(
+                    'Either user and password or client_id and client_secret'
+                    ' must be provided'
+                )
 
     @property
     def type(self) -> str:
