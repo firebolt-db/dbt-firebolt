@@ -53,3 +53,8 @@ def dbt_profile_data(dbt_profile_target, profiles_config_update):
     if profiles_config_update:
         profile.update(profiles_config_update)
     return profile
+
+
+@pytest.fixture(scope='class')
+def profile_user(dbt_profile_target):
+    return dbt_profile_target.get('user', dbt_profile_target.get('client_id'))
