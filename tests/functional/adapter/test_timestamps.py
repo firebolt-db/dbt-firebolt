@@ -22,9 +22,8 @@ class TestCurrentTimestampFirebolt(BaseCurrentTimestamps):
 
     @pytest.fixture(scope='class')
     def expected_schema(self):
-        # TODO: add Timezone-aware types here
         return {
-            'current_timestamp': 'TIMESTAMP',
+            'current_timestamp': 'TIMESTAMPTZ',
             'current_timestamp_in_utc_backcompat': 'TIMESTAMP',
             'current_timestamp_backcompat': 'TIMESTAMP',
         }
