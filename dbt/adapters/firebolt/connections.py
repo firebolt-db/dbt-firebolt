@@ -14,7 +14,7 @@ from dbt.contracts.connection import (
 from dbt.events import AdapterLogger  # type: ignore
 from dbt.exceptions import DbtRuntimeError
 from firebolt.client import DEFAULT_API_URL
-from firebolt.client.auth import UsernamePassword
+from firebolt.client.auth import Auth, ClientCredentials, UsernamePassword
 from firebolt.db import connect as sdk_connect
 from firebolt.db.connection import Connection as SDKConnection
 from firebolt.db.cursor import Cursor
@@ -27,13 +27,32 @@ logger = AdapterLogger('Firebolt')
 @dataclass
 class FireboltCredentials(Credentials):
     # These values all come from either profiles.yml or dbt_project.yml.
-    user: str
-    password: str
+    user: Optional[str] = None
+    password: Optional[str] = None
+    # New way to authenticate
+    client_id: Optional[str] = None
+    client_secret: Optional[str] = None
     api_endpoint: Optional[str] = DEFAULT_API_URL
     driver: str = 'com.firebolt.FireboltDriver'
     engine_name: Optional[str] = None
     account_name: Optional[str] = None
     retries: int = 1
+
+    def __post_init__(self) -> None:
+        # If user and password are not provided, assume client_id and client_secret
+        # are provided instead
+        if not self.user and not self.password:
+            if not self.client_id or not self.client_secret:
+                raise dbt.exceptions.DbtProfileError(
+                    'Either user and password or client_id and client_secret'
+                    ' must be provided'
+                )
+        else:
+            if self.client_id or self.client_secret:
+                raise dbt.exceptions.DbtProfileError(
+                    'Either user and password or client_id and client_secret'
+                    ' must be provided'
+                )
 
     @property
     def type(self) -> str:
@@ -94,10 +113,11 @@ class FireboltConnectionManager(SQLConnectionManager):
         if connection.state == 'open':
             return connection
         credentials = connection.credentials
+        auth: Auth = _determine_auth(credentials)
 
         def connect() -> SDKConnection:
             handle = sdk_connect(
-                auth=UsernamePassword(credentials.user, credentials.password),
+                auth=auth,
                 engine_name=credentials.engine_name,
                 database=credentials.database,
                 api_endpoint=credentials.api_endpoint,
@@ -161,4 +181,21 @@ class FireboltConnectionManager(SQLConnectionManager):
         """Cancel the last query on the given connection."""
         raise dbt.exceptions.NotImplementedError(
             '`cancel` is not implemented for this adapter!'
+        )
+
+
+def _determine_auth(credentials: FireboltCredentials) -> Auth:
+    if credentials.client_id and credentials.client_secret:
+        return ClientCredentials(credentials.client_id, credentials.client_secret)
+    elif '@' in credentials.user:  # type: ignore # checked in the dataclass
+        # email auth can only be used with UsernamePassword
+        return UsernamePassword(
+            credentials.user,  # type: ignore[arg-type]
+            credentials.password,  # type: ignore[arg-type]
+        )
+    else:
+        # assume user provided id and secret in the user/password fields
+        return ClientCredentials(
+            credentials.user,  # type: ignore[arg-type]
+            credentials.password,  # type: ignore[arg-type]
         )
