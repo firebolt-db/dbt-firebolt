@@ -113,9 +113,7 @@ class FireboltConnectionManager(SQLConnectionManager):
         if connection.state == 'open':
             return connection
         credentials = connection.credentials
-        auth: Auth  # mypy typecheck
-        # client id and client secret are the new way to authenticate
-        auth = _determine_auth(credentials)
+        auth: Auth = _determine_auth(credentials)
 
         def connect() -> SDKConnection:
             handle = sdk_connect(
@@ -187,19 +185,17 @@ class FireboltConnectionManager(SQLConnectionManager):
 
 
 def _determine_auth(credentials: FireboltCredentials) -> Auth:
-    auth: Auth
     if credentials.client_id and credentials.client_secret:
-        auth = ClientCredentials(credentials.client_id, credentials.client_secret)
+        return ClientCredentials(credentials.client_id, credentials.client_secret)
     elif '@' in credentials.user:  # type: ignore # checked in the dataclass
         # email auth can only be used with UsernamePassword
-        auth = UsernamePassword(
+        return UsernamePassword(
             credentials.user,  # type: ignore[arg-type]
             credentials.password,  # type: ignore[arg-type]
         )
     else:
         # assume user provided id and secret in the user/password fields
-        auth = ClientCredentials(
+        return ClientCredentials(
             credentials.user,  # type: ignore[arg-type]
             credentials.password,  # type: ignore[arg-type]
         )
-    return auth
