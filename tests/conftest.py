@@ -13,7 +13,7 @@ pytest_plugins = ['dbt.tests.fixtures.project']
 def dbt_profile_target():
     profile = {
         'type': 'firebolt',
-        'threads': 2,
+        'threads': 1,
         'api_endpoint': os.getenv('API_ENDPOINT'),
         'account_name': os.getenv('ACCOUNT_NAME'),
         'database': os.getenv('DATABASE_NAME'),
