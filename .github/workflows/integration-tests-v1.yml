@@ -83,25 +83,16 @@ jobs:
           API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
           ACCOUNT_NAME: "firebolt"
         run: |
-          pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ -k constraints_wrong_column_data_types --alluredir=allure-results
+          pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
+      - name: Save failed tests
+        id: cache-tests-save
+        uses: actions/cache/save@v3
         if: failure()
         with:
-          ## limits ssh access and adds the ssh public key for the user which triggered the workflow
-          limit-access-to-actor: true
-          ## limits ssh access and adds the ssh public keys of the listed GitHub users
-          limit-access-to-users: ptiurin
-
-      # - name: Save failed tests
-      #   id: cache-tests-save
-      #   uses: actions/cache/save@v3
-      #   if: failure()
-      #   with:
-      #     path: |
-      #       .pytest_cache/v/cache/lastfailed
-      #     key: ${{ steps.cache-tests-restore.outputs.cache-primary-key }}
+          path: |
+            .pytest_cache/v/cache/lastfailed
+          key: ${{ steps.cache-tests-restore.outputs.cache-primary-key }}
 
       - name: Get Allure history
         uses: actions/checkout@v2
