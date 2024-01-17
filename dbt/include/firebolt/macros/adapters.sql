@@ -194,7 +194,7 @@
       temporary (bool): Unused, included so macro signature matches
         that of dbt's default macro
       relation (dbt relation/dict)
-      select_sql (string): The SQL query that will be used to generate 
+      select_sql (string): The SQL query that will be used to generate
         the internal query of the CTAS
       language (string): sql or python models. Firebolt only supports sql.
   #}
@@ -212,6 +212,15 @@
   {%- set partitions = config.get('partition_by') %}
 
   CREATE {{ table_type }} TABLE IF NOT EXISTS {{ relation }}
+  {%- set contract_config = config.get('contract') -%}
+  {%- if contract_config.enforced -%}
+    {{ get_assert_columns_equivalent(select_sql) }}
+    {{ get_table_columns_and_constraints() }} ;
+    insert into {{ relation }} (
+      {{ adapter.dispatch('get_column_names', 'dbt')() }}
+    )
+    {%- set select_sql = get_select_subquery(select_sql) %}
+  {% endif %}
   {%- if primary_index %}
   PRIMARY INDEX
     {% if primary_index is iterable and primary_index is not string %}
@@ -228,9 +237,13 @@
       {{ partitions }}
     {%- endif -%}
   {%- endif  %}
-  AS (
+  {%- if not contract_config.enforced -%}
+    AS (
+  {%- endif -%}
     {{ select_sql }}
-  )
+  {%- if not contract_config.enforced -%}
+    )
+  {%- endif -%}
 {% endmacro %}
 
 
@@ -239,11 +252,17 @@
   Return SQL string to create view.
     Args:
       relation (dict): dbt relation
-      select_sql (string): The SQL query that will be used to generate 
+      select_sql (string): The SQL query that will be used to generate
         the internal query of the CTAS
   #}
 
-    CREATE OR REPLACE VIEW {{ relation.identifier }} AS (
+    CREATE OR REPLACE VIEW {{ relation.identifier }}
+
+    {%- set contract_config = config.get('contract') -%}
+    {%- if contract_config.enforced -%}
+      {{ get_assert_columns_equivalent(select_sql) }}
+    {%- endif %}
+    AS (
       {{ select_sql }}
     )
 {% endmacro %}

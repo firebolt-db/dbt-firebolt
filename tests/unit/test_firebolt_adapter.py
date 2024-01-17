@@ -1,7 +1,9 @@
+from datetime import datetime
 from unittest.mock import MagicMock, patch
 
 from dbt.contracts.connection import Connection
 from firebolt.client.auth import ClientCredentials, UsernamePassword
+from firebolt.db import ARRAY, DECIMAL
 from firebolt.db.connection import Connection as SDKConnection
 from firebolt.utils.exception import InterfaceError
 from pytest import fixture, mark
@@ -70,6 +72,26 @@ def adapter():
 )
 def test_resolve_columns(adapter, column, expected):
     assert adapter.resolve_special_columns(column) == expected
+
+
+@mark.parametrize(
+    'input_type, expected_output',
+    [
+        (str, 'text'),
+        (int, 'integer'),
+        (float, 'float'),
+        (bool, 'boolean'),
+        (datetime, 'timestamp'),
+        (bytes, 'bytea'),
+        (DECIMAL(1, 23), 'Decimal(1, 23)'),
+        (ARRAY(int), 'array[integer]'),
+        (dict, 'text'),  # Test for a type that is not handled and defaults to 'text'
+    ],
+)
+def test_data_type_code_to_name(input_type, expected_output):
+    assert (
+        FireboltConnectionManager.data_type_code_to_name(input_type) == expected_output
+    )
 
 
 @mark.parametrize(
