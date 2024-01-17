@@ -237,7 +237,7 @@
       {{ partitions }}
     {%- endif -%}
   {%- endif  %}
-  {%- if not contract_config.enforced -%}
+  {%- if not contract_config.enforced %}
     AS (
   {%- endif -%}
     {{ select_sql }}
