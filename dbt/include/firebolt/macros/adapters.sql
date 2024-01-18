@@ -173,12 +173,14 @@
              '{{ relation.schema }}' AS "schema",
              'table' AS type
         FROM information_schema.tables
+        WHERE table_schema = '{{ relation.schema }}'
       UNION ALL
       SELECT '{{ relation.database }}' AS "database",
              table_name AS "name",
              '{{ relation.schema }}' AS "schema",
              'view' AS type
         FROM information_schema.views
+        WHERE table_schema = '{{ relation.schema }}'
   {% endcall %}
   {% set info_table = load_result('list_tables_without_caching').table %}
   {{ return(info_table) }}
