@@ -6,9 +6,10 @@ from typing import Any, List, Mapping, Optional, Union
 
 import agate
 from dbt.adapters.base import available
-from dbt.adapters.base.impl import AdapterConfig
+from dbt.adapters.base.impl import AdapterConfig, ConstraintSupport
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.sql import SQLAdapter
+from dbt.contracts.graph.nodes import ConstraintType
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
 from dbt.exceptions import (
     CompilationError,
@@ -104,6 +105,14 @@ class FireboltAdapter(SQLAdapter):
     Relation = FireboltRelation
     ConnectionManager = FireboltConnectionManager
     Column = FireboltColumn
+
+    CONSTRAINT_SUPPORT = {
+        ConstraintType.check: ConstraintSupport.NOT_SUPPORTED,
+        ConstraintType.not_null: ConstraintSupport.ENFORCED,
+        ConstraintType.unique: ConstraintSupport.NOT_ENFORCED,
+        ConstraintType.primary_key: ConstraintSupport.NOT_SUPPORTED,
+        ConstraintType.foreign_key: ConstraintSupport.NOT_SUPPORTED,
+    }
 
     @classmethod
     def is_cancelable(cls) -> bool:

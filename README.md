@@ -59,6 +59,19 @@ The table below shows which dbt and Firebolt features are supported by the adapt
 | Join indexes                 | :x: (syntax supported, but not effective) |
 
 
+## Constraints support
+
+More on constraints in [Platform constraint support](https://docs.getdbt.com/docs/collaborate/govern/model-contracts#platform-constraint-support)
+
+
+| Constraint type | Support | Platform enforcement |
+|-----------------|---------|----------------------|
+| not_null        | :white_check_mark: Supported | :white_check_mark: Enforced |
+| primary_key     | :x: Not Supported | :x: Not enforced |
+| foreign_key     | :x: Not Supported | :x: Not enforced |
+| unique          | :white_check_mark: Supported | :x: Not enforced |
+| check           | :x: Not supported | :x: Not enforced |
+
 
 ## Using dbt-firebolt
 

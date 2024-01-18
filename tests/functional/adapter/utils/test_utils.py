@@ -376,6 +376,7 @@ seeds:
 """
 
 
+@mark.xfail(reason='susbstr(text, bigint) is not supported, waiting on FIR-28289')
 class TestRight(BaseRight):
     @pytest.fixture(scope='class')
     def models(self):

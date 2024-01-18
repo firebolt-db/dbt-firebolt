@@ -1,6 +1,7 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Generator, Optional, Tuple
+from datetime import datetime
+from typing import Generator, Optional, Tuple, Union
 
 import dbt.exceptions
 from dbt.adapters.base import Credentials
@@ -15,6 +16,7 @@ from dbt.events import AdapterLogger  # type: ignore
 from dbt.exceptions import DbtRuntimeError
 from firebolt.client import DEFAULT_API_URL
 from firebolt.client.auth import Auth, ClientCredentials, UsernamePassword
+from firebolt.db import ARRAY, DECIMAL
 from firebolt.db import connect as sdk_connect
 from firebolt.db.connection import Connection as SDKConnection
 from firebolt.db.cursor import Cursor
@@ -182,6 +184,35 @@ class FireboltConnectionManager(SQLConnectionManager):
         raise dbt.exceptions.NotImplementedError(
             '`cancel` is not implemented for this adapter!'
         )
+
+    @classmethod
+    def data_type_code_to_name(  # type: ignore[override] # FIR-29423
+        cls, type_code: Union[type, ARRAY, DECIMAL]
+    ) -> str:
+        """
+        Convert a Firebolt data type code to a string representing the data type.
+        type_code: code type retrieved from the cursor description
+        """
+        if isinstance(type_code, ARRAY):
+            return f'array[{cls.data_type_code_to_name(type_code.subtype)}]'
+        elif isinstance(type_code, DECIMAL):
+            return str(type_code)
+        elif isinstance(type_code, type):
+            if issubclass(type_code, str):
+                return 'text'
+            elif issubclass(type_code, bool):
+                # This has to be before int, as bool is a subclass of int
+                return 'boolean'
+            elif issubclass(type_code, int):
+                return 'integer'
+            elif issubclass(type_code, float):
+                return 'float'
+            elif issubclass(type_code, datetime):
+                return 'timestamp'
+            elif issubclass(type_code, bytes):
+                return 'bytea'
+            else:
+                return 'text'
 
 
 def _determine_auth(credentials: FireboltCredentials) -> Auth:
