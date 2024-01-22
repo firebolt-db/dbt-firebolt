@@ -18,13 +18,13 @@ on:
         required: false
         type: string
     secrets:
-      FIREBOLT_USERNAME_STAGING:
+      FIREBOLT_STG_USERNAME:
         required: true
-      FIREBOLT_PASSWORD_STAGING:
+      FIREBOLT_STG_PASSWORD:
         required: true
-      FIREBOLT_USERNAME_DEV:
+      FIREBOLT_USERNAME:
         required: true
-      FIREBOLT_PASSWORD_DEV:
+      FIREBOLT_PASSWORD:
         required: true
       FIREBOLT_CLIENT_ID_DEV_NEW_IDN:
         required: true
