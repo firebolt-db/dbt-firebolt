@@ -16,11 +16,7 @@ on:
 jobs:
   integration-tests:
     uses: ./.github/workflows/integration-tests.yml
-    secrets:
-      FIREBOLT_USERNAME_DEV: ${{ secrets.FIREBOLT_USERNAME_DEV }}
-      FIREBOLT_PASSWORD_DEV: ${{ secrets.FIREBOLT_PASSWORD_DEV }}
-      FIREBOLT_USERNAME_STAGING: ${{ secrets.FIREBOLT_USERNAME_STAGING }}
-      FIREBOLT_PASSWORD_STAGING: ${{ secrets.FIREBOLT_PASSWORD_STAGING }}
+    secrets: inherit
 
   publish:
     runs-on: ubuntu-latest
