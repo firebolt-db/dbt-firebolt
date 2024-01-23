@@ -78,12 +78,12 @@ def dbt_profile_data(dbt_profile_target, profiles_config_update):
 
 class SafeSecretDumper(SafeDumper):
     """
-    A custom dumper that will not dump secrets
+    A custom dumper that understands the Secret class
     """
 
     def represent_data(self, data):
         if isinstance(data, Secret):
-            return self.represent_scalar('tag:yaml.org,2002:str', '********')
+            return self.represent_scalar('tag:yaml.org,2002:str', data.value)
         return super().represent_data(data)
 
 
