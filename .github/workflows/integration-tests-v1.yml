@@ -44,25 +44,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install ".[dev]" --no-cache-dir
 
-      - name: Determine env variables
-        run: |
-          if [ "${{ inputs.environment }}" == 'staging' ]; then
-             echo "USERNAME=${{ secrets.FIREBOLT_USERNAME_STAGING }}" >> "$GITHUB_ENV"
-             echo "PASSWORD=${{ secrets.FIREBOLT_PASSWORD_STAGING }}" >> "$GITHUB_ENV"
-          else
-             echo "USERNAME=${{ secrets.FIREBOLT_USERNAME_DEV }}" >> "$GITHUB_ENV"
-             echo "PASSWORD=${{ secrets.FIREBOLT_PASSWORD_DEV }}" >> "$GITHUB_ENV"
-          fi
-
-      - name: Keep environment name in the summary
-        run: echo '### Ran integration tests against ${{ inputs.environment }} ' >> $GITHUB_STEP_SUMMARY
-
       - name: Setup database and engine
         id: setup
-        uses: firebolt-db/integration-testing-setup@v1
+        uses: firebolt-db/integration-testing-setup@master
         with:
-          firebolt-username: ${{ env.USERNAME }}
-          firebolt-password: ${{ env.PASSWORD }}
+          firebolt-username: ${{ inputs.environment == 'staging' && secrets.FIREBOLT_STG_USERNAME || secrets.FIREBOLT_USERNAME_DEV }}
+          firebolt-password: ${{ inputs.environment == 'staging' && secrets.FIREBOLT_STG_PASSWORD || secrets.FIREBOLT_PASSWORD_DEV }}
           api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
           region: "us-east-1"
 
@@ -76,8 +63,8 @@ jobs:
 
       - name: Run integration tests
         env:
-          USER_NAME: ${{ env.USERNAME }}
-          PASSWORD: ${{ env.PASSWORD }}
+          USER_NAME: ${{ inputs.environment == 'staging' && secrets.FIREBOLT_STG_USERNAME || secrets.FIREBOLT_USERNAME_DEV }}
+          PASSWORD: ${{ inputs.environment == 'staging' && secrets.FIREBOLT_STG_PASSWORD || secrets.FIREBOLT_PASSWORD_DEV }}
           DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
           ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
           API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
