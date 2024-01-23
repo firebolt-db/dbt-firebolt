@@ -1,0 +1,54 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project42
+
+
+Invoking dbt with ['seed', '--select', 'expected_delete_insert_incremental_predicates', '--full-refresh']
+[0m18:27:31  Running with dbt=1.7.5
+[0m18:27:31  Registered adapter: firebolt=1.5.0
+[0m18:27:31  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m18:27:31  Found 1 model, 1 seed, 0 sources, 0 exposures, 0 metrics, 410 macros, 0 groups, 0 semantic models
+[0m18:27:31  
+[0m18:27:34  Concurrency: 1 threads (target='default')
+[0m18:27:34  
+[0m18:27:34  1 of 1 START seed file expected_delete_insert_incremental_predicates ........... [RUN]
+[0m18:27:35  1 of 1 OK loaded seed file public.expected_delete_insert_incremental_predicates  [[32mCREATE 4[0m in 1.72s]
+[0m18:27:35  
+[0m18:27:35  Finished running 1 seed in 0 hours 0 minutes and 3.85 seconds (3.85s).
+[0m18:27:35  
+[0m18:27:35  [32mCompleted successfully[0m
+[0m18:27:35  
+[0m18:27:35  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'delete_insert_incremental_predicates', '--full-refresh']
+[0m18:27:35  Running with dbt=1.7.5
+[0m18:27:35  Registered adapter: firebolt=1.5.0
+[0m18:27:35  Found 1 model, 1 seed, 0 sources, 0 exposures, 0 metrics, 410 macros, 0 groups, 0 semantic models
+[0m18:27:35  
+[0m18:27:37  Concurrency: 1 threads (target='default')
+[0m18:27:37  
+[0m18:27:37  1 of 1 START sql incremental model delete_insert_incremental_predicates ........ [RUN]
+[0m18:27:46  1 of 1 OK created sql incremental model delete_insert_incremental_predicates ... [[32mSUCCESS[0m in 9.12s]
+[0m18:27:46  
+[0m18:27:46  Finished running 1 incremental model in 0 hours 0 minutes and 11.06 seconds (11.06s).
+[0m18:27:46  
+[0m18:27:46  [32mCompleted successfully[0m
+[0m18:27:46  
+[0m18:27:46  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'delete_insert_incremental_predicates']
+[0m18:27:47  Running with dbt=1.7.5
+[0m18:27:47  Registered adapter: firebolt=1.5.0
+[0m18:27:47  Found 1 model, 1 seed, 0 sources, 0 exposures, 0 metrics, 410 macros, 0 groups, 0 semantic models
+[0m18:27:47  
+[0m18:27:50  Concurrency: 1 threads (target='default')
+[0m18:27:50  
+[0m18:27:50  1 of 1 START sql incremental model delete_insert_incremental_predicates ........ [RUN]
+[0m18:27:56  1 of 1 OK created sql incremental model delete_insert_incremental_predicates ... [[32mSUCCESS[0m in 6.08s]
+[0m18:27:56  
+[0m18:27:56  Finished running 1 incremental model in 0 hours 0 minutes and 8.27 seconds (8.27s).
+[0m18:27:56  
+[0m18:27:56  [32mCompleted successfully[0m
+[0m18:27:56  
+[0m18:27:56  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
