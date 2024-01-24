@@ -1,0 +1,41 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project18
+
+
+Invoking dbt with ['seed']
+[0m21:28:11  Running with dbt=1.7.5
+[0m21:28:11  Registered adapter: firebolt=1.5.0
+[0m21:28:11  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m21:28:12  Found 6 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 410 macros, 0 groups, 0 semantic models
+[0m21:28:12  
+[0m21:28:13  Concurrency: 1 threads (target='default')
+[0m21:28:13  
+[0m21:28:13  1 of 1 START seed file seed .................................................... [RUN]
+[0m21:28:14  1 of 1 OK loaded seed file public.seed ......................................... [[32mINSERT 100[0m in 1.31s]
+[0m21:28:14  
+[0m21:28:14  Finished running 1 seed in 0 hours 0 minutes and 2.18 seconds (2.18s).
+[0m21:28:14  
+[0m21:28:14  [32mCompleted successfully[0m
+[0m21:28:14  
+[0m21:28:14  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m21:28:14  Running with dbt=1.7.5
+[0m21:28:14  Registered adapter: firebolt=1.5.0
+[0m21:28:14  Found 6 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 410 macros, 0 groups, 0 semantic models
+[0m21:28:14  
+[0m21:28:15  Concurrency: 1 threads (target='default')
+[0m21:28:15  
+[0m21:28:15  1 of 3 START sql table model dependent ......................................... [RUN]
+[0m21:28:16  1 of 3 OK created sql table model dependent .................................... [[32mSUCCESS[0m in 1.25s]
+[0m21:28:16  2 of 3 START sql table model double_dependent .................................. [RUN]
+[0m21:28:18  2 of 3 OK created sql table model double_dependent ............................. [[32mSUCCESS[0m in 1.31s]
+[0m21:28:18  3 of 3 START sql table model super_dependent ................................... [RUN]
+[0m21:28:19  3 of 3 OK created sql table model super_dependent .............................. [[32mSUCCESS[0m in 1.17s]
+[0m21:28:19  
+[0m21:28:19  Finished running 3 table models in 0 hours 0 minutes and 4.70 seconds (4.70s).
+[0m21:28:19  
+[0m21:28:19  [32mCompleted successfully[0m
+[0m21:28:19  
+[0m21:28:19  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 TOTAL=3
