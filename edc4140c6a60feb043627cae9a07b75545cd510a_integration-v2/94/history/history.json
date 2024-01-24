@@ -1,0 +1,2472 @@
+{
+  "6e9ce1ddcae59378de5dedd9718cd468" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "38f02c27d027d84",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/38f02c27d027d84",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136335290,
+        "stop" : 1706136352587,
+        "duration" : 17297
+      }
+    } ]
+  },
+  "6a094ef20c518f728070c1c74a4ee702" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "8cac7f0d2d0ac28",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/8cac7f0d2d0ac28",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136195293,
+        "stop" : 1706136201425,
+        "duration" : 6132
+      }
+    } ]
+  },
+  "951dbccd86be3ff55482f55340b1607d" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "c939d5d4b19743ce",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/c939d5d4b19743ce",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136233224,
+        "stop" : 1706136242005,
+        "duration" : 8781
+      }
+    } ]
+  },
+  "f45f48a430e5071109e7e2fd3793296e" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "6a22a9709746595",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/6a22a9709746595",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136538683,
+        "stop" : 1706136574164,
+        "duration" : 35481
+      }
+    } ]
+  },
+  "54ff9f0e8bc4fa063290fafbb0bc2fa2" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "4ed7a92e1005dc83",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/4ed7a92e1005dc83",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135611051,
+        "stop" : 1706135629082,
+        "duration" : 18031
+      }
+    } ]
+  },
+  "d59a904b6558936ca461d15d4ff704fa" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "b1d9135e4b651a47",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/b1d9135e4b651a47",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706137045591,
+        "stop" : 1706137049905,
+        "duration" : 4314
+      }
+    } ]
+  },
+  "efd75da0a724ad969daac3f19fb8f2ac" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "a1799010f4fc683f",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/a1799010f4fc683f",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Not implemented for v1",
+      "time" : {
+        "start" : 1706135372592,
+        "stop" : 1706135372592,
+        "duration" : 0
+      }
+    } ]
+  },
+  "9fcc49134988641cc58f2c31ad1940ac" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "bd28c241aa978a3d",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/bd28c241aa978a3d",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135608485,
+        "stop" : 1706135611048,
+        "duration" : 2563
+      }
+    } ]
+  },
+  "86d2b37946da6c05f5aa43eed5ea4791" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "9b3b31fe22ffcdb1",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/9b3b31fe22ffcdb1",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136307605,
+        "stop" : 1706136316517,
+        "duration" : 8912
+      }
+    } ]
+  },
+  "8f9b1e412de43a8542527a601fa6fc69" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "a1d239564def3d1a",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/a1d239564def3d1a",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135963774,
+        "stop" : 1706135967405,
+        "duration" : 3631
+      }
+    } ]
+  },
+  "7aab84ae542b70f69e0e879dba307dc2" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "7a6e870f2aaa5503",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/7a6e870f2aaa5503",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706137072971,
+        "stop" : 1706137086845,
+        "duration" : 13874
+      }
+    } ]
+  },
+  "279a3b09a33d0b58cd9dcbf3721c15c3" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "80fbf61a873ef76f",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/80fbf61a873ef76f",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706137099583,
+        "stop" : 1706137105321,
+        "duration" : 5738
+      }
+    } ]
+  },
+  "dc2ec85ce85357ad1003433097b085b3" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "d679a46d0d529ced",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/d679a46d0d529ced",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135251231,
+        "stop" : 1706135262049,
+        "duration" : 10818
+      }
+    } ]
+  },
+  "ead8cf0793ac52908f5371b3d16eecb1" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "6d06f7246b779e8e",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/6d06f7246b779e8e",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136887446,
+        "stop" : 1706136893121,
+        "duration" : 5675
+      }
+    } ]
+  },
+  "268fdd018a47986c78d01f7133ad67cc" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "5b9201ec9744ca24",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/5b9201ec9744ca24",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: No support for unique keys in default incremental strategy",
+      "time" : {
+        "start" : 1706136364698,
+        "stop" : 1706136364698,
+        "duration" : 0
+      }
+    } ]
+  },
+  "50a76d5626ece8ad63407c8a6ba6f687" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "fdeb66682bd8f585",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/fdeb66682bd8f585",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136721316,
+        "stop" : 1706136729211,
+        "duration" : 7895
+      }
+    } ]
+  },
+  "c2534b7367261a48b64823ead74ce039" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "14204d6a97f68f7e",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/14204d6a97f68f7e",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136164037,
+        "stop" : 1706136178308,
+        "duration" : 14271
+      }
+    } ]
+  },
+  "0401ea6c7d68d2494b18b5dc6729a1ac" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "5cd2d0750ea8905f",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/5cd2d0750ea8905f",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136764841,
+        "stop" : 1706136772691,
+        "duration" : 7850
+      }
+    } ]
+  },
+  "9eb170b0672bd7a7ea2c50f065cdb8dd" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "126482454ffd711f",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/126482454ffd711f",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135543992,
+        "stop" : 1706135585595,
+        "duration" : 41603
+      }
+    } ]
+  },
+  "1aa325b703ad92c0587ebb159133b2a8" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "8a7c856971628655",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/8a7c856971628655",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135760825,
+        "stop" : 1706135765112,
+        "duration" : 4287
+      }
+    } ]
+  },
+  "578ffaaaa0ecd0ab4b855196a1023195" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "d5cd388bfee92b40",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/d5cd388bfee92b40",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Firebolt does not support commit/rollback",
+      "time" : {
+        "start" : 1706135861344,
+        "stop" : 1706135861344,
+        "duration" : 0
+      }
+    } ]
+  },
+  "3c800d2e04ed4d35ceaebe66c7aafc7e" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "8056ca8df7fb87b4",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/8056ca8df7fb87b4",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136260095,
+        "stop" : 1706136269555,
+        "duration" : 9460
+      }
+    } ]
+  },
+  "029265be81a78228d14f99689ed9fa69" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "1f089f8c113c98d5",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/1f089f8c113c98d5",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135765115,
+        "stop" : 1706135767705,
+        "duration" : 2590
+      }
+    } ]
+  },
+  "09c801ff45e533c7384aa44bac778e3b" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "6419b6aaea17484c",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/6419b6aaea17484c",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: No support for unique keys in default incremental strategy",
+      "time" : {
+        "start" : 1706136364695,
+        "stop" : 1706136364695,
+        "duration" : 0
+      }
+    } ]
+  },
+  "f9422b65ad03e2554055718d80841f82" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "83cca87ae6e3b4ad",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/83cca87ae6e3b4ad",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136962406,
+        "stop" : 1706136967980,
+        "duration" : 5574
+      }
+    } ]
+  },
+  "98a48cc38a93e43efe6fe2517c4229f5" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "a432b55e1b669ab1",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/a432b55e1b669ab1",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136997485,
+        "stop" : 1706137003155,
+        "duration" : 5670
+      }
+    } ]
+  },
+  "91ae3ab417ddb01801146e622ff4b076" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "f315e932cf59ba70",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/f315e932cf59ba70",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135471123,
+        "stop" : 1706135476672,
+        "duration" : 5549
+      }
+    } ]
+  },
+  "8691fd1a213105faed4a3d11692ef886" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "ca3d79758f15d425",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/ca3d79758f15d425",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136785224,
+        "stop" : 1706136792902,
+        "duration" : 7678
+      }
+    } ]
+  },
+  "9e237da1ab6b0dc6e369f7ddc658eff7" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "b7ab1bcc0998a38b",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/b7ab1bcc0998a38b",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136846231,
+        "stop" : 1706136850339,
+        "duration" : 4108
+      }
+    } ]
+  },
+  "d06c2f3166c3380bb8ba22dac8079ad1" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "5febc28bf2b97313",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/5febc28bf2b97313",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136931080,
+        "stop" : 1706136936864,
+        "duration" : 5784
+      }
+    } ]
+  },
+  "bf3b92cf7bd209e94a9e682bc3c60c38" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "56e0cd0dc98df2b4",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/56e0cd0dc98df2b4",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135379450,
+        "stop" : 1706135385081,
+        "duration" : 5631
+      }
+    } ]
+  },
+  "66b4e0747f7f5bb22e11c7cc696a9c64" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "5885f92b424a69c0",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/5885f92b424a69c0",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706137139278,
+        "stop" : 1706137145173,
+        "duration" : 5895
+      }
+    } ]
+  },
+  "36130945d11afc50d6189c51ae3f8dc9" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "3803627d86966511",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/3803627d86966511",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Table-level grants are not supported yet in Firebolt",
+      "time" : {
+        "start" : 1706135926311,
+        "stop" : 1706135926311,
+        "duration" : 0
+      }
+    } ]
+  },
+  "b08568e64e0259d3e69806c4d8cc1b17" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "ce341f1572dc999b",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/ce341f1572dc999b",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Table-level grants are not supported yet in Firebolt",
+      "time" : {
+        "start" : 1706135926309,
+        "stop" : 1706135926309,
+        "duration" : 0
+      }
+    } ]
+  },
+  "bcb7992b871398c99cfd87b125ac3747" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "635ad3fc54fa62b",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/635ad3fc54fa62b",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135272238,
+        "stop" : 1706135273250,
+        "duration" : 1012
+      }
+    } ]
+  },
+  "3f00210b5b7018c8ede9a147a6207aa7" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "94a90cac19669d22",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/94a90cac19669d22",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136365902,
+        "stop" : 1706136383477,
+        "duration" : 17575
+      }
+    } ]
+  },
+  "de372b89c9249290bd8e19c94acb0efe" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "f52d44d24d550e6d",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/f52d44d24d550e6d",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136099663,
+        "stop" : 1706136104034,
+        "duration" : 4371
+      }
+    } ]
+  },
+  "6452b1b346e83e8af7681aaa5b04a183" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "9b0f0bbb0f0875e4",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/9b0f0bbb0f0875e4",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135947324,
+        "stop" : 1706135950821,
+        "duration" : 3497
+      }
+    } ]
+  },
+  "2e9c2fc6ce0cb071496f76ab33fcf560" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "891e3114a606d808",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/891e3114a606d808",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135927521,
+        "stop" : 1706135931089,
+        "duration" : 3568
+      }
+    } ]
+  },
+  "ee96f80c2cfb50ffb74203e429f9b101" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "95dab27f71efb843",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/95dab27f71efb843",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135957051,
+        "stop" : 1706135957872,
+        "duration" : 821
+      }
+    } ]
+  },
+  "4af6137d80cd063cb95d7e6665dd44d3" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "56c58de77f926da8",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/56c58de77f926da8",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136130162,
+        "stop" : 1706136135524,
+        "duration" : 5362
+      }
+    } ]
+  },
+  "5bb4909531a3e16f45fa00cb89fe6646" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "af9d7f075ffb1818",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/af9d7f075ffb1818",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135913230,
+        "stop" : 1706135920021,
+        "duration" : 6791
+      }
+    } ]
+  },
+  "2514ff3f564cdd991f7d37bb318c7c35" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "fc599524da10d54f",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/fc599524da10d54f",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135385084,
+        "stop" : 1706135392375,
+        "duration" : 7291
+      }
+    } ]
+  },
+  "b9b3d74736cd58aef0ebe234de1eb118" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "c66e4f86df050804",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/c66e4f86df050804",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135344335,
+        "stop" : 1706135360989,
+        "duration" : 16654
+      }
+    } ]
+  },
+  "839d3247063883982be74cfcf70a5a67" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "c3af1e409120ef86",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/c3af1e409120ef86",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: No support for unique keys in default incremental strategy",
+      "time" : {
+        "start" : 1706136364706,
+        "stop" : 1706136364706,
+        "duration" : 0
+      }
+    } ]
+  },
+  "645b99b698dcbde4f3e6c49012d2fbfe" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "70a8696fe3ec2f3b",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/70a8696fe3ec2f3b",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135840527,
+        "stop" : 1706135848660,
+        "duration" : 8133
+      }
+    } ]
+  },
+  "f74c680f0a5a1bb36129824c53836e3e" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "71b2c1941b5c40a8",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/71b2c1941b5c40a8",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: No support for unique keys in default incremental strategy",
+      "time" : {
+        "start" : 1706136364693,
+        "stop" : 1706136364693,
+        "duration" : 0
+      }
+    } ]
+  },
+  "46e98f27533e6021f12272f3024159d1" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "1ddc5e8888efb90d",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/1ddc5e8888efb90d",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706137060697,
+        "stop" : 1706137060697,
+        "duration" : 0
+      }
+    } ]
+  },
+  "9aac6b53f0480128b299fe9cfcfb7c14" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "93cd78f0a0f2c1fe",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/93cd78f0a0f2c1fe",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136744697,
+        "stop" : 1706136752243,
+        "duration" : 7546
+      }
+    } ]
+  },
+  "fae76033bd6ca7b9c8c9c2a9bdf2a924" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "3755a01e7a130fa",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/3755a01e7a130fa",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136502372,
+        "stop" : 1706136538680,
+        "duration" : 36308
+      }
+    } ]
+  },
+  "db9bee11f5495f1d2db80e100d3e0e72" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "6f79718d71e25350",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/6f79718d71e25350",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135483072,
+        "stop" : 1706135532748,
+        "duration" : 49676
+      }
+    } ]
+  },
+  "993b884643acada83f01332c1d72480a" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "8bfb2739e0eccb77",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/8bfb2739e0eccb77",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136383480,
+        "stop" : 1706136408693,
+        "duration" : 25213
+      }
+    } ]
+  },
+  "c7af5da6ebf632753230b26af27e7d64" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "be072d7f23461aee",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/be072d7f23461aee",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: No support for unique keys in default incremental strategy",
+      "time" : {
+        "start" : 1706136364696,
+        "stop" : 1706136364696,
+        "duration" : 0
+      }
+    } ]
+  },
+  "bf48c5440c31e103338ac7b6b083d4f9" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "afd491609e6816",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/afd491609e6816",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: No support for unique keys in default incremental strategy",
+      "time" : {
+        "start" : 1706136364701,
+        "stop" : 1706136364701,
+        "duration" : 0
+      }
+    } ]
+  },
+  "fab11f7e1419bbb073fd2424d8f6255f" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "b4970ab2e170932d",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/b4970ab2e170932d",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135785625,
+        "stop" : 1706135827797,
+        "duration" : 42172
+      }
+    } ]
+  },
+  "5fe25216d5697234131fe68b032ad996" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "156d02f304f2a47b",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/156d02f304f2a47b",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135691443,
+        "stop" : 1706135694248,
+        "duration" : 2805
+      }
+    } ]
+  },
+  "bfdacc839df86a24194c6a1b0fc6bc1d" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "236b04e24927776a",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/236b04e24927776a",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135242378,
+        "stop" : 1706135244734,
+        "duration" : 2356
+      }
+    } ]
+  },
+  "44ac323ed2381b870497df22c3d689fa" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "1a1ada5d402cddc6",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/1a1ada5d402cddc6",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136594027,
+        "stop" : 1706136604966,
+        "duration" : 10939
+      }
+    } ]
+  },
+  "9270f6f55b348cfea06384850b732b82" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "dffadafc3e47a555",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/dffadafc3e47a555",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: No support for unique keys in default incremental strategy",
+      "time" : {
+        "start" : 1706136364700,
+        "stop" : 1706136364700,
+        "duration" : 0
+      }
+    } ]
+  },
+  "c3846f7141ff99568958d83bf2350bfc" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "af591bdc4072ce16",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/af591bdc4072ce16",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135973599,
+        "stop" : 1706135977060,
+        "duration" : 3461
+      }
+    } ]
+  },
+  "f99fa5ab39d39e44076ea0f43a541906" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "cc13bd4669ebb46f",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/cc13bd4669ebb46f",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Not implemented for v1",
+      "time" : {
+        "start" : 1706135372590,
+        "stop" : 1706135372590,
+        "duration" : 0
+      }
+    } ]
+  },
+  "5ec14aee96d00e6f9fcafff4cbca2191" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "f3affebd82b30bea",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/f3affebd82b30bea",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706137105323,
+        "stop" : 1706137122039,
+        "duration" : 16716
+      }
+    } ]
+  },
+  "1f040c082664e39c3fc9e53657587074" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "6259b80028add798",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/6259b80028add798",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Firebolt has a bug in LEFT JOIN. FIR-11078",
+      "time" : {
+        "start" : 1706135372594,
+        "stop" : 1706135372594,
+        "duration" : 0
+      }
+    } ]
+  },
+  "caffb6ad2d4028ab9f6f254e19834ff9" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "357dece06f6aa897",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/357dece06f6aa897",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Intersect is not supported yet",
+      "time" : {
+        "start" : 1706136947527,
+        "stop" : 1706136947527,
+        "duration" : 0
+      }
+    } ]
+  },
+  "a9668c2013951b7fb91eb8599053a9f7" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "4c510cb4c624dea2",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/4c510cb4c624dea2",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135694252,
+        "stop" : 1706135712019,
+        "duration" : 17767
+      }
+    } ]
+  },
+  "167e5d5572cea639465ef6ee47fce2b5" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "1b33e5a90def1263",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/1b33e5a90def1263",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136451335,
+        "stop" : 1706136476577,
+        "duration" : 25242
+      }
+    } ]
+  },
+  "a86fed9c3e6ed5ef6ea4d1026a33738e" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "4b16bf012d30b479",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/4b16bf012d30b479",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135712024,
+        "stop" : 1706135749919,
+        "duration" : 37895
+      }
+    } ]
+  },
+  "c69e2180db2353ad1ca5c39f692121ce" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "26caa465d02878e9",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/26caa465d02878e9",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135983521,
+        "stop" : 1706136031700,
+        "duration" : 48179
+      }
+    } ]
+  },
+  "6586843d54eb87d15bcf47d669d032c1" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "32c20ce560a1a79b",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/32c20ce560a1a79b",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136278642,
+        "stop" : 1706136285152,
+        "duration" : 6510
+      }
+    } ]
+  },
+  "a8e5e1c78545a3e8767d20759e1811aa" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "b9aa57cc34181dd6",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/b9aa57cc34181dd6",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135687801,
+        "stop" : 1706135691440,
+        "duration" : 3639
+      }
+    } ]
+  },
+  "e87d0f50f4364c1d93a11313dd1c20ce" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "86ce480169f1c06c",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/86ce480169f1c06c",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135305613,
+        "stop" : 1706135326582,
+        "duration" : 20969
+      }
+    } ]
+  },
+  "e81354caf95961146c2e33899558dfb0" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "849db944de236b70",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/849db944de236b70",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Table-level grants are not supported yet in Firebolt",
+      "time" : {
+        "start" : 1706135926314,
+        "stop" : 1706135926314,
+        "duration" : 0
+      }
+    } ]
+  },
+  "deb482023a42418aaefee87b72e109da" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "453e48a51c06942b",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/453e48a51c06942b",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Except is not supported yet",
+      "time" : {
+        "start" : 1706136929906,
+        "stop" : 1706136929906,
+        "duration" : 0
+      }
+    } ]
+  },
+  "a90f969832ff26b78f06839c6dd7f853" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "3a2c917af93a475",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/3a2c917af93a475",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135435157,
+        "stop" : 1706135460894,
+        "duration" : 25737
+      }
+    } ]
+  },
+  "be3c9cc25db6d9bee4a001e95a43a6d6" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "41c4cfa0af3288ec",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/41c4cfa0af3288ec",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136948853,
+        "stop" : 1706136954606,
+        "duration" : 5753
+      }
+    } ]
+  },
+  "22b16762c13c3a5c7c30d6c0dcc6fe94" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "62ee719743f02eb3",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/62ee719743f02eb3",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706137060694,
+        "stop" : 1706137060694,
+        "duration" : 0
+      }
+    } ]
+  },
+  "a35d0d6dd148bfdabfb26152280c970c" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "a297383c5f652ffb",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/a297383c5f652ffb",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136408696,
+        "stop" : 1706136438142,
+        "duration" : 29446
+      }
+    } ]
+  },
+  "528502df7a999777dc4496f15b799f54" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "c92f2c590c3830bc",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/c92f2c590c3830bc",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136830641,
+        "stop" : 1706136837633,
+        "duration" : 6992
+      }
+    } ]
+  },
+  "8fa0aec007cd9c6f2f3a8c782f9119a0" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "4396f7d621482093",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/4396f7d621482093",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136808419,
+        "stop" : 1706136815661,
+        "duration" : 7242
+      }
+    } ]
+  },
+  "e02f7ddbcb0b3c6527162c012b578967" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "70f077a5009ba0a1",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/70f077a5009ba0a1",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: True boolean is feature-flagged",
+      "time" : {
+        "start" : 1706136807062,
+        "stop" : 1706136807062,
+        "duration" : 0
+      }
+    } ]
+  },
+  "76fbbce1654a871e49755b9f264291d1" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "891e3d3d3bfc8ca8",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/891e3d3d3bfc8ca8",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Firebolt does not support reading delimiter from a column. FIR-16783",
+      "time" : {
+        "start" : 1706137044402,
+        "stop" : 1706137044402,
+        "duration" : 0
+      }
+    } ]
+  },
+  "1b724aacf943ae3de611ab8880da1d96" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "583e11ed5b471ef3",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/583e11ed5b471ef3",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136294357,
+        "stop" : 1706136299925,
+        "duration" : 5568
+      }
+    } ]
+  },
+  "ff0d91db6971471face06f7d73dc51f6" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "d2fa73b29afc7bf8",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/d2fa73b29afc7bf8",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Table-level grants are not supported yet in Firebolt",
+      "time" : {
+        "start" : 1706135926312,
+        "stop" : 1706135926312,
+        "duration" : 0
+      }
+    } ]
+  },
+  "d646a72764f6febf39f5f3b1ee00c562" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "247207f59ee6eaf5",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/247207f59ee6eaf5",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: No support for unique keys in default incremental strategy",
+      "time" : {
+        "start" : 1706136364691,
+        "stop" : 1706136364691,
+        "duration" : 0
+      }
+    } ]
+  },
+  "922619b7041fe52fbed4e0b87b7c8891" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "a5f52524de8c74ce",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/a5f52524de8c74ce",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136698947,
+        "stop" : 1706136706786,
+        "duration" : 7839
+      }
+    } ]
+  },
+  "c76aee5cf6ada260bce14baefd947098" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "338abbad95ac6eb4",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/338abbad95ac6eb4",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: No support for unique keys in default incremental strategy",
+      "time" : {
+        "start" : 1706136364705,
+        "stop" : 1706136364705,
+        "duration" : 0
+      }
+    } ]
+  },
+  "291c5fc3e5f495ad09de6156cbf32dbc" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "cfa9c6cf170313aa",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/cfa9c6cf170313aa",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Firebolt doesn't support materialized views",
+      "time" : {
+        "start" : 1706136031701,
+        "stop" : 1706136031701,
+        "duration" : 0
+      }
+    } ]
+  },
+  "7d1fc82d830465359977fd4bdf80f27d" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "34f62fbe2a785121",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/34f62fbe2a785121",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136188077,
+        "stop" : 1706136188899,
+        "duration" : 822
+      }
+    } ]
+  },
+  "8e21713aff6e0a37a7382fc9b7963d22" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "b368c2b188b5f63a",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/b368c2b188b5f63a",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706137028673,
+        "stop" : 1706137034458,
+        "duration" : 5785
+      }
+    } ]
+  },
+  "5cdcbb431c6f29f1f6e028b4160a7f03" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "7cb47501081e03bb",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/7cb47501081e03bb",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136980213,
+        "stop" : 1706136985822,
+        "duration" : 5609
+      }
+    } ]
+  },
+  "cacaf09c998d976976a0d745bd4a6242" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "6085d94949990e3d",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/6085d94949990e3d",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135767709,
+        "stop" : 1706135785621,
+        "duration" : 17912
+      }
+    } ]
+  },
+  "be43c2b928e2d3a14def6453b42037c6" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "33d0bfbe5c541cd6",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/33d0bfbe5c541cd6",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136919136,
+        "stop" : 1706136924289,
+        "duration" : 5153
+      }
+    } ]
+  },
+  "8d45e56e2266b8dba6321ade483e8420" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "fb9b4831718b9e8d",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/fb9b4831718b9e8d",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135604334,
+        "stop" : 1706135608482,
+        "duration" : 4148
+      }
+    } ]
+  },
+  "9e9996ad3c8cb4db8cbb1f6b6b123caf" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "33155560404f4d29",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/33155560404f4d29",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136673929,
+        "stop" : 1706136682156,
+        "duration" : 8227
+      }
+    } ]
+  },
+  "d6094921bbc32385217efcd36435c90d" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "dd00d8c9f8977052",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/dd00d8c9f8977052",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136211511,
+        "stop" : 1706136223239,
+        "duration" : 11728
+      }
+    } ]
+  },
+  "cd4763758c7b63714aa7f2ab222031e2" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "1102603024ac0724",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/1102603024ac0724",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136574167,
+        "stop" : 1706136594024,
+        "duration" : 19857
+      }
+    } ]
+  },
+  "1ef113e3a43707272e6e207956b38f44" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "f71fdf13cfe587dd",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/f71fdf13cfe587dd",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Firebolt does not support constraint clause in DDL",
+      "time" : {
+        "start" : 1706135882216,
+        "stop" : 1706135882216,
+        "duration" : 0
+      }
+    } ]
+  },
+  "e0c286934e7cdf2bf722f1a5d0555476" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "5f9f40d5d4833be9",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/5f9f40d5d4833be9",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Firebolt does not support schema change yet",
+      "time" : {
+        "start" : 1706135433938,
+        "stop" : 1706135433938,
+        "duration" : 0
+      }
+    } ]
+  },
+  "60727ca3e2361dccf3a756071cd5203e" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "83e6588f1b5edb",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/83e6588f1b5edb",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136327950,
+        "stop" : 1706136328761,
+        "duration" : 811
+      }
+    } ]
+  },
+  "17809473b65c744ac370ef91954769e2" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "222f37ffe3c08ec8",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/222f37ffe3c08ec8",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: ORDER BY in ARRAY_AGG is not supported. FIR-8828",
+      "time" : {
+        "start" : 1706136978963,
+        "stop" : 1706136978963,
+        "duration" : 0
+      }
+    } ]
+  },
+  "ac5384442052f55400ae776171ff9aec" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "53b4581e17fa947e",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/53b4581e17fa947e",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135629086,
+        "stop" : 1706135668951,
+        "duration" : 39865
+      }
+    } ]
+  },
+  "77aba76ebcd53dcfba9392e7125c3333" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "684b30e1a6da1cac",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/684b30e1a6da1cac",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135279274,
+        "stop" : 1706135294474,
+        "duration" : 15200
+      }
+    } ]
+  },
+  "2192deff42361468c00f86a6173f2923" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "448b4c6d2ace7c43",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/448b4c6d2ace7c43",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136111974,
+        "stop" : 1706136117516,
+        "duration" : 5542
+      }
+    } ]
+  },
+  "e9af067f44d004b4e5253c3f4b6c46a3" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "1959d17c239bba7b",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/1959d17c239bba7b",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136901031,
+        "stop" : 1706136907011,
+        "duration" : 5980
+      }
+    } ]
+  },
+  "d6a58062c9b7043868e6cb380fffb366" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "9387f06db3c2a392",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/9387f06db3c2a392",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136476580,
+        "stop" : 1706136502369,
+        "duration" : 25789
+      }
+    } ]
+  },
+  "6b2d52348323d1db15735bfa94e5f8c0" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "cee7f457c023556c",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/cee7f457c023556c",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Firebolt does not support commit/rollback",
+      "time" : {
+        "start" : 1706135882214,
+        "stop" : 1706135882214,
+        "duration" : 0
+      }
+    } ]
+  },
+  "cf182de481d6f5f1c762befb1d250a1a" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "2ac38713e21ac347",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/2ac38713e21ac347",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: No support for unique keys in default incremental strategy",
+      "time" : {
+        "start" : 1706136364703,
+        "stop" : 1706136364703,
+        "duration" : 0
+      }
+    } ]
+  },
+  "64a05dcc06b8a13dd5a261db83a459cc" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "e12aa068ac4f7f91",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/e12aa068ac4f7f91",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136053155,
+        "stop" : 1706136071882,
+        "duration" : 18727
+      }
+    } ]
+  },
+  "978abf73c7d9e93903114dcb1fad5f5c" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "a5fc380e0db7d326",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/a5fc380e0db7d326",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136438145,
+        "stop" : 1706136451332,
+        "duration" : 13187
+      }
+    } ]
+  },
+  "e4e029909ac9847d8e6c16094e3b1d4f" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "b316f121f0a75794",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/b316f121f0a75794",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Firebolt does not support check constraint",
+      "time" : {
+        "start" : 1706135882218,
+        "stop" : 1706135882218,
+        "duration" : 0
+      }
+    } ]
+  },
+  "5f760f777d5818a9a13f9d5a1e8016d3" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "254d3378841b474a",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/254d3378841b474a",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135937632,
+        "stop" : 1706135941085,
+        "duration" : 3453
+      }
+    } ]
+  },
+  "780a44c2b193969f3f7908213cd1cd90" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "fe2e96963501fda6",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/fe2e96963501fda6",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135410488,
+        "stop" : 1706135419735,
+        "duration" : 9247
+      }
+    } ]
+  },
+  "bdf2115b03824f059977355b0c12ccfa" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "5626aaac08926ec4",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/5626aaac08926ec4",
+      "status" : "skipped",
+      "statusDetails" : "XFAIL susbstr(text, bigint) is not supported, waiting on FIR-28289\n\nAssertionError: dbt exit state did not match expected",
+      "time" : {
+        "start" : 1706137011183,
+        "stop" : 1706137016876,
+        "duration" : 5693
+      }
+    } ]
+  },
+  "b9c90f189e217d77c8d9d3f212c272ab" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "d35a23d4732ca5e3",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/d35a23d4732ca5e3",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136147407,
+        "stop" : 1706136155410,
+        "duration" : 8003
+      }
+    } ]
+  },
+  "bac469e57b819dc2f4a821fa6bd9088a" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 1,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "8066e99a06e789db",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/8066e99a06e789db",
+      "status" : "skipped",
+      "statusDetails" : "Skipped: Table-level grants are not supported yet in Firebolt",
+      "time" : {
+        "start" : 1706135926307,
+        "stop" : 1706135926307,
+        "duration" : 0
+      }
+    } ]
+  },
+  "0991f93d897f0b94e90f0b7b53e53d60" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "15c33f914aa53476",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/15c33f914aa53476",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136856512,
+        "stop" : 1706136862161,
+        "duration" : 5649
+      }
+    } ]
+  },
+  "5ae0f151559087f4e576030c92aab35a" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "be37717de63860e6",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/be37717de63860e6",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706136873691,
+        "stop" : 1706136879344,
+        "duration" : 5653
+      }
+    } ]
+  },
+  "f0fb871f7c2e9d4174a530f8f4201251" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "7aa6b82b64538d71",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/7aa6b82b64538d71",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706137145176,
+        "stop" : 1706137162510,
+        "duration" : 17334
+      }
+    } ]
+  },
+  "9288ac85bad9c6da313e8c30dd9a9167" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "ec183b2528515b1e",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/ec183b2528515b1e",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135883439,
+        "stop" : 1706135896405,
+        "duration" : 12966
+      }
+    } ]
+  },
+  "77d1fd6de38498bec892b2392682b67b" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "41b765f1ef577941",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/41b765f1ef577941",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135862576,
+        "stop" : 1706135871783,
+        "duration" : 9207
+      }
+    } ]
+  },
+  "7d6185507568c05cc257af9a502c5dc5" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "d19893ccec65bb",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/d19893ccec65bb",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706137067486,
+        "stop" : 1706137072968,
+        "duration" : 5482
+      }
+    } ]
+  },
+  "aa0e864726779625e566bc98b9079041" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "6bcc585d01ff0313",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/edc4140c6a60feb043627cae9a07b75545cd510a_integration-v2/94//#testresult/6bcc585d01ff0313",
+      "status" : "passed",
+      "time" : {
+        "start" : 1706135188048,
+        "stop" : 1706135228430,
+        "duration" : 40382
+      }
+    } ]
+  }
+}
