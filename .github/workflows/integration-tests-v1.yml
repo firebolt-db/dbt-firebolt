@@ -44,6 +44,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install ".[dev]" --no-cache-dir
 
+      - name: Keep environment name in the summary
+        run: echo '### Ran integration tests against ${{ inputs.environment }} ' >> $GITHUB_STEP_SUMMARY
+
       - name: Setup database and engine
         id: setup
         uses: firebolt-db/integration-testing-setup@v1
