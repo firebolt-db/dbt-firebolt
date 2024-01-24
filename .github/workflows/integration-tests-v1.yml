@@ -46,7 +46,7 @@ jobs:
 
       - name: Setup database and engine
         id: setup
-        uses: firebolt-db/integration-testing-setup@master
+        uses: firebolt-db/integration-testing-setup@v1
         with:
           firebolt-username: ${{ inputs.environment == 'staging' && secrets.FIREBOLT_STG_USERNAME || secrets.FIREBOLT_USERNAME_DEV }}
           firebolt-password: ${{ inputs.environment == 'staging' && secrets.FIREBOLT_STG_PASSWORD || secrets.FIREBOLT_PASSWORD_DEV }}
