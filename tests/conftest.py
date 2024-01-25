@@ -1,6 +1,9 @@
 import os
 
 import pytest
+from dbt.tests.util import write_file
+from pydantic import SecretStr
+from yaml import SafeDumper, dump_all
 
 # Import the standard functional fixtures as a plugin
 # Note: fixtures with session scope need to be local
@@ -23,10 +26,10 @@ def dbt_profile_target():
     # add credentials to the profile keys
     if os.getenv('USER_NAME') and os.getenv('PASSWORD'):
         profile['user'] = os.getenv('USER_NAME')
-        profile['password'] = os.getenv('PASSWORD')
+        profile['password'] = SecretStr(os.getenv('PASSWORD'))
     elif os.getenv('CLIENT_ID') and os.getenv('CLIENT_SECRET'):
         profile['client_id'] = os.getenv('CLIENT_ID')
-        profile['client_secret'] = os.getenv('CLIENT_SECRET')
+        profile['client_secret'] = SecretStr(os.getenv('CLIENT_SECRET'))
     else:
         raise Exception('No credentials found in environment')
     return profile
@@ -53,6 +56,33 @@ def dbt_profile_data(dbt_profile_target, profiles_config_update):
     if profiles_config_update:
         profile.update(profiles_config_update)
     return profile
+
+
+class SafeSecretDumper(SafeDumper):
+    """
+    A custom dumper that understands the Secret class
+    """
+
+    def represent_data(self, data):
+        if isinstance(data, SecretStr):
+            # We have to tell dumper how to represent SecretStr
+            # otherwise it will just use the default str() function
+            return self.represent_str(data.get_secret_value())
+        return super().represent_data(data)
+
+
+@pytest.fixture(scope='class')
+def profiles_yml(profiles_root, dbt_profile_data):
+    """Override dbt fixture to work with Secret class in profiles"""
+    os.environ['DBT_PROFILES_DIR'] = str(profiles_root)
+    # Override here to inject our custom dumper
+    write_file(
+        dump_all([dbt_profile_data], Dumper=SafeSecretDumper),
+        profiles_root,
+        'profiles.yml',
+    )
+    yield dbt_profile_data
+    del os.environ['DBT_PROFILES_DIR']
 
 
 @pytest.fixture(scope='class')
