@@ -1,0 +1,10 @@
+[ {
+  "name" : "GitHub Actions",
+  "type" : "github",
+  "url" : "https://firebolt-db.github.io/dbt-firebolt/7ab668e07204d8b6eb1c6a4a3f71e0db82e10203_integration-v2",
+  "buildOrder" : 96,
+  "buildName" : "GitHub Actions Run #7667628659",
+  "buildUrl" : "https://github.com/firebolt-db/dbt-firebolt/actions/runs/7667628659",
+  "reportName" : "Allure Report with history",
+  "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/7ab668e07204d8b6eb1c6a4a3f71e0db82e10203_integration-v2/96/"
+} ]

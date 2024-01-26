@@ -1,0 +1,211 @@
+[ {
+  "uid" : "d41437013ce7803b",
+  "name" : "test__constraints_wrong_column_order",
+  "time" : {
+    "start" : 1706270232483,
+    "stop" : 1706270236424,
+    "duration" : 3941
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "ed1d6f24da248e72",
+  "name" : "test_adapter_methods",
+  "time" : {
+    "start" : 1706269998687,
+    "stop" : 1706269998687,
+    "duration" : 0
+  },
+  "status" : "skipped",
+  "severity" : "normal"
+}, {
+  "uid" : "5ca645941a7f10ad",
+  "name" : "test_concurrency",
+  "time" : {
+    "start" : 1706270173309,
+    "stop" : 1706270215791,
+    "duration" : 42482
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "353282f9d5adfb66",
+  "name" : "test_run_and_generate",
+  "time" : {
+    "start" : 1706270011200,
+    "stop" : 1706270018612,
+    "duration" : 7412
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "8ea0ec84076ef850",
+  "name" : "test_references",
+  "time" : {
+    "start" : 1706270038550,
+    "stop" : 1706270046610,
+    "duration" : 8060
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "dcfbf7f3e122311d",
+  "name" : "test__constraints_wrong_column_names",
+  "time" : {
+    "start" : 1706270236427,
+    "stop" : 1706270239106,
+    "duration" : 2679
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "fa539f930866535c",
+  "name" : "test_empty",
+  "time" : {
+    "start" : 1706269908286,
+    "stop" : 1706269909309,
+    "duration" : 1023
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "2abe463fa7b56cbe",
+  "name" : "test_generic_tests",
+  "time" : {
+    "start" : 1706269973799,
+    "stop" : 1706269991304,
+    "duration" : 17505
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "b94009022aa3b57a",
+  "name" : "test_changing_materialization_changes_relation_type",
+  "time" : {
+    "start" : 1706270064538,
+    "stop" : 1706270088887,
+    "duration" : 24349
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "bf51c0f67ad12fba",
+  "name" : "test__constraints_wrong_column_data_types",
+  "time" : {
+    "start" : 1706270239109,
+    "stop" : 1706270257111,
+    "duration" : 18002
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "5a19e73bc0e4a9aa",
+  "name" : "test_run_and_generate_no_compile",
+  "time" : {
+    "start" : 1706270005433,
+    "stop" : 1706270011197,
+    "duration" : 5764
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "100c0d1f1bf8752",
+  "name" : "test_run_and_test",
+  "time" : {
+    "start" : 1706270096376,
+    "stop" : 1706270101557,
+    "duration" : 5181
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "fa369516e4d15ad5",
+  "name" : "test_snapshot_check_cols",
+  "time" : {
+    "start" : 1706269998683,
+    "stop" : 1706269998683,
+    "duration" : 0
+  },
+  "status" : "skipped",
+  "severity" : "normal"
+}, {
+  "uid" : "191961e6047884ac",
+  "name" : "test_singular_tests_ephemeral",
+  "time" : {
+    "start" : 1706269890611,
+    "stop" : 1706269900823,
+    "duration" : 10212
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "5fd66cc141bc701d",
+  "name" : "test_concurrency",
+  "time" : {
+    "start" : 1706270107603,
+    "stop" : 1706270158564,
+    "duration" : 50961
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "8af9e7535bd248ef",
+  "name" : "test_base",
+  "time" : {
+    "start" : 1706269833235,
+    "stop" : 1706269868427,
+    "duration" : 35192
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "e1b9ff6918f4cb38",
+  "name" : "test_singular_tests",
+  "time" : {
+    "start" : 1706269882154,
+    "stop" : 1706269884629,
+    "duration" : 2475
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "ca17081ebfda39cf",
+  "name" : "test_ephemeral",
+  "time" : {
+    "start" : 1706269915369,
+    "stop" : 1706269926572,
+    "duration" : 11203
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "c262ae1ad709c95f",
+  "name" : "test_incremental_not_schema_change",
+  "time" : {
+    "start" : 1706270063317,
+    "stop" : 1706270063317,
+    "duration" : 0
+  },
+  "status" : "skipped",
+  "severity" : "normal"
+}, {
+  "uid" : "5ae25b46d5163578",
+  "name" : "test_snapshot_timestamp",
+  "time" : {
+    "start" : 1706269998685,
+    "stop" : 1706269998685,
+    "duration" : 0
+  },
+  "status" : "skipped",
+  "severity" : "normal"
+}, {
+  "uid" : "36238825fb92fedc",
+  "name" : "test_incremental",
+  "time" : {
+    "start" : 1706269939845,
+    "stop" : 1706269960496,
+    "duration" : 20651
+  },
+  "status" : "passed",
+  "severity" : "normal"
+} ]

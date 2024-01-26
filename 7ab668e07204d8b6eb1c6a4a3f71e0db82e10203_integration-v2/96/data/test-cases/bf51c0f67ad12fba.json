@@ -1,0 +1,153 @@
+{
+  "uid" : "bf51c0f67ad12fba",
+  "name" : "test__constraints_wrong_column_data_types",
+  "fullName" : "tests.functional.adapter.test_constraints.TestTableConstraintsColumnsEqualFirebolt#test__constraints_wrong_column_data_types",
+  "historyId" : "54ff9f0e8bc4fa063290fafbb0bc2fa2",
+  "time" : {
+    "start" : 1706270239109,
+    "stop" : 1706270257111,
+    "duration" : 18002
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "schema_string_type",
+    "time" : {
+      "start" : 1706270239108,
+      "stop" : 1706270239108,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "string_type",
+    "time" : {
+      "start" : 1706270239108,
+      "stop" : 1706270239108,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "schema_int_type",
+    "time" : {
+      "start" : 1706270239108,
+      "stop" : 1706270239109,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "data_types",
+    "time" : {
+      "start" : 1706270239109,
+      "stop" : 1706270239109,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "int_type",
+    "time" : {
+      "start" : 1706270239108,
+      "stop" : 1706270239108,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ {
+      "uid" : "225310af8da0045b",
+      "name" : "log",
+      "source" : "225310af8da0045b.txt",
+      "type" : "text/plain",
+      "size" : 33292
+    }, {
+      "uid" : "579498c77198999c",
+      "name" : "stdout",
+      "source" : "579498c77198999c.txt",
+      "type" : "text/plain",
+      "size" : 392
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 2,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "parentSuite",
+    "value" : "tests.functional.adapter"
+  }, {
+    "name" : "suite",
+    "value" : "test_constraints"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestTableConstraintsColumnsEqualFirebolt"
+  }, {
+    "name" : "host",
+    "value" : "fv-az1215-381"
+  }, {
+    "name" : "thread",
+    "value" : "2475-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "tests.functional.adapter.test_constraints"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "bf51c0f67ad12fba.json",
+  "parameterValues" : [ ]
+}
