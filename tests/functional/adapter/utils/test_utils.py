@@ -16,6 +16,10 @@ from dbt.tests.adapter.utils.fixture_dateadd import (
     models__test_dateadd_yml,
 )
 from dbt.tests.adapter.utils.fixture_datediff import models__test_datediff_yml
+from dbt.tests.adapter.utils.fixture_equals import (
+    MODELS__EQUAL_VALUES_SQL,
+    MODELS__NOT_EQUAL_VALUES_SQL,
+)
 from dbt.tests.adapter.utils.fixture_hash import (
     models__test_hash_sql,
     models__test_hash_yml,
@@ -65,6 +69,7 @@ from dbt.tests.adapter.utils.test_current_timestamp import (
 from dbt.tests.adapter.utils.test_date_trunc import BaseDateTrunc
 from dbt.tests.adapter.utils.test_dateadd import BaseDateAdd
 from dbt.tests.adapter.utils.test_datediff import BaseDateDiff
+from dbt.tests.adapter.utils.test_equals import BaseEquals
 from dbt.tests.adapter.utils.test_escape_single_quotes import (
     BaseEscapeSingleQuotesBackslash,
 )
@@ -74,18 +79,16 @@ from dbt.tests.adapter.utils.test_intersect import BaseIntersect
 from dbt.tests.adapter.utils.test_last_day import BaseLastDay
 from dbt.tests.adapter.utils.test_length import BaseLength
 from dbt.tests.adapter.utils.test_listagg import BaseListagg
+from dbt.tests.adapter.utils.test_null_compare import (
+    BaseMixedNullCompare,
+    BaseNullCompare,
+)
 from dbt.tests.adapter.utils.test_position import BasePosition
 from dbt.tests.adapter.utils.test_replace import BaseReplace
 from dbt.tests.adapter.utils.test_right import BaseRight
 from dbt.tests.adapter.utils.test_safe_cast import BaseSafeCast
 from dbt.tests.adapter.utils.test_split_part import BaseSplitPart
 from dbt.tests.adapter.utils.test_string_literal import BaseStringLiteral
-from dbt.tests.adapter.utils.test_equals import BaseEquals
-from dbt.tests.adapter.utils.fixture_equals import (
-    MODELS__EQUAL_VALUES_SQL,
-    MODELS__NOT_EQUAL_VALUES_SQL,
-)
-from dbt.tests.adapter.utils.test_null_compare import BaseNullCompare, BaseMixedNullCompare
 from dbt.tests.adapter.utils.test_validate_sql import BaseValidateSqlMethod
 from pytest import mark
 
@@ -490,7 +493,6 @@ class TestArrayConstruct(BaseArrayConstruct):
         }
 
 
-
 schema_seed_equals_yml = """
 version: 2
 seeds:
@@ -503,8 +505,9 @@ seeds:
         expected: TEXT
 """
 
+
 class TestFireboltEquals(BaseEquals):
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope='class')
     def models(self):
         return {
             'equal_values.sql': MODELS__EQUAL_VALUES_SQL,
@@ -512,11 +515,14 @@ class TestFireboltEquals(BaseEquals):
             'seeds.yml': schema_seed_equals_yml,
         }
 
+
 class TestFireboltNullCompare(BaseNullCompare):
     pass
 
+
 class TestFireboltMixedNullCompare(BaseMixedNullCompare):
     pass
+
 
 class TestFireboltValidateSqlMethod(BaseValidateSqlMethod):
     pass
