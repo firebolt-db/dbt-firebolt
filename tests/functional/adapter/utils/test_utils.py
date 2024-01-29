@@ -85,6 +85,7 @@ from dbt.tests.adapter.utils.fixture_equals import (
     MODELS__EQUAL_VALUES_SQL,
     MODELS__NOT_EQUAL_VALUES_SQL,
 )
+from dbt.tests.adapter.utils.test_null_compare import BaseNullCompare, BaseMixedNullCompare
 from pytest import mark
 
 schema_actual_table_yml = """
@@ -509,3 +510,9 @@ class TestFireboltEquals(BaseEquals):
             'not_equal_values.sql': MODELS__NOT_EQUAL_VALUES_SQL,
             'seeds.yml': schema_seed_equals_yml,
         }
+
+class TestFireboltNullCompare(BaseNullCompare):
+    pass
+
+class TestFireboltMixedNullCompare(BaseMixedNullCompare):
+    pass
