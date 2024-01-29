@@ -80,6 +80,11 @@ from dbt.tests.adapter.utils.test_right import BaseRight
 from dbt.tests.adapter.utils.test_safe_cast import BaseSafeCast
 from dbt.tests.adapter.utils.test_split_part import BaseSplitPart
 from dbt.tests.adapter.utils.test_string_literal import BaseStringLiteral
+from dbt.tests.adapter.utils.test_equals import BaseEquals
+from dbt.tests.adapter.utils.fixture_equals import (
+    MODELS__EQUAL_VALUES_SQL,
+    MODELS__NOT_EQUAL_VALUES_SQL,
+)
 from pytest import mark
 
 schema_actual_table_yml = """
@@ -480,4 +485,27 @@ class TestArrayConstruct(BaseArrayConstruct):
             'actual.sql': models__array_construct_actual_sql,
             'expected.yml': schema_expected_table_yml,
             'expected.sql': models__array_construct_expected_sql,
+        }
+
+
+
+schema_seed_equals_yml = """
+version: 2
+seeds:
+  - name: data_equals
+    config:
+      column_types:
+        key_name: INT
+        x: INT NULL
+        y: INT NULL
+        expected: TEXT
+"""
+
+class TestFireboltEquals(BaseEquals):
+    @pytest.fixture(scope="class")
+    def models(self):
+        return {
+            'equal_values.sql': MODELS__EQUAL_VALUES_SQL,
+            'not_equal_values.sql': MODELS__NOT_EQUAL_VALUES_SQL,
+            'seeds.yml': schema_seed_equals_yml,
         }
