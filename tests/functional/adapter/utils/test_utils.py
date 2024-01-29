@@ -86,6 +86,7 @@ from dbt.tests.adapter.utils.fixture_equals import (
     MODELS__NOT_EQUAL_VALUES_SQL,
 )
 from dbt.tests.adapter.utils.test_null_compare import BaseNullCompare, BaseMixedNullCompare
+from dbt.tests.adapter.utils.test_validate_sql import BaseValidateSqlMethod
 from pytest import mark
 
 schema_actual_table_yml = """
@@ -515,4 +516,7 @@ class TestFireboltNullCompare(BaseNullCompare):
     pass
 
 class TestFireboltMixedNullCompare(BaseMixedNullCompare):
+    pass
+
+class TestFireboltValidateSqlMethod(BaseValidateSqlMethod):
     pass
