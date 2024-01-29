@@ -1,7 +1,7 @@
 from dbt.tests.adapter.dbt_clone.test_dbt_clone import BaseCloneNotPossible
-from pytest import skip
+from pytest import mark
 
 # Test clone works by copying tables to a new schema
-@skip("Can't test this before schemas are implemented")
+@mark.skip("Can't test this before schemas are implemented")
 class TestFireboltCloneNotPossible(BaseCloneNotPossible):
     pass
