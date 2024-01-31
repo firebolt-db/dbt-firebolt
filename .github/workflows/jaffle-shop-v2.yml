@@ -1,26 +1,8 @@
 name: Run Jaffle shop tests V2
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to run the tests against'
-        type: choice
-        required: true
-        default: 'dev'
-        options:
-          - dev
-          - staging
   workflow_call:
-    inputs:
-      environment:
-        default: 'staging'
-        required: false
-        type: string
     secrets:
-      FIREBOLT_CLIENT_ID_DEV_NEW_IDN:
-        required: true
-      FIREBOLT_CLIENT_SECRET_DEV_NEW_IDN:
-        required: true
       FIREBOLT_CLIENT_ID_STG_NEW_IDN:
         required: true
       FIREBOLT_CLIENT_SECRET_STG_NEW_IDN:
@@ -50,40 +32,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install "dbt-firebolt/.[dev]"
 
-      - name: Determine env variables
-        run: |
-          if [ "${{ inputs.environment }}" == 'staging' ]; then
-              echo "KEY=${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}" >> "$GITHUB_ENV"
-              echo "SECRET=${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}" >> "$GITHUB_ENV"
-          else
-              echo "KEY=${{ secrets.FIREBOLT_CLIENT_ID_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
-              echo "SECRET=${{ secrets.FIREBOLT_CLIENT_SECRET_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
-          fi
-
-      - name: Keep environment name in the summary
-        run: echo '### Ran integration tests against ${{ inputs.environment }} ' >> $GITHUB_STEP_SUMMARY
-
       - name: Setup database and engine
         id: setup
         uses: firebolt-db/integration-testing-setup@v2
         with:
-          firebolt-client-id: ${{ env.KEY }}
-          firebolt-client-secret: ${{ env.SECRET }}
+          firebolt-client-id: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
+          firebolt-client-secret: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
           account: "automation"
-          api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
+          api-endpoint: "api.staging.firebolt.io"
 
 
       - name: Run Jaffle Shop test workflow
         env:
-          USER_NAME: ${{ env.KEY }}
-          PASSWORD: ${{ env.SECRET }}
+          USER_NAME: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
+          PASSWORD: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
           DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
           ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
-          API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
+          API_ENDPOINT: "api.staging.firebolt.io"
           ACCOUNT_NAME: "automation"
           DBT_PROFILES_DIR: "../dbt-firebolt/.github/workflows/jaffle_shop"
         working-directory: jaffle-shop
         run:
           ../dbt-firebolt/.github/workflows/jaffle_shop/run_test_workflow.sh
-
-

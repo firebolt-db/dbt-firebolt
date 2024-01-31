@@ -2,26 +2,8 @@ name: Run integration tests V2
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to run the tests against'
-        type: choice
-        required: true
-        default: 'dev'
-        options:
-          - dev
-          - staging
   workflow_call:
-    inputs:
-      environment:
-        default: 'staging'
-        required: false
-        type: string
     secrets:
-      FIREBOLT_CLIENT_ID_DEV_NEW_IDN:
-        required: true
-      FIREBOLT_CLIENT_SECRET_DEV_NEW_IDN:
-        required: true
       FIREBOLT_CLIENT_ID_STG_NEW_IDN:
         required: true
       FIREBOLT_CLIENT_SECRET_STG_NEW_IDN:
@@ -44,27 +26,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install ".[dev]" --no-cache-dir
 
-      - name: Determine env variables
-        run: |
-          if [ "${{ inputs.environment }}" == 'staging' ]; then
-             echo "CLIENT_ID=${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}" >> "$GITHUB_ENV"
-             echo "CLIENT_SECRET=${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}" >> "$GITHUB_ENV"
-          else
-             echo "CLIENT_ID=${{ secrets.FIREBOLT_CLIENT_ID_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
-             echo "CLIENT_SECRET=${{ secrets.FIREBOLT_CLIENT_SECRET_DEV_NEW_IDN }}" >> "$GITHUB_ENV"
-          fi
-
-      - name: Keep environment name in the summary
-        run: echo '### Ran integration tests against ${{ inputs.environment }} ' >> $GITHUB_STEP_SUMMARY
-
       - name: Setup database and engine
         id: setup
         uses: firebolt-db/integration-testing-setup@v2
         with:
-          firebolt-client-id: ${{ env.CLIENT_ID }}
-          firebolt-client-secret: ${{ env.CLIENT_SECRET }}
+          firebolt-client-id: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
+          firebolt-client-secret: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
           account: "automation"
-          api-endpoint: "api.${{ inputs.environment }}.firebolt.io"
+          api-endpoint: "api.staging.firebolt.io"
 
       - name: Restore cached failed tests
         id: cache-tests-restore
@@ -76,11 +45,11 @@ jobs:
 
       - name: Run integration tests
         env:
-          CLIENT_ID: ${{ env.CLIENT_ID }}
-          CLIENT_SECRET: ${{ env.CLIENT_SECRET }}
+          CLIENT_ID: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
+          CLIENT_SECRET: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
           DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
           ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
-          API_ENDPOINT: "api.${{ inputs.environment }}.firebolt.io"
+          API_ENDPOINT: "api.staging.firebolt.io"
           ACCOUNT_NAME: "automation"
         run: |
           pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
