@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
   workflow_call:
     secrets:
-      FIREBOLT_USERNAME_STAGING:
+      FIREBOLT_STG_USERNAME:
         required: true
-      FIREBOLT_PASSWORD_STAGING:
+      FIREBOLT_STG_PASSWORD:
         required: true
       FIREBOLT_CLIENT_ID_STG_NEW_IDN:
         required: true
