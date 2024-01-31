@@ -1,0 +1,659 @@
+{
+  "uid" : "944dc7f5b1d6ff73",
+  "name" : "test__empty_str_unique_key",
+  "fullName" : "tests.functional.adapter.incremental.test_incremental.TestUniqueKeyDeleteInsertFirebolt#test__empty_str_unique_key",
+  "historyId" : "993b884643acada83f01332c1d72480a",
+  "time" : {
+    "start" : 1706724928474,
+    "stop" : 1706724939153,
+    "duration" : 10679
+  },
+  "description" : "with empty string for unique key, seed and model should match",
+  "descriptionHtml" : "<p>with empty string for unique key, seed and model should match</p>\n",
+  "status" : "broken",
+  "statusMessage" : "AttributeError: 'Connection' object has no attribute 'rollback'",
+  "statusTrace" : "self = <dbt.adapters.firebolt.impl.FireboltAdapter object at 0x7ff456e739d0>\nsql = 'select * from test17067249175339828742_test_incremental.seed'\nfetch = 'all'\nconn = Connection(type='firebolt', name='_test', state=<ConnectionState.CLOSED: 'closed'>, transaction_open=False, _handle=<f...'com.firebolt.FireboltDriver', engine_name='integration_testing__1706723746486', account_name='automation', retries=1))\n\n    def run_sql_for_tests(self, sql, fetch, conn):\n        cursor = conn.handle.cursor()\n        try:\n>           cursor.execute(sql)\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/impl.py:258: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/common/base_cursor.py:93: in inner\n    return func(self, *args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:254: in execute\n    self._do_execute(query, params_list, skip_parsing, async_execution)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:200: in _do_execute\n    self._raise_if_error(resp)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <firebolt.db.cursor.CursorV2 object at 0x7ff4566e7680>\nresp = <Response [500 Internal Server Error]>\n\n    def _raise_if_error(self, resp: Response) -> None:\n        \"\"\"Raise a proper error if any\"\"\"\n        if resp.status_code == codes.INTERNAL_SERVER_ERROR:\n>           raise OperationalError(\n                f\"Error executing query:\\n{resp.read().decode('utf-8')}\"\n            )\nE           firebolt.utils.exception.OperationalError: Error executing query:\nE           Schema does not exists: test17067249175339828742_test_incremental\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:94: OperationalError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <test_incremental.TestUniqueKeyDeleteInsertFirebolt object at 0x7ff458de4b20>\nproject = <dbt.tests.fixtures.project.TestProjInfo object at 0x7ff457c401c0>\n\n    def test__empty_str_unique_key(self, project):\n        \"\"\"with empty string for unique key, seed and model should match\"\"\"\n    \n        expected_fields = self.get_expected_fields(relation=\"seed\", seed_rows=8)\n>       test_case_fields = self.get_test_fields(\n            project,\n            seed=\"seed\",\n            incremental_model=\"empty_str_unique_key\",\n            update_sql_file=\"add_new_rows\",\n        )\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/adapter/incremental/test_incremental_unique_id.py:438: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/adapter/incremental/test_incremental_unique_id.py:369: in get_test_fields\n    seed_rows = len(project.run_sql(row_count_query, fetch=\"all\"))\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/fixtures/project.py:431: in run_sql\n    return run_sql_with_adapter(self.adapter, sql, fetch=fetch)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/util.py:318: in run_sql_with_adapter\n    return adapter.run_sql_for_tests(sql, fetch, conn)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <dbt.adapters.firebolt.impl.FireboltAdapter object at 0x7ff456e739d0>\nsql = 'select * from test17067249175339828742_test_incremental.seed'\nfetch = 'all'\nconn = Connection(type='firebolt', name='_test', state=<ConnectionState.CLOSED: 'closed'>, transaction_open=False, _handle=<f...'com.firebolt.FireboltDriver', engine_name='integration_testing__1706723746486', account_name='automation', retries=1))\n\n    def run_sql_for_tests(self, sql, fetch, conn):\n        cursor = conn.handle.cursor()\n        try:\n            cursor.execute(sql)\n            if hasattr(conn.handle, \"commit\"):\n                conn.handle.commit()\n            if fetch == \"one\":\n                return cursor.fetchone()\n            elif fetch == \"all\":\n                return cursor.fetchall()\n            else:\n                return\n        except BaseException as e:\n            if conn.handle and not getattr(conn.handle, \"closed\", True):\n>               conn.handle.rollback()\nE               AttributeError: 'Connection' object has no attribute 'rollback'\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/impl.py:269: AttributeError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "packages_yml",
+    "time" : {
+      "start" : 1706724917269,
+      "stop" : 1706724917269,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "properties",
+    "time" : {
+      "start" : 1706724917706,
+      "stop" : 1706724917706,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project_files",
+    "time" : {
+      "start" : 1706724917706,
+      "stop" : 1706724917707,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "profiles_yml",
+    "time" : {
+      "start" : 1706724917267,
+      "stop" : 1706724917269,
+      "duration" : 2
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "test_data_dir",
+    "time" : {
+      "start" : 1706724901765,
+      "stop" : 1706724901765,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project",
+    "time" : {
+      "start" : 1706724917708,
+      "stop" : 1706724918553,
+      "duration" : 845
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "packages",
+    "time" : {
+      "start" : 1706724917269,
+      "stop" : 1706724917269,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dependencies_yml",
+    "time" : {
+      "start" : 1706724917269,
+      "stop" : 1706724917270,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "adapter",
+    "time" : {
+      "start" : 1706724917270,
+      "stop" : 1706724917705,
+      "duration" : 435
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "seeds",
+    "time" : {
+      "start" : 1706724917706,
+      "stop" : 1706724917706,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "logs_dir",
+    "time" : {
+      "start" : 1706724917707,
+      "stop" : 1706724917707,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "snapshots",
+    "time" : {
+      "start" : 1706724917706,
+      "stop" : 1706724917706,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dbt_profile_target",
+    "time" : {
+      "start" : 1706724917267,
+      "stop" : 1706724917267,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "macros",
+    "time" : {
+      "start" : 1706724917706,
+      "stop" : 1706724917706,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "seeds",
+    "time" : {
+      "start" : 1706725072640,
+      "stop" : 1706725072640,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "clean_up_logging",
+    "time" : {
+      "start" : 1706724917266,
+      "stop" : 1706724917266,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "shared_data_dir",
+    "time" : {
+      "start" : 1706723931505,
+      "stop" : 1706723931505,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "models",
+    "time" : {
+      "start" : 1706724917706,
+      "stop" : 1706724917706,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "tests",
+    "time" : {
+      "start" : 1706724917706,
+      "stop" : 1706724917706,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "prefix",
+    "time" : {
+      "start" : 1706724917267,
+      "stop" : 1706724917267,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project_config_update",
+    "time" : {
+      "start" : 1706725072208,
+      "stop" : 1706725072208,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dbt_project_yml",
+    "time" : {
+      "start" : 1706724917269,
+      "stop" : 1706724917269,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project_root",
+    "time" : {
+      "start" : 1706724917266,
+      "stop" : 1706724917266,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project_config_update",
+    "time" : {
+      "start" : 1706724917269,
+      "stop" : 1706724917269,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "test_config",
+    "time" : {
+      "start" : 1706724917708,
+      "stop" : 1706724917708,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "tmpdir_factory",
+    "time" : {
+      "start" : 1706723931505,
+      "stop" : 1706723931505,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "selectors",
+    "time" : {
+      "start" : 1706724917270,
+      "stop" : 1706724917270,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dependencies",
+    "time" : {
+      "start" : 1706724917269,
+      "stop" : 1706724917269,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "profiles_config_update",
+    "time" : {
+      "start" : 1706724917267,
+      "stop" : 1706724917267,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "selectors_yml",
+    "time" : {
+      "start" : 1706724917270,
+      "stop" : 1706724917270,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "unique_schema",
+    "time" : {
+      "start" : 1706724917267,
+      "stop" : 1706724917267,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "analyses",
+    "time" : {
+      "start" : 1706724917706,
+      "stop" : 1706724917706,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dbt_profile_data",
+    "time" : {
+      "start" : 1706724917267,
+      "stop" : 1706724917267,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "profiles_root",
+    "time" : {
+      "start" : 1706724917266,
+      "stop" : 1706724917267,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "description" : "with empty string for unique key, seed and model should match",
+    "status" : "broken",
+    "statusMessage" : "AttributeError: 'Connection' object has no attribute 'rollback'",
+    "statusTrace" : "self = <dbt.adapters.firebolt.impl.FireboltAdapter object at 0x7ff456e739d0>\nsql = 'select * from test17067249175339828742_test_incremental.seed'\nfetch = 'all'\nconn = Connection(type='firebolt', name='_test', state=<ConnectionState.CLOSED: 'closed'>, transaction_open=False, _handle=<f...'com.firebolt.FireboltDriver', engine_name='integration_testing__1706723746486', account_name='automation', retries=1))\n\n    def run_sql_for_tests(self, sql, fetch, conn):\n        cursor = conn.handle.cursor()\n        try:\n>           cursor.execute(sql)\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/impl.py:258: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/common/base_cursor.py:93: in inner\n    return func(self, *args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:254: in execute\n    self._do_execute(query, params_list, skip_parsing, async_execution)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:200: in _do_execute\n    self._raise_if_error(resp)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <firebolt.db.cursor.CursorV2 object at 0x7ff4566e7680>\nresp = <Response [500 Internal Server Error]>\n\n    def _raise_if_error(self, resp: Response) -> None:\n        \"\"\"Raise a proper error if any\"\"\"\n        if resp.status_code == codes.INTERNAL_SERVER_ERROR:\n>           raise OperationalError(\n                f\"Error executing query:\\n{resp.read().decode('utf-8')}\"\n            )\nE           firebolt.utils.exception.OperationalError: Error executing query:\nE           Schema does not exists: test17067249175339828742_test_incremental\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:94: OperationalError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <test_incremental.TestUniqueKeyDeleteInsertFirebolt object at 0x7ff458de4b20>\nproject = <dbt.tests.fixtures.project.TestProjInfo object at 0x7ff457c401c0>\n\n    def test__empty_str_unique_key(self, project):\n        \"\"\"with empty string for unique key, seed and model should match\"\"\"\n    \n        expected_fields = self.get_expected_fields(relation=\"seed\", seed_rows=8)\n>       test_case_fields = self.get_test_fields(\n            project,\n            seed=\"seed\",\n            incremental_model=\"empty_str_unique_key\",\n            update_sql_file=\"add_new_rows\",\n        )\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/adapter/incremental/test_incremental_unique_id.py:438: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/adapter/incremental/test_incremental_unique_id.py:369: in get_test_fields\n    seed_rows = len(project.run_sql(row_count_query, fetch=\"all\"))\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/fixtures/project.py:431: in run_sql\n    return run_sql_with_adapter(self.adapter, sql, fetch=fetch)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/util.py:318: in run_sql_with_adapter\n    return adapter.run_sql_for_tests(sql, fetch, conn)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <dbt.adapters.firebolt.impl.FireboltAdapter object at 0x7ff456e739d0>\nsql = 'select * from test17067249175339828742_test_incremental.seed'\nfetch = 'all'\nconn = Connection(type='firebolt', name='_test', state=<ConnectionState.CLOSED: 'closed'>, transaction_open=False, _handle=<f...'com.firebolt.FireboltDriver', engine_name='integration_testing__1706723746486', account_name='automation', retries=1))\n\n    def run_sql_for_tests(self, sql, fetch, conn):\n        cursor = conn.handle.cursor()\n        try:\n            cursor.execute(sql)\n            if hasattr(conn.handle, \"commit\"):\n                conn.handle.commit()\n            if fetch == \"one\":\n                return cursor.fetchone()\n            elif fetch == \"all\":\n                return cursor.fetchall()\n            else:\n                return\n        except BaseException as e:\n            if conn.handle and not getattr(conn.handle, \"closed\", True):\n>               conn.handle.rollback()\nE               AttributeError: 'Connection' object has no attribute 'rollback'\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/impl.py:269: AttributeError",
+    "steps" : [ ],
+    "attachments" : [ {
+      "uid" : "291da07df88e99f9",
+      "name" : "log",
+      "source" : "291da07df88e99f9.txt",
+      "type" : "text/plain",
+      "size" : 12516
+    }, {
+      "uid" : "a6b2cadd782f8a15",
+      "name" : "stdout",
+      "source" : "a6b2cadd782f8a15.txt",
+      "type" : "text/plain",
+      "size" : 1649
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 2,
+    "shouldDisplayMessage" : true,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "profiles_yml::0",
+    "time" : {
+      "start" : 1706725072195,
+      "stop" : 1706725072195,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project::0",
+    "time" : {
+      "start" : 1706725062248,
+      "stop" : 1706725072187,
+      "duration" : 9939
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "adapter::0",
+    "time" : {
+      "start" : 1706725072191,
+      "stop" : 1706725072192,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "logs_dir::0",
+    "time" : {
+      "start" : 1706725072188,
+      "stop" : 1706725072188,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "parentSuite",
+    "value" : "tests.functional.adapter.incremental"
+  }, {
+    "name" : "suite",
+    "value" : "test_incremental"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestUniqueKeyDeleteInsertFirebolt"
+  }, {
+    "name" : "host",
+    "value" : "fv-az665-743"
+  }, {
+    "name" : "thread",
+    "value" : "2475-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "tests.functional.adapter.incremental.test_incremental"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Test defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ ]
+  },
+  "source" : "944dc7f5b1d6ff73.json",
+  "parameterValues" : [ ]
+}

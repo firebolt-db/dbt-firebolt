@@ -1,0 +1,194 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "dbt.exceptions.DbtRuntimeError: Runtime Error\n  Error executing query:\n  Line 7, Column 34: relation \"table_a\" does not exist",
+      "children" : [ {
+        "name" : "test_concurrency",
+        "uid" : "f342a5d6d6e1129f",
+        "parentUid" : "572a64d5c32a6c9b61d5b7e3ec576c77",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706724232338,
+          "stop" : 1706724256858,
+          "duration" : 24520
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "572a64d5c32a6c9b61d5b7e3ec576c77"
+    }, {
+      "name" : "AttributeError: 'Connection' object has no attribute 'rollback'",
+      "children" : [ {
+        "name" : "test__incremental_predicates",
+        "uid" : "24b17bc572848108",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706724903015,
+          "stop" : 1706724910375,
+          "duration" : 7360
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__no_unique_keys",
+        "uid" : "ae70993374cbf9f7",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706724918554,
+          "stop" : 1706724928430,
+          "duration" : 9876
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__empty_str_unique_key",
+        "uid" : "944dc7f5b1d6ff73",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706724928474,
+          "stop" : 1706724939153,
+          "duration" : 10679
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__one_unique_key",
+        "uid" : "c22951113f400b33",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706724939196,
+          "stop" : 1706724952162,
+          "duration" : 12966
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__empty_unique_key_list",
+        "uid" : "c037a8b7839d17e1",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706724963915,
+          "stop" : 1706724977276,
+          "duration" : 13361
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__unary_unique_key_list",
+        "uid" : "9878fca9751d59d3",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706724977318,
+          "stop" : 1706725000664,
+          "duration" : 23346
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__duplicated_unary_unique_key_list",
+        "uid" : "c9f4c82c8f34a304",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706725000704,
+          "stop" : 1706725015983,
+          "duration" : 15279
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__trinary_unique_key_list",
+        "uid" : "64f16be8aa36d968",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706725016137,
+          "stop" : 1706725037191,
+          "duration" : 21054
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__trinary_unique_key_list_no_update",
+        "uid" : "1b167524a8190812",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706725037332,
+          "stop" : 1706725048637,
+          "duration" : 11305
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "b4b75cd8bf3ba26dbc68506b9c65fd65"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  }, {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "AssertionError: dbt exit state did not match expected",
+      "children" : [ {
+        "name" : "test__constraints_ddl",
+        "uid" : "91b5ea2477daecc7",
+        "parentUid" : "716bf23f50e1373ebbe2cc6c2f01a3ef",
+        "status" : "failed",
+        "time" : {
+          "start" : 1706724466089,
+          "stop" : 1706724469807,
+          "duration" : 3718
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__constraints_ddl",
+        "uid" : "65f831c86eaaa9ab",
+        "parentUid" : "716bf23f50e1373ebbe2cc6c2f01a3ef",
+        "status" : "failed",
+        "time" : {
+          "start" : 1706724477986,
+          "stop" : 1706724481702,
+          "duration" : 3716
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test_build_assert_equal",
+        "uid" : "3f7256fbc35da346",
+        "parentUid" : "716bf23f50e1373ebbe2cc6c2f01a3ef",
+        "status" : "failed",
+        "time" : {
+          "start" : 1706725203967,
+          "stop" : 1706725210889,
+          "duration" : 6922
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "716bf23f50e1373ebbe2cc6c2f01a3ef"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ],
+  "name" : "categories"
+}
