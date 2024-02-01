@@ -1,0 +1,34 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m16:49:01  Running with dbt=1.7.6
+[0m16:49:01  Registered adapter: firebolt=1.5.0
+[0m16:49:01  Found 12 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m16:49:01  
+[0m16:49:02  Concurrency: 1 threads (target='default')
+[0m16:49:02  
+[0m16:49:02  1 of 1 START seed file seed .................................................... [RUN]
+[0m16:49:04  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 6[0m in 1.49s]
+[0m16:49:04  
+[0m16:49:04  Finished running 1 seed in 0 hours 0 minutes and 2.39 seconds (2.39s).
+[0m16:49:04  
+[0m16:49:04  [32mCompleted successfully[0m
+[0m16:49:04  
+[0m16:49:04  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'nontyped_trinary_unique_key_list', '--full-refresh']
+[0m16:49:04  Running with dbt=1.7.6
+[0m16:49:04  Registered adapter: firebolt=1.5.0
+[0m16:49:04  Found 12 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m16:49:04  
+[0m16:49:05  Concurrency: 1 threads (target='default')
+[0m16:49:05  
+[0m16:49:05  1 of 1 START sql incremental model nontyped_trinary_unique_key_list ............ [RUN]
+[0m16:49:06  1 of 1 OK created sql incremental model nontyped_trinary_unique_key_list ....... [[32mSUCCESS[0m in 1.28s]
+[0m16:49:06  
+[0m16:49:06  Finished running 1 incremental model in 0 hours 0 minutes and 2.16 seconds (2.16s).
+[0m16:49:06  
+[0m16:49:06  [32mCompleted successfully[0m
+[0m16:49:06  
+[0m16:49:06  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
