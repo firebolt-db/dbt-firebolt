@@ -1,0 +1,641 @@
+{
+  "uid" : "57dcf15be282fe10",
+  "name" : "test__constraints_ddl",
+  "fullName" : "tests.functional.adapter.test_constraints.TestConstraintsRuntimeDdlEnforcementFirebolt#test__constraints_ddl",
+  "historyId" : "645b99b698dcbde4f3e6c49012d2fbfe",
+  "time" : {
+    "start" : 1706805897276,
+    "stop" : 1706805901938,
+    "duration" : 4662
+  },
+  "status" : "failed",
+  "statusMessage" : "AssertionError: dbt exit state did not match expected",
+  "statusTrace" : "self = <test_constraints.TestConstraintsRuntimeDdlEnforcementFirebolt object at 0x7f223f2c1eb0>\nproject = <dbt.tests.fixtures.project.TestProjInfo object at 0x7f223c849d00>\nexpected_sql = \"\\ncreate dimension table if not exists <model_identifier> (\\n    id integer not null unique,\\n    color text,\\n    da...elect\\n            'blue' as color,\\n            1 as id,\\n            '2019-01-01' as date_day\\n    ) as model_subq\\n\"\n\n    def test__constraints_ddl(self, project, expected_sql):\n        unformatted_constraint_schema_yml = read_file(\"models\", \"constraints_schema.yml\")\n        write_file(\n            unformatted_constraint_schema_yml.format(schema=project.test_schema),\n            \"models\",\n            \"constraints_schema.yml\",\n        )\n    \n>       results = run_dbt([\"run\", \"-s\", \"+my_model\"])\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/adapter/constraints/test_constraints.py:237: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nargs = ['run', '-s', '+my_model', '--project-dir', '/tmp/pytest-of-runner/pytest-0/project16', '--profiles-dir', ...]\nexpect_pass = True\n\n    def run_dbt(\n        args: Optional[List[str]] = None,\n        expect_pass: bool = True,\n    ):\n        # Ignore logbook warnings\n        warnings.filterwarnings(\"ignore\", category=DeprecationWarning, module=\"logbook\")\n    \n        # reset global vars\n        reset_metadata_vars()\n    \n        # The logger will complain about already being initialized if\n        # we don't do this.\n        log_manager.reset_handlers()\n        if args is None:\n            args = [\"run\"]\n    \n        print(\"\\n\\nInvoking dbt with {}\".format(args))\n        from dbt.flags import get_flags\n    \n        flags = get_flags()\n        project_dir = getattr(flags, \"PROJECT_DIR\", None)\n        profiles_dir = getattr(flags, \"PROFILES_DIR\", None)\n        if project_dir and \"--project-dir\" not in args:\n            args.extend([\"--project-dir\", project_dir])\n        if profiles_dir and \"--profiles-dir\" not in args:\n            args.extend([\"--profiles-dir\", profiles_dir])\n    \n        dbt = dbtRunner()\n        res = dbt.invoke(args)\n    \n        # the exception is immediately raised to be caught in tests\n        # using a pattern like `with pytest.raises(SomeException):`\n        if res.exception is not None:\n            raise res.exception\n    \n        if expect_pass is not None:\n>           assert res.success == expect_pass, \"dbt exit state did not match expected\"\nE           AssertionError: dbt exit state did not match expected\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/util.py:108: AssertionError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "dbt_profile_target",
+    "time" : {
+      "start" : 1706805895944,
+      "stop" : 1706805895944,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "test_config",
+    "time" : {
+      "start" : 1706805896386,
+      "stop" : 1706805896386,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "test_data_dir",
+    "time" : {
+      "start" : 1706805722127,
+      "stop" : 1706805722127,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "shared_data_dir",
+    "time" : {
+      "start" : 1706805388657,
+      "stop" : 1706805388657,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "adapter",
+    "time" : {
+      "start" : 1706805895946,
+      "stop" : 1706805896385,
+      "duration" : 439
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "properties",
+    "time" : {
+      "start" : 1706805896385,
+      "stop" : 1706805896385,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "prefix",
+    "time" : {
+      "start" : 1706805895943,
+      "stop" : 1706805895943,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "macros",
+    "time" : {
+      "start" : 1706805896385,
+      "stop" : 1706805896385,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "snapshots",
+    "time" : {
+      "start" : 1706805896385,
+      "stop" : 1706805896385,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "packages_yml",
+    "time" : {
+      "start" : 1706805895946,
+      "stop" : 1706805895946,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "logs_dir",
+    "time" : {
+      "start" : 1706805896386,
+      "stop" : 1706805896386,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "expected_sql",
+    "time" : {
+      "start" : 1706805897275,
+      "stop" : 1706805897275,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project_root",
+    "time" : {
+      "start" : 1706805895942,
+      "stop" : 1706805895943,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "seeds",
+    "time" : {
+      "start" : 1706805896385,
+      "stop" : 1706805896385,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dependencies",
+    "time" : {
+      "start" : 1706805895946,
+      "stop" : 1706805895946,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "profiles_yml",
+    "time" : {
+      "start" : 1706805895944,
+      "stop" : 1706805895945,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "tmpdir_factory",
+    "time" : {
+      "start" : 1706805388657,
+      "stop" : 1706805388657,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "packages",
+    "time" : {
+      "start" : 1706805895946,
+      "stop" : 1706805895946,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "selectors_yml",
+    "time" : {
+      "start" : 1706805895946,
+      "stop" : 1706805895946,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "profiles_config_update",
+    "time" : {
+      "start" : 1706805895944,
+      "stop" : 1706805895944,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "models",
+    "time" : {
+      "start" : 1706805896385,
+      "stop" : 1706805896385,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dbt_project_yml",
+    "time" : {
+      "start" : 1706805895945,
+      "stop" : 1706805895945,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dbt_profile_data",
+    "time" : {
+      "start" : 1706805895944,
+      "stop" : 1706805895944,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "analyses",
+    "time" : {
+      "start" : 1706805896386,
+      "stop" : 1706805896386,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "selectors",
+    "time" : {
+      "start" : 1706805895946,
+      "stop" : 1706805895946,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project_config_update",
+    "time" : {
+      "start" : 1706805895945,
+      "stop" : 1706805895945,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "tests",
+    "time" : {
+      "start" : 1706805896386,
+      "stop" : 1706805896386,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project",
+    "time" : {
+      "start" : 1706805896387,
+      "stop" : 1706805897275,
+      "duration" : 888
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "profiles_root",
+    "time" : {
+      "start" : 1706805895943,
+      "stop" : 1706805895943,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "unique_schema",
+    "time" : {
+      "start" : 1706805895943,
+      "stop" : 1706805895944,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project_files",
+    "time" : {
+      "start" : 1706805896386,
+      "stop" : 1706805896386,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dependencies_yml",
+    "time" : {
+      "start" : 1706805895946,
+      "stop" : 1706805895946,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "clean_up_logging",
+    "time" : {
+      "start" : 1706805895942,
+      "stop" : 1706805895942,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "failed",
+    "statusMessage" : "AssertionError: dbt exit state did not match expected",
+    "statusTrace" : "self = <test_constraints.TestConstraintsRuntimeDdlEnforcementFirebolt object at 0x7f223f2c1eb0>\nproject = <dbt.tests.fixtures.project.TestProjInfo object at 0x7f223c849d00>\nexpected_sql = \"\\ncreate dimension table if not exists <model_identifier> (\\n    id integer not null unique,\\n    color text,\\n    da...elect\\n            'blue' as color,\\n            1 as id,\\n            '2019-01-01' as date_day\\n    ) as model_subq\\n\"\n\n    def test__constraints_ddl(self, project, expected_sql):\n        unformatted_constraint_schema_yml = read_file(\"models\", \"constraints_schema.yml\")\n        write_file(\n            unformatted_constraint_schema_yml.format(schema=project.test_schema),\n            \"models\",\n            \"constraints_schema.yml\",\n        )\n    \n>       results = run_dbt([\"run\", \"-s\", \"+my_model\"])\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/adapter/constraints/test_constraints.py:237: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nargs = ['run', '-s', '+my_model', '--project-dir', '/tmp/pytest-of-runner/pytest-0/project16', '--profiles-dir', ...]\nexpect_pass = True\n\n    def run_dbt(\n        args: Optional[List[str]] = None,\n        expect_pass: bool = True,\n    ):\n        # Ignore logbook warnings\n        warnings.filterwarnings(\"ignore\", category=DeprecationWarning, module=\"logbook\")\n    \n        # reset global vars\n        reset_metadata_vars()\n    \n        # The logger will complain about already being initialized if\n        # we don't do this.\n        log_manager.reset_handlers()\n        if args is None:\n            args = [\"run\"]\n    \n        print(\"\\n\\nInvoking dbt with {}\".format(args))\n        from dbt.flags import get_flags\n    \n        flags = get_flags()\n        project_dir = getattr(flags, \"PROJECT_DIR\", None)\n        profiles_dir = getattr(flags, \"PROFILES_DIR\", None)\n        if project_dir and \"--project-dir\" not in args:\n            args.extend([\"--project-dir\", project_dir])\n        if profiles_dir and \"--profiles-dir\" not in args:\n            args.extend([\"--profiles-dir\", profiles_dir])\n    \n        dbt = dbtRunner()\n        res = dbt.invoke(args)\n    \n        # the exception is immediately raised to be caught in tests\n        # using a pattern like `with pytest.raises(SomeException):`\n        if res.exception is not None:\n            raise res.exception\n    \n        if expect_pass is not None:\n>           assert res.success == expect_pass, \"dbt exit state did not match expected\"\nE           AssertionError: dbt exit state did not match expected\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/util.py:108: AssertionError",
+    "steps" : [ ],
+    "attachments" : [ {
+      "uid" : "e4080317d1b69b05",
+      "name" : "log",
+      "source" : "e4080317d1b69b05.txt",
+      "type" : "text/plain",
+      "size" : 20525
+    }, {
+      "uid" : "d7ffff53736c7fa",
+      "name" : "stdout",
+      "source" : "d7ffff53736c7fa.txt",
+      "type" : "text/plain",
+      "size" : 2893
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 2,
+    "shouldDisplayMessage" : true,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "adapter::0",
+    "time" : {
+      "start" : 1706805909227,
+      "stop" : 1706805909227,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "logs_dir::0",
+    "time" : {
+      "start" : 1706805909225,
+      "stop" : 1706805909225,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "profiles_yml::0",
+    "time" : {
+      "start" : 1706805909229,
+      "stop" : 1706805909229,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project::0",
+    "time" : {
+      "start" : 1706805901956,
+      "stop" : 1706805909224,
+      "duration" : 7268
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "parentSuite",
+    "value" : "tests.functional.adapter"
+  }, {
+    "name" : "suite",
+    "value" : "test_constraints"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestConstraintsRuntimeDdlEnforcementFirebolt"
+  }, {
+    "name" : "host",
+    "value" : "fv-az1215-353"
+  }, {
+    "name" : "thread",
+    "value" : "2457-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "tests.functional.adapter.test_constraints"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Product defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ ]
+  },
+  "source" : "57dcf15be282fe10.json",
+  "parameterValues" : [ ]
+}

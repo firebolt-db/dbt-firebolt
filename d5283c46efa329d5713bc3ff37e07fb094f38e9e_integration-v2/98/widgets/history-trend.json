@@ -1,0 +1,13 @@
+[ {
+  "buildOrder" : 98,
+  "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/d5283c46efa329d5713bc3ff37e07fb094f38e9e_integration-v2/98/",
+  "reportName" : "Allure Report with history",
+  "data" : {
+    "failed" : 3,
+    "broken" : 9,
+    "skipped" : 31,
+    "passed" : 91,
+    "unknown" : 0,
+    "total" : 134
+  }
+} ]

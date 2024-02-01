@@ -1,0 +1,177 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "AssertionError: dbt exit state did not match expected",
+      "children" : [ {
+        "name" : "test__constraints_ddl",
+        "uid" : "57dcf15be282fe10",
+        "parentUid" : "716bf23f50e1373ebbe2cc6c2f01a3ef",
+        "status" : "failed",
+        "time" : {
+          "start" : 1706805897276,
+          "stop" : 1706805901938,
+          "duration" : 4662
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__constraints_ddl",
+        "uid" : "bdebf01cd64d116a",
+        "parentUid" : "716bf23f50e1373ebbe2cc6c2f01a3ef",
+        "status" : "failed",
+        "time" : {
+          "start" : 1706805910327,
+          "stop" : 1706805913910,
+          "duration" : 3583
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test_build_assert_equal",
+        "uid" : "4a7a8bcb05ca7b01",
+        "parentUid" : "716bf23f50e1373ebbe2cc6c2f01a3ef",
+        "status" : "failed",
+        "time" : {
+          "start" : 1706806549808,
+          "stop" : 1706806556313,
+          "duration" : 6505
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "716bf23f50e1373ebbe2cc6c2f01a3ef"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  }, {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "AttributeError: 'Connection' object has no attribute 'rollback'",
+      "children" : [ {
+        "name" : "test__incremental_predicates",
+        "uid" : "6db052cb5e553806",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706806322085,
+          "stop" : 1706806329279,
+          "duration" : 7194
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__no_unique_keys",
+        "uid" : "8b8b0925b7844f4a",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706806337041,
+          "stop" : 1706806346255,
+          "duration" : 9214
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__empty_str_unique_key",
+        "uid" : "8bc6f96f428ba09a",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706806346295,
+          "stop" : 1706806354385,
+          "duration" : 8090
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__one_unique_key",
+        "uid" : "ee9cc6535ffd281c",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706806354427,
+          "stop" : 1706806365229,
+          "duration" : 10802
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__empty_unique_key_list",
+        "uid" : "fd249347cc255820",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706806373705,
+          "stop" : 1706806381958,
+          "duration" : 8253
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__unary_unique_key_list",
+        "uid" : "a96e6fc11e848c7c",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706806381999,
+          "stop" : 1706806392374,
+          "duration" : 10375
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__duplicated_unary_unique_key_list",
+        "uid" : "2b8754ec9a05b245",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706806392415,
+          "stop" : 1706806402567,
+          "duration" : 10152
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__trinary_unique_key_list",
+        "uid" : "fdf18ebf17c7d854",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706806402703,
+          "stop" : 1706806412879,
+          "duration" : 10176
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test__trinary_unique_key_list_no_update",
+        "uid" : "a816840ba0a10ea4",
+        "parentUid" : "b4b75cd8bf3ba26dbc68506b9c65fd65",
+        "status" : "broken",
+        "time" : {
+          "start" : 1706806413018,
+          "stop" : 1706806422027,
+          "duration" : 9009
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "b4b75cd8bf3ba26dbc68506b9c65fd65"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  } ],
+  "name" : "categories"
+}

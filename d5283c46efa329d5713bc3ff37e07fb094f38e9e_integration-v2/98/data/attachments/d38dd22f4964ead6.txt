@@ -1,0 +1,37 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project37
+
+
+Invoking dbt with ['seed']
+[0m16:50:18  Running with dbt=1.7.6
+[0m16:50:18  Registered adapter: firebolt=1.5.0
+[0m16:50:18  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m16:50:19  Found 1 seed, 1 test, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m16:50:19  
+[0m16:50:20  Concurrency: 1 threads (target='default')
+[0m16:50:20  
+[0m16:50:20  1 of 1 START seed file example_seed ............................................ [RUN]
+[0m16:50:22  1 of 1 OK loaded seed file public.example_seed ................................. [[32mINSERT 3[0m in 1.51s]
+[0m16:50:22  
+[0m16:50:22  Finished running 1 seed in 0 hours 0 minutes and 3.03 seconds (3.03s).
+[0m16:50:22  
+[0m16:50:22  [32mCompleted successfully[0m
+[0m16:50:22  
+[0m16:50:22  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m16:50:22  Running with dbt=1.7.6
+[0m16:50:22  Registered adapter: firebolt=1.5.0
+[0m16:50:22  Found 1 seed, 1 test, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m16:50:22  
+[0m16:50:23  Concurrency: 1 threads (target='default')
+[0m16:50:23  
+[0m16:50:23  1 of 1 START test accepted_values_example_seed_c__0 ............................ [RUN]
+[0m16:50:24  1 of 1 PASS accepted_values_example_seed_c__0 .................................. [[32mPASS[0m in 0.80s]
+[0m16:50:24  
+[0m16:50:24  Finished running 1 test in 0 hours 0 minutes and 1.94 seconds (1.94s).
+[0m16:50:24  
+[0m16:50:24  [32mCompleted successfully[0m
+[0m16:50:24  
+[0m16:50:24  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
