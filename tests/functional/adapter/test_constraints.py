@@ -79,6 +79,7 @@ class TestIncrementalConstraintsColumnsEqualFirebolt(
     pass
 
 
+@mark.skip(reason='Firebolt does not support foreign key')
 class TestConstraintsRuntimeDdlEnforcementFirebolt(
     BaseConstraintsRuntimeDdlEnforcement
 ):
@@ -92,6 +93,7 @@ class TestConstraintsRollbackFirebolt(BaseConstraintsRollback):
     pass
 
 
+@mark.skip(reason='Firebolt does not support foreign key')
 class TestIncrementalConstraintsRuntimeDdlEnforcementFirebolt(
     BaseIncrementalConstraintsRuntimeDdlEnforcement
 ):
