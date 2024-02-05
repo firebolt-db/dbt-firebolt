@@ -1,0 +1,2 @@
+INFO     httpx:_client.py:1027 HTTP Request: GET https://api.staging.firebolt.io/web/v3/account/automation/engineUrl "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1027 HTTP Request: GET https://api.staging.firebolt.io/web/v3/account/automation/resolve "HTTP/1.1 500 Internal Server Error"

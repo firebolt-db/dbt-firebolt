@@ -1,0 +1,3 @@
+INFO     httpx:_client.py:1027 HTTP Request: GET https://api.staging.firebolt.io/web/v3/account/automation/engineUrl "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1027 HTTP Request: GET https://api.staging.firebolt.io/web/v3/account/automation/resolve "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1027 HTTP Request: POST https://api.us-east-1.staging.firebolt.io/?database=integration_testing__1707155886557&output_format=JSON_Compact&account_id=01h9g6nnqsrtc617763xer77ah "HTTP/1.1 500 Internal Server Error"

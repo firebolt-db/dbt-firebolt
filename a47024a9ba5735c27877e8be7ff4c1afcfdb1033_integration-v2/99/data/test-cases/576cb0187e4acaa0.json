@@ -1,0 +1,701 @@
+{
+  "uid" : "576cb0187e4acaa0",
+  "name" : "test__constraints_wrong_column_data_types",
+  "fullName" : "tests.functional.adapter.test_constraints.TestTableConstraintsColumnsEqualFirebolt#test__constraints_wrong_column_data_types",
+  "historyId" : "54ff9f0e8bc4fa063290fafbb0bc2fa2",
+  "time" : {
+    "start" : 1707156416801,
+    "stop" : 1707156441041,
+    "duration" : 24240
+  },
+  "status" : "broken",
+  "statusMessage" : "dbt.exceptions.DbtRuntimeError: Runtime Error\n  Runtime Error\n    Database Error\n      Server error '502 Bad Gateway' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\n      For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502",
+  "statusTrace" : "cls = <class 'dbt.adapters.firebolt.connections.FireboltConnectionManager'>\nconnection = Connection(type='firebolt', name='list_integration_testing__1707155886557_public', state=<ConnectionState.CLOSED: 'clo...'com.firebolt.FireboltDriver', engine_name='integration_testing__1707155886557', account_name='automation', retries=1))\nconnect = <function FireboltConnectionManager.open.<locals>.connect at 0x7f45f62698b0>\nlogger = AdapterLogger(name='Firebolt')\nretryable_exceptions = [<class 'firebolt.utils.exception.FireboltDatabaseError'>, <class 'firebolt.utils.exception.ConnectionError'>, <class 'firebolt.utils.exception.InterfaceError'>]\nretry_limit = 1, retry_timeout = 1, _attempts = 0\n\n    @classmethod\n    def retry_connection(\n        cls,\n        connection: Connection,\n        connect: Callable[[], AdapterHandle],\n        logger: AdapterLogger,\n        retryable_exceptions: Iterable[Type[Exception]],\n        retry_limit: int = 1,\n        retry_timeout: Union[Callable[[int], SleepTime], SleepTime] = 1,\n        _attempts: int = 0,\n    ) -> Connection:\n        \"\"\"Given a Connection, set its handle by calling connect.\n    \n        The calls to connect will be retried up to retry_limit times to deal with transient\n        connection errors. By default, one retry will be attempted if retryable_exceptions is set.\n    \n        :param Connection connection: An instance of a Connection that needs a handle to be set,\n            usually when attempting to open it.\n        :param connect: A callable that returns the appropiate connection handle for a\n            given adapter. This callable will be retried retry_limit times if a subclass of any\n            Exception in retryable_exceptions is raised by connect.\n        :type connect: Callable[[], AdapterHandle]\n        :param AdapterLogger logger: A logger to emit messages on retry attempts or errors. When\n            handling expected errors, we call debug, and call warning on unexpected errors or when\n            all retry attempts have been exhausted.\n        :param retryable_exceptions: An iterable of exception classes that if raised by\n            connect should trigger a retry.\n        :type retryable_exceptions: Iterable[Type[Exception]]\n        :param int retry_limit: How many times to retry the call to connect. If this limit\n            is exceeded before a successful call, a FailedToConnectError will be raised.\n            Must be non-negative.\n        :param retry_timeout: Time to wait between attempts to connect. Can also take a\n            Callable that takes the number of attempts so far, beginning at 0, and returns an int\n            or float to be passed to time.sleep.\n        :type retry_timeout: Union[Callable[[int], SleepTime], SleepTime] = 1\n        :param int _attempts: Parameter used to keep track of the number of attempts in calling the\n            connect function across recursive calls. Passed as an argument to retry_timeout if it\n            is a Callable. This parameter should not be set by the initial caller.\n        :raises dbt.exceptions.FailedToConnectError: Upon exhausting all retry attempts without\n            successfully acquiring a handle.\n        :return: The given connection with its appropriate state and handle attributes set\n            depending on whether we successfully acquired a handle or not.\n        \"\"\"\n        timeout = retry_timeout(_attempts) if callable(retry_timeout) else retry_timeout\n        if timeout < 0:\n            raise dbt.exceptions.FailedToConnectError(\n                \"retry_timeout cannot be negative or return a negative time.\"\n            )\n    \n        if retry_limit < 0 or retry_limit > sys.getrecursionlimit():\n            # This guard is not perfect others may add to the recursion limit (e.g. built-ins).\n            connection.handle = None\n            connection.state = ConnectionState.FAIL\n            raise dbt.exceptions.FailedToConnectError(\"retry_limit cannot be negative\")\n    \n        try:\n>           connection.handle = connect()\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/connections.py:241: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:121: in connect\n    handle = sdk_connect(\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/connection.py:53: in connect\n    return connect_v2(\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/connection.py:142: in connect_v2\n    ) = cursor._get_engine_url_status_db(system_engine_connection, engine_name)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:450: in _get_engine_url_status_db\n    cursor.execute(\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/common/base_cursor.py:93: in inner\n    return func(self, *args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:254: in execute\n    self._do_execute(query, params_list, skip_parsing, async_execution)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:197: in _do_execute\n    resp = self._api_request(\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:398: in _api_request\n    parameters[\"account_id\"] = self._client.account_id\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/client/client.py:155: in account_id\n    response.raise_for_status()\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <Response [502 Bad Gateway]>\n\n    def raise_for_status(self) -> \"Response\":\n        \"\"\"\n        Raise the `HTTPStatusError` if one occurred.\n        \"\"\"\n        request = self._request\n        if request is None:\n            raise RuntimeError(\n                \"Cannot call `raise_for_status` as the request \"\n                \"instance has not been set on this response.\"\n            )\n    \n        if self.is_success:\n            return self\n    \n        if self.has_redirect_location:\n            message = (\n                \"{error_type} '{0.status_code} {0.reason_phrase}' for url '{0.url}'\\n\"\n                \"Redirect location: '{0.headers[location]}'\\n\"\n                \"For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/{0.status_code}\"\n            )\n        else:\n            message = (\n                \"{error_type} '{0.status_code} {0.reason_phrase}' for url '{0.url}'\\n\"\n                \"For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/{0.status_code}\"\n            )\n    \n        status_class = self.status_code // 100\n        error_types = {\n            1: \"Informational response\",\n            3: \"Redirect response\",\n            4: \"Client error\",\n            5: \"Server error\",\n        }\n        error_type = error_types.get(status_class, \"Invalid status code\")\n        message = message.format(self, error_type=error_type)\n>       raise HTTPStatusError(message, request=request, response=self)\nE       httpx.HTTPStatusError: Server error '502 Bad Gateway' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\nE       For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/httpx/_models.py:759: HTTPStatusError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <dbt.adapters.firebolt.connections.FireboltConnectionManager object at 0x7f45f77cd910>\nsql = '\\n\\n      SELECT \\'integration_testing__1707155886557\\' AS \"database\",\\n             table_name AS \"name\",\\n         ...ofile_name\": \"test\", \"target_name\": \"default\", \"connection_name\": \"list_integration_testing__1707155886557_public\"} */'\n\n    @contextmanager\n    def exception_handler(self, sql: str) -> Generator:\n        try:\n>           yield\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:148: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/connections.py:79: in add_query\n    cursor = connection.handle.cursor()\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/contracts/connection.py:90: in handle\n    self._handle.resolve(self)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/contracts/connection.py:114: in resolve\n    return self.opener(connection)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:137: in open\n    return cls.retry_connection(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ncls = <class 'dbt.adapters.firebolt.connections.FireboltConnectionManager'>\nconnection = Connection(type='firebolt', name='list_integration_testing__1707155886557_public', state=<ConnectionState.CLOSED: 'clo...'com.firebolt.FireboltDriver', engine_name='integration_testing__1707155886557', account_name='automation', retries=1))\nconnect = <function FireboltConnectionManager.open.<locals>.connect at 0x7f45f62698b0>\nlogger = AdapterLogger(name='Firebolt')\nretryable_exceptions = [<class 'firebolt.utils.exception.FireboltDatabaseError'>, <class 'firebolt.utils.exception.ConnectionError'>, <class 'firebolt.utils.exception.InterfaceError'>]\nretry_limit = 1, retry_timeout = 1, _attempts = 0\n\n    @classmethod\n    def retry_connection(\n        cls,\n        connection: Connection,\n        connect: Callable[[], AdapterHandle],\n        logger: AdapterLogger,\n        retryable_exceptions: Iterable[Type[Exception]],\n        retry_limit: int = 1,\n        retry_timeout: Union[Callable[[int], SleepTime], SleepTime] = 1,\n        _attempts: int = 0,\n    ) -> Connection:\n        \"\"\"Given a Connection, set its handle by calling connect.\n    \n        The calls to connect will be retried up to retry_limit times to deal with transient\n        connection errors. By default, one retry will be attempted if retryable_exceptions is set.\n    \n        :param Connection connection: An instance of a Connection that needs a handle to be set,\n            usually when attempting to open it.\n        :param connect: A callable that returns the appropiate connection handle for a\n            given adapter. This callable will be retried retry_limit times if a subclass of any\n            Exception in retryable_exceptions is raised by connect.\n        :type connect: Callable[[], AdapterHandle]\n        :param AdapterLogger logger: A logger to emit messages on retry attempts or errors. When\n            handling expected errors, we call debug, and call warning on unexpected errors or when\n            all retry attempts have been exhausted.\n        :param retryable_exceptions: An iterable of exception classes that if raised by\n            connect should trigger a retry.\n        :type retryable_exceptions: Iterable[Type[Exception]]\n        :param int retry_limit: How many times to retry the call to connect. If this limit\n            is exceeded before a successful call, a FailedToConnectError will be raised.\n            Must be non-negative.\n        :param retry_timeout: Time to wait between attempts to connect. Can also take a\n            Callable that takes the number of attempts so far, beginning at 0, and returns an int\n            or float to be passed to time.sleep.\n        :type retry_timeout: Union[Callable[[int], SleepTime], SleepTime] = 1\n        :param int _attempts: Parameter used to keep track of the number of attempts in calling the\n            connect function across recursive calls. Passed as an argument to retry_timeout if it\n            is a Callable. This parameter should not be set by the initial caller.\n        :raises dbt.exceptions.FailedToConnectError: Upon exhausting all retry attempts without\n            successfully acquiring a handle.\n        :return: The given connection with its appropriate state and handle attributes set\n            depending on whether we successfully acquired a handle or not.\n        \"\"\"\n        timeout = retry_timeout(_attempts) if callable(retry_timeout) else retry_timeout\n        if timeout < 0:\n            raise dbt.exceptions.FailedToConnectError(\n                \"retry_timeout cannot be negative or return a negative time.\"\n            )\n    \n        if retry_limit < 0 or retry_limit > sys.getrecursionlimit():\n            # This guard is not perfect others may add to the recursion limit (e.g. built-ins).\n            connection.handle = None\n            connection.state = ConnectionState.FAIL\n            raise dbt.exceptions.FailedToConnectError(\"retry_limit cannot be negative\")\n    \n        try:\n            connection.handle = connect()\n            connection.state = ConnectionState.OPEN\n            return connection\n    \n        except tuple(retryable_exceptions) as e:\n            if retry_limit <= 0:\n                connection.handle = None\n                connection.state = ConnectionState.FAIL\n                raise dbt.exceptions.FailedToConnectError(str(e))\n    \n            logger.debug(\n                f\"Got a retryable error when attempting to open a {cls.TYPE} connection.\\n\"\n                f\"{retry_limit} attempts remaining. Retrying in {timeout} seconds.\\n\"\n                f\"Error:\\n{e}\"\n            )\n    \n            sleep(timeout)\n            return cls.retry_connection(\n                connection=connection,\n                connect=connect,\n                logger=logger,\n                retry_limit=retry_limit - 1,\n                retry_timeout=retry_timeout,\n                retryable_exceptions=retryable_exceptions,\n                _attempts=_attempts + 1,\n            )\n    \n        except Exception as e:\n            connection.handle = None\n            connection.state = ConnectionState.FAIL\n>           raise dbt.exceptions.FailedToConnectError(str(e))\nE           dbt.exceptions.FailedToConnectError: Database Error\nE             Server error '502 Bad Gateway' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\nE             For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/connections.py:271: FailedToConnectError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <dbt.adapters.firebolt.connections.FireboltConnectionManager object at 0x7f45f77cd910>\nsql = 'macro list_relations_without_caching'\n\n    @contextmanager\n    def exception_handler(self, sql: str) -> Generator:\n        try:\n>           yield\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:148: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/impl.py:1112: in execute_macro\n    result = macro_function(**kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:330: in __call__\n    return self.call_macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:257: in call_macro\n    return macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:763: in __call__\n    return self._invoke(arguments, autoescape)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:777: in _invoke\n    rv = self._func(*arguments)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/sandbox.py:393: in call\n    return __context.call(__obj, *args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:298: in call\n    return __obj(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:330: in __call__\n    return self.call_macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:257: in call_macro\n    return macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:763: in __call__\n    return self._invoke(arguments, autoescape)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:777: in _invoke\n    rv = self._func(*arguments)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/sandbox.py:393: in call\n    return __context.call(__obj, *args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:298: in call\n    return __obj(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:330: in __call__\n    return self.call_macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:257: in call_macro\n    return macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:763: in __call__\n    return self._invoke(arguments, autoescape)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:777: in _invoke\n    rv = self._func(*arguments)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/sandbox.py:393: in call\n    return __context.call(__obj, *args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:298: in call\n    return __obj(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/impl.py:310: in execute\n    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/connections.py:138: in execute\n    _, cursor = self.add_query(sql, auto_begin)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/connections.py:90: in add_query\n    return connection, cursor\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/contextlib.py:137: in __exit__\n    self.gen.throw(typ, value, traceback)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <dbt.adapters.firebolt.connections.FireboltConnectionManager object at 0x7f45f77cd910>\nsql = '\\n\\n      SELECT \\'integration_testing__1707155886557\\' AS \"database\",\\n             table_name AS \"name\",\\n         ...ofile_name\": \"test\", \"target_name\": \"default\", \"connection_name\": \"list_integration_testing__1707155886557_public\"} */'\n\n    @contextmanager\n    def exception_handler(self, sql: str) -> Generator:\n        try:\n            yield\n        except Exception as e:\n            self.release()\n>           raise DbtRuntimeError(str(e))\nE           dbt.exceptions.DbtRuntimeError: Runtime Error\nE             Database Error\nE               Server error '502 Bad Gateway' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\nE               For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:151: DbtRuntimeError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <test_constraints.TestTableConstraintsColumnsEqualFirebolt object at 0x7f45f8adb6a0>\nproject = <dbt.tests.fixtures.project.TestProjInfo object at 0x7f45f654a5b0>\nstring_type = 'text', int_type = 'integer', schema_string_type = 'text'\nschema_int_type = 'integer'\ndata_types = [['1', 'integer', 'integer'], [\"'1'\", 'text', 'text'], ['true', 'bool', 'boolean'], [\"'2013-11-03 00:00:00-07'::timestamptz\", 'timestamptz', 'timestamp'], [\"ARRAY['a','b','c']\", 'text[]', 'array'], ['ARRAY[1,2,3]', 'int[]', 'array'], ...]\n\n    def test__constraints_wrong_column_data_types(\n        self, project, string_type, int_type, schema_string_type, schema_int_type, data_types\n    ):\n        for (sql_column_value, schema_data_type, error_data_type) in data_types:\n            # Write parametrized data_type to sql file\n            write_file(\n                my_model_data_type_sql.format(sql_value=sql_column_value),\n                \"models\",\n                \"my_model_data_type.sql\",\n            )\n    \n            # Write wrong data_type to corresponding schema file\n            # Write integer type for all schema yaml values except when testing integer type itself\n            wrong_schema_data_type = (\n                schema_int_type\n                if schema_data_type.upper() != schema_int_type.upper()\n                else schema_string_type\n            )\n            wrong_schema_error_data_type = (\n                int_type if schema_data_type.upper() != schema_int_type.upper() else string_type\n            )\n            write_file(\n                model_data_type_schema_yml.format(data_type=wrong_schema_data_type),\n                \"models\",\n                \"constraints_schema.yml\",\n            )\n    \n>           results, log_output = run_dbt_and_capture(\n                [\"run\", \"-s\", \"my_model_data_type\"], expect_pass=False\n            )\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/adapter/constraints/test_constraints.py:131: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/util.py:124: in run_dbt_and_capture\n    res = run_dbt(args, expect_pass=expect_pass)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/util.py:105: in run_dbt\n    raise res.exception\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:91: in wrapper\n    result, success = func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:76: in wrapper\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:169: in wrapper\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:198: in wrapper\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:245: in wrapper\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:276: in wrapper\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/main.py:625: in run\n    results = task.run()\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/task/runnable.py:474: in run\n    result = self.execute_with_hooks(selected_uids)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/task/runnable.py:434: in execute_with_hooks\n    self.before_run(adapter, selected_uids)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/task/run.py:447: in before_run\n    self.populate_adapter_cache(adapter, required_schemas)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/task/runnable.py:412: in populate_adapter_cache\n    adapter.set_relations_cache(self.manifest)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/impl.py:519: in set_relations_cache\n    self._relations_cache_for_schemas(manifest, required_schemas)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/impl.py:495: in _relations_cache_for_schemas\n    for relation in future.result():\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/concurrent/futures/_base.py:439: in result\n    return self.__get_result()\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/concurrent/futures/_base.py:391: in __get_result\n    raise self._exception\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/concurrent/futures/thread.py:58: in run\n    result = self.fn(*self.args, **self.kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/utils.py:471: in connected\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/impl.py:185: in list_relations_without_caching\n    results = self.execute_macro(LIST_RELATIONS_MACRO_NAME, kwargs=kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/impl.py:1112: in execute_macro\n    result = macro_function(**kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/contextlib.py:137: in __exit__\n    self.gen.throw(typ, value, traceback)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <dbt.adapters.firebolt.connections.FireboltConnectionManager object at 0x7f45f77cd910>\nsql = 'macro list_relations_without_caching'\n\n    @contextmanager\n    def exception_handler(self, sql: str) -> Generator:\n        try:\n            yield\n        except Exception as e:\n            self.release()\n>           raise DbtRuntimeError(str(e))\nE           dbt.exceptions.DbtRuntimeError: Runtime Error\nE             Runtime Error\nE               Database Error\nE                 Server error '502 Bad Gateway' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\nE                 For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:151: DbtRuntimeError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "dbt_project_yml",
+    "time" : {
+      "start" : 1707156408538,
+      "stop" : 1707156408538,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "snapshots",
+    "time" : {
+      "start" : 1707156408978,
+      "stop" : 1707156408978,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "schema_int_type",
+    "time" : {
+      "start" : 1707156416800,
+      "stop" : 1707156416800,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "prefix",
+    "time" : {
+      "start" : 1707156408536,
+      "stop" : 1707156408536,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "macros",
+    "time" : {
+      "start" : 1707156408978,
+      "stop" : 1707156408978,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "tmpdir_factory",
+    "time" : {
+      "start" : 1707156084589,
+      "stop" : 1707156084589,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "test_config",
+    "time" : {
+      "start" : 1707156408979,
+      "stop" : 1707156408979,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "clean_up_logging",
+    "time" : {
+      "start" : 1707156408535,
+      "stop" : 1707156408535,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dbt_profile_target",
+    "time" : {
+      "start" : 1707156408537,
+      "stop" : 1707156408537,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "selectors",
+    "time" : {
+      "start" : 1707156408539,
+      "stop" : 1707156408539,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "packages_yml",
+    "time" : {
+      "start" : 1707156408539,
+      "stop" : 1707156408539,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "test_data_dir",
+    "time" : {
+      "start" : 1707156408535,
+      "stop" : 1707156408535,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "profiles_yml",
+    "time" : {
+      "start" : 1707156408537,
+      "stop" : 1707156408538,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "profiles_root",
+    "time" : {
+      "start" : 1707156408536,
+      "stop" : 1707156408536,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "unique_schema",
+    "time" : {
+      "start" : 1707156408536,
+      "stop" : 1707156408536,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project_root",
+    "time" : {
+      "start" : 1707156408535,
+      "stop" : 1707156408536,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project_files",
+    "time" : {
+      "start" : 1707156408978,
+      "stop" : 1707156408979,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dbt_profile_data",
+    "time" : {
+      "start" : 1707156408537,
+      "stop" : 1707156408537,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "string_type",
+    "time" : {
+      "start" : 1707156416800,
+      "stop" : 1707156416800,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "seeds",
+    "time" : {
+      "start" : 1707156408978,
+      "stop" : 1707156408978,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "logs_dir",
+    "time" : {
+      "start" : 1707156408979,
+      "stop" : 1707156408979,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "shared_data_dir",
+    "time" : {
+      "start" : 1707156084589,
+      "stop" : 1707156084589,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "int_type",
+    "time" : {
+      "start" : 1707156416800,
+      "stop" : 1707156416800,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "selectors_yml",
+    "time" : {
+      "start" : 1707156408539,
+      "stop" : 1707156408539,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "packages",
+    "time" : {
+      "start" : 1707156408538,
+      "stop" : 1707156408538,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "schema_string_type",
+    "time" : {
+      "start" : 1707156416800,
+      "stop" : 1707156416800,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "models",
+    "time" : {
+      "start" : 1707156408977,
+      "stop" : 1707156408978,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "analyses",
+    "time" : {
+      "start" : 1707156408978,
+      "stop" : 1707156408978,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dependencies_yml",
+    "time" : {
+      "start" : 1707156408539,
+      "stop" : 1707156408539,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "data_types",
+    "time" : {
+      "start" : 1707156416800,
+      "stop" : 1707156416800,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "dependencies",
+    "time" : {
+      "start" : 1707156408539,
+      "stop" : 1707156408539,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project_config_update",
+    "time" : {
+      "start" : 1707156408538,
+      "stop" : 1707156408538,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "adapter",
+    "time" : {
+      "start" : 1707156408539,
+      "stop" : 1707156408977,
+      "duration" : 438
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "tests",
+    "time" : {
+      "start" : 1707156408978,
+      "stop" : 1707156408978,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "profiles_config_update",
+    "time" : {
+      "start" : 1707156408537,
+      "stop" : 1707156408537,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project",
+    "time" : {
+      "start" : 1707156408980,
+      "stop" : 1707156409771,
+      "duration" : 791
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "properties",
+    "time" : {
+      "start" : 1707156408978,
+      "stop" : 1707156408978,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "broken",
+    "statusMessage" : "dbt.exceptions.DbtRuntimeError: Runtime Error\n  Runtime Error\n    Database Error\n      Server error '502 Bad Gateway' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\n      For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502",
+    "statusTrace" : "cls = <class 'dbt.adapters.firebolt.connections.FireboltConnectionManager'>\nconnection = Connection(type='firebolt', name='list_integration_testing__1707155886557_public', state=<ConnectionState.CLOSED: 'clo...'com.firebolt.FireboltDriver', engine_name='integration_testing__1707155886557', account_name='automation', retries=1))\nconnect = <function FireboltConnectionManager.open.<locals>.connect at 0x7f45f62698b0>\nlogger = AdapterLogger(name='Firebolt')\nretryable_exceptions = [<class 'firebolt.utils.exception.FireboltDatabaseError'>, <class 'firebolt.utils.exception.ConnectionError'>, <class 'firebolt.utils.exception.InterfaceError'>]\nretry_limit = 1, retry_timeout = 1, _attempts = 0\n\n    @classmethod\n    def retry_connection(\n        cls,\n        connection: Connection,\n        connect: Callable[[], AdapterHandle],\n        logger: AdapterLogger,\n        retryable_exceptions: Iterable[Type[Exception]],\n        retry_limit: int = 1,\n        retry_timeout: Union[Callable[[int], SleepTime], SleepTime] = 1,\n        _attempts: int = 0,\n    ) -> Connection:\n        \"\"\"Given a Connection, set its handle by calling connect.\n    \n        The calls to connect will be retried up to retry_limit times to deal with transient\n        connection errors. By default, one retry will be attempted if retryable_exceptions is set.\n    \n        :param Connection connection: An instance of a Connection that needs a handle to be set,\n            usually when attempting to open it.\n        :param connect: A callable that returns the appropiate connection handle for a\n            given adapter. This callable will be retried retry_limit times if a subclass of any\n            Exception in retryable_exceptions is raised by connect.\n        :type connect: Callable[[], AdapterHandle]\n        :param AdapterLogger logger: A logger to emit messages on retry attempts or errors. When\n            handling expected errors, we call debug, and call warning on unexpected errors or when\n            all retry attempts have been exhausted.\n        :param retryable_exceptions: An iterable of exception classes that if raised by\n            connect should trigger a retry.\n        :type retryable_exceptions: Iterable[Type[Exception]]\n        :param int retry_limit: How many times to retry the call to connect. If this limit\n            is exceeded before a successful call, a FailedToConnectError will be raised.\n            Must be non-negative.\n        :param retry_timeout: Time to wait between attempts to connect. Can also take a\n            Callable that takes the number of attempts so far, beginning at 0, and returns an int\n            or float to be passed to time.sleep.\n        :type retry_timeout: Union[Callable[[int], SleepTime], SleepTime] = 1\n        :param int _attempts: Parameter used to keep track of the number of attempts in calling the\n            connect function across recursive calls. Passed as an argument to retry_timeout if it\n            is a Callable. This parameter should not be set by the initial caller.\n        :raises dbt.exceptions.FailedToConnectError: Upon exhausting all retry attempts without\n            successfully acquiring a handle.\n        :return: The given connection with its appropriate state and handle attributes set\n            depending on whether we successfully acquired a handle or not.\n        \"\"\"\n        timeout = retry_timeout(_attempts) if callable(retry_timeout) else retry_timeout\n        if timeout < 0:\n            raise dbt.exceptions.FailedToConnectError(\n                \"retry_timeout cannot be negative or return a negative time.\"\n            )\n    \n        if retry_limit < 0 or retry_limit > sys.getrecursionlimit():\n            # This guard is not perfect others may add to the recursion limit (e.g. built-ins).\n            connection.handle = None\n            connection.state = ConnectionState.FAIL\n            raise dbt.exceptions.FailedToConnectError(\"retry_limit cannot be negative\")\n    \n        try:\n>           connection.handle = connect()\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/connections.py:241: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:121: in connect\n    handle = sdk_connect(\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/connection.py:53: in connect\n    return connect_v2(\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/connection.py:142: in connect_v2\n    ) = cursor._get_engine_url_status_db(system_engine_connection, engine_name)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:450: in _get_engine_url_status_db\n    cursor.execute(\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/common/base_cursor.py:93: in inner\n    return func(self, *args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:254: in execute\n    self._do_execute(query, params_list, skip_parsing, async_execution)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:197: in _do_execute\n    resp = self._api_request(\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/db/cursor.py:398: in _api_request\n    parameters[\"account_id\"] = self._client.account_id\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/firebolt/client/client.py:155: in account_id\n    response.raise_for_status()\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <Response [502 Bad Gateway]>\n\n    def raise_for_status(self) -> \"Response\":\n        \"\"\"\n        Raise the `HTTPStatusError` if one occurred.\n        \"\"\"\n        request = self._request\n        if request is None:\n            raise RuntimeError(\n                \"Cannot call `raise_for_status` as the request \"\n                \"instance has not been set on this response.\"\n            )\n    \n        if self.is_success:\n            return self\n    \n        if self.has_redirect_location:\n            message = (\n                \"{error_type} '{0.status_code} {0.reason_phrase}' for url '{0.url}'\\n\"\n                \"Redirect location: '{0.headers[location]}'\\n\"\n                \"For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/{0.status_code}\"\n            )\n        else:\n            message = (\n                \"{error_type} '{0.status_code} {0.reason_phrase}' for url '{0.url}'\\n\"\n                \"For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/{0.status_code}\"\n            )\n    \n        status_class = self.status_code // 100\n        error_types = {\n            1: \"Informational response\",\n            3: \"Redirect response\",\n            4: \"Client error\",\n            5: \"Server error\",\n        }\n        error_type = error_types.get(status_class, \"Invalid status code\")\n        message = message.format(self, error_type=error_type)\n>       raise HTTPStatusError(message, request=request, response=self)\nE       httpx.HTTPStatusError: Server error '502 Bad Gateway' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\nE       For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/httpx/_models.py:759: HTTPStatusError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <dbt.adapters.firebolt.connections.FireboltConnectionManager object at 0x7f45f77cd910>\nsql = '\\n\\n      SELECT \\'integration_testing__1707155886557\\' AS \"database\",\\n             table_name AS \"name\",\\n         ...ofile_name\": \"test\", \"target_name\": \"default\", \"connection_name\": \"list_integration_testing__1707155886557_public\"} */'\n\n    @contextmanager\n    def exception_handler(self, sql: str) -> Generator:\n        try:\n>           yield\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:148: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/connections.py:79: in add_query\n    cursor = connection.handle.cursor()\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/contracts/connection.py:90: in handle\n    self._handle.resolve(self)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/contracts/connection.py:114: in resolve\n    return self.opener(connection)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:137: in open\n    return cls.retry_connection(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ncls = <class 'dbt.adapters.firebolt.connections.FireboltConnectionManager'>\nconnection = Connection(type='firebolt', name='list_integration_testing__1707155886557_public', state=<ConnectionState.CLOSED: 'clo...'com.firebolt.FireboltDriver', engine_name='integration_testing__1707155886557', account_name='automation', retries=1))\nconnect = <function FireboltConnectionManager.open.<locals>.connect at 0x7f45f62698b0>\nlogger = AdapterLogger(name='Firebolt')\nretryable_exceptions = [<class 'firebolt.utils.exception.FireboltDatabaseError'>, <class 'firebolt.utils.exception.ConnectionError'>, <class 'firebolt.utils.exception.InterfaceError'>]\nretry_limit = 1, retry_timeout = 1, _attempts = 0\n\n    @classmethod\n    def retry_connection(\n        cls,\n        connection: Connection,\n        connect: Callable[[], AdapterHandle],\n        logger: AdapterLogger,\n        retryable_exceptions: Iterable[Type[Exception]],\n        retry_limit: int = 1,\n        retry_timeout: Union[Callable[[int], SleepTime], SleepTime] = 1,\n        _attempts: int = 0,\n    ) -> Connection:\n        \"\"\"Given a Connection, set its handle by calling connect.\n    \n        The calls to connect will be retried up to retry_limit times to deal with transient\n        connection errors. By default, one retry will be attempted if retryable_exceptions is set.\n    \n        :param Connection connection: An instance of a Connection that needs a handle to be set,\n            usually when attempting to open it.\n        :param connect: A callable that returns the appropiate connection handle for a\n            given adapter. This callable will be retried retry_limit times if a subclass of any\n            Exception in retryable_exceptions is raised by connect.\n        :type connect: Callable[[], AdapterHandle]\n        :param AdapterLogger logger: A logger to emit messages on retry attempts or errors. When\n            handling expected errors, we call debug, and call warning on unexpected errors or when\n            all retry attempts have been exhausted.\n        :param retryable_exceptions: An iterable of exception classes that if raised by\n            connect should trigger a retry.\n        :type retryable_exceptions: Iterable[Type[Exception]]\n        :param int retry_limit: How many times to retry the call to connect. If this limit\n            is exceeded before a successful call, a FailedToConnectError will be raised.\n            Must be non-negative.\n        :param retry_timeout: Time to wait between attempts to connect. Can also take a\n            Callable that takes the number of attempts so far, beginning at 0, and returns an int\n            or float to be passed to time.sleep.\n        :type retry_timeout: Union[Callable[[int], SleepTime], SleepTime] = 1\n        :param int _attempts: Parameter used to keep track of the number of attempts in calling the\n            connect function across recursive calls. Passed as an argument to retry_timeout if it\n            is a Callable. This parameter should not be set by the initial caller.\n        :raises dbt.exceptions.FailedToConnectError: Upon exhausting all retry attempts without\n            successfully acquiring a handle.\n        :return: The given connection with its appropriate state and handle attributes set\n            depending on whether we successfully acquired a handle or not.\n        \"\"\"\n        timeout = retry_timeout(_attempts) if callable(retry_timeout) else retry_timeout\n        if timeout < 0:\n            raise dbt.exceptions.FailedToConnectError(\n                \"retry_timeout cannot be negative or return a negative time.\"\n            )\n    \n        if retry_limit < 0 or retry_limit > sys.getrecursionlimit():\n            # This guard is not perfect others may add to the recursion limit (e.g. built-ins).\n            connection.handle = None\n            connection.state = ConnectionState.FAIL\n            raise dbt.exceptions.FailedToConnectError(\"retry_limit cannot be negative\")\n    \n        try:\n            connection.handle = connect()\n            connection.state = ConnectionState.OPEN\n            return connection\n    \n        except tuple(retryable_exceptions) as e:\n            if retry_limit <= 0:\n                connection.handle = None\n                connection.state = ConnectionState.FAIL\n                raise dbt.exceptions.FailedToConnectError(str(e))\n    \n            logger.debug(\n                f\"Got a retryable error when attempting to open a {cls.TYPE} connection.\\n\"\n                f\"{retry_limit} attempts remaining. Retrying in {timeout} seconds.\\n\"\n                f\"Error:\\n{e}\"\n            )\n    \n            sleep(timeout)\n            return cls.retry_connection(\n                connection=connection,\n                connect=connect,\n                logger=logger,\n                retry_limit=retry_limit - 1,\n                retry_timeout=retry_timeout,\n                retryable_exceptions=retryable_exceptions,\n                _attempts=_attempts + 1,\n            )\n    \n        except Exception as e:\n            connection.handle = None\n            connection.state = ConnectionState.FAIL\n>           raise dbt.exceptions.FailedToConnectError(str(e))\nE           dbt.exceptions.FailedToConnectError: Database Error\nE             Server error '502 Bad Gateway' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\nE             For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/connections.py:271: FailedToConnectError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <dbt.adapters.firebolt.connections.FireboltConnectionManager object at 0x7f45f77cd910>\nsql = 'macro list_relations_without_caching'\n\n    @contextmanager\n    def exception_handler(self, sql: str) -> Generator:\n        try:\n>           yield\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:148: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/impl.py:1112: in execute_macro\n    result = macro_function(**kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:330: in __call__\n    return self.call_macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:257: in call_macro\n    return macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:763: in __call__\n    return self._invoke(arguments, autoescape)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:777: in _invoke\n    rv = self._func(*arguments)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/sandbox.py:393: in call\n    return __context.call(__obj, *args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:298: in call\n    return __obj(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:330: in __call__\n    return self.call_macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:257: in call_macro\n    return macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:763: in __call__\n    return self._invoke(arguments, autoescape)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:777: in _invoke\n    rv = self._func(*arguments)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/sandbox.py:393: in call\n    return __context.call(__obj, *args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:298: in call\n    return __obj(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:330: in __call__\n    return self.call_macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/clients/jinja.py:257: in call_macro\n    return macro(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:763: in __call__\n    return self._invoke(arguments, autoescape)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:777: in _invoke\n    rv = self._func(*arguments)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/sandbox.py:393: in call\n    return __context.call(__obj, *args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/jinja2/runtime.py:298: in call\n    return __obj(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/impl.py:310: in execute\n    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/connections.py:138: in execute\n    _, cursor = self.add_query(sql, auto_begin)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/connections.py:90: in add_query\n    return connection, cursor\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/contextlib.py:137: in __exit__\n    self.gen.throw(typ, value, traceback)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <dbt.adapters.firebolt.connections.FireboltConnectionManager object at 0x7f45f77cd910>\nsql = '\\n\\n      SELECT \\'integration_testing__1707155886557\\' AS \"database\",\\n             table_name AS \"name\",\\n         ...ofile_name\": \"test\", \"target_name\": \"default\", \"connection_name\": \"list_integration_testing__1707155886557_public\"} */'\n\n    @contextmanager\n    def exception_handler(self, sql: str) -> Generator:\n        try:\n            yield\n        except Exception as e:\n            self.release()\n>           raise DbtRuntimeError(str(e))\nE           dbt.exceptions.DbtRuntimeError: Runtime Error\nE             Database Error\nE               Server error '502 Bad Gateway' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\nE               For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:151: DbtRuntimeError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <test_constraints.TestTableConstraintsColumnsEqualFirebolt object at 0x7f45f8adb6a0>\nproject = <dbt.tests.fixtures.project.TestProjInfo object at 0x7f45f654a5b0>\nstring_type = 'text', int_type = 'integer', schema_string_type = 'text'\nschema_int_type = 'integer'\ndata_types = [['1', 'integer', 'integer'], [\"'1'\", 'text', 'text'], ['true', 'bool', 'boolean'], [\"'2013-11-03 00:00:00-07'::timestamptz\", 'timestamptz', 'timestamp'], [\"ARRAY['a','b','c']\", 'text[]', 'array'], ['ARRAY[1,2,3]', 'int[]', 'array'], ...]\n\n    def test__constraints_wrong_column_data_types(\n        self, project, string_type, int_type, schema_string_type, schema_int_type, data_types\n    ):\n        for (sql_column_value, schema_data_type, error_data_type) in data_types:\n            # Write parametrized data_type to sql file\n            write_file(\n                my_model_data_type_sql.format(sql_value=sql_column_value),\n                \"models\",\n                \"my_model_data_type.sql\",\n            )\n    \n            # Write wrong data_type to corresponding schema file\n            # Write integer type for all schema yaml values except when testing integer type itself\n            wrong_schema_data_type = (\n                schema_int_type\n                if schema_data_type.upper() != schema_int_type.upper()\n                else schema_string_type\n            )\n            wrong_schema_error_data_type = (\n                int_type if schema_data_type.upper() != schema_int_type.upper() else string_type\n            )\n            write_file(\n                model_data_type_schema_yml.format(data_type=wrong_schema_data_type),\n                \"models\",\n                \"constraints_schema.yml\",\n            )\n    \n>           results, log_output = run_dbt_and_capture(\n                [\"run\", \"-s\", \"my_model_data_type\"], expect_pass=False\n            )\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/adapter/constraints/test_constraints.py:131: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/util.py:124: in run_dbt_and_capture\n    res = run_dbt(args, expect_pass=expect_pass)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/tests/util.py:105: in run_dbt\n    raise res.exception\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:91: in wrapper\n    result, success = func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:76: in wrapper\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:169: in wrapper\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:198: in wrapper\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:245: in wrapper\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/requires.py:276: in wrapper\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/cli/main.py:625: in run\n    results = task.run()\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/task/runnable.py:474: in run\n    result = self.execute_with_hooks(selected_uids)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/task/runnable.py:434: in execute_with_hooks\n    self.before_run(adapter, selected_uids)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/task/run.py:447: in before_run\n    self.populate_adapter_cache(adapter, required_schemas)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/task/runnable.py:412: in populate_adapter_cache\n    adapter.set_relations_cache(self.manifest)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/impl.py:519: in set_relations_cache\n    self._relations_cache_for_schemas(manifest, required_schemas)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/impl.py:495: in _relations_cache_for_schemas\n    for relation in future.result():\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/concurrent/futures/_base.py:439: in result\n    return self.__get_result()\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/concurrent/futures/_base.py:391: in __get_result\n    raise self._exception\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/concurrent/futures/thread.py:58: in run\n    result = self.fn(*self.args, **self.kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/utils.py:471: in connected\n    return func(*args, **kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/sql/impl.py:185: in list_relations_without_caching\n    results = self.execute_macro(LIST_RELATIONS_MACRO_NAME, kwargs=kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/base/impl.py:1112: in execute_macro\n    result = macro_function(**kwargs)\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/contextlib.py:137: in __exit__\n    self.gen.throw(typ, value, traceback)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <dbt.adapters.firebolt.connections.FireboltConnectionManager object at 0x7f45f77cd910>\nsql = 'macro list_relations_without_caching'\n\n    @contextmanager\n    def exception_handler(self, sql: str) -> Generator:\n        try:\n            yield\n        except Exception as e:\n            self.release()\n>           raise DbtRuntimeError(str(e))\nE           dbt.exceptions.DbtRuntimeError: Runtime Error\nE             Runtime Error\nE               Database Error\nE                 Server error '502 Bad Gateway' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\nE                 For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502\n\n/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/dbt/adapters/firebolt/connections.py:151: DbtRuntimeError",
+    "steps" : [ ],
+    "attachments" : [ {
+      "uid" : "ffc915f012c1ca8f",
+      "name" : "log",
+      "source" : "ffc915f012c1ca8f.txt",
+      "type" : "text/plain",
+      "size" : 25448
+    }, {
+      "uid" : "9a73cd1e72151ebf",
+      "name" : "stdout",
+      "source" : "9a73cd1e72151ebf.txt",
+      "type" : "text/plain",
+      "size" : 336
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 2,
+    "shouldDisplayMessage" : true,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "profiles_yml::0",
+    "time" : {
+      "start" : 1707156475664,
+      "stop" : 1707156475664,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "logs_dir::0",
+    "time" : {
+      "start" : 1707156475659,
+      "stop" : 1707156475659,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "adapter::0",
+    "time" : {
+      "start" : 1707156475661,
+      "stop" : 1707156475662,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "project::0",
+    "time" : {
+      "start" : 1707156468330,
+      "stop" : 1707156475658,
+      "duration" : 7328
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "parentSuite",
+    "value" : "tests.functional.adapter"
+  }, {
+    "name" : "suite",
+    "value" : "test_constraints"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestTableConstraintsColumnsEqualFirebolt"
+  }, {
+    "name" : "host",
+    "value" : "fv-az1113-935"
+  }, {
+    "name" : "thread",
+    "value" : "2385-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "tests.functional.adapter.test_constraints"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Test defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ ]
+  },
+  "source" : "576cb0187e4acaa0.json",
+  "parameterValues" : [ ]
+}

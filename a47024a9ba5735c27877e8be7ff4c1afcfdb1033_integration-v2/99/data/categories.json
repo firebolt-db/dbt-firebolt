@@ -1,5 +1,94 @@
 {
   "uid" : "4b4757e66a1912dae1a509f688f20b0f",
-  "children" : [ ],
+  "children" : [ {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "dbt.exceptions.DbtRuntimeError: Runtime Error\n  Runtime Error\n    Database Error\n      Server error '500 Internal Server Error' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\n      For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+      "children" : [ {
+        "name" : "test_references",
+        "uid" : "d1b497c0a8a4bffa",
+        "parentUid" : "4bb358b01a62ad42434b6a39ccdb0e5a",
+        "status" : "broken",
+        "time" : {
+          "start" : 1707156277266,
+          "stop" : 1707156277266,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "4bb358b01a62ad42434b6a39ccdb0e5a"
+    }, {
+      "name" : "dbt.exceptions.DbtRuntimeError: Runtime Error\n  Runtime Error\n    Database Error\n      Server error '502 Bad Gateway' for url 'https://api.staging.firebolt.io/web/v3/account/automation/resolve'\n      For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502",
+      "children" : [ {
+        "name" : "test__constraints_wrong_column_data_types",
+        "uid" : "576cb0187e4acaa0",
+        "parentUid" : "9353f88fe2661e63ae0e6ff6463db27f",
+        "status" : "broken",
+        "time" : {
+          "start" : 1707156416801,
+          "stop" : 1707156441041,
+          "duration" : 24240
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "9353f88fe2661e63ae0e6ff6463db27f"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  }, {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "AssertionError: assert 'PASS=5 WARN=0 ERROR=1 SKIP=1 TOTAL=7' in '\\x1b[0m18:05:41  Running with dbt=1.7.7\\n\\x1b[0m18:05:41  Running with dbt=1.7.7\\n\\x1b[0m18:05:41  Registered adapter: firebolt=1.5.0\\n\\x1b[0m18:05:41  Registered adapter: firebolt=1.5.0\\n\\x1b[0m18:05:41  Found 7 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models\\n\\x1b[0m18:05:41  Found 7 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models\\n\\x1b[0m18:05:41  \\n\\x1b[0m18:05:41  \\n\\x1b[0m18:05:43  Concurrency: 1 threads (target=\\'default\\')\\n\\x1b[0m18:05:43  Concurrency: 1 threads (target=\\'default\\')\\n\\x1b[0m18:05:43  \\n\\x1b[0m18:05:43  \\n\\x1b[0m18:05:43  1 of 7 START sql table model invalid ........................................... [RUN]\\n\\x1b[0m18:05:43  1 of 7 START sql table model invalid ........................................... [RUN]\\n\\x1b[0m18:05:44  1 of 7 ERROR creating sql table model invalid .................................. [\\x1b[31mERROR\\x1b[0m in 1.02s]\\n\\x1b[0m18:05:44  1 of 7 ERROR creating sql table model invalid .................................. [\\x1b[31mERROR\\x1b[0m in 1.02s]\\n\\x1b[0m18:05:44  2 of 7 START sql table model table_a ........................................... [RUN]...eceived error from remote server /core/v1/accounts/01h9g6nnqsrtc617763xer77ah/bindings?page.first=10000. HTTP status code: 503 Service Unavailable, body: {\"error\":\"connection error: desc = \\\\\"transport: Error while dialing: dial tcp :3001: connect: connection refused\\\\\"\",\"code\":14,\"message\":\"connection error: desc = \\\\\"transport: Error while dialing: dial tcp :3001: connect: connection refused\\\\\"\",\"details\":[]}\\n      \\n\\x1b[0m18:05:51    Runtime Error in model view_with_conflicting_cascade (models/view_with_conflicting_cascade.sql)\\n  Runtime Error\\n    Database Error\\n      Error executing query:\\n      Received error from remote server /core/v1/accounts/01h9g6nnqsrtc617763xer77ah/bindings?page.first=10000. HTTP status code: 503 Service Unavailable, body: {\"error\":\"connection error: desc = \\\\\"transport: Error while dialing: dial tcp :3001: connect: connection refused\\\\\"\",\"code\":14,\"message\":\"connection error: desc = \\\\\"transport: Error while dialing: dial tcp :3001: connect: connection refused\\\\\"\",\"details\":[]}\\n      \\n\\x1b[0m18:05:51  \\n\\x1b[0m18:05:51  \\n\\x1b[0m18:05:51  Done. PASS=4 WARN=0 ERROR=2 SKIP=1 TOTAL=7\\n\\x1b[0m18:05:51  Done. PASS=4 WARN=0 ERROR=2 SKIP=1 TOTAL=7\\n'",
+      "children" : [ {
+        "name" : "test_concurrency",
+        "uid" : "f34e147dfed59872",
+        "parentUid" : "97d9a3a44d7c9f9fe87dfe6ba991b5b9",
+        "status" : "failed",
+        "time" : {
+          "start" : 1707156321236,
+          "stop" : 1707156356294,
+          "duration" : 35058
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "97d9a3a44d7c9f9fe87dfe6ba991b5b9"
+    }, {
+      "name" : "AssertionError: dbt exit state did not match expected",
+      "children" : [ {
+        "name" : "test_simple_copy",
+        "uid" : "bfe826c504e5ea0b",
+        "parentUid" : "716bf23f50e1373ebbe2cc6c2f01a3ef",
+        "status" : "failed",
+        "time" : {
+          "start" : 1707156719626,
+          "stop" : 1707156731662,
+          "duration" : 12036
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "test_build_assert_equal",
+        "uid" : "e257d2acade9ea47",
+        "parentUid" : "716bf23f50e1373ebbe2cc6c2f01a3ef",
+        "status" : "failed",
+        "time" : {
+          "start" : 1707157501957,
+          "stop" : 1707157506400,
+          "duration" : 4443
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "716bf23f50e1373ebbe2cc6c2f01a3ef"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ],
   "name" : "categories"
 }
