@@ -89,7 +89,8 @@ def profiles_yml(profiles_root, dbt_profile_data):
 def profile_user(dbt_profile_target):
     return dbt_profile_target.get('user', dbt_profile_target.get('client_id'))
 
-@pytest.fixture(scope="class")
+
+@pytest.fixture(scope='class')
 def unique_schema(request, prefix) -> str:
     """Firebolt does not have concept of schemas so we return 'public' here."""
-    return "public"
+    return 'public'
