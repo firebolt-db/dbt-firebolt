@@ -1,0 +1,23 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project2
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
