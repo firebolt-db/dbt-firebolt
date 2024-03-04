@@ -239,9 +239,9 @@
   {%- endif  %}
   {%- if not contract_config.enforced %}
     AS (
-  {%- endif -%}
+  {% endif -%}
     {{ select_sql }}
-  {%- if not contract_config.enforced -%}
+  {% if not contract_config.enforced -%}
     )
   {%- endif -%}
 {% endmacro %}
