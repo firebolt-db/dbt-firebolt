@@ -275,6 +275,7 @@ class TestDateTrunc(BaseDateTrunc):
         }
 
 
+@mark.skip('Escaping with backslash is not supported in Firebolt')
 class TestEscapeSingleQuotes(BaseEscapeSingleQuotesBackslash):
     pass
 
