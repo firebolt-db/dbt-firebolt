@@ -1,3 +1,10 @@
 [ {
+  "buildOrder" : 32,
+  "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/348c2ef3ade281b37269fb247d8ad6f9cbe02534_integration-v2/32/",
+  "reportName" : "Allure Report with history",
+  "data" : {
+    "Product defects" : 1
+  }
+}, {
   "data" : { }
 } ]
