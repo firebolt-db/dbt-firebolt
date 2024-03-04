@@ -1,0 +1,97 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project26
+
+
+Invoking dbt with ['seed']
+[0m14:01:07  Running with dbt=1.7.9
+[0m14:01:07  Registered adapter: firebolt=1.6.0
+[0m14:01:07  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:01:08  Found 8 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m14:01:08  
+[0m14:01:10  Concurrency: 1 threads (target='default')
+[0m14:01:10  
+[0m14:01:10  1 of 1 START seed file seed .................................................... [RUN]
+[0m14:01:13  1 of 1 OK loaded seed file public.seed ......................................... [[32mINSERT 100[0m in 2.91s]
+[0m14:01:13  
+[0m14:01:13  Finished running 1 seed in 0 hours 0 minutes and 4.48 seconds (4.48s).
+[0m14:01:13  
+[0m14:01:13  [32mCompleted successfully[0m
+[0m14:01:13  
+[0m14:01:13  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m14:01:13  Running with dbt=1.7.9
+[0m14:01:13  Registered adapter: firebolt=1.6.0
+[0m14:01:13  Found 8 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m14:01:13  
+[0m14:01:14  Concurrency: 1 threads (target='default')
+[0m14:01:14  
+[0m14:01:14  1 of 7 START sql incremental model advanced_incremental ........................ [RUN]
+[0m14:01:16  1 of 7 OK created sql incremental model advanced_incremental ................... [[32mSUCCESS[0m in 1.49s]
+[0m14:01:16  2 of 7 START sql table model compound_sort ..................................... [RUN]
+[0m14:01:17  2 of 7 OK created sql table model compound_sort ................................ [[32mSUCCESS[0m in 1.57s]
+[0m14:01:17  3 of 7 START sql incremental model incremental ................................. [RUN]
+[0m14:01:19  3 of 7 OK created sql incremental model incremental ............................ [[32mSUCCESS[0m in 1.57s]
+[0m14:01:19  4 of 7 START sql table model interleaved_sort .................................. [RUN]
+[0m14:01:21  4 of 7 OK created sql table model interleaved_sort ............................. [[32mSUCCESS[0m in 1.82s]
+[0m14:01:21  5 of 7 START sql table model materialized ...................................... [RUN]
+[0m14:01:22  5 of 7 OK created sql table model materialized ................................. [[32mSUCCESS[0m in 1.56s]
+[0m14:01:22  6 of 7 START sql view model view_model ......................................... [RUN]
+[0m14:01:23  6 of 7 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 1.12s]
+[0m14:01:23  7 of 7 START sql view model get_and_ref ........................................ [RUN]
+[0m14:01:25  7 of 7 OK created sql view model get_and_ref ................................... [[32mSUCCESS[0m in 1.13s]
+[0m14:01:25  
+[0m14:01:25  Finished running 2 incremental models, 3 table models, 2 view models in 0 hours 0 minutes and 11.81 seconds (11.81s).
+[0m14:01:25  
+[0m14:01:25  [32mCompleted successfully[0m
+[0m14:01:25  
+[0m14:01:25  Done. PASS=7 WARN=0 ERROR=0 SKIP=0 TOTAL=7
+
+
+Invoking dbt with ['seed']
+[0m14:01:26  Running with dbt=1.7.9
+[0m14:01:26  Registered adapter: firebolt=1.6.0
+[0m14:01:26  Found 8 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m14:01:26  
+[0m14:01:27  Concurrency: 1 threads (target='default')
+[0m14:01:27  
+[0m14:01:27  1 of 1 START seed file seed .................................................... [RUN]
+[0m14:01:30  1 of 1 OK loaded seed file public.seed ......................................... [[32mINSERT 200[0m in 2.27s]
+[0m14:01:30  
+[0m14:01:30  Finished running 1 seed in 0 hours 0 minutes and 3.77 seconds (3.77s).
+[0m14:01:30  
+[0m14:01:30  [32mCompleted successfully[0m
+[0m14:01:30  
+[0m14:01:30  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m14:01:30  Running with dbt=1.7.9
+[0m14:01:30  Registered adapter: firebolt=1.6.0
+[0m14:01:30  Found 8 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m14:01:30  
+[0m14:01:31  Concurrency: 1 threads (target='default')
+[0m14:01:31  
+[0m14:01:31  1 of 7 START sql incremental model advanced_incremental ........................ [RUN]
+[0m14:01:31  Model advanced_incremental is set to incremental, but no incremental strategy is set. Defaulting to append
+[0m14:01:33  1 of 7 OK created sql incremental model advanced_incremental ................... [[32mSUCCESS[0m in 1.84s]
+[0m14:01:33  2 of 7 START sql table model compound_sort ..................................... [RUN]
+[0m14:01:35  2 of 7 OK created sql table model compound_sort ................................ [[32mSUCCESS[0m in 1.53s]
+[0m14:01:35  3 of 7 START sql incremental model incremental ................................. [RUN]
+[0m14:01:35  Model incremental is set to incremental, but no incremental strategy is set. Defaulting to append
+[0m14:01:36  3 of 7 OK created sql incremental model incremental ............................ [[32mSUCCESS[0m in 1.80s]
+[0m14:01:36  4 of 7 START sql table model interleaved_sort .................................. [RUN]
+[0m14:01:38  4 of 7 OK created sql table model interleaved_sort ............................. [[32mSUCCESS[0m in 1.89s]
+[0m14:01:38  5 of 7 START sql table model materialized ...................................... [RUN]
+[0m14:01:40  5 of 7 OK created sql table model materialized ................................. [[32mSUCCESS[0m in 1.61s]
+[0m14:01:40  6 of 7 START sql view model view_model ......................................... [RUN]
+[0m14:01:41  6 of 7 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 1.13s]
+[0m14:01:41  7 of 7 START sql view model get_and_ref ........................................ [RUN]
+[0m14:01:42  7 of 7 OK created sql view model get_and_ref ................................... [[32mSUCCESS[0m in 1.14s]
+[0m14:01:42  
+[0m14:01:42  Finished running 2 incremental models, 3 table models, 2 view models in 0 hours 0 minutes and 12.46 seconds (12.46s).
+[0m14:01:42  
+[0m14:01:42  [32mCompleted successfully[0m
+[0m14:01:42  
+[0m14:01:42  Done. PASS=7 WARN=0 ERROR=0 SKIP=0 TOTAL=7
