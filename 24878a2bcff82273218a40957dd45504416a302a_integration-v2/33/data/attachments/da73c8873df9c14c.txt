@@ -1,0 +1,50 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project4
+
+
+Invoking dbt with ['seed']
+[0m13:53:23  Running with dbt=1.7.9
+[0m13:53:23  Registered adapter: firebolt=1.6.0
+[0m13:53:23  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m13:53:24  Found 3 models, 1 seed, 1 source, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m13:53:24  
+[0m13:53:29  Concurrency: 1 threads (target='default')
+[0m13:53:29  
+[0m13:53:29  1 of 1 START seed file base .................................................... [RUN]
+[0m13:53:32  1 of 1 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 3.18s]
+[0m13:53:32  
+[0m13:53:32  Finished running 1 seed in 0 hours 0 minutes and 7.74 seconds (7.74s).
+[0m13:53:32  
+[0m13:53:32  [32mCompleted successfully[0m
+[0m13:53:32  
+[0m13:53:32  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m13:53:32  Running with dbt=1.7.9
+[0m13:53:32  Registered adapter: firebolt=1.6.0
+[0m13:53:32  Found 3 models, 1 seed, 1 source, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m13:53:32  
+[0m13:53:37  Concurrency: 1 threads (target='default')
+[0m13:53:37  
+[0m13:53:37  1 of 2 START sql table model table_model ....................................... [RUN]
+[0m13:53:40  1 of 2 OK created sql table model table_model .................................. [[32mSUCCESS[0m in 3.54s]
+[0m13:53:40  2 of 2 START sql view model view_model ......................................... [RUN]
+[0m13:53:43  2 of 2 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 3.10s]
+[0m13:53:43  
+[0m13:53:43  Finished running 1 table model, 1 view model in 0 hours 0 minutes and 11.46 seconds (11.46s).
+[0m13:53:43  
+[0m13:53:43  [32mCompleted successfully[0m
+[0m13:53:43  
+[0m13:53:43  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+
+
+Invoking dbt with ['docs', 'generate']
+[0m13:53:48  Running with dbt=1.7.9
+[0m13:53:48  Registered adapter: firebolt=1.6.0
+[0m13:53:48  Found 3 models, 1 seed, 1 source, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m13:53:48  
+[0m13:53:51  Concurrency: 1 threads (target='default')
+[0m13:53:51  
+[0m13:53:51  Building catalog
+[0m13:53:53  Catalog written to /tmp/pytest-of-runner/pytest-0/project4/target/catalog.json

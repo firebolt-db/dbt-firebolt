@@ -1,0 +1,42 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project71
+
+
+Invoking dbt with ['run']
+[0m14:46:57  Running with dbt=1.7.9
+[0m14:46:57  Registered adapter: firebolt=1.6.0
+[0m14:46:57  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:46:58  Found 1 model, 1 test, 0 sources, 0 exposures, 0 metrics, 421 macros, 0 groups, 0 semantic models
+[0m14:46:58  
+[0m14:47:03  Concurrency: 1 threads (target='default')
+[0m14:47:03  
+[0m14:47:03  1 of 1 START sql view model test_mixed_null_compare ............................ [RUN]
+[0m14:47:06  1 of 1 OK created sql view model test_mixed_null_compare ....................... [[32mSUCCESS[0m in 3.10s]
+[0m14:47:06  
+[0m14:47:06  Finished running 1 view model in 0 hours 0 minutes and 7.88 seconds (7.88s).
+[0m14:47:06  
+[0m14:47:06  [32mCompleted successfully[0m
+[0m14:47:06  
+[0m14:47:06  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m14:47:06  Running with dbt=1.7.9
+[0m14:47:06  Registered adapter: firebolt=1.6.0
+[0m14:47:06  Found 1 model, 1 test, 0 sources, 0 exposures, 0 metrics, 421 macros, 0 groups, 0 semantic models
+[0m14:47:06  
+[0m14:47:09  Concurrency: 1 threads (target='default')
+[0m14:47:09  
+[0m14:47:09  1 of 1 START test assert_equal_test_mixed_null_compare_actual__expected ........ [RUN]
+[0m14:47:11  1 of 1 ERROR assert_equal_test_mixed_null_compare_actual__expected ............. [[31mERROR[0m in 2.31s]
+[0m14:47:11  
+[0m14:47:11  Finished running 1 test in 0 hours 0 minutes and 4.72 seconds (4.72s).
+[0m14:47:11  
+[0m14:47:11  [31mCompleted with 1 error and 0 warnings:[0m
+[0m14:47:11  
+[0m14:47:11    Runtime Error in test assert_equal_test_mixed_null_compare_actual__expected (models/test_mixed_null_compare.yml)
+  Error executing query:
+  Line 12, Column 30: operator '=' for input types (integer, text) not found, try adding explicit casts
+  
+[0m14:47:11  
+[0m14:47:11  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
