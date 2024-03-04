@@ -3,6 +3,12 @@ from dbt.tests.adapter.basic.expected_catalog import (
     expected_references_catalog,
     no_stats,
 )
+from dbt.tests.adapter.basic.files import (
+    base_materialized_var_sql,
+    base_view_sql,
+    config_materialized_table,
+    schema_base_yml,
+)
 from dbt.tests.adapter.basic.test_adapter_methods import BaseAdapterMethod
 from dbt.tests.adapter.basic.test_base import BaseSimpleMaterializations
 from dbt.tests.adapter.basic.test_docs_generate import (
@@ -53,7 +59,20 @@ class AnySpecifiedType:
 
 
 class TestSimpleMaterializationsFirebolt(BaseSimpleMaterializations):
-    pass
+    # Adding comment to verify CTAS wrapping
+    # more info in PR #122
+    my_model_base = """
+    select * from {{ source('raw', 'seed') }} -- Some Comment"""
+    my_base_table_sql = config_materialized_table + my_model_base
+
+    @fixture(scope='class')
+    def models(self):
+        return {
+            'view_model.sql': base_view_sql,
+            'table_model.sql': self.my_base_table_sql,
+            'swappable.sql': base_materialized_var_sql,
+            'schema.yml': schema_base_yml,
+        }
 
 
 class TestSingularTestsFirebolt(BaseSingularTests):
