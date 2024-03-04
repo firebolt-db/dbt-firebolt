@@ -2005,14 +2005,24 @@
   },
   "be43c2b928e2d3a14def6453b42037c6" : {
     "statistic" : {
-      "failed" : 1,
+      "failed" : 2,
       "broken" : 0,
       "skipped" : 0,
       "passed" : 0,
       "unknown" : 0,
-      "total" : 1
+      "total" : 2
     },
     "items" : [ {
+      "uid" : "e6665bed1df1919d",
+      "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/348c2ef3ade281b37269fb247d8ad6f9cbe02534_integration-v2/32//#testresult/e6665bed1df1919d",
+      "status" : "failed",
+      "statusDetails" : "AssertionError: dbt exit state did not match expected",
+      "time" : {
+        "start" : 1709557755355,
+        "stop" : 1709557762022,
+        "duration" : 6667
+      }
+    }, {
       "uid" : "ae8f4dbc068f57b7",
       "reportUrl" : "https://firebolt-db.github.io/dbt-firebolt/348c2ef3ade281b37269fb247d8ad6f9cbe02534_integration-v2/32//#testresult/ae8f4dbc068f57b7",
       "status" : "failed",
