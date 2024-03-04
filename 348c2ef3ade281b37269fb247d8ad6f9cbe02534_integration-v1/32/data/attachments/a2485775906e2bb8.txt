@@ -1,0 +1,29 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project63
+
+
+Invoking dbt with ['build']
+[0m11:51:29  Running with dbt=1.7.9
+[0m11:51:29  Registered adapter: firebolt=1.6.0
+[0m11:51:29  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m11:51:29  Found 1 model, 1 seed, 1 test, 0 sources, 0 exposures, 0 metrics, 421 macros, 0 groups, 0 semantic models
+[0m11:51:29  
+[0m11:51:30  Concurrency: 1 threads (target='default')
+[0m11:51:30  
+[0m11:51:30  1 of 3 START seed file data_right .............................................. [RUN]
+[0m11:51:31  1 of 3 OK loaded seed file public.data_right ................................... [[32mINSERT 4[0m in 0.97s]
+[0m11:51:31  2 of 3 START sql view model test_right ......................................... [RUN]
+[0m11:51:32  2 of 3 OK created sql view model test_right .................................... [[32mSUCCESS[0m in 1.04s]
+[0m11:51:32  3 of 3 START test assert_equal_test_right_actual__expected ..................... [RUN]
+[0m11:51:32  3 of 3 FAIL 3 assert_equal_test_right_actual__expected ......................... [[31mFAIL 3[0m in 0.31s]
+[0m11:51:32  
+[0m11:51:32  Finished running 1 seed, 1 view model, 1 test in 0 hours 0 minutes and 2.86 seconds (2.86s).
+[0m11:51:32  
+[0m11:51:32  [31mCompleted with 1 error and 0 warnings:[0m
+[0m11:51:32  
+[0m11:51:32  [31mFailure in test assert_equal_test_right_actual__expected (models/test_right.yml)[0m
+[0m11:51:32    Got 3 results, configured to fail if != 0
+[0m11:51:32  
+[0m11:51:32    compiled Code at target/compiled/test/models/test_right.yml/assert_equal_test_right_actual__expected.sql
+[0m11:51:32  
+[0m11:51:32  Done. PASS=2 WARN=0 ERROR=1 SKIP=0 TOTAL=3
