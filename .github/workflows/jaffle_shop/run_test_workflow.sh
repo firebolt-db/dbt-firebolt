@@ -1,4 +1,3 @@
-#!/usr/bin/bash
 set -e
 dbt debug
 dbt clean
