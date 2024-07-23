@@ -1,0 +1,2 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project10
