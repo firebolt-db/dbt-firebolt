@@ -1,3 +1,0 @@
-kind: Changed
-body: Limit dbt-core to 1.8 to avoid breakage
-time: 2024-07-19T12:01:50.461961+01:00
