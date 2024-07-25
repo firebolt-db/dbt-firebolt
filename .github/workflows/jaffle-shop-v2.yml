@@ -22,6 +22,9 @@ jobs:
           repository: firebolt-db/jaffle_shop_firebolt
           path: jaffle-shop
 
+      - name: Copy sources_external_tables.yml override to Jaffle Shop
+        run: cp dbt-firebolt/.github/workflows/jaffle_shop/sources_external_tables.yml jaffle-shop/models/staging/
+
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
@@ -50,6 +53,9 @@ jobs:
           ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
           API_ENDPOINT: "api.staging.firebolt.io"
           ACCOUNT_NAME: ${{ vars.FIREBOLT_ACCOUNT }}
+          SECURE_BUCKET_PATH: ${{ vars.BUCKET_PATH }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_ACCESS_SECRET_KEY: ${{ secrets.AWS_ACCESS_SECRET_KEY }}
           DBT_PROFILES_DIR: "../dbt-firebolt/.github/workflows/jaffle_shop"
         working-directory: jaffle-shop
         run:
