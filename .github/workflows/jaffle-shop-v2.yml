@@ -22,9 +22,6 @@ jobs:
           repository: firebolt-db/jaffle_shop_firebolt
           path: jaffle-shop
 
-      - name: Copy sources_external_tables.yml override to Jaffle Shop
-        run: cp dbt-firebolt/.github/workflows/jaffle_shop/sources_external_tables.yml jaffle-shop/models/staging/
-
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
