@@ -50,7 +50,7 @@ jobs:
           API_ENDPOINT: "api.staging.firebolt.io"
           ACCOUNT_NAME: "firebolt"
           DBT_PROFILES_DIR: "../dbt-firebolt/.github/workflows/jaffle_shop"
-          SECURE_BUCKET_PATH: ${{ vars.BUCKET_PATH }}
+          SECURE_BUCKET_PATH: ${{ vars.SECURE_BUCKET_PATH }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_ACCESS_SECRET_KEY: ${{ secrets.AWS_ACCESS_SECRET_KEY }}
         working-directory: jaffle-shop
