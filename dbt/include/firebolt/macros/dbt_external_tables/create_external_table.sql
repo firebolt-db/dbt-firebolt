@@ -30,6 +30,6 @@
                 {{- ',' if not loop.last }}
             {%- endfor %}
     {%- endif %}
-    {%- if external.compression -%} COMPRESSION = {{external.compression}} {%- endif -%}
+    {%- if external.compression -%} COMPRESSION = {{external.compression}} {%- endif %}
     TYPE = {{ external.type }}
 {% endmacro %}
