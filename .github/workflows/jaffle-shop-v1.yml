@@ -29,8 +29,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # pip 24.2 has issues installing the Logbook dependency
-          python -m pip install --upgrade "pip<=24.1.2"
+          python -m pip install --upgrade pip
           pip install "dbt-firebolt/.[dev]"
 
       - name: Setup database and engine
