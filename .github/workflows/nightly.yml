@@ -57,6 +57,7 @@ jobs:
           SECURE_BUCKET_PATH: ${{ vars.SECURE_BUCKET_PATH }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_ACCESS_SECRET_KEY: ${{ secrets.AWS_ACCESS_SECRET_KEY }}
+          AWS_ACCESS_ROLE_ARN: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
         working-directory: jaffle-shop
         shell: bash
         run: |

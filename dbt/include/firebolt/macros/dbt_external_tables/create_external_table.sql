@@ -20,7 +20,10 @@
     {% if external.url %} URL = '{{external.url}}' {%- endif %}
     {%- if credentials and credentials.internal_role_arn %}
         CREDENTIALS = (AWS_ROLE_ARN = '{{credentials.internal_role_arn}}'
-                       AWS_ROLE_EXTERNAL_ID = '{{credentials.external_role_id}}')
+        {%- if credentials.external_role_id %}
+                       AWS_ROLE_EXTERNAL_ID = '{{credentials.external_role_id}}'
+        {%- endif -%}
+        )
     {% elif credentials and credentials.aws_key_id %}
         CREDENTIALS = (AWS_KEY_ID = '{{credentials.aws_key_id}}'
                        AWS_SECRET_KEY = '{{credentials.aws_secret_key}}')
