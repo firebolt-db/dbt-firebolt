@@ -192,7 +192,7 @@ class TestDocsGenerateFirebolt(BaseDocsGenerate):
             text_type='TEXT',
             time_type='TIMESTAMP',
             view_type='VIEW',
-            table_type='DIMENSION',
+            table_type='BASE TABLE',
             model_stats=no_stats(),
         )
         # Can't have any other schema apart from public at the moment.
@@ -218,7 +218,7 @@ class TestDocsGenReferencesFirebolt(BaseDocsGenReferences):
             time_type='TIMESTAMP',
             bigint_type=AnySpecifiedType(['BIGINT', 'LONG']),
             view_type='VIEW',
-            table_type='DIMENSION',
+            table_type='BASE TABLE',
             model_stats=no_stats(),
         )
 
