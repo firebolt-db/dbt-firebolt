@@ -461,7 +461,7 @@ class TestCurrentTimestamp(BaseCurrentTimestampAware):
     pass
 
 
-@mark.skip("FIR-35221 array equality check issue")
+@mark.skip('FIR-35221 array equality check issue')
 class TestArrayAppend(BaseArrayAppend):
     @pytest.fixture(scope='class')
     def models(self):
@@ -473,7 +473,7 @@ class TestArrayAppend(BaseArrayAppend):
         }
 
 
-@mark.skip("FIR-35221 array equality check issue")
+@mark.skip('FIR-35221 array equality check issue')
 class TestArrayConcat(BaseArrayConcat):
     @pytest.fixture(scope='class')
     def models(self):
