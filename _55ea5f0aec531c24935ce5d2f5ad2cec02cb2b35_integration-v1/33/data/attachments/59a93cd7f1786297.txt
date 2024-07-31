@@ -1,0 +1,39 @@
+
+
+Invoking dbt with ['run', '--select', 'one_str__overwrite']
+[0m21:50:39  Running with dbt=1.7.17
+[0m21:50:39  Registered adapter: firebolt=1.6.3
+[0m21:50:39  Found 12 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m21:50:39  
+[0m21:50:40  Concurrency: 1 threads (target='default')
+[0m21:50:40  
+[0m21:50:40  1 of 1 START sql table model one_str__overwrite ................................ [RUN]
+[0m21:50:41  1 of 1 OK created sql table model one_str__overwrite ........................... [[32mSUCCESS[0m in 1.45s]
+[0m21:50:41  
+[0m21:50:41  Finished running 1 table model in 0 hours 0 minutes and 2.36 seconds (2.36s).
+[0m21:50:41  
+[0m21:50:41  [32mCompleted successfully[0m
+[0m21:50:41  
+[0m21:50:41  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m21:50:41  Running with dbt=1.7.17
+[0m21:50:41  Registered adapter: firebolt=1.6.3
+[0m21:50:41  Found 12 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m21:50:41  
+[0m21:50:42  Concurrency: 1 threads (target='default')
+[0m21:50:42  
+[0m21:50:42  1 of 1 START seed file seed .................................................... [RUN]
+[0m21:50:43  1 of 1 ERROR loading seed file public.seed ..................................... [[31mERROR[0m in 0.66s]
+[0m21:50:43  
+[0m21:50:43  Finished running 1 seed in 0 hours 0 minutes and 1.57 seconds (1.57s).
+[0m21:50:43  
+[0m21:50:43  [31mCompleted with 1 error and 0 warnings:[0m
+[0m21:50:43  
+[0m21:50:43    Runtime Error in seed seed (seeds/seed.csv)
+  Error executing query:
+  Couldn't find column 'state'
+  
+[0m21:50:43  
+[0m21:50:43  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
