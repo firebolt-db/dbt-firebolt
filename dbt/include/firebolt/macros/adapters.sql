@@ -169,10 +169,13 @@
   {% call statement('list_tables_without_caching', fetch_result=True) %}
 
       SELECT
-          table_catalog AS database,
-          table_name AS name,
-          table_schema AS schema,
-          table_type
+          table_catalog AS "database",
+          table_name AS "name",
+          table_schema AS "schema",
+          CASE
+            WHEN table_type = 'BASE TABLE' THEN 'table'
+            WHEN table_type = 'VIEW' THEN 'view'
+          END AS "type"
       FROM
           information_schema.tables
   {% endcall %}
