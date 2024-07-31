@@ -1,0 +1,35 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m15:50:56  Running with dbt=1.7.17
+[0m15:50:56  Registered adapter: firebolt=1.6.3
+[0m15:50:56  Found 12 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m15:50:56  
+[0m15:50:58  Concurrency: 1 threads (target='default')
+[0m15:50:58  
+[0m15:50:58  1 of 1 START seed file seed .................................................... [RUN]
+[0m15:51:00  1 of 1 ERROR loading seed file public.seed ..................................... [[31mERROR[0m in 1.52s]
+[0m15:51:00  
+[0m15:51:00  Finished running 1 seed in 0 hours 0 minutes and 4.21 seconds (4.21s).
+[0m15:51:00  
+[0m15:51:00  [31mCompleted with 1 error and 0 warnings:[0m
+[0m15:51:00  
+[0m15:51:00    Runtime Error in seed seed (seeds/seed.csv)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "Couldn't find column 'state'"
+      }
+    ],
+    "query": {
+      "query_id": "760d02f8-3e5b-4e4c-802b-cf12cd564105",
+      "request_id": "ce549db0-bcb3-4af5-bcee-43d2a97373cc"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m15:51:00  
+[0m15:51:00  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1

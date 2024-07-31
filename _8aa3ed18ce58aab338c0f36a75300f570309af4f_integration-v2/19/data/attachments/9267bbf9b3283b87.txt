@@ -1,0 +1,40 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project49
+
+
+Invoking dbt with ['build']
+[0m15:52:41  Running with dbt=1.7.17
+[0m15:52:41  Registered adapter: firebolt=1.6.3
+[0m15:52:41  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:52:42  Found 1 model, 1 seed, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m15:52:42  
+[0m15:52:45  Concurrency: 1 threads (target='default')
+[0m15:52:45  
+[0m15:52:45  1 of 2 START sql table model actual ............................................ [RUN]
+[0m15:52:47  1 of 2 OK created sql table model actual ....................................... [[32mSUCCESS[0m in 2.22s]
+[0m15:52:47  2 of 2 START seed file expected ................................................ [RUN]
+[0m15:52:49  2 of 2 ERROR loading seed file public.expected ................................. [[31mERROR[0m in 1.52s]
+[0m15:52:49  
+[0m15:52:49  Finished running 1 table model, 1 seed in 0 hours 0 minutes and 6.49 seconds (6.49s).
+[0m15:52:49  
+[0m15:52:49  [31mCompleted with 1 error and 0 warnings:[0m
+[0m15:52:49  
+[0m15:52:49    Runtime Error in seed expected (seeds/expected.csv)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "Couldn't find column 'timestamp_col'"
+      }
+    ],
+    "query": {
+      "query_id": "4c459ecf-d091-4d63-9787-6f1444e79220",
+      "request_id": "e20de1cc-5016-4199-9971-286ecedf0ca6"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m15:52:49  
+[0m15:52:49  Done. PASS=1 WARN=0 ERROR=1 SKIP=0 TOTAL=2
