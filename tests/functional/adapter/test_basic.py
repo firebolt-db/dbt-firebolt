@@ -43,7 +43,7 @@ from pytest import fixture, mark
 
 def is2_0():
     """Helper to check Firebolt version we're testing against"""
-    if os.getenv('USER_NAME') and "@" in os.getenv('USER_NAME', ""):
+    if os.getenv('USER_NAME') and '@' in os.getenv('USER_NAME', ''):
         return False
     return True
 
