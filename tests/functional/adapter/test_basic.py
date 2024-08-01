@@ -1,3 +1,5 @@
+import os
+
 from dbt.tests.adapter.basic.expected_catalog import (
     base_expected_catalog,
     expected_references_catalog,
@@ -38,7 +40,12 @@ from dbt.tests.adapter.basic.test_snapshot_timestamp import (
 from dbt.tests.util import check_relations_equal, relation_from_name, run_dbt
 from pytest import fixture, mark
 
-from tests.functional.adapter.shared import is2_0
+
+def is2_0():
+    """Helper to check Firebolt version we're testing against"""
+    if os.getenv('USER_NAME') and "@" in os.getenv('USER_NAME', ""):
+        return False
+    return True
 
 
 class AnySpecifiedType:
