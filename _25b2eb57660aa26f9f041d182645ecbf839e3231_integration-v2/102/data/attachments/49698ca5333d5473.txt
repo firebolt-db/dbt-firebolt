@@ -1,0 +1,92 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project9
+
+
+Invoking dbt with ['run', '--vars', 'materialized: view']
+[0m14:10:40  Running with dbt=1.7.17
+[0m14:10:40  Registered adapter: firebolt=1.6.3
+[0m14:10:41  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:10:41  Found 1 model, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m14:10:41  
+[0m14:10:43  Concurrency: 1 threads (target='default')
+[0m14:10:43  
+[0m14:10:43  1 of 1 START sql view model model_mc_modelface ................................. [RUN]
+[0m14:10:44  1 of 1 OK created sql view model model_mc_modelface ............................ [[32mSUCCESS[0m in 1.11s]
+[0m14:10:44  
+[0m14:10:44  Finished running 1 view model in 0 hours 0 minutes and 2.50 seconds (2.50s).
+[0m14:10:44  
+[0m14:10:44  [32mCompleted successfully[0m
+[0m14:10:44  
+[0m14:10:44  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--vars', 'materialized: table']
+[0m14:10:44  Running with dbt=1.7.17
+[0m14:10:44  Registered adapter: firebolt=1.6.3
+[0m14:10:44  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m14:10:45  Found 1 model, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m14:10:45  
+[0m14:10:46  Concurrency: 1 threads (target='default')
+[0m14:10:46  
+[0m14:10:46  1 of 1 START sql table model model_mc_modelface ................................ [RUN]
+[0m14:10:48  1 of 1 OK created sql table model model_mc_modelface ........................... [[32mSUCCESS[0m in 1.52s]
+[0m14:10:48  
+[0m14:10:48  Finished running 1 table model in 0 hours 0 minutes and 2.93 seconds (2.93s).
+[0m14:10:48  
+[0m14:10:48  [32mCompleted successfully[0m
+[0m14:10:48  
+[0m14:10:48  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--vars', 'materialized: view']
+[0m14:10:48  Running with dbt=1.7.17
+[0m14:10:48  Registered adapter: firebolt=1.6.3
+[0m14:10:48  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m14:10:49  Found 1 model, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m14:10:49  
+[0m14:10:50  Concurrency: 1 threads (target='default')
+[0m14:10:50  
+[0m14:10:50  1 of 1 START sql view model model_mc_modelface ................................. [RUN]
+[0m14:10:51  1 of 1 OK created sql view model model_mc_modelface ............................ [[32mSUCCESS[0m in 1.15s]
+[0m14:10:51  
+[0m14:10:51  Finished running 1 view model in 0 hours 0 minutes and 2.59 seconds (2.59s).
+[0m14:10:51  
+[0m14:10:51  [32mCompleted successfully[0m
+[0m14:10:51  
+[0m14:10:51  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--vars', 'materialized: incremental']
+[0m14:10:51  Running with dbt=1.7.17
+[0m14:10:51  Registered adapter: firebolt=1.6.3
+[0m14:10:51  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m14:10:52  Found 1 model, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m14:10:52  
+[0m14:10:54  Concurrency: 1 threads (target='default')
+[0m14:10:54  
+[0m14:10:54  1 of 1 START sql incremental model model_mc_modelface .......................... [RUN]
+[0m14:10:55  1 of 1 OK created sql incremental model model_mc_modelface ..................... [[32mSUCCESS[0m in 1.63s]
+[0m14:10:55  
+[0m14:10:55  Finished running 1 incremental model in 0 hours 0 minutes and 3.02 seconds (3.02s).
+[0m14:10:55  
+[0m14:10:55  [32mCompleted successfully[0m
+[0m14:10:55  
+[0m14:10:55  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--vars', 'materialized: table', '--full-refresh']
+[0m14:10:55  Running with dbt=1.7.17
+[0m14:10:55  Registered adapter: firebolt=1.6.3
+[0m14:10:55  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m14:10:56  Found 1 model, 0 sources, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m14:10:56  
+[0m14:10:58  Concurrency: 1 threads (target='default')
+[0m14:10:58  
+[0m14:10:58  1 of 1 START sql table model model_mc_modelface ................................ [RUN]
+[0m14:10:59  1 of 1 OK created sql table model model_mc_modelface ........................... [[32mSUCCESS[0m in 1.53s]
+[0m14:10:59  
+[0m14:10:59  Finished running 1 table model in 0 hours 0 minutes and 2.94 seconds (2.94s).
+[0m14:10:59  
+[0m14:10:59  [32mCompleted successfully[0m
+[0m14:10:59  
+[0m14:10:59  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
