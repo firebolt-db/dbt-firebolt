@@ -12,6 +12,8 @@ the columns (for instance, `is_nullable` is missing) but more could be added lat
       cols.data_type AS column_type,
       CASE
         WHEN table_type = 'BASE TABLE' THEN 'TABLE'
+        WHEN table_type = 'DIMENSION' THEN 'TABLE'
+        WHEN table_type = 'FACT' THEN 'TABLE'
         WHEN table_type = 'VIEW' THEN 'VIEW'
       END AS relation_type,
       cols.ordinal_position as column_index
