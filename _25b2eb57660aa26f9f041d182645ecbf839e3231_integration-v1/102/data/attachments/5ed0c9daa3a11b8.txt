@@ -1,0 +1,9 @@
+
+
+Invoking dbt with ['debug', '--connection']
+
+
+Invoking dbt with ['debug', '--connection', '--target', 'NONE']
+
+
+Invoking dbt with ['debug', '--connection', '--profiles-dir', 'NONE']
