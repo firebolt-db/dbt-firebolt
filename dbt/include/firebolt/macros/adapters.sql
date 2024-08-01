@@ -174,6 +174,8 @@
           table_schema AS "schema",
           CASE
             WHEN table_type = 'BASE TABLE' THEN 'table'
+            WHEN table_type = 'DIMENSION' THEN 'table'
+            WHEN table_type = 'FACT' THEN 'table'
             WHEN table_type = 'VIEW' THEN 'view'
           END AS "type"
       FROM
