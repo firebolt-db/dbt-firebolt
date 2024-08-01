@@ -1,0 +1,22 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project2
+
+
+Invoking dbt with ['seed']
+[0m13:30:41  Running with dbt=1.7.17
+[0m13:30:41  Registered adapter: firebolt=1.6.3
+[0m13:30:41  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m13:30:42  Found 1 model, 2 seeds, 1 source, 0 exposures, 0 metrics, 418 macros, 0 groups, 0 semantic models
+[0m13:30:42  
+[0m13:30:43  Concurrency: 1 threads (target='default')
+[0m13:30:43  
+[0m13:30:43  1 of 2 START seed file added ................................................... [RUN]
+[0m13:30:45  1 of 2 OK loaded seed file public.added ........................................ [[32mINSERT 20[0m in 1.64s]
+[0m13:30:45  2 of 2 START seed file base .................................................... [RUN]
+[0m13:30:47  2 of 2 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 1.42s]
+[0m13:30:47  
+[0m13:30:47  Finished running 2 seeds in 0 hours 0 minutes and 4.92 seconds (4.92s).
+[0m13:30:47  
+[0m13:30:47  [32mCompleted successfully[0m
+[0m13:30:47  
+[0m13:30:47  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
