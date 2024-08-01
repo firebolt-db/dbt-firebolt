@@ -1,0 +1,22 @@
+INFO     httpx:_client.py:1026 HTTP Request: GET https://api.staging.firebolt.io/iam/v2/accounts:getIdByName?account_name=firebolt "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1026 HTTP Request: GET https://api.staging.firebolt.io/core/v1/accounts/297db526-f0c1-46f2-9f67-6e9142931479/engines:getIdByName?engine_name=integration_testing__1722500390 "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1026 HTTP Request: GET https://api.staging.firebolt.io/core/v1/accounts/297db526-f0c1-46f2-9f67-6e9142931479/engines/c5355c9f-72ae-4984-a68a-1fb0208cca0b "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1026 HTTP Request: POST https://integration-testing-1722500390.firebolt.us-east-1.staging.firebolt.io/?database=integration_testing__1722500390&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:194 Query fetched 1 rows in 0.029234886169433594 seconds.
+INFO     httpx:_client.py:1026 HTTP Request: POST https://integration-testing-1722500390.firebolt.us-east-1.staging.firebolt.io/?database=integration_testing__1722500390&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:194 Query fetched 1 rows in 0.015397310256958008 seconds.
+INFO     httpx:_client.py:1026 HTTP Request: GET https://api.staging.firebolt.io/iam/v2/accounts:getIdByName?account_name=firebolt "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1026 HTTP Request: GET https://api.staging.firebolt.io/core/v1/accounts/297db526-f0c1-46f2-9f67-6e9142931479/engines:getIdByName?engine_name=integration_testing__1722500390 "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1026 HTTP Request: GET https://api.staging.firebolt.io/core/v1/accounts/297db526-f0c1-46f2-9f67-6e9142931479/engines/c5355c9f-72ae-4984-a68a-1fb0208cca0b "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1026 HTTP Request: POST https://integration-testing-1722500390.firebolt.us-east-1.staging.firebolt.io/?database=integration_testing__1722500390&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:194 Query fetched 1 rows in 0.026588916778564453 seconds.
+INFO     httpx:_client.py:1026 HTTP Request: POST https://integration-testing-1722500390.firebolt.us-east-1.staging.firebolt.io/?database=integration_testing__1722500390&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:194 Query fetched 30 rows in 0.024328947067260742 seconds.
+INFO     httpx:_client.py:1026 HTTP Request: GET https://api.staging.firebolt.io/iam/v2/accounts:getIdByName?account_name=firebolt "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1026 HTTP Request: GET https://api.staging.firebolt.io/core/v1/accounts/297db526-f0c1-46f2-9f67-6e9142931479/engines:getIdByName?engine_name=integration_testing__1722500390 "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1026 HTTP Request: GET https://api.staging.firebolt.io/core/v1/accounts/297db526-f0c1-46f2-9f67-6e9142931479/engines/c5355c9f-72ae-4984-a68a-1fb0208cca0b "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1026 HTTP Request: POST https://integration-testing-1722500390.firebolt.us-east-1.staging.firebolt.io/?database=integration_testing__1722500390&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:194 Query fetched 1 rows in 0.04817318916320801 seconds.
+INFO     httpx:_client.py:1026 HTTP Request: POST https://integration-testing-1722500390.firebolt.us-east-1.staging.firebolt.io/?database=integration_testing__1722500390&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:194 Query fetched 0 rows in 0.1182706356048584 seconds.
+INFO     httpx:_client.py:1026 HTTP Request: POST https://integration-testing-1722500390.firebolt.us-east-1.staging.firebolt.io/?database=integration_testing__1722500390&output_format=JSON_Compact "HTTP/1.1 500 Internal Server Error"
