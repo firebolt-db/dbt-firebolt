@@ -1,0 +1,51 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m16:50:49  Running with dbt=1.7.18
+[0m16:50:49  Registered adapter: firebolt=1.6.3
+[0m16:50:49  Found 12 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 420 macros, 0 groups, 0 semantic models
+[0m16:50:49  
+[0m16:50:50  Concurrency: 1 threads (target='default')
+[0m16:50:50  
+[0m16:50:50  1 of 1 START seed file seed .................................................... [RUN]
+[0m16:50:52  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 6[0m in 1.65s]
+[0m16:50:52  
+[0m16:50:52  Finished running 1 seed in 0 hours 0 minutes and 3.31 seconds (3.31s).
+[0m16:50:52  
+[0m16:50:52  [32mCompleted successfully[0m
+[0m16:50:52  
+[0m16:50:52  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'empty_unique_key_list', '--full-refresh']
+[0m16:50:52  Running with dbt=1.7.18
+[0m16:50:52  Registered adapter: firebolt=1.6.3
+[0m16:50:52  Found 12 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 420 macros, 0 groups, 0 semantic models
+[0m16:50:52  
+[0m16:50:54  Concurrency: 1 threads (target='default')
+[0m16:50:54  
+[0m16:50:54  1 of 1 START sql incremental model empty_unique_key_list ....................... [RUN]
+[0m16:50:55  1 of 1 OK created sql incremental model empty_unique_key_list .................. [[32mSUCCESS[0m in 1.38s]
+[0m16:50:55  
+[0m16:50:55  Finished running 1 incremental model in 0 hours 0 minutes and 3.22 seconds (3.22s).
+[0m16:50:55  
+[0m16:50:55  [32mCompleted successfully[0m
+[0m16:50:55  
+[0m16:50:55  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'empty_unique_key_list']
+[0m16:50:58  Running with dbt=1.7.18
+[0m16:50:58  Registered adapter: firebolt=1.6.3
+[0m16:50:58  Found 12 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 420 macros, 0 groups, 0 semantic models
+[0m16:50:58  
+[0m16:51:00  Concurrency: 1 threads (target='default')
+[0m16:51:00  
+[0m16:51:00  1 of 1 START sql incremental model empty_unique_key_list ....................... [RUN]
+[0m16:51:02  1 of 1 OK created sql incremental model empty_unique_key_list .................. [[32mSUCCESS[0m in 2.04s]
+[0m16:51:02  
+[0m16:51:02  Finished running 1 incremental model in 0 hours 0 minutes and 3.93 seconds (3.93s).
+[0m16:51:02  
+[0m16:51:02  [32mCompleted successfully[0m
+[0m16:51:02  
+[0m16:51:02  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1

@@ -1,0 +1,12 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project41
+
+
+Invoking dbt with ['run']
+[0m13:20:55  Running with dbt=1.7.18
+[0m13:20:55  Registered adapter: firebolt=1.6.3
+[0m13:20:55  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m13:20:56  Encountered an error:
+Compilation Error in model hooks (models/hooks.sql)
+  Invalid config, has conflicting keys "pre_hook" and "pre-hook"
+[0m13:20:56  Unable to do partial parsing because saved manifest not found. Starting full parse.

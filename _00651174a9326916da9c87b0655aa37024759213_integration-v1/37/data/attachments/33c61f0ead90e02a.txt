@@ -1,0 +1,54 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project43
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m13:59:02  Running with dbt=1.7.18
+[0m13:59:02  Registered adapter: firebolt=1.6.3
+[0m13:59:02  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m13:59:03  Found 12 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 420 macros, 0 groups, 0 semantic models
+[0m13:59:03  
+[0m13:59:05  Concurrency: 1 threads (target='default')
+[0m13:59:05  
+[0m13:59:05  1 of 1 START seed file seed .................................................... [RUN]
+[0m13:59:07  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 6[0m in 1.65s]
+[0m13:59:07  
+[0m13:59:07  Finished running 1 seed in 0 hours 0 minutes and 3.55 seconds (3.55s).
+[0m13:59:07  
+[0m13:59:07  [32mCompleted successfully[0m
+[0m13:59:07  
+[0m13:59:07  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'no_unique_key', '--full-refresh']
+[0m13:59:07  Running with dbt=1.7.18
+[0m13:59:07  Registered adapter: firebolt=1.6.3
+[0m13:59:07  Found 12 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 420 macros, 0 groups, 0 semantic models
+[0m13:59:07  
+[0m13:59:09  Concurrency: 1 threads (target='default')
+[0m13:59:09  
+[0m13:59:09  1 of 1 START sql incremental model no_unique_key ............................... [RUN]
+[0m13:59:11  1 of 1 OK created sql incremental model no_unique_key .......................... [[32mSUCCESS[0m in 1.91s]
+[0m13:59:11  
+[0m13:59:11  Finished running 1 incremental model in 0 hours 0 minutes and 3.75 seconds (3.75s).
+[0m13:59:11  
+[0m13:59:11  [32mCompleted successfully[0m
+[0m13:59:11  
+[0m13:59:11  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'no_unique_key']
+[0m13:59:14  Running with dbt=1.7.18
+[0m13:59:14  Registered adapter: firebolt=1.6.3
+[0m13:59:14  Found 12 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 420 macros, 0 groups, 0 semantic models
+[0m13:59:14  
+[0m13:59:16  Concurrency: 1 threads (target='default')
+[0m13:59:16  
+[0m13:59:16  1 of 1 START sql incremental model no_unique_key ............................... [RUN]
+[0m13:59:18  1 of 1 OK created sql incremental model no_unique_key .......................... [[32mSUCCESS[0m in 2.60s]
+[0m13:59:18  
+[0m13:59:18  Finished running 1 incremental model in 0 hours 0 minutes and 4.43 seconds (4.43s).
+[0m13:59:18  
+[0m13:59:18  [32mCompleted successfully[0m
+[0m13:59:18  
+[0m13:59:18  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1

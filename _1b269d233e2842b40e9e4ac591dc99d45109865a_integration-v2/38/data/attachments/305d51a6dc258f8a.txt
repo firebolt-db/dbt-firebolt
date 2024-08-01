@@ -1,0 +1,69 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project12
+
+
+Invoking dbt with ['seed', '--select', 'seed']
+[0m14:26:15  Running with dbt=1.7.18
+[0m14:26:15  Registered adapter: firebolt=1.6.3
+[0m14:26:15  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:26:16  Found 7 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 420 macros, 0 groups, 0 semantic models
+[0m14:26:16  
+[0m14:26:17  Concurrency: 1 threads (target='default')
+[0m14:26:17  
+[0m14:26:17  1 of 1 START seed file seed .................................................... [RUN]
+[0m14:26:18  1 of 1 OK loaded seed file public.seed ......................................... [[32mINSERT 100[0m in 1.29s]
+[0m14:26:18  
+[0m14:26:18  Finished running 1 seed in 0 hours 0 minutes and 2.28 seconds (2.28s).
+[0m14:26:18  
+[0m14:26:18  [32mCompleted successfully[0m
+[0m14:26:18  
+[0m14:26:18  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m14:26:18  Running with dbt=1.7.18
+[0m14:26:18  Registered adapter: firebolt=1.6.3
+[0m14:26:18  Found 7 models, 1 seed, 0 sources, 0 exposures, 0 metrics, 420 macros, 0 groups, 0 semantic models
+[0m14:26:18  
+[0m14:26:20  Concurrency: 1 threads (target='default')
+[0m14:26:20  
+[0m14:26:20  1 of 7 START sql table model invalid ........................................... [RUN]
+[0m14:26:20  1 of 7 ERROR creating sql table model invalid .................................. [[31mERROR[0m in 0.73s]
+[0m14:26:20  2 of 7 START sql table model table_a ........................................... [RUN]
+[0m14:26:21  2 of 7 OK created sql table model table_a ...................................... [[32mSUCCESS[0m in 0.89s]
+[0m14:26:21  3 of 7 START sql table model table_b ........................................... [RUN]
+[0m14:26:22  3 of 7 OK created sql table model table_b ...................................... [[32mSUCCESS[0m in 0.92s]
+[0m14:26:22  4 of 7 START sql view model view_model ......................................... [RUN]
+[0m14:26:23  4 of 7 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 0.80s]
+[0m14:26:23  5 of 7 SKIP relation public.skip ............................................... [[33mSKIP[0m]
+[0m14:26:23  6 of 7 START sql view model view_with_conflicting_cascade ...................... [RUN]
+[0m14:26:24  6 of 7 OK created sql view model view_with_conflicting_cascade ................. [[32mSUCCESS[0m in 0.78s]
+[0m14:26:24  7 of 7 START sql table model dep ............................................... [RUN]
+[0m14:26:25  7 of 7 OK created sql table model dep .......................................... [[32mSUCCESS[0m in 0.97s]
+[0m14:26:25  
+[0m14:26:25  Finished running 4 table models, 3 view models in 0 hours 0 minutes and 6.20 seconds (6.20s).
+[0m14:26:25  
+[0m14:26:25  [31mCompleted with 1 error and 0 warnings:[0m
+[0m14:26:25  
+[0m14:26:25    Runtime Error in model invalid (models/invalid.sql)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "Line 5, Column 8: Column 'a_field_that_does_not_exist' does not exist."
+      }
+    ],
+    "query": {
+      "query_id": "c802bcd7-ccc1-4e0a-830f-c29bc765047c",
+      "request_id": "ac676d00-83d5-46c3-bc20-117f96410461"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m14:26:25  
+[0m14:26:25  Done. PASS=5 WARN=0 ERROR=1 SKIP=1 TOTAL=7
+
+
+Invoking dbt with ['run']
