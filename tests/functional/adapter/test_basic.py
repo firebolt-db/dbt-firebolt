@@ -1,3 +1,5 @@
+import os
+
 from dbt.tests.adapter.basic.expected_catalog import (
     base_expected_catalog,
     expected_references_catalog,
@@ -37,6 +39,13 @@ from dbt.tests.adapter.basic.test_snapshot_timestamp import (
 )
 from dbt.tests.util import check_relations_equal, relation_from_name, run_dbt
 from pytest import fixture, mark
+
+
+def is2_0():
+    """Helper to check Firebolt version we're testing against"""
+    if os.getenv('USER_NAME') and '@' in os.getenv('USER_NAME', ''):
+        return False
+    return True
 
 
 class AnySpecifiedType:
@@ -192,7 +201,7 @@ class TestDocsGenerateFirebolt(BaseDocsGenerate):
             text_type='TEXT',
             time_type='TIMESTAMP',
             view_type='VIEW',
-            table_type='DIMENSION',
+            table_type='BASE TABLE' if is2_0() else 'DIMENSION',
             model_stats=no_stats(),
         )
         # Can't have any other schema apart from public at the moment.
@@ -218,7 +227,7 @@ class TestDocsGenReferencesFirebolt(BaseDocsGenReferences):
             time_type='TIMESTAMP',
             bigint_type=AnySpecifiedType(['BIGINT', 'LONG']),
             view_type='VIEW',
-            table_type='DIMENSION',
+            table_type='BASE TABLE' if is2_0() else 'DIMENSION',
             model_stats=no_stats(),
         )
 

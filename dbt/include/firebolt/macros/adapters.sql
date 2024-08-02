@@ -168,17 +168,18 @@
   #}
   {% call statement('list_tables_without_caching', fetch_result=True) %}
 
-      SELECT '{{ relation.database }}' AS "database",
-             table_name AS "name",
-             '{{ relation.schema }}' AS "schema",
-             'table' AS type
-        FROM information_schema.tables
-      UNION ALL
-      SELECT '{{ relation.database }}' AS "database",
-             table_name AS "name",
-             '{{ relation.schema }}' AS "schema",
-             'view' AS type
-        FROM information_schema.views
+      SELECT
+          table_catalog AS "database",
+          table_name AS "name",
+          table_schema AS "schema",
+          CASE
+            WHEN table_type = 'BASE TABLE' THEN 'table'
+            WHEN table_type = 'DIMENSION' THEN 'table'
+            WHEN table_type = 'FACT' THEN 'table'
+            WHEN table_type = 'VIEW' THEN 'view'
+          END AS "type"
+      FROM
+          information_schema.tables
   {% endcall %}
   {% set info_table = load_result('list_tables_without_caching').table %}
   {{ return(info_table) }}
