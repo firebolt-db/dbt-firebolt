@@ -1,4 +1,12 @@
 {% macro firebolt__create_external_table(source_node) %}
+    {% if source_node.external.strategy == 'copy' %}
+        {{ firebolt__create_with_copy_from(source_node) }}
+    {% else %}
+        {{ firebolt__create_with_external_table(source_node) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro firebolt__create_with_external_table(source_node) %}
     {%- set external = source_node.external -%}
     {%- if 'partitions' in external -%}
         {%- set columns = adapter.make_field_partition_pairs(source_node.columns.values(),
@@ -7,7 +15,6 @@
         {%- set columns = adapter.make_field_partition_pairs(source_node.columns.values(),
                                                              []) -%}
     {%- endif -%}
-    -- {%- set partitions = external.partitions -%}
     {%- set credentials = external.credentials -%}
     {# Leaving out "IF NOT EXISTS" because this should only be called by
        if no DROP IF is necessary. #}
@@ -38,4 +45,93 @@
     {%- endif %}
     {%- if external.compression -%} COMPRESSION = {{external.compression}} {%- endif %}
     TYPE = {{ external.type }}
+{% endmacro %}
+
+{% macro firebolt__create_with_copy_from(source_node) %}
+    {# COPY FROM is only available in Firebolt 2.0. #}
+    {%- set external = source_node.external -%}
+    {%- set credentials = external.credentials -%}
+    {%- set options = external.options -%}
+    {%- set csv_options = options.csv_options -%}
+    {%- set error_file_credentials = options.error_file_credentials -%}
+
+    {# There are no partitions, but this formats the columns correctly. #}
+    {%- if 'partitions' in external -%}
+        {%- set columns = adapter.make_field_partition_pairs(source_node.columns.values(),
+                                                             external.partitions) -%}
+    {%- else -%}
+        {%- set columns = adapter.make_field_partition_pairs(source_node.columns.values(),
+                                                             []) -%}
+    {%- endif -%}
+    COPY INTO {{source(source_node.source_name, source_node.name)}}
+    {%- if columns and columns | length > 0 %}
+    (
+        {%- for column in columns -%}
+          {{ column.name }}
+          {%- if column.default is not none %} DEFAULT {{ column.default }}{% endif %}
+          {%- if column.source_column_name is not none %} {{ '$' ~ loop.index0 }}{% endif %}
+          {{- ',' if not loop.last }}
+        {%- endfor -%}
+    )
+    {%- endif %}
+    FROM '{{external.url}}'
+    {%- if options %}
+        WITH
+        {%- if options.object_pattern %}
+            PATTERN = '{{options.object_pattern}}'
+        {%- endif %}
+        {%- if options.type %}
+            TYPE = {{ options.type }}
+        {%- endif %}
+        {%- if options.auto_create is not none %}
+            AUTO_CREATE = {{ options.auto_create | upper }}
+        {%- endif %}
+        {%- if options.allow_column_mismatch is not none %}
+            ALLOW_COLUMN_MISMATCH = {{ options.allow_column_mismatch | upper }}
+        {%- endif %}
+        {%- if options.error_file %}
+            ERROR_FILE = '{{ options.error_file }}'
+        {%- endif %}
+        {%- if error_file_credentials %}
+            ERROR_FILE_CREDENTIALS = (AWS_KEY_ID = '{{ error_file_credentials.aws_key_id }}' AWS_SECRET_KEY = '{{ error_file_credentials.aws_secret_key }}')
+        {%- endif %}
+        {%- if options.max_errors_per_file %}
+            MAX_ERRORS_PER_FILE = {{ options.max_errors_per_file }}
+        {%- endif %}
+        {%- if csv_options %}
+            {%- if csv_options.header is not none %}
+                HEADER = {{ csv_options.header | upper }}
+            {%- endif %}
+            {%- if csv_options.delimiter %}
+                DELIMITER = '{{ csv_options.delimiter }}'
+            {%- endif %}
+            {%- if csv_options.newline %}
+                NEWLINE = '{{ csv_options.newline }}'
+            {%- endif %}
+            {%- if csv_options.quote %}
+                QUOTE = {{ csv_options.quote }}
+            {%- endif %}
+            {%- if csv_options.escape %}
+                ESCAPE = '{{ csv_options.escape }}'
+            {%- endif %}
+            {%- if csv_options.null_string %}
+                NULL_STRING = '{{ csv_options.null_string }}'
+            {%- endif %}
+            {%- if csv_options.empty_field_as_null is not none %}
+                EMPTY_FIELD_AS_NULL = {{ csv_options.empty_field_as_null | upper }}
+            {%- endif %}
+            {%- if csv_options.skip_blank_lines is not none %}
+                SKIP_BLANK_LINES = {{ csv_options.skip_blank_lines | upper }}
+            {%- endif %}
+            {%- if csv_options.date_format %}
+                DATE_FORMAT = '{{ csv_options.date_format }}'
+            {%- endif %}
+            {%- if csv_options.timestamp_format %}
+                TIMESTAMP_FORMAT = '{{ csv_options.timestamp_format }}'
+            {%- endif %}
+        {%- endif %}
+    {%- endif %}
+    {%- if credentials %}
+    CREDENTIALS = (AWS_KEY_ID = '{{credentials.aws_key_id}}' AWS_SECRET_KEY = '{{credentials.aws_secret_key}}')
+    {%- endif %}
 {% endmacro %}
