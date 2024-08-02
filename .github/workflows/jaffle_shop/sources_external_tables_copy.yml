@@ -9,7 +9,7 @@ sources:
           url: "{{ env_var('SECURE_BUCKET_PATH') }}"
           credentials:
             aws_key_id: "{{ env_var('AWS_ACCESS_KEY_ID') }}"
-            aws_secret_key: "{{ env_var('AWS_SECRET_ACCESS_KEY') }}"
+            aws_secret_key: "{{ env_var('AWS_ACCESS_SECRET_KEY') }}"
           options:
             object_pattern: '*raw_customers.csv'
             type: CSV
