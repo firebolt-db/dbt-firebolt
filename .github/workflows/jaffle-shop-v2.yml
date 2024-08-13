@@ -23,14 +23,14 @@ jobs:
           path: jaffle-shop
 
       - name: Set up Python 3.8
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: 3.8
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install "dbt-firebolt/.[dev]"
+          cd dbt-firebolt
+          python -m pip install dbt-core -e .
 
       - name: Setup database and engine
         id: setup
@@ -40,7 +40,6 @@ jobs:
           firebolt-client-secret: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
           account: ${{ vars.FIREBOLT_ACCOUNT }}
           api-endpoint: "api.staging.firebolt.io"
-
 
       - name: Run Jaffle Shop test workflow
         env:
@@ -56,5 +55,5 @@ jobs:
           AWS_ACCESS_ROLE_ARN: ${{ secrets.AWS_ACCESS_ROLE_ARN }}
           DBT_PROFILES_DIR: "../dbt-firebolt/.github/workflows/jaffle_shop"
         working-directory: jaffle-shop
-        run:
-          ../dbt-firebolt/.github/workflows/jaffle_shop/run_test_workflow.sh
+        run: |
+          source ../dbt-firebolt/.github/workflows/jaffle_shop/run_test_workflow.sh

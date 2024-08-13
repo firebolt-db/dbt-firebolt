@@ -1,6 +1,6 @@
 set -xe
-dbt debug
 dbt clean
+dbt debug
 dbt deps
 dbt compile
 dbt run-operation stage_external_sources
