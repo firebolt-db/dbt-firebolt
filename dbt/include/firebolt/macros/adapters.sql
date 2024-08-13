@@ -171,12 +171,10 @@
       SELECT
           table_catalog AS "database",
           table_name AS "name",
-          table_schema AS "schema",
+          '{{ relation.schema }}' AS "schema",
           CASE
-            WHEN table_type = 'BASE TABLE' THEN 'table'
-            WHEN table_type = 'DIMENSION' THEN 'table'
-            WHEN table_type = 'FACT' THEN 'table'
             WHEN table_type = 'VIEW' THEN 'view'
+            ELSE 'table'
           END AS "type"
       FROM
           information_schema.tables
