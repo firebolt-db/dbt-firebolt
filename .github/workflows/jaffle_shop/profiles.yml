@@ -3,7 +3,7 @@ seeds:
 jaffle_shop:
   target: app
   outputs:
-    app: &app
+    app:
       type: firebolt
       api_endpoint: "{{ env_var('API_ENDPOINT') }}"
       account_name: "{{ env_var('ACCOUNT_NAME') }}"
