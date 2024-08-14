@@ -29,6 +29,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           cd dbt-firebolt
           python -m pip install dbt-core -e .
 
