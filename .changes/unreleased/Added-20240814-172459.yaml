@@ -1,0 +1,3 @@
+kind: Added
+body: Added a way to use COPY FROM command as an alternative to EXTERNAL TABLE.
+time: 2024-08-14T17:24:59.573298+01:00

@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: s3
+    tables:
+      - name: raw_customers
+        external:
+          strategy: copy
+          url: "{{ env_var('SECURE_BUCKET_PATH') }}"
+          credentials:
+            aws_key_id: "{{ env_var('AWS_ACCESS_KEY_ID') }}"
+            aws_secret_key: "{{ env_var('AWS_ACCESS_SECRET_KEY') }}"
+          options:
+            object_pattern: '*raw_customers.csv'
+            type: CSV
+            auto_create: true
+            allow_column_mismatch: false
+            max_errors_per_file: 10
+            csv_options:
+              header: true
+              delimiter: ','
+              quote: DOUBLE_QUOTE
+              escape: '\'
+              null_string: '\\N'
+              empty_field_as_null: true
+              skip_blank_lines: true
+              date_format: 'YYYY-MM-DD'
+              timestamp_format: 'YYYY-MM-DD HH24:MI:SS'
+
