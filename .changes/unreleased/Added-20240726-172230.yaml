@@ -1,3 +1,0 @@
-kind: Added
-body: Ability to specify AWS key id and secret when creating external tables.
-time: 2024-07-26T17:22:30.860068+01:00
