@@ -54,6 +54,12 @@ jobs:
         run: |
           pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
+      - name: Make sure no secrets make it to the logs
+        if: always()
+        run: |
+          find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_STG_USERNAME }}/REDACTED/g' {} +
+          find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_STG_PASSWORD }}/REDACTED/g' {} +
+
       - name: Save failed tests
         id: cache-tests-save
         uses: actions/cache/save@v3

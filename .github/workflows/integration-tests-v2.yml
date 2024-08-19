@@ -55,6 +55,7 @@ jobs:
           pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
       - name: Make sure no secrets make it to the logs
+        if: always()
         run: |
           find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}/REDACTED/g' {} +
           find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}/REDACTED/g' {} +
