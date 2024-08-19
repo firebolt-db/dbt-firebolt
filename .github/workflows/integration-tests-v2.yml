@@ -56,8 +56,8 @@ jobs:
 
       - name: Make sure no secrets make it to the logs
         run: |
-          find allure-results -type f -exec perl .github/replace.pl ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }} {} +
-          find allure-results -type f -exec perl .github/replace.pl ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }} {} +
+          find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}/REDACTED/g' {} +
+          find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}/REDACTED/g' {} +
 
       - name: Save failed tests
         id: cache-tests-save
