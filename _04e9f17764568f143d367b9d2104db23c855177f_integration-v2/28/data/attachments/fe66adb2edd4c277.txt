@@ -1,0 +1,70 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project5
+
+
+Invoking dbt with ['seed']
+[0m10:59:09  Running with dbt=1.7.18
+[0m10:59:09  Registered adapter: firebolt=1.6.4
+[0m10:59:09  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m10:59:10  Found 1 model, 2 seeds, 1 source, 0 exposures, 0 metrics, 431 macros, 0 groups, 0 semantic models
+[0m10:59:10  
+[0m10:59:12  Concurrency: 1 threads (target='default')
+[0m10:59:12  
+[0m10:59:12  1 of 2 START seed file added ................................................... [RUN]
+[0m10:59:13  1 of 2 OK loaded seed file public.added ........................................ [[32mINSERT 20[0m in 1.02s]
+[0m10:59:13  2 of 2 START seed file base .................................................... [RUN]
+[0m10:59:14  2 of 2 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 0.91s]
+[0m10:59:14  
+[0m10:59:14  Finished running 2 seeds in 0 hours 0 minutes and 3.60 seconds (3.60s).
+[0m10:59:14  
+[0m10:59:14  [32mCompleted successfully[0m
+[0m10:59:14  
+[0m10:59:14  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+
+
+Invoking dbt with ['run', '--vars', 'seed_name: base']
+[0m10:59:15  Running with dbt=1.7.18
+[0m10:59:15  Registered adapter: firebolt=1.6.4
+[0m10:59:15  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m10:59:16  Found 1 model, 2 seeds, 1 source, 0 exposures, 0 metrics, 431 macros, 0 groups, 0 semantic models
+[0m10:59:16  
+[0m10:59:17  Concurrency: 1 threads (target='default')
+[0m10:59:17  
+[0m10:59:17  1 of 1 START sql incremental model incremental ................................. [RUN]
+[0m10:59:18  1 of 1 OK created sql incremental model incremental ............................ [[32mSUCCESS[0m in 0.85s]
+[0m10:59:18  
+[0m10:59:18  Finished running 1 incremental model in 0 hours 0 minutes and 2.43 seconds (2.43s).
+[0m10:59:18  
+[0m10:59:18  [32mCompleted successfully[0m
+[0m10:59:18  
+[0m10:59:18  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--full-refresh', '--vars', 'seed_name: added']
+[0m10:59:20  Running with dbt=1.7.18
+[0m10:59:20  Registered adapter: firebolt=1.6.4
+[0m10:59:20  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m10:59:21  Found 1 model, 2 seeds, 1 source, 0 exposures, 0 metrics, 431 macros, 0 groups, 0 semantic models
+[0m10:59:21  
+[0m10:59:22  Concurrency: 1 threads (target='default')
+[0m10:59:22  
+[0m10:59:22  1 of 1 START sql incremental model incremental ................................. [RUN]
+[0m10:59:23  1 of 1 OK created sql incremental model incremental ............................ [[32mSUCCESS[0m in 1.51s]
+[0m10:59:23  
+[0m10:59:23  Finished running 1 incremental model in 0 hours 0 minutes and 2.47 seconds (2.47s).
+[0m10:59:23  
+[0m10:59:23  [32mCompleted successfully[0m
+[0m10:59:23  
+[0m10:59:23  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['docs', 'generate']
+[0m10:59:24  Running with dbt=1.7.18
+[0m10:59:24  Registered adapter: firebolt=1.6.4
+[0m10:59:24  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m10:59:25  Found 1 model, 2 seeds, 1 source, 0 exposures, 0 metrics, 431 macros, 0 groups, 0 semantic models
+[0m10:59:25  
+[0m10:59:25  Concurrency: 1 threads (target='default')
+[0m10:59:25  
+[0m10:59:25  Building catalog
+[0m10:59:26  Catalog written to /tmp/pytest-of-runner/pytest-0/project5/target/catalog.json
