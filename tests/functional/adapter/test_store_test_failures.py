@@ -24,7 +24,9 @@ class TestStoreTestFailuresAsGeneric(StoreTestFailuresAsGeneric):
     pass
 
 
-class TestStoreTestFailuresAsProjectLevelEphemeral(StoreTestFailuresAsProjectLevelEphemeral):
+class TestStoreTestFailuresAsProjectLevelEphemeral(
+    StoreTestFailuresAsProjectLevelEphemeral
+):
     pass
 
 

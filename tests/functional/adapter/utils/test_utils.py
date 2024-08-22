@@ -23,6 +23,9 @@ from dbt.tests.adapter.utils.fixture_equals import (
     MODELS__EQUAL_VALUES_SQL,
     MODELS__NOT_EQUAL_VALUES_SQL,
 )
+from dbt.tests.adapter.utils.fixture_get_intervals_between import (
+    models__test_get_intervals_between_yml,
+)
 from dbt.tests.adapter.utils.fixture_hash import (
     models__test_hash_sql,
     models__test_hash_yml,
@@ -237,14 +240,14 @@ from data
 
 -- Also test correct casting of literal values.
 
-union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "second") }} as actual, 1 as expected
-union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "minute") }} as actual, 1 as expected
-union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "hour") }} as actual, 1 as expected
-union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "day") }} as actual, 1 as expected
-union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-03 00:00:00.000000'", "week") }} as actual, 1 as expected
-union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "month") }} as actual, 1 as expected
-union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "quarter") }} as actual, 1 as expected
-union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", "year") }} as actual, 1 as expected
+union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'second') }} as actual, 1 as expected
+union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'minute') }} as actual, 1 as expected
+union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'hour') }} as actual, 1 as expected
+union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'day') }} as actual, 1 as expected
+union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-03 00:00:00.000000'', 'week') }} as actual, 1 as expected
+union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'month') }} as actual, 1 as expected
+union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'quarter') }} as actual, 1 as expected
+union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'year') }} as actual, 1 as expected
 """
 
 
@@ -544,7 +547,7 @@ class TestDateSpine(BaseDateSpine):
     # Override to use postgres dialect
     models__test_date_spine_sql = """
     with generated_dates as (
-            {{ date_spine("day", "'2023-09-01'::date", "'2023-09-10'::date") }}
+            {{ date_spine('day', ''2023-09-01'::date', ''2023-09-10'::date') }}
     ), expected_dates as (
             select '2023-09-01'::date as expected
             union all
@@ -574,20 +577,18 @@ class TestDateSpine(BaseDateSpine):
     SELECT * from joined
     """
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope='class')
     def models(self):
         return {
-            "test_date_spine.yml": models__test_date_spine_yml,
-            "test_date_spine.sql": self.interpolate_macro_namespace(
-                self.models__test_date_spine_sql, "date_spine"
+            'test_date_spine.yml': models__test_date_spine_yml,
+            'test_date_spine.sql': self.interpolate_macro_namespace(
+                self.models__test_date_spine_sql, 'date_spine'
             ),
         }
+
+
 class TestGenerateSeries(BaseGenerateSeries):
     pass
-
-from dbt.tests.adapter.utils.fixture_get_intervals_between import (
-    models__test_get_intervals_between_yml,
-)
 
 
 class TestGetIntervalsBeteween(BaseGetIntervalsBetween):
@@ -596,18 +597,20 @@ class TestGetIntervalsBeteween(BaseGetIntervalsBetween):
     # the Firebolt database
     models__test_get_intervals_between_sql = """
     SELECT
-        {{ get_intervals_between("'01/09/2023'::date", "'12/09/2023'::date", "day") }} as intervals,
+        {{ get_intervals_between(''01/09/2023'::date', ''12/09/2023'::date', 'day') }} as intervals,
     11 as expected
 
     """
-    @pytest.fixture(scope="class")
+
+    @pytest.fixture(scope='class')
     def models(self):
         return {
-            "test_get_intervals_between.yml": models__test_get_intervals_between_yml,
-            "test_get_intervals_between.sql": self.interpolate_macro_namespace(
-                self.models__test_get_intervals_between_sql, "get_intervals_between"
+            'test_get_intervals_between.yml': models__test_get_intervals_between_yml,
+            'test_get_intervals_between.sql': self.interpolate_macro_namespace(
+                self.models__test_get_intervals_between_sql, 'get_intervals_between'
             ),
         }
+
 
 class TestGetPowersOfTwo(BaseGetPowersOfTwo):
     pass

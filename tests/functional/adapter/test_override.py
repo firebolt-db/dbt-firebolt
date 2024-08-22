@@ -20,21 +20,21 @@ class TestDocsGenerateOverride:
     is enabled in the adapter.
     """
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope='class')
     def models(self):
-        return {"model.sql": model_sql}
+        return {'model.sql': model_sql}
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope='class')
     def macros(self):
-        return {"failure.sql": fail_macros__failure_sql}
+        return {'failure.sql': fail_macros__failure_sql}
 
     def test_override_used(
         self,
         project,
     ):
-        results = run_dbt(["run"])
+        results = run_dbt(['run'])
         assert len(results) == 1  # type: ignore
         # this should pick up our failure macro and raise a compilation exception
         with pytest.raises(CompilationError) as excinfo:
-            run_dbt(["--warn-error", "docs", "generate"])
-        assert "rejected: no catalogs for you" in str(excinfo.value)
+            run_dbt(['--warn-error', 'docs', 'generate'])
+        assert 'rejected: no catalogs for you' in str(excinfo.value)
