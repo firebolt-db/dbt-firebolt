@@ -32,7 +32,9 @@ class FireboltRelation(BaseRelation):
     quote_character: str = '"'
     is_delta: Optional[bool] = None
     information: Optional[str] = None
-    relation_configs: Dict[RelationType, RelationConfigBase] = {}
+    relation_configs: Dict[RelationType, RelationConfigBase] = field(
+        default_factory=lambda: {}
+    )
     # list relations that can be renamed (e.g. `RENAME my_relation TO my_new_name;`)
     renameable_relations: FrozenSet[RelationType] = field(
         default_factory=lambda: frozenset({})
