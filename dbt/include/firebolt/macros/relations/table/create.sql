@@ -49,8 +49,7 @@
 
     {%- if primary_index %}
         primary INDEX {% if primary_index is iterable and primary_index is not string %}
-            {{ primary_index |
-            JOIN(', ') }}
+            {{ primary_index | join(', ') }}
         {%- else -%}
             {{ primary_index }}
         {%- endif -%}
@@ -58,8 +57,7 @@
 
     {% if partitions %}
         PARTITION BY {% if partitions is iterable and partitions is not string %}
-            {{ partitions |
-            JOIN(', ') }}
+            {{ partitions | join(', ') }}
         {%- else -%}
             {{ partitions }}
         {%- endif -%}
