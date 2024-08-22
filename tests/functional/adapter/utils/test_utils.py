@@ -240,14 +240,14 @@ from data
 
 -- Also test correct casting of literal values.
 
-union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'second') }} as actual, 1 as expected
-union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'minute') }} as actual, 1 as expected
-union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'hour') }} as actual, 1 as expected
-union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'day') }} as actual, 1 as expected
-union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-03 00:00:00.000000'', 'week') }} as actual, 1 as expected
-union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'month') }} as actual, 1 as expected
-union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'quarter') }} as actual, 1 as expected
-union all select {{ datediff(''1999-12-31 23:59:59.999999'', ''2000-01-01 00:00:00.000000'', 'year') }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", 'second') }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", 'minute') }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", 'hour') }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", 'day') }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-03 00:00:00.000000'", 'week') }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", 'month') }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", 'quarter') }} as actual, 1 as expected
+union all select {{ datediff("'1999-12-31 23:59:59.999999'", "'2000-01-01 00:00:00.000000'", 'year') }} as actual, 1 as expected
 """
 
 
@@ -547,7 +547,7 @@ class TestDateSpine(BaseDateSpine):
     # Override to use postgres dialect
     models__test_date_spine_sql = """
     with generated_dates as (
-            {{ date_spine('day', ''2023-09-01'::date', ''2023-09-10'::date') }}
+            {{ date_spine('day', "'2023-09-01'::date", "'2023-09-10'::date") }}
     ), expected_dates as (
             select '2023-09-01'::date as expected
             union all
@@ -597,7 +597,7 @@ class TestGetIntervalsBeteween(BaseGetIntervalsBetween):
     # the Firebolt database
     models__test_get_intervals_between_sql = """
     SELECT
-        {{ get_intervals_between(''01/09/2023'::date', ''12/09/2023'::date', 'day') }} as intervals,
+        {{ get_intervals_between("'01/09/2023'::date", "'12/09/2023'::date", 'day') }} as intervals,
     11 as expected
 
     """
