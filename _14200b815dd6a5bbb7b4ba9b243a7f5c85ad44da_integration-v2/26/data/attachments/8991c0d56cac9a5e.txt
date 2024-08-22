@@ -1,0 +1,14 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project83
+
+
+Invoking dbt with ['build']
+[0m10:33:06  Running with dbt=1.7.18
+[0m10:33:06  Registered adapter: firebolt=1.6.4
+[0m10:33:06  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m10:33:06  Encountered an error:
+Compilation Error in model test_date_spine (models/test_date_spine.sql)
+  expected token ',', got 'integer'
+    line 2
+      {{ date_spine('day', ''2023-09-01'::date', ''2023-09-10'::date') }}
+[0m10:33:07  Unable to do partial parsing because saved manifest not found. Starting full parse.

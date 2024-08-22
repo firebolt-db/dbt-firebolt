@@ -1,0 +1,7 @@
+INFO     httpx:_client.py:1026 HTTP Request: POST https://01hzdxdxjqa9n6c07d5j51skep.api.us-east-1.staging.firebolt.io/?output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:192 Query fetched 0 rows in 0.03405165672302246 seconds.
+INFO     httpx:_client.py:1026 HTTP Request: POST https://01hzdxdxjqa9n6c07d5j51skep.api.us-east-1.staging.firebolt.io/?database=integration_testing__1724321556329&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:192 Query fetched 0 rows in 0.09350824356079102 seconds.
+INFO     httpx:_client.py:1026 HTTP Request: POST https://automation-firebolt.api.us-east-1.staging.firebolt.io/?database=integration_testing__1724321556329&engine=integration_testing__1724321556329&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:192 Query fetched 1 rows in 0.022350311279296875 seconds.
+INFO     httpx:_client.py:1026 HTTP Request: POST https://automation-firebolt.api.us-east-1.staging.firebolt.io/?database=integration_testing__1724321556329&engine=integration_testing__1724321556329&output_format=JSON_Compact "HTTP/1.1 500 Internal Server Error"

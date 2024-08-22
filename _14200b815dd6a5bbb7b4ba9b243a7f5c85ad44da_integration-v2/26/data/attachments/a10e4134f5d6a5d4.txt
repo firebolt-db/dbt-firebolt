@@ -1,0 +1,22 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project16
+
+
+Invoking dbt with ['run', '-s', 'my_model_wrong_order']
+[0m10:16:54  Running with dbt=1.7.18
+[0m10:16:54  Registered adapter: firebolt=1.6.4
+[0m10:16:54  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m10:16:55  [[33mWARNING[0m]: Did not find matching node for patch with name 'my_model' in the 'models' section of file 'models/constraints_schema.yml'
+[0m10:16:55  [[33mWARNING[0m]: Did not find matching node for patch with name 'my_model_error' in the 'models' section of file 'models/constraints_schema.yml'
+[0m10:16:55  [[33mWARNING[0m]: Test 'test.test.unique_my_model_id.7a8b3e1711' (models/constraints_schema.yml) depends on a node named 'my_model' in package '' which was not found
+[0m10:16:55  [[33mWARNING[0m]: Test 'test.test.unique_my_model_error_id.8d2ff7a7b1' (models/constraints_schema.yml) depends on a node named 'my_model_error' in package '' which was not found
+[0m10:16:55  Found 2 models, 2 tests, 0 sources, 0 exposures, 0 metrics, 431 macros, 0 groups, 0 semantic models
+[0m10:16:55  
+[0m10:17:18  
+[0m10:17:18  Finished running  in 0 hours 0 minutes and 22.93 seconds (22.93s).
+[0m10:17:18  Encountered an error:
+Runtime Error
+  Runtime Error
+    Database Error
+      Server error '502 Bad Gateway' for url 'https://01hzdxdxjqa9n6c07d5j51skep.api.us-east-1.staging.firebolt.io/?output_format=JSON_Compact'
+      For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502
