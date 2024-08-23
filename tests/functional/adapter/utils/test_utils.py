@@ -1,4 +1,9 @@
 import pytest
+from dbt.tests.adapter.utils import (
+    fixture_array_append,
+    fixture_array_concat,
+    fixture_array_construct,
+)
 from dbt.tests.adapter.utils.fixture_bool_or import (
     models__test_bool_or_sql,
     models__test_bool_or_yml,
@@ -51,21 +56,9 @@ from dbt.tests.adapter.utils.fixture_split_part import (
     models__test_split_part_yml,
 )
 from dbt.tests.adapter.utils.test_any_value import BaseAnyValue
-from dbt.tests.adapter.utils.test_array_append import (
-    BaseArrayAppend,
-    models__array_append_actual_sql,
-    models__array_append_expected_sql,
-)
-from dbt.tests.adapter.utils.test_array_concat import (
-    BaseArrayConcat,
-    models__array_concat_actual_sql,
-    models__array_concat_expected_sql,
-)
-from dbt.tests.adapter.utils.test_array_construct import (
-    BaseArrayConstruct,
-    models__array_construct_actual_sql,
-    models__array_construct_expected_sql,
-)
+from dbt.tests.adapter.utils.test_array_append import BaseArrayAppend
+from dbt.tests.adapter.utils.test_array_concat import BaseArrayConcat
+from dbt.tests.adapter.utils.test_array_construct import BaseArrayConstruct
 from dbt.tests.adapter.utils.test_bool_or import BaseBoolOr
 from dbt.tests.adapter.utils.test_cast_bool_to_text import BaseCastBoolToText
 from dbt.tests.adapter.utils.test_concat import BaseConcat
@@ -479,9 +472,9 @@ class TestArrayAppend(BaseArrayAppend):
     def models(self):
         return {
             'actual.yml': schema_actual_table_yml,
-            'actual.sql': models__array_append_actual_sql,
+            'actual.sql': fixture_array_append.models__array_append_actual_sql,
             'expected.yml': schema_expected_table_yml,
-            'expected.sql': models__array_append_expected_sql,
+            'expected.sql': fixture_array_append.models__array_append_expected_sql,
         }
 
 
@@ -491,9 +484,9 @@ class TestArrayConcat(BaseArrayConcat):
     def models(self):
         return {
             'actual.yml': schema_actual_table_yml,
-            'actual.sql': models__array_concat_actual_sql,
+            'actual.sql': fixture_array_concat.models__array_concat_actual_sql,
             'expected.yml': schema_expected_table_yml,
-            'expected.sql': models__array_concat_expected_sql,
+            'expected.sql': fixture_array_concat.models__array_concat_expected_sql,
         }
 
 
@@ -502,9 +495,9 @@ class TestArrayConstruct(BaseArrayConstruct):
     def models(self):
         return {
             'actual.yml': schema_actual_table_yml,
-            'actual.sql': models__array_construct_actual_sql,
+            'actual.sql': fixture_array_construct.models__array_construct_actual_sql,
             'expected.yml': schema_expected_table_yml,
-            'expected.sql': models__array_construct_expected_sql,
+            'expected.sql': fixture_array_construct.models__array_construct_expected_sql,
         }
 
 

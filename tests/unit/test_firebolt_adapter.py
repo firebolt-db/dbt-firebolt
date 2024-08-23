@@ -1,7 +1,8 @@
 from datetime import datetime
+from multiprocessing import get_context
 from unittest.mock import MagicMock, patch
 
-from dbt.contracts.connection import Connection
+from dbt.adapters.contracts.connection import Connection
 from firebolt.client.auth import ClientCredentials, UsernamePassword
 from firebolt.db import ARRAY, DECIMAL
 from firebolt.db.connection import Connection as SDKConnection
@@ -15,6 +16,7 @@ from dbt.adapters.firebolt import (
 )
 from dbt.adapters.firebolt.column import FireboltColumn
 from dbt.adapters.firebolt.connections import _determine_auth
+from tests.functional.adapter.test_basic import AnySpecifiedType
 
 
 @fixture
@@ -54,7 +56,7 @@ def test_open(connection):
 
 @fixture(scope='module')
 def adapter():
-    return FireboltAdapter(MagicMock())
+    return FireboltAdapter(MagicMock(), get_context("spawn"))
 
 
 @mark.parametrize(
@@ -104,7 +106,7 @@ def test_data_type_code_to_name(input_type, expected_output):
     ],
 )
 def test_setting_append(profile, expected):
-    adapter = FireboltAdapter(profile)
+    adapter = FireboltAdapter(profile, get_context("spawn"))
     assert adapter.config.query_comment.append == expected
 
 
@@ -114,7 +116,7 @@ def test_setting_append(profile, expected):
         ('STRING', 'TEXT'),
         ('TIMESTAMP', 'TIMESTAMP'),
         ('FLOAT', 'FLOAT'),
-        ('INTEGER', 'INT'),
+        ('INTEGER', AnySpecifiedType(['INT', 'INTEGER'])),
         ('BOOLEAN', 'BOOLEAN'),
         ('DUMMY_TYPE', 'DUMMY_TYPE'),
         ('TEXT', 'TEXT'),

@@ -183,6 +183,11 @@ class TestDocsGenerateFirebolt(BaseDocsGenerate):
     def unique_schema(request, prefix) -> str:
         return 'public'
 
+    @fixture(autouse=True)
+    def clean_up(self, project):
+        # No schema support so we can't clean up schemas
+        yield
+
     @fixture(scope='class')
     def models(self):
         return {
