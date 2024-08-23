@@ -1,0 +1,78 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project37
+
+
+Invoking dbt with ['seed']
+[0m20:06:59  Running with dbt=1.8.5
+[0m20:06:59  Registered adapter: firebolt=1.6.4
+[0m20:06:59  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m20:06:59  Found 1 model, 1 seed, 3 data tests, 447 macros
+[0m20:06:59  
+[0m20:07:00  Concurrency: 1 threads (target='default')
+[0m20:07:00  
+[0m20:07:00  1 of 1 START seed file chipmunks_stage ......................................... [RUN]
+[0m20:07:01  1 of 1 OK loaded seed file public.chipmunks_stage .............................. [[32mINSERT 4[0m in 0.59s]
+[0m20:07:01  
+[0m20:07:01  Finished running 1 seed in 0 hours 0 minutes and 1.38 seconds (1.38s).
+[0m20:07:01  
+[0m20:07:01  [32mCompleted successfully[0m
+[0m20:07:01  
+[0m20:07:01  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m20:07:01  Running with dbt=1.8.5
+[0m20:07:01  Registered adapter: firebolt=1.6.4
+[0m20:07:01  Found 1 model, 1 seed, 3 data tests, 447 macros
+[0m20:07:01  
+[0m20:07:02  Concurrency: 1 threads (target='default')
+[0m20:07:02  
+[0m20:07:02  1 of 1 START sql table model chipmunks ......................................... [RUN]
+[0m20:07:02  1 of 1 OK created sql table model chipmunks .................................... [[32mSUCCESS[0m in 0.70s]
+[0m20:07:02  
+[0m20:07:02  Finished running 1 table model in 0 hours 0 minutes and 1.52 seconds (1.52s).
+[0m20:07:02  
+[0m20:07:02  [32mCompleted successfully[0m
+[0m20:07:02  
+[0m20:07:02  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m20:07:02  Running with dbt=1.8.5
+[0m20:07:02  Registered adapter: firebolt=1.6.4
+[0m20:07:03  Found 1 model, 1 seed, 3 data tests, 447 macros
+[0m20:07:03  
+[0m20:07:04  Concurrency: 1 threads (target='default')
+[0m20:07:04  
+[0m20:07:04  1 of 3 START test accepted_values_chipmunks_name__alvin__simon__theodore ....... [RUN]
+[0m20:07:04  1 of 3 FAIL 1 accepted_values_chipmunks_name__alvin__simon__theodore ........... [[31mFAIL 1[0m in 0.68s]
+[0m20:07:04  2 of 3 START test not_null_chipmunks_name ...................................... [RUN]
+[0m20:07:05  2 of 3 PASS not_null_chipmunks_name ............................................ [[32mPASS[0m in 0.47s]
+[0m20:07:05  3 of 3 START test not_null_chipmunks_shirt ..................................... [RUN]
+[0m20:07:05  3 of 3 FAIL 1 not_null_chipmunks_shirt ......................................... [[31mFAIL 1[0m in 0.48s]
+[0m20:07:05  
+[0m20:07:05  Finished running 3 data tests in 0 hours 0 minutes and 2.71 seconds (2.71s).
+[0m20:07:05  
+[0m20:07:05  [31mCompleted with 2 errors and 0 warnings:[0m
+[0m20:07:05  
+[0m20:07:05  [31mFailure in test accepted_values_chipmunks_name__alvin__simon__theodore (models/schema.yml)[0m
+[0m20:07:05    Got 1 result, configured to fail if != 0
+[0m20:07:05  
+[0m20:07:05    compiled code at target/compiled/test/models/schema.yml/accepted_values_chipmunks_name__alvin__simon__theodore.sql
+[0m20:07:05  
+[0m20:07:05    See test failures:
+  --------------------------------------------------------------------
+  select * from accepted_values_chipmunks_name__alvin__simon__theodore
+  --------------------------------------------------------------------
+[0m20:07:05  
+[0m20:07:05  [31mFailure in test not_null_chipmunks_shirt (models/schema.yml)[0m
+[0m20:07:05    Got 1 result, configured to fail if != 0
+[0m20:07:05  
+[0m20:07:05    compiled code at target/compiled/test/models/schema.yml/not_null_chipmunks_shirt.sql
+[0m20:07:05  
+[0m20:07:05    See test failures:
+  --------------------------------------
+  select * from not_null_chipmunks_shirt
+  --------------------------------------
+[0m20:07:05  
+[0m20:07:05  Done. PASS=1 WARN=0 ERROR=2 SKIP=0 TOTAL=3

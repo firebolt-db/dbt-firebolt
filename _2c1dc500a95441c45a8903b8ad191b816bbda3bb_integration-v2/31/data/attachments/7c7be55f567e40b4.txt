@@ -1,0 +1,50 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project8
+
+
+Invoking dbt with ['seed']
+[0m20:02:06  Running with dbt=1.8.5
+[0m20:02:06  Registered adapter: firebolt=1.6.4
+[0m20:02:06  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m20:02:06  Found 3 models, 1 snapshot, 1 seed, 1 source, 1 exposure, 448 macros
+[0m20:02:06  
+[0m20:02:07  Concurrency: 1 threads (target='default')
+[0m20:02:07  
+[0m20:02:07  1 of 1 START seed file seed .................................................... [RUN]
+[0m20:02:08  1 of 1 OK loaded seed file public.seed ......................................... [[32mINSERT 1[0m in 0.57s]
+[0m20:02:08  
+[0m20:02:08  Finished running 1 seed in 0 hours 0 minutes and 1.37 seconds (1.37s).
+[0m20:02:08  
+[0m20:02:08  [32mCompleted successfully[0m
+[0m20:02:08  
+[0m20:02:08  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m20:02:08  Running with dbt=1.8.5
+[0m20:02:08  Registered adapter: firebolt=1.6.4
+[0m20:02:08  Found 3 models, 1 snapshot, 1 seed, 1 source, 1 exposure, 448 macros
+[0m20:02:08  
+[0m20:02:09  Concurrency: 1 threads (target='default')
+[0m20:02:09  
+[0m20:02:09  1 of 2 START sql table model ephemeral_summary ................................. [RUN]
+[0m20:02:09  1 of 2 OK created sql table model ephemeral_summary ............................ [[32mSUCCESS[0m in 0.64s]
+[0m20:02:09  2 of 2 START sql view model view_summary ....................................... [RUN]
+[0m20:02:10  2 of 2 OK created sql view model view_summary .................................. [[32mSUCCESS[0m in 0.50s]
+[0m20:02:10  
+[0m20:02:10  Finished running 1 table model, 1 view model in 0 hours 0 minutes and 1.96 seconds (1.96s).
+[0m20:02:10  
+[0m20:02:10  [32mCompleted successfully[0m
+[0m20:02:10  
+[0m20:02:10  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+
+
+Invoking dbt with ['docs', 'generate']
+[0m20:02:10  Running with dbt=1.8.5
+[0m20:02:10  Registered adapter: firebolt=1.6.4
+[0m20:02:10  Found 3 models, 1 snapshot, 1 seed, 1 source, 1 exposure, 448 macros
+[0m20:02:10  
+[0m20:02:11  Concurrency: 1 threads (target='default')
+[0m20:02:11  
+[0m20:02:11  Building catalog
+[0m20:02:11  Catalog written to /tmp/pytest-of-runner/pytest-0/project8/target/catalog.json
