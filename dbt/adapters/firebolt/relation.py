@@ -1,7 +1,9 @@
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Dict, FrozenSet, Optional
 
-from dbt.adapters.base.relation import BaseRelation, Policy
+from dbt.adapters.base import RelationType  # type: ignore
+from dbt.adapters.base.relation import BaseRelation, Policy  # type: ignore
+from dbt.adapters.relation_configs import RelationConfigBase  # type: ignore
 from dbt.exceptions import DbtRuntimeError
 
 
@@ -30,6 +32,22 @@ class FireboltRelation(BaseRelation):
     quote_character: str = '"'
     is_delta: Optional[bool] = None
     information: Optional[str] = None
+    relation_configs: Dict[RelationType, RelationConfigBase] = field(
+        default_factory=lambda: {}
+    )
+    # list relations that can be renamed (e.g. `RENAME my_relation TO my_new_name;`)
+    renameable_relations: FrozenSet[RelationType] = field(
+        default_factory=lambda: frozenset({})
+    )
+    # list relations that can be atomically replaced
+    # (e.g. `CREATE OR REPLACE my_relation..` versus `DROP` and `CREATE`)
+    replaceable_relations: FrozenSet[RelationType] = field(
+        default_factory=lambda: frozenset(
+            {
+                RelationType.View,
+            }
+        )
+    )
 
     def render(self) -> str:
         if self.include_policy.database and self.include_policy.schema:

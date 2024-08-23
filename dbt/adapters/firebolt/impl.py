@@ -5,10 +5,17 @@ from datetime import datetime
 from typing import Any, List, Mapping, Optional, Union
 
 import agate
-from dbt.adapters.base import available
-from dbt.adapters.base.impl import AdapterConfig, ConstraintSupport
+from dbt.adapters.base import available  # type: ignore
+from dbt.adapters.base.impl import AdapterConfig  # type: ignore
+from dbt.adapters.base.impl import ConstraintSupport
 from dbt.adapters.base.relation import BaseRelation
-from dbt.adapters.sql import SQLAdapter
+from dbt.adapters.capability import (
+    Capability,
+    CapabilityDict,
+    CapabilitySupport,
+    Support,
+)
+from dbt.adapters.sql import SQLAdapter  # type: ignore
 from dbt.contracts.graph.nodes import ConstraintType
 from dbt.dataclass_schema import ValidationError, dbtClassMixin
 from dbt.exceptions import (
@@ -113,6 +120,17 @@ class FireboltAdapter(SQLAdapter):
         ConstraintType.primary_key: ConstraintSupport.NOT_SUPPORTED,
         ConstraintType.foreign_key: ConstraintSupport.NOT_SUPPORTED,
     }
+
+    _capabilities: CapabilityDict = CapabilityDict(
+        {
+            Capability.SchemaMetadataByRelations: CapabilitySupport(
+                support=Support.Full
+            ),
+            Capability.TableLastModifiedMetadata: CapabilitySupport(
+                support=Support.Unsupported
+            ),
+        }
+    )
 
     @classmethod
     def is_cancelable(cls) -> bool:
