@@ -2,7 +2,7 @@ import string
 from typing import List
 
 import agate
-from dbt.clients import agate_helper
+from dbt_common.clients import agate_helper
 
 from dbt.adapters.firebolt import FireboltAdapter
 

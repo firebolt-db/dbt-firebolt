@@ -26,10 +26,10 @@ def dbt_profile_target():
     # add credentials to the profile keys
     if os.getenv('USER_NAME') and os.getenv('PASSWORD'):
         profile['user'] = os.getenv('USER_NAME')
-        profile['password'] = SecretStr(os.getenv('PASSWORD'))
+        profile['password'] = SecretStr(os.getenv('PASSWORD', ''))
     elif os.getenv('CLIENT_ID') and os.getenv('CLIENT_SECRET'):
         profile['client_id'] = os.getenv('CLIENT_ID')
-        profile['client_secret'] = SecretStr(os.getenv('CLIENT_SECRET'))
+        profile['client_secret'] = SecretStr(os.getenv('CLIENT_SECRET', ''))
     else:
         raise Exception('No credentials found in environment')
     return profile

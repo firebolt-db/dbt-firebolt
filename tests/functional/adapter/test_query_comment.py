@@ -24,13 +24,12 @@ class TestMacroQueryCommentsFirebolt(BaseMacroQueryComments):
 
 
 class TestMacroArgsQueryCommentsFirebolt(BaseMacroArgsQueryComments):
-    def test_matches_comment(self, project) -> bool:
+    def test_matches_comment(self, project) -> None:
         logs = self.run_get_json()
         expected_dct = {
-            'app': 'dbt++',
-            'dbt_version': dbt_version,
-            'macro_version': '0.1.0',
-            'message': 'blah: default',
+            "app": "dbt++",
+            "macro_version": "0.1.0",
+            "message": f"blah: {project.adapter.config.target_name}",
         }
         expected = '/* {} */'.format(
             json.dumps(expected_dct, sort_keys=True).replace('"', '\\"')
