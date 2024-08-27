@@ -1,0 +1,173 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project34
+
+
+Invoking dbt with ['seed']
+[0m08:17:17  Running with dbt=1.7.18
+[0m08:17:17  Registered adapter: firebolt=1.6.4
+[0m08:17:17  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m08:17:18  Found 1 model, 13 tests, 1 seed, 0 sources, 0 exposures, 0 metrics, 431 macros, 0 groups, 0 semantic models
+[0m08:17:18  
+[0m08:17:19  Concurrency: 1 threads (target='default')
+[0m08:17:19  
+[0m08:17:19  1 of 1 START seed file chipmunks_stage ......................................... [RUN]
+[0m08:17:20  1 of 1 OK loaded seed file public.chipmunks_stage .............................. [[32mINSERT 4[0m in 0.66s]
+[0m08:17:20  
+[0m08:17:20  Finished running 1 seed in 0 hours 0 minutes and 1.58 seconds (1.58s).
+[0m08:17:20  
+[0m08:17:20  [32mCompleted successfully[0m
+[0m08:17:20  
+[0m08:17:20  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m08:17:20  Running with dbt=1.7.18
+[0m08:17:20  Registered adapter: firebolt=1.6.4
+[0m08:17:20  Found 1 model, 13 tests, 1 seed, 0 sources, 0 exposures, 0 metrics, 431 macros, 0 groups, 0 semantic models
+[0m08:17:20  
+[0m08:17:21  Concurrency: 1 threads (target='default')
+[0m08:17:21  
+[0m08:17:21  1 of 1 START sql table model chipmunks ......................................... [RUN]
+[0m08:17:21  1 of 1 OK created sql table model chipmunks .................................... [[32mSUCCESS[0m in 0.71s]
+[0m08:17:21  
+[0m08:17:21  Finished running 1 table model in 0 hours 0 minutes and 1.70 seconds (1.70s).
+[0m08:17:21  
+[0m08:17:21  [32mCompleted successfully[0m
+[0m08:17:21  
+[0m08:17:21  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m08:17:21  Running with dbt=1.7.18
+[0m08:17:21  Registered adapter: firebolt=1.6.4
+[0m08:17:21  Found 1 model, 13 tests, 1 seed, 0 sources, 0 exposures, 0 metrics, 431 macros, 0 groups, 0 semantic models
+[0m08:17:21  
+[0m08:17:23  Concurrency: 1 threads (target='default')
+[0m08:17:23  
+[0m08:17:23  1 of 13 START test ephemeral_false ............................................. [RUN]
+[0m08:17:23  1 of 13 FAIL 1 ephemeral_false ................................................. [[31mFAIL 1[0m in 0.30s]
+[0m08:17:23  2 of 13 START test ephemeral_true .............................................. [RUN]
+[0m08:17:23  2 of 13 FAIL 1 ephemeral_true .................................................. [[31mFAIL 1[0m in 0.30s]
+[0m08:17:23  3 of 13 START test ephemeral_unset ............................................. [RUN]
+[0m08:17:24  3 of 13 FAIL 1 ephemeral_unset ................................................. [[31mFAIL 1[0m in 0.28s]
+[0m08:17:24  4 of 13 START test table_false ................................................. [RUN]
+[0m08:17:24  4 of 13 FAIL 1 table_false ..................................................... [[31mFAIL 1[0m in 0.66s]
+[0m08:17:24  5 of 13 START test table_true .................................................. [RUN]
+[0m08:17:25  5 of 13 FAIL 1 table_true ...................................................... [[31mFAIL 1[0m in 0.61s]
+[0m08:17:25  6 of 13 START test table_unset ................................................. [RUN]
+[0m08:17:26  6 of 13 FAIL 1 table_unset ..................................................... [[31mFAIL 1[0m in 0.68s]
+[0m08:17:26  7 of 13 START test unset_false ................................................. [RUN]
+[0m08:17:26  7 of 13 FAIL 1 unset_false ..................................................... [[31mFAIL 1[0m in 0.29s]
+[0m08:17:26  8 of 13 START test unset_true .................................................. [RUN]
+[0m08:17:27  8 of 13 FAIL 1 unset_true ...................................................... [[31mFAIL 1[0m in 0.61s]
+[0m08:17:27  9 of 13 START test unset_unset ................................................. [RUN]
+[0m08:17:27  9 of 13 FAIL 1 unset_unset ..................................................... [[31mFAIL 1[0m in 0.29s]
+[0m08:17:27  10 of 13 START test view_false ................................................. [RUN]
+[0m08:17:27  10 of 13 FAIL 1 view_false ..................................................... [[31mFAIL 1[0m in 0.56s]
+[0m08:17:27  11 of 13 START test view_true .................................................. [RUN]
+[0m08:17:28  11 of 13 FAIL 1 view_true ...................................................... [[31mFAIL 1[0m in 0.50s]
+[0m08:17:28  12 of 13 START test view_unset ................................................. [RUN]
+[0m08:17:28  12 of 13 FAIL 1 view_unset ..................................................... [[31mFAIL 1[0m in 0.52s]
+[0m08:17:28  13 of 13 START test view_unset_pass ............................................ [RUN]
+[0m08:17:29  13 of 13 PASS view_unset_pass .................................................. [[32mPASS[0m in 0.53s]
+[0m08:17:29  
+[0m08:17:29  Finished running 13 tests in 0 hours 0 minutes and 7.43 seconds (7.43s).
+[0m08:17:29  
+[0m08:17:29  [31mCompleted with 12 errors and 0 warnings:[0m
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test ephemeral_false (tests/ephemeral_false.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/ephemeral_false.sql
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test ephemeral_true (tests/ephemeral_true.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/ephemeral_true.sql
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test ephemeral_unset (tests/ephemeral_unset.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/ephemeral_unset.sql
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test table_false (tests/table_false.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/table_false.sql
+[0m08:17:29  
+[0m08:17:29    See test failures:
+  -------------------------
+  select * from table_false
+  -------------------------
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test table_true (tests/table_true.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/table_true.sql
+[0m08:17:29  
+[0m08:17:29    See test failures:
+  ------------------------
+  select * from table_true
+  ------------------------
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test table_unset (tests/table_unset.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/table_unset.sql
+[0m08:17:29  
+[0m08:17:29    See test failures:
+  -------------------------
+  select * from table_unset
+  -------------------------
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test unset_false (tests/unset_false.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/unset_false.sql
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test unset_true (tests/unset_true.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/unset_true.sql
+[0m08:17:29  
+[0m08:17:29    See test failures:
+  ------------------------
+  select * from unset_true
+  ------------------------
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test unset_unset (tests/unset_unset.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/unset_unset.sql
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test view_false (tests/view_false.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/view_false.sql
+[0m08:17:29  
+[0m08:17:29    See test failures:
+  ------------------------
+  select * from view_false
+  ------------------------
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test view_true (tests/view_true.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/view_true.sql
+[0m08:17:29  
+[0m08:17:29    See test failures:
+  -----------------------
+  select * from view_true
+  -----------------------
+[0m08:17:29  
+[0m08:17:29  [31mFailure in test view_unset (tests/view_unset.sql)[0m
+[0m08:17:29    Got 1 result, configured to fail if != 0
+[0m08:17:29  
+[0m08:17:29    compiled Code at target/compiled/test/tests/view_unset.sql
+[0m08:17:29  
+[0m08:17:29    See test failures:
+  ------------------------
+  select * from view_unset
+  ------------------------
+[0m08:17:29  
+[0m08:17:29  Done. PASS=1 WARN=0 ERROR=12 SKIP=0 TOTAL=13
