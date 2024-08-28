@@ -1,0 +1,55 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project81
+
+
+Invoking dbt with ['run']
+[0m12:28:46  Running with dbt=1.7.18
+[0m12:28:46  Registered adapter: firebolt=1.6.4
+[0m12:28:46  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:28:47  Found 1 model, 1 test, 0 sources, 0 exposures, 0 metrics, 434 macros, 0 groups, 0 semantic models
+[0m12:28:47  
+[0m12:28:48  Concurrency: 1 threads (target='default')
+[0m12:28:48  
+[0m12:28:48  1 of 1 START sql view model test_mixed_null_compare ............................ [RUN]
+[0m12:28:49  1 of 1 OK created sql view model test_mixed_null_compare ....................... [[32mSUCCESS[0m in 0.83s]
+[0m12:28:49  
+[0m12:28:49  Finished running 1 view model in 0 hours 0 minutes and 1.79 seconds (1.79s).
+[0m12:28:49  
+[0m12:28:49  [32mCompleted successfully[0m
+[0m12:28:49  
+[0m12:28:49  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m12:28:49  Running with dbt=1.7.18
+[0m12:28:49  Registered adapter: firebolt=1.6.4
+[0m12:28:49  Found 1 model, 1 test, 0 sources, 0 exposures, 0 metrics, 434 macros, 0 groups, 0 semantic models
+[0m12:28:49  
+[0m12:28:49  Concurrency: 1 threads (target='default')
+[0m12:28:49  
+[0m12:28:49  1 of 1 START test assert_equal_test_mixed_null_compare_actual__expected ........ [RUN]
+[0m12:28:50  1 of 1 ERROR assert_equal_test_mixed_null_compare_actual__expected ............. [[31mERROR[0m in 0.45s]
+[0m12:28:50  
+[0m12:28:50  Finished running 1 test in 0 hours 0 minutes and 0.96 seconds (0.96s).
+[0m12:28:50  
+[0m12:28:50  [31mCompleted with 1 error and 0 warnings:[0m
+[0m12:28:50  
+[0m12:28:50    Runtime Error in test assert_equal_test_mixed_null_compare_actual__expected (models/test_mixed_null_compare.yml)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "Line 12, Column 30: operator '=' for input types (integer, text) not found, try adding explicit casts"
+      }
+    ],
+    "query": {
+      "query_id": "3b0a286b-f47e-487f-9a07-664f71e609fd",
+      "request_id": "990cd655-7a0e-4580-9df5-7ad52b59e2f7"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m12:28:50  
+[0m12:28:50  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1

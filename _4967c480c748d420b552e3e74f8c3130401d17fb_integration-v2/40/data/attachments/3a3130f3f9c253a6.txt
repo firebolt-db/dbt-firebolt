@@ -1,0 +1,48 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project22
+
+
+Invoking dbt with ['seed']
+[0m12:16:49  Running with dbt=1.7.18
+[0m12:16:49  Registered adapter: firebolt=1.6.4
+[0m12:16:49  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:16:49  Found 2 models, 1 seed, 1 source, 0 exposures, 0 metrics, 431 macros, 0 groups, 0 semantic models
+[0m12:16:49  
+[0m12:16:51  Concurrency: 1 threads (target='default')
+[0m12:16:51  
+[0m12:16:51  1 of 1 START seed file base .................................................... [RUN]
+[0m12:16:52  1 of 1 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 0.99s]
+[0m12:16:52  
+[0m12:16:52  Finished running 1 seed in 0 hours 0 minutes and 2.12 seconds (2.12s).
+[0m12:16:52  
+[0m12:16:52  [32mCompleted successfully[0m
+[0m12:16:52  
+[0m12:16:52  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m12:16:52  Running with dbt=1.7.18
+[0m12:16:52  Registered adapter: firebolt=1.6.4
+[0m12:16:52  Found 2 models, 1 seed, 1 source, 0 exposures, 0 metrics, 431 macros, 0 groups, 0 semantic models
+[0m12:16:52  
+[0m12:16:53  Concurrency: 1 threads (target='default')
+[0m12:16:53  
+[0m12:16:53  1 of 2 START sql table model table_model ....................................... [RUN]
+[0m12:16:54  1 of 2 OK created sql table model table_model .................................. [[32mSUCCESS[0m in 0.97s]
+[0m12:16:54  2 of 2 START sql materialized_view model view_model ............................ [RUN]
+[0m12:16:54  2 of 2 ERROR creating sql materialized_view model view_model ................... [[31mERROR[0m in 0.04s]
+[0m12:16:54  
+[0m12:16:54  Finished running 1 table model, 1 materialized_view model in 0 hours 0 minutes and 2.20 seconds (2.20s).
+[0m12:16:54  
+[0m12:16:54  [31mCompleted with 1 error and 0 warnings:[0m
+[0m12:16:54  
+[0m12:16:54    Compilation Error in model view_model (models/view_model.sql)
+  Firebolt does not support materialized views
+  
+  > in macro firebolt__get_create_materialized_view_as_sql (macros/relations/materialized_view/create.sql)
+  > called by macro get_create_materialized_view_as_sql (macros/relations/materialized_view/create.sql)
+  > called by macro materialized_view_get_build_sql (macros/materializations/models/materialized_view.sql)
+  > called by macro materialization_materialized_view_default (macros/materializations/models/materialized_view.sql)
+  > called by model view_model (models/view_model.sql)
+[0m12:16:54  
+[0m12:16:54  Done. PASS=1 WARN=0 ERROR=1 SKIP=0 TOTAL=2
