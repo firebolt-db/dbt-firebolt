@@ -1,0 +1,27 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project30
+
+
+Invoking dbt with ['seed']
+[0m12:22:18  Running with dbt=1.7.18
+[0m12:22:18  Registered adapter: firebolt=1.6.4
+[0m12:22:18  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:22:19  Found 1 model, 1 seed, 0 sources, 0 exposures, 0 metrics, 431 macros, 0 groups, 0 semantic models
+[0m12:22:19  
+[0m12:22:20  Concurrency: 1 threads (target='default')
+[0m12:22:20  
+[0m12:22:20  1 of 1 START seed file seed_pipe_separated ..................................... [RUN]
+[0m12:22:20  1 of 1 ERROR loading seed file public.seed_pipe_separated ...................... [[31mERROR[0m in 0.46s]
+[0m12:22:20  
+[0m12:22:20  Finished running 1 seed in 0 hours 0 minutes and 1.39 seconds (1.39s).
+[0m12:22:20  
+[0m12:22:20  [31mCompleted with 1 error and 0 warnings:[0m
+[0m12:22:20  
+[0m12:22:20    Runtime Error in seed seed_pipe_separated (seeds/seed_pipe_separated.csv)
+  Error executing query:
+  Line 1, Column 66: syntax error, unexpected invalid token, expecting ')' or ','
+  CREATE DIMENSION TABLE IF NOT EXISTS seed_pipe_separated (seed_id|first_name|email|ip_address|birthday text)
+                                                                   ^
+  
+[0m12:22:20  
+[0m12:22:20  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
