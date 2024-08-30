@@ -56,7 +56,7 @@ def test_open(connection):
 
 @fixture(scope='module')
 def adapter():
-    return FireboltAdapter(MagicMock(), get_context("spawn"))
+    return FireboltAdapter(MagicMock(), get_context('spawn'))
 
 
 @mark.parametrize(
@@ -106,7 +106,7 @@ def test_data_type_code_to_name(input_type, expected_output):
     ],
 )
 def test_setting_append(profile, expected):
-    adapter = FireboltAdapter(profile, get_context("spawn"))
+    adapter = FireboltAdapter(profile, get_context('spawn'))
     assert adapter.config.query_comment.append == expected
 
 

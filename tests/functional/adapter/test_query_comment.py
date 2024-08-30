@@ -8,7 +8,6 @@ from dbt.tests.adapter.query_comment.test_query_comment import (
     BaseNullQueryComments,
     BaseQueryComments,
 )
-from dbt.version import __version__ as dbt_version
 
 
 class TestQueryCommentsFirebolt(BaseQueryComments):
@@ -27,9 +26,9 @@ class TestMacroArgsQueryCommentsFirebolt(BaseMacroArgsQueryComments):
     def test_matches_comment(self, project) -> None:
         logs = self.run_get_json()
         expected_dct = {
-            "app": "dbt++",
-            "macro_version": "0.1.0",
-            "message": f"blah: {project.adapter.config.target_name}",
+            'app': 'dbt++',
+            'macro_version': '0.1.0',
+            'message': f'blah: {project.adapter.config.target_name}',
         }
         expected = '/* {} */'.format(
             json.dumps(expected_dct, sort_keys=True).replace('"', '\\"')
