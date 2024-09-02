@@ -1,19 +1,23 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import datetime
+from multiprocessing.context import SpawnContext
 from typing import Generator, Optional, Tuple, Union
 
-import dbt.exceptions
-from dbt.adapters.base import Credentials
-from dbt.adapters.sql import SQLConnectionManager
-from dbt.contracts.connection import (
+from dbt.adapters.contracts.connection import (
     AdapterRequiredConfig,
     AdapterResponse,
     Connection,
+    Credentials,
     QueryComment,
 )
-from dbt.events import AdapterLogger  # type: ignore
-from dbt.exceptions import DbtRuntimeError
+from dbt.adapters.events.logging import AdapterLogger
+from dbt.adapters.sql.connections import SQLConnectionManager
+from dbt_common.exceptions import (
+    DbtConfigError,
+    DbtRuntimeError,
+    NotImplementedError,
+)
 from firebolt.client import DEFAULT_API_URL
 from firebolt.client.auth import Auth, ClientCredentials, UsernamePassword
 from firebolt.db import ARRAY, DECIMAL
@@ -45,13 +49,13 @@ class FireboltCredentials(Credentials):
         # are provided instead
         if not self.user and not self.password:
             if not self.client_id or not self.client_secret:
-                raise dbt.exceptions.DbtProfileError(
+                raise DbtConfigError(
                     'Either user and password or client_id and client_secret'
                     ' must be provided'
                 )
         else:
             if self.client_id or self.client_secret:
-                raise dbt.exceptions.DbtProfileError(
+                raise DbtConfigError(
                     'Either user and password or client_id and client_secret'
                     ' must be provided'
                 )
@@ -99,13 +103,13 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     TYPE = 'firebolt'
 
-    def __init__(self, profile: AdapterRequiredConfig):
+    def __init__(self, profile: AdapterRequiredConfig, mp_context: SpawnContext):
         # Query comment in appent mode only
         # This allows clearer view of queries in query_history
         if not hasattr(profile, 'query_comment'):
             setattr(profile, 'query_comment', QueryComment())
         profile.query_comment.append = True
-        super().__init__(profile)
+        super().__init__(profile, mp_context)
 
     def __str__(self) -> str:
         return 'FireboltConnectionManager()'
@@ -181,9 +185,7 @@ class FireboltConnectionManager(SQLConnectionManager):
 
     def cancel(self, connection: Connection) -> None:
         """Cancel the last query on the given connection."""
-        raise dbt.exceptions.NotImplementedError(
-            '`cancel` is not implemented for this adapter!'
-        )
+        raise NotImplementedError('`cancel` is not implemented for this adapter!')
 
     @classmethod
     def data_type_code_to_name(  # type: ignore[override] # FIR-29423

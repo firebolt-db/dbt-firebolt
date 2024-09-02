@@ -5,9 +5,8 @@ from datetime import datetime
 from typing import Any, List, Mapping, Optional, Union
 
 import agate
-from dbt.adapters.base import available  # type: ignore
-from dbt.adapters.base.impl import AdapterConfig  # type: ignore
 from dbt.adapters.base.impl import ConstraintSupport
+from dbt.adapters.base.meta import available
 from dbt.adapters.base.relation import BaseRelation
 from dbt.adapters.capability import (
     Capability,
@@ -15,10 +14,11 @@ from dbt.adapters.capability import (
     CapabilitySupport,
     Support,
 )
-from dbt.adapters.sql import SQLAdapter  # type: ignore
-from dbt.contracts.graph.nodes import ConstraintType
-from dbt.dataclass_schema import ValidationError, dbtClassMixin
-from dbt.exceptions import (
+from dbt.adapters.protocol import AdapterConfig
+from dbt.adapters.sql.impl import SQLAdapter
+from dbt_common.contracts.constraints import ConstraintType
+from dbt_common.dataclass_schema import ValidationError, dbtClassMixin
+from dbt_common.exceptions import (
     CompilationError,
     DbtRuntimeError,
     NotImplementedError,

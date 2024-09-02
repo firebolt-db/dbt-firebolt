@@ -1,10 +1,10 @@
 from dataclasses import dataclass, field
 from typing import Dict, FrozenSet, Optional
 
-from dbt.adapters.base import RelationType  # type: ignore
-from dbt.adapters.base.relation import BaseRelation, Policy  # type: ignore
-from dbt.adapters.relation_configs import RelationConfigBase  # type: ignore
-from dbt.exceptions import DbtRuntimeError
+from dbt.adapters.base.relation import BaseRelation
+from dbt.adapters.contracts.relation import Policy, RelationType
+from dbt.adapters.relation_configs.config_base import RelationConfigBase
+from dbt_common.exceptions import DbtRuntimeError
 
 
 @dataclass
