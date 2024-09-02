@@ -1,0 +1,88 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project0
+
+
+Invoking dbt with ['seed']
+[0m15:48:24  Running with dbt=1.8.6
+[0m15:48:24  Registered adapter: firebolt=1.8.0
+[0m15:48:24  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:48:25  Found 3 models, 1 seed, 1 source, 447 macros
+[0m15:48:25  
+[0m15:48:26  Concurrency: 1 threads (target='default')
+[0m15:48:26  
+[0m15:48:26  1 of 1 START seed file base .................................................... [RUN]
+[0m15:48:27  1 of 1 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 1.02s]
+[0m15:48:27  
+[0m15:48:27  Finished running 1 seed in 0 hours 0 minutes and 1.73 seconds (1.73s).
+[0m15:48:27  
+[0m15:48:27  [32mCompleted successfully[0m
+[0m15:48:27  
+[0m15:48:27  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m15:48:27  Running with dbt=1.8.6
+[0m15:48:27  Registered adapter: firebolt=1.8.0
+[0m15:48:27  Found 3 models, 1 seed, 1 source, 447 macros
+[0m15:48:27  
+[0m15:48:28  Concurrency: 1 threads (target='default')
+[0m15:48:28  
+[0m15:48:28  1 of 3 START sql table model swappable ......................................... [RUN]
+[0m15:48:29  1 of 3 OK created sql table model swappable .................................... [[32mSUCCESS[0m in 1.22s]
+[0m15:48:29  2 of 3 START sql table model table_model ....................................... [RUN]
+[0m15:48:30  2 of 3 OK created sql table model table_model .................................. [[32mSUCCESS[0m in 1.08s]
+[0m15:48:30  3 of 3 START sql view model view_model ......................................... [RUN]
+[0m15:48:31  3 of 3 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 0.69s]
+[0m15:48:31  
+[0m15:48:31  Finished running 2 table models, 1 view model in 0 hours 0 minutes and 3.60 seconds (3.60s).
+[0m15:48:31  
+[0m15:48:31  [32mCompleted successfully[0m
+[0m15:48:31  
+[0m15:48:31  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 TOTAL=3
+
+
+Invoking dbt with ['docs', 'generate']
+[0m15:48:33  Running with dbt=1.8.6
+[0m15:48:33  Registered adapter: firebolt=1.8.0
+[0m15:48:33  Found 3 models, 1 seed, 1 source, 447 macros
+[0m15:48:33  
+[0m15:48:33  Concurrency: 1 threads (target='default')
+[0m15:48:33  
+[0m15:48:33  Building catalog
+[0m15:48:33  Catalog written to /tmp/pytest-of-runner/pytest-0/project0/target/catalog.json
+
+
+Invoking dbt with ['run', '-m', 'swappable', '--vars', 'materialized_var: view']
+[0m15:48:33  Running with dbt=1.8.6
+[0m15:48:33  Registered adapter: firebolt=1.8.0
+[0m15:48:33  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m15:48:34  Found 3 models, 1 seed, 1 source, 447 macros
+[0m15:48:34  
+[0m15:48:34  Concurrency: 1 threads (target='default')
+[0m15:48:34  
+[0m15:48:34  1 of 1 START sql view model swappable .......................................... [RUN]
+[0m15:48:35  1 of 1 OK created sql view model swappable ..................................... [[32mSUCCESS[0m in 0.70s]
+[0m15:48:35  
+[0m15:48:35  Finished running 1 view model in 0 hours 0 minutes and 1.27 seconds (1.27s).
+[0m15:48:35  
+[0m15:48:35  [32mCompleted successfully[0m
+[0m15:48:35  
+[0m15:48:35  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-m', 'swappable', '--vars', 'materialized_var: incremental']
+[0m15:48:36  Running with dbt=1.8.6
+[0m15:48:36  Registered adapter: firebolt=1.8.0
+[0m15:48:36  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m15:48:37  Found 3 models, 1 seed, 1 source, 447 macros
+[0m15:48:37  
+[0m15:48:37  Concurrency: 1 threads (target='default')
+[0m15:48:37  
+[0m15:48:37  1 of 1 START sql incremental model swappable ................................... [RUN]
+[0m15:48:38  1 of 1 OK created sql incremental model swappable .............................. [[32mSUCCESS[0m in 1.31s]
+[0m15:48:38  
+[0m15:48:38  Finished running 1 incremental model in 0 hours 0 minutes and 1.85 seconds (1.85s).
+[0m15:48:38  
+[0m15:48:38  [32mCompleted successfully[0m
+[0m15:48:38  
+[0m15:48:38  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
