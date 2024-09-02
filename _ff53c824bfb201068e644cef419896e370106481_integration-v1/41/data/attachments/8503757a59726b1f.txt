@@ -1,0 +1,24 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project55
+
+
+Invoking dbt with ['build']
+[0m11:20:46  Running with dbt=1.8.6
+[0m11:20:46  Registered adapter: firebolt=1.7.0
+[0m11:20:46  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m11:20:46  Found 1 model, 1 seed, 447 macros
+[0m11:20:46  
+[0m11:20:47  Concurrency: 1 threads (target='default')
+[0m11:20:47  
+[0m11:20:47  1 of 2 START sql table model actual ............................................ [RUN]
+[0m11:20:48  1 of 2 OK created sql table model actual ....................................... [[32mSUCCESS[0m in 1.13s]
+[0m11:20:48  2 of 2 START seed file expected ................................................ [RUN]
+[0m11:20:49  2 of 2 OK loaded seed file public.expected ..................................... [[32mINSERT 1[0m in 0.91s]
+[0m11:20:49  
+[0m11:20:49  Finished running 1 table model, 1 seed in 0 hours 0 minutes and 2.64 seconds (2.64s).
+[0m11:20:49  
+[0m11:20:49  [32mCompleted successfully[0m
+[0m11:20:49  
+[0m11:20:49  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+Expected: [('float_col', 'REAL', None)]
+Actual: [('float_col', 'REAL', None)]

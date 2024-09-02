@@ -1,0 +1,56 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m11:18:33  Running with dbt=1.8.6
+[0m11:18:33  Registered adapter: firebolt=1.7.0
+[0m11:18:33  Found 12 models, 1 seed, 447 macros
+[0m11:18:33  
+[0m11:18:34  Concurrency: 1 threads (target='default')
+[0m11:18:34  
+[0m11:18:34  1 of 1 START seed file seed .................................................... [RUN]
+[0m11:18:35  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 6[0m in 1.39s]
+[0m11:18:35  
+[0m11:18:35  Finished running 1 seed in 0 hours 0 minutes and 1.92 seconds (1.92s).
+[0m11:18:35  
+[0m11:18:35  [32mCompleted successfully[0m
+[0m11:18:35  
+[0m11:18:35  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'not_found_unique_key', '--full-refresh']
+[0m11:18:35  Running with dbt=1.8.6
+[0m11:18:35  Registered adapter: firebolt=1.7.0
+[0m11:18:35  Found 12 models, 1 seed, 447 macros
+[0m11:18:35  
+[0m11:18:36  Concurrency: 1 threads (target='default')
+[0m11:18:36  
+[0m11:18:36  1 of 1 START sql incremental model not_found_unique_key ........................ [RUN]
+[0m11:18:37  1 of 1 OK created sql incremental model not_found_unique_key ................... [[32mSUCCESS[0m in 1.13s]
+[0m11:18:37  
+[0m11:18:37  Finished running 1 incremental model in 0 hours 0 minutes and 1.63 seconds (1.63s).
+[0m11:18:37  
+[0m11:18:37  [32mCompleted successfully[0m
+[0m11:18:37  
+[0m11:18:37  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'not_found_unique_key']
+[0m11:18:37  Running with dbt=1.8.6
+[0m11:18:37  Registered adapter: firebolt=1.7.0
+[0m11:18:37  Found 12 models, 1 seed, 447 macros
+[0m11:18:37  
+[0m11:18:37  Concurrency: 1 threads (target='default')
+[0m11:18:37  
+[0m11:18:37  1 of 1 START sql incremental model not_found_unique_key ........................ [RUN]
+[0m11:18:38  1 of 1 ERROR creating sql incremental model not_found_unique_key ............... [[31mERROR[0m in 0.88s]
+[0m11:18:38  
+[0m11:18:38  Finished running 1 incremental model in 0 hours 0 minutes and 1.39 seconds (1.39s).
+[0m11:18:38  
+[0m11:18:38  [31mCompleted with 1 error and 0 warnings:[0m
+[0m11:18:38  
+[0m11:18:38    Runtime Error in model not_found_unique_key (models/not_found_unique_key.sql)
+  Error executing query:
+  Line 3, Column 17: Column 'thisisnotacolumn' does not exist.
+  
+[0m11:18:38  
+[0m11:18:38  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
