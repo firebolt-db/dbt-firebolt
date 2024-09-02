@@ -1,0 +1,30 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project14
+
+
+Invoking dbt with ['run', '-s', 'my_model_wrong_order']
+[0m15:50:32  Running with dbt=1.8.6
+[0m15:50:32  Registered adapter: firebolt=1.8.0
+[0m15:50:32  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:50:32  [[33mWARNING[0m]: Did not find matching node for patch with name 'my_model' in the 'models' section of file 'models/constraints_schema.yml'
+[0m15:50:32  [[33mWARNING[0m]: Did not find matching node for patch with name 'my_model_error' in the 'models' section of file 'models/constraints_schema.yml'
+[0m15:50:32  [[33mWARNING[0m]: Test 'test.test.unique_my_model_id.7a8b3e1711' (models/constraints_schema.yml) depends on a node named 'my_model' in package '' which was not found
+[0m15:50:32  [[33mWARNING[0m]: Test 'test.test.unique_my_model_error_id.8d2ff7a7b1' (models/constraints_schema.yml) depends on a node named 'my_model_error' in package '' which was not found
+[0m15:50:32  Found 2 models, 2 data tests, 447 macros
+[0m15:50:32  
+[0m15:50:34  Concurrency: 1 threads (target='default')
+[0m15:50:34  
+[0m15:50:34  1 of 1 START sql table model my_model_wrong_order .............................. [RUN]
+[0m15:50:35  [[33mWARNING[0m]: The constraint type primary_key is not supported by
+firebolt, and will be ignored. Set 'warn_unsupported: false' on this constraint
+to ignore this warning.
+[0m15:50:35  [[33mWARNING[0m]: The constraint type check is not supported by firebolt, and
+will be ignored. Set 'warn_unsupported: false' on this constraint to ignore this
+warning.
+[0m15:50:36  1 of 1 OK created sql table model my_model_wrong_order ......................... [[32mSUCCESS[0m in 1.69s]
+[0m15:50:36  
+[0m15:50:36  Finished running 1 table model in 0 hours 0 minutes and 3.36 seconds (3.36s).
+[0m15:50:36  
+[0m15:50:36  [32mCompleted successfully[0m
+[0m15:50:36  
+[0m15:50:36  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1

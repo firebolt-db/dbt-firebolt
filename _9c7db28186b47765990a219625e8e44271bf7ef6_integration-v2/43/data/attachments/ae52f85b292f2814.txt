@@ -1,0 +1,55 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project85
+
+
+Invoking dbt with ['run']
+[0m16:13:51  Running with dbt=1.8.6
+[0m16:13:51  Registered adapter: firebolt=1.8.0
+[0m16:13:51  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m16:13:51  Found 1 model, 1 test, 450 macros
+[0m16:13:51  
+[0m16:13:53  Concurrency: 1 threads (target='default')
+[0m16:13:53  
+[0m16:13:53  1 of 1 START sql view model test_mixed_null_compare ............................ [RUN]
+[0m16:13:54  1 of 1 OK created sql view model test_mixed_null_compare ....................... [[32mSUCCESS[0m in 1.24s]
+[0m16:13:54  
+[0m16:13:54  Finished running 1 view model in 0 hours 0 minutes and 2.92 seconds (2.92s).
+[0m16:13:54  
+[0m16:13:54  [32mCompleted successfully[0m
+[0m16:13:54  
+[0m16:13:54  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m16:13:54  Running with dbt=1.8.6
+[0m16:13:54  Registered adapter: firebolt=1.8.0
+[0m16:13:54  Found 1 model, 1 test, 450 macros
+[0m16:13:54  
+[0m16:13:55  Concurrency: 1 threads (target='default')
+[0m16:13:55  
+[0m16:13:55  1 of 1 START test assert_equal_test_mixed_null_compare_actual__expected ........ [RUN]
+[0m16:13:56  1 of 1 ERROR assert_equal_test_mixed_null_compare_actual__expected ............. [[31mERROR[0m in 0.83s]
+[0m16:13:56  
+[0m16:13:56  Finished running 1 test in 0 hours 0 minutes and 1.67 seconds (1.67s).
+[0m16:13:56  
+[0m16:13:56  [31mCompleted with 1 error and 0 warnings:[0m
+[0m16:13:56  
+[0m16:13:56    Runtime Error in test assert_equal_test_mixed_null_compare_actual__expected (models/test_mixed_null_compare.yml)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "Line 12, Column 30: operator '=' for input types (integer, text) not found, try adding explicit casts"
+      }
+    ],
+    "query": {
+      "query_id": "2a69658d-d7ca-4412-ab70-79b1864a8055",
+      "request_id": "24433ece-1f80-4b43-992b-0db790d45192"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m16:13:56  
+[0m16:13:56  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
