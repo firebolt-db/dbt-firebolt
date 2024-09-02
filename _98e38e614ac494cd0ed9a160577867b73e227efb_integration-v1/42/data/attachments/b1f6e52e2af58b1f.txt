@@ -1,0 +1,63 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project2
+
+
+Invoking dbt with ['seed']
+[0m14:55:01  Running with dbt=1.8.6
+[0m14:55:01  Registered adapter: firebolt=1.7.0
+[0m14:55:01  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:55:01  Found 3 models, 2 data tests, 1 seed, 1 source, 447 macros
+[0m14:55:01  
+[0m14:55:03  Concurrency: 1 threads (target='default')
+[0m14:55:03  
+[0m14:55:03  1 of 1 START seed file base .................................................... [RUN]
+[0m14:55:05  1 of 1 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 1.54s]
+[0m14:55:05  
+[0m14:55:05  Finished running 1 seed in 0 hours 0 minutes and 3.36 seconds (3.36s).
+[0m14:55:05  
+[0m14:55:05  [32mCompleted successfully[0m
+[0m14:55:05  
+[0m14:55:05  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m14:55:05  Running with dbt=1.8.6
+[0m14:55:05  Registered adapter: firebolt=1.7.0
+[0m14:55:05  Found 3 models, 2 data tests, 1 seed, 1 source, 447 macros
+[0m14:55:05  
+[0m14:55:06  Concurrency: 1 threads (target='default')
+[0m14:55:06  
+[0m14:55:06  1 of 2 START test failing ...................................................... [RUN]
+[0m14:55:06  1 of 2 FAIL 10 failing ......................................................... [[31mFAIL 10[0m in 0.92s]
+[0m14:55:06  2 of 2 START test passing ...................................................... [RUN]
+[0m14:55:07  2 of 2 PASS passing ............................................................ [[32mPASS[0m in 0.90s]
+[0m14:55:07  
+[0m14:55:07  Finished running 2 data tests in 0 hours 0 minutes and 2.73 seconds (2.73s).
+[0m14:55:07  
+[0m14:55:07  [31mCompleted with 1 error and 0 warnings:[0m
+[0m14:55:07  
+[0m14:55:07  [31mFailure in test failing (tests/failing.sql)[0m
+[0m14:55:07    Got 10 results, configured to fail if != 0
+[0m14:55:07  
+[0m14:55:07    compiled code at target/compiled/singular_tests_ephemeral/tests/failing.sql
+[0m14:55:07  
+[0m14:55:07  Done. PASS=1 WARN=0 ERROR=1 SKIP=0 TOTAL=2
+
+
+Invoking dbt with ['run']
+[0m14:55:07  Running with dbt=1.8.6
+[0m14:55:07  Registered adapter: firebolt=1.7.0
+[0m14:55:07  Found 3 models, 2 data tests, 1 seed, 1 source, 447 macros
+[0m14:55:07  
+[0m14:55:09  Concurrency: 1 threads (target='default')
+[0m14:55:09  
+[0m14:55:09  1 of 2 START sql view model failing_model ...................................... [RUN]
+[0m14:55:11  1 of 2 OK created sql view model failing_model ................................. [[32mSUCCESS[0m in 1.39s]
+[0m14:55:11  2 of 2 START sql view model passing_model ...................................... [RUN]
+[0m14:55:12  2 of 2 OK created sql view model passing_model ................................. [[32mSUCCESS[0m in 1.36s]
+[0m14:55:12  
+[0m14:55:12  Finished running 2 view models in 0 hours 0 minutes and 4.59 seconds (4.59s).
+[0m14:55:12  
+[0m14:55:12  [32mCompleted successfully[0m
+[0m14:55:12  
+[0m14:55:12  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2

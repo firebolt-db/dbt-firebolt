@@ -1,0 +1,42 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project79
+
+
+Invoking dbt with ['run']
+[0m15:22:00  Running with dbt=1.8.6
+[0m15:22:00  Registered adapter: firebolt=1.7.0
+[0m15:22:00  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:22:01  Found 1 model, 1 test, 450 macros
+[0m15:22:01  
+[0m15:22:02  Concurrency: 1 threads (target='default')
+[0m15:22:02  
+[0m15:22:02  1 of 1 START sql view model test_mixed_null_compare ............................ [RUN]
+[0m15:22:04  1 of 1 OK created sql view model test_mixed_null_compare ....................... [[32mSUCCESS[0m in 1.43s]
+[0m15:22:04  
+[0m15:22:04  Finished running 1 view model in 0 hours 0 minutes and 3.24 seconds (3.24s).
+[0m15:22:04  
+[0m15:22:04  [32mCompleted successfully[0m
+[0m15:22:04  
+[0m15:22:04  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m15:22:04  Running with dbt=1.8.6
+[0m15:22:04  Registered adapter: firebolt=1.7.0
+[0m15:22:04  Found 1 model, 1 test, 450 macros
+[0m15:22:04  
+[0m15:22:05  Concurrency: 1 threads (target='default')
+[0m15:22:05  
+[0m15:22:05  1 of 1 START test assert_equal_test_mixed_null_compare_actual__expected ........ [RUN]
+[0m15:22:06  1 of 1 FAIL 1 assert_equal_test_mixed_null_compare_actual__expected ............ [[31mFAIL 1[0m in 0.90s]
+[0m15:22:06  
+[0m15:22:06  Finished running 1 test in 0 hours 0 minutes and 1.80 seconds (1.80s).
+[0m15:22:06  
+[0m15:22:06  [31mCompleted with 1 error and 0 warnings:[0m
+[0m15:22:06  
+[0m15:22:06  [31mFailure in test assert_equal_test_mixed_null_compare_actual__expected (models/test_mixed_null_compare.yml)[0m
+[0m15:22:06    Got 1 result, configured to fail if != 0
+[0m15:22:06  
+[0m15:22:06    compiled code at target/compiled/test/models/test_mixed_null_compare.yml/assert_equal_test_mixed_null_compare_actual__expected.sql
+[0m15:22:06  
+[0m15:22:06  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1

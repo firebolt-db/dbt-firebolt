@@ -1,0 +1,39 @@
+
+
+Invoking dbt with ['build']
+[0m15:04:45  Running with dbt=1.8.6
+[0m15:04:45  Registered adapter: firebolt=1.7.0
+[0m15:04:45  Found 2 models, 1 seed, 447 macros
+[0m15:04:45  
+[0m15:04:47  Concurrency: 1 threads (target='default')
+[0m15:04:47  
+[0m15:04:47  1 of 2 START seed file sample_seed ............................................. [RUN]
+[0m15:04:49  1 of 2 OK loaded seed file public.sample_seed .................................. [[32mINSERT 7[0m in 2.09s]
+[0m15:04:49  2 of 2 START sql view model sample_model ....................................... [RUN]
+[0m15:04:50  2 of 2 OK created sql view model sample_model .................................. [[32mSUCCESS[0m in 1.44s]
+[0m15:04:50  
+[0m15:04:50  Finished running 1 seed, 1 view model in 0 hours 0 minutes and 5.35 seconds (5.35s).
+[0m15:04:50  
+[0m15:04:50  [32mCompleted successfully[0m
+[0m15:04:50  
+[0m15:04:50  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+
+
+Invoking dbt with ['show', '--inline', "\n{{ config(materialized = 'ephemeral') }}\nselect\n    col_deci + 100 as col_hundo\nfrom {{ ref('ephemeral_model') }}\n", '--limit', -1]
+[0m15:04:50  Running with dbt=1.8.6
+[0m15:04:50  Registered adapter: firebolt=1.7.0
+[0m15:04:50  Found 2 models, 1 seed, 1 sql operation, 447 macros
+[0m15:04:50  
+[0m15:04:51  Concurrency: 1 threads (target='default')
+[0m15:04:51  
+[0m15:04:52  Previewing inline node:
+| col_hundo |
+| --------- |
+|       111 |
+|       112 |
+|       113 |
+|       114 |
+|       115 |
+|       116 |
+|       117 |
+
