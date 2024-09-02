@@ -44,6 +44,10 @@ class FireboltCredentials(Credentials):
     account_name: Optional[str] = None
     retries: int = 1
 
+    _ALIASES = {
+        'host': 'api_endpoint',
+    }
+
     def __post_init__(self) -> None:
         # If user and password are not provided, assume client_id and client_secret
         # are provided instead
