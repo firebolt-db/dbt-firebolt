@@ -1,0 +1,80 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project6
+
+
+Invoking dbt with ['seed']
+[0m14:53:17  Running with dbt=1.8.6
+[0m14:53:17  Registered adapter: firebolt=1.7.0
+[0m14:53:17  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:53:18  [[33mWARNING[0m]: 'base' is a seed node, but it is specified in the models section of
+seeds/schema.yml. To fix this error, place the `base` specification under the
+seeds key instead.
+[0m14:53:18  Found 2 models, 1 seed, 3 data tests, 1 source, 447 macros
+[0m14:53:18  
+[0m14:53:18  Concurrency: 1 threads (target='default')
+[0m14:53:18  
+[0m14:53:18  1 of 1 START seed file base .................................................... [RUN]
+[0m14:53:19  1 of 1 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 0.60s]
+[0m14:53:19  
+[0m14:53:19  Finished running 1 seed in 0 hours 0 minutes and 1.23 seconds (1.23s).
+[0m14:53:19  
+[0m14:53:19  [32mCompleted successfully[0m
+[0m14:53:19  
+[0m14:53:19  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '-m', 'base']
+[0m14:53:19  Running with dbt=1.8.6
+[0m14:53:19  Registered adapter: firebolt=1.7.0
+[0m14:53:19  Found 2 models, 1 seed, 3 data tests, 1 source, 447 macros
+[0m14:53:19  
+[0m14:53:19  Concurrency: 1 threads (target='default')
+[0m14:53:19  
+[0m14:53:19  1 of 1 START test not_null_base_id ............................................. [RUN]
+[0m14:53:20  1 of 1 PASS not_null_base_id ................................................... [[32mPASS[0m in 0.30s]
+[0m14:53:20  
+[0m14:53:20  Finished running 1 test in 0 hours 0 minutes and 0.58 seconds (0.58s).
+[0m14:53:20  
+[0m14:53:20  [32mCompleted successfully[0m
+[0m14:53:20  
+[0m14:53:20  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m14:53:20  Running with dbt=1.8.6
+[0m14:53:20  Registered adapter: firebolt=1.7.0
+[0m14:53:20  Found 2 models, 1 seed, 3 data tests, 1 source, 447 macros
+[0m14:53:20  
+[0m14:53:20  Concurrency: 1 threads (target='default')
+[0m14:53:20  
+[0m14:53:20  1 of 2 START sql table model table_model ....................................... [RUN]
+[0m14:53:21  1 of 2 OK created sql table model table_model .................................. [[32mSUCCESS[0m in 0.70s]
+[0m14:53:21  2 of 2 START sql view model view_model ......................................... [RUN]
+[0m14:53:22  2 of 2 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 0.62s]
+[0m14:53:22  
+[0m14:53:22  Finished running 1 table model, 1 view model in 0 hours 0 minutes and 1.91 seconds (1.91s).
+[0m14:53:22  
+[0m14:53:22  [32mCompleted successfully[0m
+[0m14:53:22  
+[0m14:53:22  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+
+
+Invoking dbt with ['test']
+[0m14:53:22  Running with dbt=1.8.6
+[0m14:53:22  Registered adapter: firebolt=1.7.0
+[0m14:53:22  Found 2 models, 1 seed, 3 data tests, 1 source, 447 macros
+[0m14:53:22  
+[0m14:53:22  Concurrency: 1 threads (target='default')
+[0m14:53:22  
+[0m14:53:22  1 of 3 START test not_null_base_id ............................................. [RUN]
+[0m14:53:22  1 of 3 PASS not_null_base_id ................................................... [[32mPASS[0m in 0.30s]
+[0m14:53:22  2 of 3 START test not_null_table_model_id ...................................... [RUN]
+[0m14:53:23  2 of 3 PASS not_null_table_model_id ............................................ [[32mPASS[0m in 0.34s]
+[0m14:53:23  3 of 3 START test not_null_view_model_id ....................................... [RUN]
+[0m14:53:23  3 of 3 PASS not_null_view_model_id ............................................. [[32mPASS[0m in 0.29s]
+[0m14:53:23  
+[0m14:53:23  Finished running 3 data tests in 0 hours 0 minutes and 1.29 seconds (1.29s).
+[0m14:53:23  
+[0m14:53:23  [32mCompleted successfully[0m
+[0m14:53:23  
+[0m14:53:23  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 TOTAL=3
