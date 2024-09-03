@@ -33,6 +33,7 @@ jobs:
           firebolt-client-id: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
           firebolt-client-secret: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
           account: "automation"
+          instance-type: "M"
           api-endpoint: "api.staging.firebolt.io"
 
       - name: Restore cached failed tests
