@@ -17,6 +17,8 @@ fi
 dbt seed
 dbt seed --full-refresh
 dbt run
+# Trigger incremental check
+dbt run
 dbt source freshness
 dbt test
 dbt docs generate
