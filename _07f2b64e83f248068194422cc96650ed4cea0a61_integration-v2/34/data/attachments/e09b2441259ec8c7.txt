@@ -1,0 +1,60 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project40
+
+
+Invoking dbt with ['seed']
+[0m12:47:10  Running with dbt=1.8.6
+[0m12:47:10  Registered adapter: firebolt=1.8.1
+[0m12:47:10  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:47:10  Found 1 model, 1 test, 1 seed, 447 macros
+[0m12:47:10  
+[0m12:47:11  Concurrency: 1 threads (target='default')
+[0m12:47:11  
+[0m12:47:11  1 of 1 START seed file chipmunks_stage ......................................... [RUN]
+[0m12:47:12  1 of 1 OK loaded seed file public.chipmunks_stage .............................. [[32mINSERT 4[0m in 0.63s]
+[0m12:47:12  
+[0m12:47:12  Finished running 1 seed in 0 hours 0 minutes and 1.63 seconds (1.63s).
+[0m12:47:12  
+[0m12:47:12  [32mCompleted successfully[0m
+[0m12:47:12  
+[0m12:47:12  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m12:47:12  Running with dbt=1.8.6
+[0m12:47:12  Registered adapter: firebolt=1.8.1
+[0m12:47:12  Found 1 model, 1 test, 1 seed, 447 macros
+[0m12:47:12  
+[0m12:47:13  Concurrency: 1 threads (target='default')
+[0m12:47:13  
+[0m12:47:13  1 of 1 START sql table model chipmunks ......................................... [RUN]
+[0m12:47:14  1 of 1 OK created sql table model chipmunks .................................... [[32mSUCCESS[0m in 0.82s]
+[0m12:47:14  
+[0m12:47:14  Finished running 1 table model in 0 hours 0 minutes and 1.77 seconds (1.77s).
+[0m12:47:14  
+[0m12:47:14  [32mCompleted successfully[0m
+[0m12:47:14  
+[0m12:47:14  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m12:47:14  Running with dbt=1.8.6
+[0m12:47:14  Registered adapter: firebolt=1.8.1
+[0m12:47:14  Found 1 model, 1 test, 1 seed, 447 macros
+[0m12:47:14  
+[0m12:47:15  Concurrency: 1 threads (target='default')
+[0m12:47:15  
+[0m12:47:15  1 of 1 START test store_failures_as_error ...................................... [RUN]
+[0m12:47:15  1 of 1 ERROR store_failures_as_error ........................................... [[31mERROR[0m in 0.01s]
+[0m12:47:15  
+[0m12:47:15  Finished running 1 test in 0 hours 0 minutes and 1.36 seconds (1.36s).
+[0m12:47:15  
+[0m12:47:15  [31mCompleted with 1 error and 0 warnings:[0m
+[0m12:47:15  
+[0m12:47:15    Compilation Error in test store_failures_as_error (tests/store_failures_as_error.sql)
+  'error' is not a valid value for `store_failures_as`. Accepted values are: ['ephemeral', 'table', 'view']
+  
+  > in macro materialization_test_default (macros/materializations/tests/test.sql)
+  > called by test store_failures_as_error (tests/store_failures_as_error.sql)
+[0m12:47:15  
+[0m12:47:15  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1

@@ -1,0 +1,41 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project45
+
+
+Invoking dbt with ['seed']
+[0m12:47:52  Running with dbt=1.8.6
+[0m12:47:52  Registered adapter: firebolt=1.8.1
+[0m12:47:52  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:47:53  [[33mWARNING[0m]: Deprecated functionality
+The `tests` config has been renamed to `data_tests`. Please see
+https://docs.getdbt.com/docs/build/data-tests#new-data_tests-syntax for more
+information.
+[0m12:47:53  Found 1 seed, 1 test, 447 macros
+[0m12:47:53  
+[0m12:47:53  Concurrency: 1 threads (target='default')
+[0m12:47:53  
+[0m12:47:53  1 of 1 START seed file example_seed ............................................ [RUN]
+[0m12:47:54  1 of 1 OK loaded seed file public.example_seed ................................. [[32mINSERT 3[0m in 0.87s]
+[0m12:47:54  
+[0m12:47:54  Finished running 1 seed in 0 hours 0 minutes and 1.51 seconds (1.51s).
+[0m12:47:54  
+[0m12:47:54  [32mCompleted successfully[0m
+[0m12:47:54  
+[0m12:47:54  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m12:47:54  Running with dbt=1.8.6
+[0m12:47:54  Registered adapter: firebolt=1.8.1
+[0m12:47:54  Found 1 seed, 1 test, 447 macros
+[0m12:47:54  
+[0m12:47:55  Concurrency: 1 threads (target='default')
+[0m12:47:55  
+[0m12:47:55  1 of 1 START test accepted_values_example_seed_c__0 ............................ [RUN]
+[0m12:47:55  1 of 1 PASS accepted_values_example_seed_c__0 .................................. [[32mPASS[0m in 0.35s]
+[0m12:47:55  
+[0m12:47:55  Finished running 1 test in 0 hours 0 minutes and 0.66 seconds (0.66s).
+[0m12:47:55  
+[0m12:47:55  [32mCompleted successfully[0m
+[0m12:47:55  
+[0m12:47:55  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1

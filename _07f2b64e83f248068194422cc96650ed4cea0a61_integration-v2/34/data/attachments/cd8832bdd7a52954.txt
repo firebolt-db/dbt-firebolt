@@ -1,0 +1,54 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project56
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m12:49:08  Running with dbt=1.8.6
+[0m12:49:08  Registered adapter: firebolt=1.8.1
+[0m12:49:08  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:49:08  Found 12 models, 1 seed, 447 macros
+[0m12:49:08  
+[0m12:49:09  Concurrency: 1 threads (target='default')
+[0m12:49:09  
+[0m12:49:09  1 of 1 START seed file seed .................................................... [RUN]
+[0m12:49:09  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 6[0m in 0.64s]
+[0m12:49:09  
+[0m12:49:09  Finished running 1 seed in 0 hours 0 minutes and 1.26 seconds (1.26s).
+[0m12:49:09  
+[0m12:49:09  [32mCompleted successfully[0m
+[0m12:49:09  
+[0m12:49:09  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'no_unique_key', '--full-refresh']
+[0m12:49:09  Running with dbt=1.8.6
+[0m12:49:09  Registered adapter: firebolt=1.8.1
+[0m12:49:09  Found 12 models, 1 seed, 447 macros
+[0m12:49:09  
+[0m12:49:10  Concurrency: 1 threads (target='default')
+[0m12:49:10  
+[0m12:49:10  1 of 1 START sql incremental model no_unique_key ............................... [RUN]
+[0m12:49:11  1 of 1 OK created sql incremental model no_unique_key .......................... [[32mSUCCESS[0m in 0.78s]
+[0m12:49:11  
+[0m12:49:11  Finished running 1 incremental model in 0 hours 0 minutes and 1.46 seconds (1.46s).
+[0m12:49:11  
+[0m12:49:11  [32mCompleted successfully[0m
+[0m12:49:11  
+[0m12:49:11  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'no_unique_key']
+[0m12:49:12  Running with dbt=1.8.6
+[0m12:49:12  Registered adapter: firebolt=1.8.1
+[0m12:49:12  Found 12 models, 1 seed, 447 macros
+[0m12:49:12  
+[0m12:49:13  Concurrency: 1 threads (target='default')
+[0m12:49:13  
+[0m12:49:13  1 of 1 START sql incremental model no_unique_key ............................... [RUN]
+[0m12:49:14  1 of 1 OK created sql incremental model no_unique_key .......................... [[32mSUCCESS[0m in 1.05s]
+[0m12:49:14  
+[0m12:49:14  Finished running 1 incremental model in 0 hours 0 minutes and 1.66 seconds (1.66s).
+[0m12:49:14  
+[0m12:49:14  [32mCompleted successfully[0m
+[0m12:49:14  
+[0m12:49:14  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
