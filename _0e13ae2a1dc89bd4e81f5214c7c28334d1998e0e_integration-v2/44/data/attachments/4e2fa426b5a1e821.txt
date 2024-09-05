@@ -1,0 +1,30 @@
+
+
+Invoking dbt with ['run']
+[0m08:21:11  Running with dbt=1.8.6
+[0m08:21:11  Registered adapter: firebolt=1.8.1
+[0m08:21:11  Found 2 models, 1 snapshot, 1 seed, 3 data tests, 1 source, 2 exposures, 448 macros
+[0m08:21:11  
+[0m08:21:12  Concurrency: 1 threads (target='default')
+[0m08:21:12  
+[0m08:21:12  1 of 2 START sql view model model .............................................. [RUN]
+[0m08:21:13  1 of 2 OK created sql view model model ......................................... [[32mSUCCESS[0m in 0.67s]
+[0m08:21:13  2 of 2 START sql view model second_model ....................................... [RUN]
+[0m08:21:14  2 of 2 OK created sql view model second_model .................................. [[32mSUCCESS[0m in 0.84s]
+[0m08:21:14  
+[0m08:21:14  Finished running 2 view models in 0 hours 0 minutes and 2.64 seconds (2.64s).
+[0m08:21:14  
+[0m08:21:14  [32mCompleted successfully[0m
+[0m08:21:14  
+[0m08:21:14  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+
+
+Invoking dbt with ['docs', 'generate']
+[0m08:21:14  Running with dbt=1.8.6
+[0m08:21:14  Registered adapter: firebolt=1.8.1
+[0m08:21:14  Found 2 models, 1 snapshot, 1 seed, 3 data tests, 1 source, 2 exposures, 448 macros
+[0m08:21:14  
+[0m08:21:15  Concurrency: 1 threads (target='default')
+[0m08:21:15  
+[0m08:21:15  Building catalog
+[0m08:21:15  Catalog written to /tmp/pytest-of-runner/pytest-0/project7/target/catalog.json

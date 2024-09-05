@@ -1,0 +1,48 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project23
+
+
+Invoking dbt with ['seed']
+[0m08:25:25  Running with dbt=1.8.6
+[0m08:25:25  Registered adapter: firebolt=1.8.1
+[0m08:25:25  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m08:25:25  Found 2 models, 1 seed, 1 source, 447 macros
+[0m08:25:25  
+[0m08:25:26  Concurrency: 1 threads (target='default')
+[0m08:25:26  
+[0m08:25:26  1 of 1 START seed file base .................................................... [RUN]
+[0m08:25:27  1 of 1 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 0.83s]
+[0m08:25:27  
+[0m08:25:27  Finished running 1 seed in 0 hours 0 minutes and 1.55 seconds (1.55s).
+[0m08:25:27  
+[0m08:25:27  [32mCompleted successfully[0m
+[0m08:25:27  
+[0m08:25:27  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m08:25:27  Running with dbt=1.8.6
+[0m08:25:27  Registered adapter: firebolt=1.8.1
+[0m08:25:27  Found 2 models, 1 seed, 1 source, 447 macros
+[0m08:25:27  
+[0m08:25:28  Concurrency: 1 threads (target='default')
+[0m08:25:28  
+[0m08:25:28  1 of 2 START sql table model table_model ....................................... [RUN]
+[0m08:25:28  1 of 2 OK created sql table model table_model .................................. [[32mSUCCESS[0m in 0.81s]
+[0m08:25:28  2 of 2 START sql materialized_view model view_model ............................ [RUN]
+[0m08:25:28  2 of 2 ERROR creating sql materialized_view model view_model ................... [[31mERROR[0m in 0.04s]
+[0m08:25:29  
+[0m08:25:29  Finished running 1 table model, 1 materialized view model in 0 hours 0 minutes and 1.58 seconds (1.58s).
+[0m08:25:29  
+[0m08:25:29  [31mCompleted with 1 error and 0 warnings:[0m
+[0m08:25:29  
+[0m08:25:29    Compilation Error in model view_model (models/view_model.sql)
+  Firebolt does not support materialized views
+  
+  > in macro firebolt__get_create_materialized_view_as_sql (macros/relations/materialized_view/create.sql)
+  > called by macro get_create_materialized_view_as_sql (macros/relations/materialized_view/create.sql)
+  > called by macro materialized_view_get_build_sql (macros/materializations/models/materialized_view.sql)
+  > called by macro materialization_materialized_view_default (macros/materializations/models/materialized_view.sql)
+  > called by model view_model (models/view_model.sql)
+[0m08:25:29  
+[0m08:25:29  Done. PASS=1 WARN=0 ERROR=1 SKIP=0 TOTAL=2
