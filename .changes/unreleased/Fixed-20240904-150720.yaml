@@ -1,3 +1,0 @@
-kind: Fixed
-body: Partition drop logic using the old SQL format.
-time: 2024-09-04T15:07:20.500532+01:00
