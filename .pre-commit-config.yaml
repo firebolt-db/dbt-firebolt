@@ -6,9 +6,11 @@ repos:
       - id: check-merge-conflict
 
   - repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v1.17.0
+    rev: v2.5.0
     hooks:
       - id: setup-cfg-fmt
+        args:
+          - --include-version-classifiers
 
   - repo: https://github.com/myint/autoflake
     rev: v1.4
