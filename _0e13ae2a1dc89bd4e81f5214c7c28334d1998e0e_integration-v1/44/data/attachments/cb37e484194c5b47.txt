@@ -1,0 +1,41 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project19
+
+
+Invoking dbt with ['seed']
+[0m08:27:10  Running with dbt=1.8.6
+[0m08:27:10  Registered adapter: firebolt=1.8.1
+[0m08:27:10  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m08:27:11  Found 6 models, 1 seed, 447 macros
+[0m08:27:11  
+[0m08:27:11  Concurrency: 1 threads (target='default')
+[0m08:27:11  
+[0m08:27:11  1 of 1 START seed file seed .................................................... [RUN]
+[0m08:27:12  1 of 1 OK loaded seed file public.seed ......................................... [[32mINSERT 100[0m in 1.11s]
+[0m08:27:12  
+[0m08:27:12  Finished running 1 seed in 0 hours 0 minutes and 1.62 seconds (1.62s).
+[0m08:27:12  
+[0m08:27:12  [32mCompleted successfully[0m
+[0m08:27:12  
+[0m08:27:12  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m08:27:12  Running with dbt=1.8.6
+[0m08:27:12  Registered adapter: firebolt=1.8.1
+[0m08:27:12  Found 6 models, 1 seed, 447 macros
+[0m08:27:12  
+[0m08:27:13  Concurrency: 1 threads (target='default')
+[0m08:27:13  
+[0m08:27:13  1 of 3 START sql table model dependent ......................................... [RUN]
+[0m08:27:14  1 of 3 OK created sql table model dependent .................................... [[32mSUCCESS[0m in 1.10s]
+[0m08:27:14  2 of 3 START sql table model double_dependent .................................. [RUN]
+[0m08:27:15  2 of 3 OK created sql table model double_dependent ............................. [[32mSUCCESS[0m in 1.11s]
+[0m08:27:15  3 of 3 START sql table model super_dependent ................................... [RUN]
+[0m08:27:16  3 of 3 OK created sql table model super_dependent .............................. [[32mSUCCESS[0m in 1.32s]
+[0m08:27:16  
+[0m08:27:16  Finished running 3 table models in 0 hours 0 minutes and 4.06 seconds (4.06s).
+[0m08:27:16  
+[0m08:27:16  [32mCompleted successfully[0m
+[0m08:27:16  
+[0m08:27:16  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 TOTAL=3
