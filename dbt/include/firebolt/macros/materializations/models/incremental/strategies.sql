@@ -64,7 +64,7 @@
 
       SELECT
       {% if partition_cols is iterable and partition_cols is not string -%}
-        DISTINCT({{ partition_cols | join(', ') }})
+        DISTINCT {{ partition_cols | join(', ') }}
       {%- else -%}
         DISTINCT {{ partition_cols }}
       {%- endif %}
@@ -110,7 +110,7 @@
                 of extra work. -#}
             '{{ vals | join(', ') }}'
           {%- else -%}
-            {{ vals | join(', ') }}
+            '{{ vals | join("', '") }}'
           {%- endif -%}
         {%- endif -%}
       {%- else -%}
