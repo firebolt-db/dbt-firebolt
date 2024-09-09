@@ -39,7 +39,6 @@ class FireboltCredentials(Credentials):
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
     api_endpoint: Optional[str] = DEFAULT_API_URL
-    driver: str = 'com.firebolt.FireboltDriver'
     engine_name: Optional[str] = None
     account_name: Optional[str] = None
     retries: int = 1
