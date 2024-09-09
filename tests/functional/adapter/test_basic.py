@@ -157,7 +157,6 @@ class TestSnapshotTimestampFirebolt(BaseSnapshotTimestamp):
     pass
 
 
-@mark.skip('Firebolt has a bug in LEFT JOIN. FIR-11078')
 class TestBaseAdapterMethod(BaseAdapterMethod):
     pass
 
