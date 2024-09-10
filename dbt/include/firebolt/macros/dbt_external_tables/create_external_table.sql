@@ -68,8 +68,8 @@
     (
         {%- for column in columns -%}
           {{ column.name }}
-          {%- if column.default is not none %} DEFAULT {{ column.default }}{% endif %}
-          {%- if column.source_column_name is not none %} {{ '$' ~ loop.index0 }}{% endif %}
+          {%- if column.default %} DEFAULT {{ column.default }}{% endif %}
+          {%- if column.source_column_name %} {{ '$' ~ loop.index0 }}{% endif %}
           {{- ',' if not loop.last }}
         {%- endfor -%}
     )
@@ -83,10 +83,10 @@
         {%- if options.type %}
             TYPE = {{ options.type }}
         {%- endif %}
-        {%- if options.auto_create is not none %}
+        {%- if options.auto_create %}
             AUTO_CREATE = {{ options.auto_create | upper }}
         {%- endif %}
-        {%- if options.allow_column_mismatch is not none %}
+        {%- if options.allow_column_mismatch %}
             ALLOW_COLUMN_MISMATCH = {{ options.allow_column_mismatch | upper }}
         {%- endif %}
         {%- if options.error_file %}
@@ -99,7 +99,7 @@
             MAX_ERRORS_PER_FILE = {{ options.max_errors_per_file }}
         {%- endif %}
         {%- if csv_options %}
-            {%- if csv_options.header is not none %}
+            {%- if csv_options.header %}
                 HEADER = {{ csv_options.header | upper }}
             {%- endif %}
             {%- if csv_options.delimiter %}
@@ -117,10 +117,10 @@
             {%- if csv_options.null_string %}
                 NULL_STRING = '{{ csv_options.null_string }}'
             {%- endif %}
-            {%- if csv_options.empty_field_as_null is not none %}
+            {%- if csv_options.empty_field_as_null %}
                 EMPTY_FIELD_AS_NULL = {{ csv_options.empty_field_as_null | upper }}
             {%- endif %}
-            {%- if csv_options.skip_blank_lines is not none %}
+            {%- if csv_options.skip_blank_lines %}
                 SKIP_BLANK_LINES = {{ csv_options.skip_blank_lines | upper }}
             {%- endif %}
             {%- if csv_options.date_format %}
