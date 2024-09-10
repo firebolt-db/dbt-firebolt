@@ -14,7 +14,6 @@ sources:
             object_pattern: '*raw_customers.csv'
             type: CSV
             auto_create: true
-            allow_column_mismatch: false
             max_errors_per_file: 10
             csv_options:
               header: true
