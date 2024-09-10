@@ -280,12 +280,12 @@ class TestDateTrunc(BaseDateTrunc):
         }
 
 
-@mark.skip('Escaping with backslash is not supported in Firebolt')
+@mark.skip('Escaping with backslash is not supported by default in Firebolt')
 class TestEscapeSingleQuotes(BaseEscapeSingleQuotesBackslash):
     pass
 
 
-@mark.skip('Except is not supported yet')
+@mark.skip('Except is not supported yet. FIR-16223')
 class TestExcept(BaseExcept):
     pass
 
@@ -313,7 +313,7 @@ class TestHash(BaseHash):
         }
 
 
-@mark.skip('Intersect is not supported yet')
+@mark.skip('Intersect is not supported yet. FIR-16223')
 class TestIntersect(BaseIntersect):
     pass
 

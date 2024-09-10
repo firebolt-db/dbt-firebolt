@@ -114,7 +114,6 @@ class TestTypeTimestamp(BaseTypeTimestamp):
         }
 
 
-@pytest.mark.skip('True boolean is feature-flagged')
 class TestTypeBoolean(BaseTypeBoolean):
     @pytest.fixture(scope='class')
     def models(self):
