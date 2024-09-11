@@ -147,12 +147,10 @@ class TestGenericTestsFirebolt(BaseGenericTests):
     pass
 
 
-@mark.skip('Not implemented for v1')
 class TestSnapshotCheckColsFirebolt(BaseSnapshotCheckCols):
     pass
 
 
-@mark.skip('Not implemented for v1')
 class TestSnapshotTimestampFirebolt(BaseSnapshotTimestamp):
     pass
 
