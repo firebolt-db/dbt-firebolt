@@ -1,0 +1,68 @@
+
+
+Invoking dbt with ['run', '--select', 'unique_key_list__inplace_overwrite']
+[0m09:50:54  Running with dbt=1.8.6
+[0m09:50:54  Registered adapter: firebolt=1.8.2
+[0m09:50:54  Found 12 models, 1 seed, 451 macros
+[0m09:50:54  
+[0m09:50:55  Concurrency: 1 threads (target='default')
+[0m09:50:55  
+[0m09:50:55  1 of 1 START sql table model unique_key_list__inplace_overwrite ................ [RUN]
+[0m09:50:56  1 of 1 OK created sql table model unique_key_list__inplace_overwrite ........... [[32mSUCCESS[0m in 0.85s]
+[0m09:50:56  
+[0m09:50:56  Finished running 1 table model in 0 hours 0 minutes and 1.57 seconds (1.57s).
+[0m09:50:56  
+[0m09:50:56  [32mCompleted successfully[0m
+[0m09:50:56  
+[0m09:50:56  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m09:50:56  Running with dbt=1.8.6
+[0m09:50:56  Registered adapter: firebolt=1.8.2
+[0m09:50:56  Found 12 models, 1 seed, 451 macros
+[0m09:50:56  
+[0m09:50:57  Concurrency: 1 threads (target='default')
+[0m09:50:57  
+[0m09:50:57  1 of 1 START seed file seed .................................................... [RUN]
+[0m09:50:57  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 6[0m in 0.67s]
+[0m09:50:57  
+[0m09:50:57  Finished running 1 seed in 0 hours 0 minutes and 1.29 seconds (1.29s).
+[0m09:50:57  
+[0m09:50:57  [32mCompleted successfully[0m
+[0m09:50:57  
+[0m09:50:57  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'unary_unique_key_list', '--full-refresh']
+[0m09:50:57  Running with dbt=1.8.6
+[0m09:50:57  Registered adapter: firebolt=1.8.2
+[0m09:50:58  Found 12 models, 1 seed, 451 macros
+[0m09:50:58  
+[0m09:50:58  Concurrency: 1 threads (target='default')
+[0m09:50:58  
+[0m09:50:58  1 of 1 START sql incremental model unary_unique_key_list ....................... [RUN]
+[0m09:50:59  1 of 1 OK created sql incremental model unary_unique_key_list .................. [[32mSUCCESS[0m in 0.79s]
+[0m09:50:59  
+[0m09:50:59  Finished running 1 incremental model in 0 hours 0 minutes and 1.44 seconds (1.44s).
+[0m09:50:59  
+[0m09:50:59  [32mCompleted successfully[0m
+[0m09:50:59  
+[0m09:50:59  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'unary_unique_key_list']
+[0m09:51:00  Running with dbt=1.8.6
+[0m09:51:00  Registered adapter: firebolt=1.8.2
+[0m09:51:00  Found 12 models, 1 seed, 451 macros
+[0m09:51:00  
+[0m09:51:00  Concurrency: 1 threads (target='default')
+[0m09:51:00  
+[0m09:51:00  1 of 1 START sql incremental model unary_unique_key_list ....................... [RUN]
+[0m09:51:02  1 of 1 OK created sql incremental model unary_unique_key_list .................. [[32mSUCCESS[0m in 1.30s]
+[0m09:51:02  
+[0m09:51:02  Finished running 1 incremental model in 0 hours 0 minutes and 1.89 seconds (1.89s).
+[0m09:51:02  
+[0m09:51:02  [32mCompleted successfully[0m
+[0m09:51:02  
+[0m09:51:02  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1

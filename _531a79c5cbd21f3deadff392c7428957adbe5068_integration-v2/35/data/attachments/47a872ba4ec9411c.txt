@@ -1,0 +1,120 @@
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m09:44:08  Running with dbt=1.8.6
+[0m09:44:08  Registered adapter: firebolt=1.8.2
+[0m09:44:09  Found 3 models, 451 macros
+[0m09:44:09  
+[0m09:44:09  Concurrency: 1 threads (target='default')
+[0m09:44:09  
+[0m09:44:09  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m09:44:10  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.84s]
+[0m09:44:10  
+[0m09:44:10  Finished running 1 table model in 0 hours 0 minutes and 1.44 seconds (1.44s).
+[0m09:44:10  
+[0m09:44:10  [32mCompleted successfully[0m
+[0m09:44:10  
+[0m09:44:10  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m09:44:10  Running with dbt=1.8.6
+[0m09:44:10  Registered adapter: firebolt=1.8.2
+[0m09:44:10  Found 3 models, 451 macros
+[0m09:44:10  
+[0m09:44:11  Concurrency: 1 threads (target='default')
+[0m09:44:11  
+[0m09:44:11  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m09:44:12  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.83s]
+[0m09:44:12  
+[0m09:44:12  Finished running 1 table model in 0 hours 0 minutes and 1.41 seconds (1.41s).
+[0m09:44:12  
+[0m09:44:12  [32mCompleted successfully[0m
+[0m09:44:12  
+[0m09:44:12  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m09:44:12  Running with dbt=1.8.6
+[0m09:44:12  Registered adapter: firebolt=1.8.2
+[0m09:44:12  Found 3 models, 451 macros
+[0m09:44:12  
+[0m09:44:12  Concurrency: 1 threads (target='default')
+[0m09:44:12  
+[0m09:44:12  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m09:44:13  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.86s]
+[0m09:44:13  
+[0m09:44:13  Finished running 1 table model in 0 hours 0 minutes and 1.46 seconds (1.46s).
+[0m09:44:13  
+[0m09:44:13  [32mCompleted successfully[0m
+[0m09:44:13  
+[0m09:44:13  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m09:44:13  Running with dbt=1.8.6
+[0m09:44:13  Registered adapter: firebolt=1.8.2
+[0m09:44:13  Found 3 models, 451 macros
+[0m09:44:13  
+[0m09:44:14  Concurrency: 1 threads (target='default')
+[0m09:44:14  
+[0m09:44:14  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m09:44:15  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.86s]
+[0m09:44:15  
+[0m09:44:15  Finished running 1 table model in 0 hours 0 minutes and 1.52 seconds (1.52s).
+[0m09:44:15  
+[0m09:44:15  [32mCompleted successfully[0m
+[0m09:44:15  
+[0m09:44:15  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m09:44:15  Running with dbt=1.8.6
+[0m09:44:15  Registered adapter: firebolt=1.8.2
+[0m09:44:15  Found 3 models, 451 macros
+[0m09:44:15  
+[0m09:44:16  Concurrency: 1 threads (target='default')
+[0m09:44:16  
+[0m09:44:16  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m09:44:17  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.88s]
+[0m09:44:17  
+[0m09:44:17  Finished running 1 table model in 0 hours 0 minutes and 1.57 seconds (1.57s).
+[0m09:44:17  
+[0m09:44:17  [32mCompleted successfully[0m
+[0m09:44:17  
+[0m09:44:17  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m09:44:17  Running with dbt=1.8.6
+[0m09:44:17  Registered adapter: firebolt=1.8.2
+[0m09:44:17  Found 3 models, 451 macros
+[0m09:44:17  
+[0m09:44:17  Concurrency: 1 threads (target='default')
+[0m09:44:17  
+[0m09:44:18  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m09:44:19  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 1.07s]
+[0m09:44:19  
+[0m09:44:19  Finished running 1 table model in 0 hours 0 minutes and 1.73 seconds (1.73s).
+[0m09:44:19  
+[0m09:44:19  [32mCompleted successfully[0m
+[0m09:44:19  
+[0m09:44:19  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m09:44:19  Running with dbt=1.8.6
+[0m09:44:19  Registered adapter: firebolt=1.8.2
+[0m09:44:19  Found 3 models, 451 macros
+[0m09:44:19  
+[0m09:44:19  Concurrency: 1 threads (target='default')
+[0m09:44:19  
+[0m09:44:19  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m09:44:20  Detected columns with numeric type and unspecified precision/scale, this can lead to unintended rounding: ['wrong_data_type_column_name']`
+[0m09:44:20  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.90s]
+[0m09:44:20  
+[0m09:44:20  Finished running 1 table model in 0 hours 0 minutes and 1.51 seconds (1.51s).
+[0m09:44:20  
+[0m09:44:20  [32mCompleted successfully[0m
+[0m09:44:20  
+[0m09:44:20  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1

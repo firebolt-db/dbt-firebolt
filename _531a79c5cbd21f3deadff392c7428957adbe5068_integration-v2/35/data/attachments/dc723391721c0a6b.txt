@@ -1,0 +1,61 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project13
+
+
+Invoking dbt with ['seed']
+[0m09:42:59  Running with dbt=1.8.6
+[0m09:42:59  Registered adapter: firebolt=1.8.2
+[0m09:42:59  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m09:42:59  Found 3 models, 1 snapshot, 1 seed, 2 data tests, 1 exposure, 455 macros
+[0m09:42:59  
+[0m09:43:01  Concurrency: 1 threads (target='default')
+[0m09:43:01  
+[0m09:43:01  1 of 1 START seed file seed .................................................... [RUN]
+[0m09:43:01  1 of 1 OK loaded seed file public_seeds.seed ................................... [[32mINSERT 2[0m in 0.61s]
+[0m09:43:01  
+[0m09:43:01  Finished running 1 seed in 0 hours 0 minutes and 1.86 seconds (1.86s).
+[0m09:43:01  
+[0m09:43:01  [32mCompleted successfully[0m
+[0m09:43:01  
+[0m09:43:01  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m09:43:01  Running with dbt=1.8.6
+[0m09:43:01  Registered adapter: firebolt=1.8.2
+[0m09:43:01  Found 3 models, 1 snapshot, 1 seed, 2 data tests, 1 exposure, 455 macros
+[0m09:43:01  
+[0m09:43:02  Concurrency: 1 threads (target='default')
+[0m09:43:02  
+[0m09:43:02  1 of 2 START sql view model view_model ......................................... [RUN]
+[0m09:43:03  1 of 2 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 0.66s]
+[0m09:43:03  2 of 2 START sql table model table_model ....................................... [RUN]
+[0m09:43:04  2 of 2 OK created sql table model table_model .................................. [[32mSUCCESS[0m in 0.71s]
+[0m09:43:04  
+[0m09:43:04  Finished running 1 view model, 1 table model in 0 hours 0 minutes and 2.35 seconds (2.35s).
+[0m09:43:04  
+[0m09:43:04  [32mCompleted successfully[0m
+[0m09:43:04  
+[0m09:43:04  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+
+
+Invoking dbt with ['test']
+[0m09:43:04  Running with dbt=1.8.6
+[0m09:43:04  Registered adapter: firebolt=1.8.2
+[0m09:43:04  Found 3 models, 1 snapshot, 1 seed, 2 data tests, 1 exposure, 455 macros
+[0m09:43:04  
+[0m09:43:05  Concurrency: 1 threads (target='default')
+[0m09:43:05  
+[0m09:43:05  1 of 2 START test not_null_view_model_id ....................................... [RUN]
+[0m09:43:05  1 of 2 PASS not_null_view_model_id ............................................. [[32mPASS[0m in 0.27s]
+[0m09:43:05  2 of 2 START test unique_view_model_id ......................................... [RUN]
+[0m09:43:05  2 of 2 PASS unique_view_model_id ............................................... [[32mPASS[0m in 0.30s]
+[0m09:43:05  
+[0m09:43:05  Finished running 2 data tests in 0 hours 0 minutes and 1.30 seconds (1.30s).
+[0m09:43:05  
+[0m09:43:05  [32mCompleted successfully[0m
+[0m09:43:05  
+[0m09:43:05  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+
+
+Invoking dbt with ['clone', '--state', 'target']
