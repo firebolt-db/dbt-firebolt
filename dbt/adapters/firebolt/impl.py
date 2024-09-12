@@ -31,9 +31,13 @@ from dbt.adapters.firebolt.relation import FireboltRelation
 def quote_columns(columns: Union[str, List[str]]) -> Union[str, List[str]]:
     if isinstance(columns, str):
         return f'"{columns}"'
-    return [
-        f'"{col}"' for col in columns if not (col.startswith('"') and col.endswith('"'))
-    ]
+    quoted_columns = []
+    for col in columns:
+        if col.startswith('"') and col.endswith('"'):
+            quoted_columns.append(col)
+        else:
+            quoted_columns.append(f'"{col}"')
+    return quoted_columns
 
 
 @dataclass
