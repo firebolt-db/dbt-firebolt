@@ -1,4 +1,0 @@
-kind: Fixed
-body: Fixed default arguments for copy stategy when they would appear empty when not
-  specified.
-time: 2024-09-10T17:14:59.352269+01:00
