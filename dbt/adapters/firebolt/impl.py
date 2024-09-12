@@ -32,6 +32,7 @@ from dbt.adapters.firebolt.relation import FireboltRelation
 @dataclass
 class FireboltIndexConfig(dbtClassMixin):
     index_type: str
+    index_name: Optional[str] = None
     join_columns: Optional[Union[str, List[str]]] = None
     key_columns: Optional[Union[str, List[str]]] = None
     dimension_column: Optional[Union[str, List[str]]] = None
@@ -43,6 +44,8 @@ class FireboltIndexConfig(dbtClassMixin):
         index type, relation name, key/join columns, timestamp (unix & UTC)
         example index name: join_my_model_customer_id_1633504263.
         """
+        if self.index_name:
+            return self.index_name
         now_unix = str(int(time.mktime(datetime.utcnow().timetuple())))
         # If column_names is a list with > 1 members, join with _,
         # otherwise do not. We were getting index names like
