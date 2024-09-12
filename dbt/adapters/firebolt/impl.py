@@ -1,7 +1,6 @@
 import re
 import time
 from dataclasses import dataclass
-from datetime import datetime
 from typing import Any, List, Mapping, Optional, Union
 
 import agate
@@ -29,6 +28,14 @@ from dbt.adapters.firebolt.connections import FireboltConnectionManager
 from dbt.adapters.firebolt.relation import FireboltRelation
 
 
+def quote_columns(columns: Union[str, List[str]]) -> Union[str, List[str]]:
+    if isinstance(columns, str):
+        return f'"{columns}"'
+    return [
+        f'"{col}"' for col in columns if not (col.startswith('"') and col.endswith('"'))
+    ]
+
+
 @dataclass
 class FireboltIndexConfig(dbtClassMixin):
     index_type: str
@@ -38,6 +45,15 @@ class FireboltIndexConfig(dbtClassMixin):
     dimension_column: Optional[Union[str, List[str]]] = None
     aggregation: Optional[Union[str, List[str]]] = None
 
+    def __post_init__(self) -> None:
+        # quote unquoted columns
+        if self.join_columns:
+            self.join_columns = quote_columns(self.join_columns)
+        if self.key_columns:
+            self.key_columns = quote_columns(self.key_columns)
+        if self.dimension_column:
+            self.dimension_column = quote_columns(self.dimension_column)
+
     def render_name(self, relation: FireboltRelation) -> str:
         """
         Name an index according to the following format, joined by `_`:
@@ -46,7 +62,7 @@ class FireboltIndexConfig(dbtClassMixin):
         """
         if self.index_name:
             return self.index_name
-        now_unix = str(int(time.mktime(datetime.utcnow().timetuple())))
+        now_unix = str(int(time.time()))
         # If column_names is a list with > 1 members, join with _,
         # otherwise do not. We were getting index names like
         # join__idx__emf_customers__f_i_r_s_t___n_a_m_e__165093112.
@@ -54,14 +70,23 @@ class FireboltIndexConfig(dbtClassMixin):
         spine_col = (
             '_'.join(column_names) if isinstance(column_names, list) else column_names
         )
+        # Additional hash to ensure uniqueness after spaces are removed
+        column_hash = str(hash(spine_col))[:5]
         inputs = [
             f'{self.index_type}_idx',
             relation.identifier,
             spine_col,
+            column_hash,
             now_unix,
         ]
-        string = '__'.join([x for x in inputs if x is not None])
-        return string
+        index_name = '__'.join([x for x in inputs if x is not None])
+        if len(index_name) > 255:
+            # Firebolt index names must be <= 255 characters.
+            # If the index name is too long, hash it.
+            return f'{self.index_type}_idx_{hash(index_name)}'
+        # Remove any spaces or quotes from the index name.
+        index_name = index_name.replace(' ', '_').replace('"', '')
+        return index_name
 
     @classmethod
     def parse(cls, raw_index: Optional[Mapping]) -> Optional['FireboltIndexConfig']:

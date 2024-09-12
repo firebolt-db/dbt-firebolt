@@ -49,9 +49,9 @@
 
     {%- if primary_index %}
         primary INDEX {% if primary_index is iterable and primary_index is not string %}
-            {{ primary_index | join(', ') }}
+            "{{ primary_index | join('", "') }}"
         {%- else -%}
-            {{ primary_index }}
+            "{{ primary_index }}"
         {%- endif -%}
     {%- endif -%}
 
