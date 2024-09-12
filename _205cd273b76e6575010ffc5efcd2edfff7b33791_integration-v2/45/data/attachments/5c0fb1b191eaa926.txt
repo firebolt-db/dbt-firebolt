@@ -1,0 +1,40 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project22
+
+
+Invoking dbt with ['build']
+[0m08:33:02  Running with dbt=1.8.6
+[0m08:33:02  Registered adapter: firebolt=1.8.2
+[0m08:33:02  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m08:33:02  Found 2 models, 1 seed, 450 macros
+[0m08:33:02  
+[0m08:33:04  Concurrency: 1 threads (target='default')
+[0m08:33:04  
+[0m08:33:04  1 of 2 START seed file sample_seed ............................................. [RUN]
+[0m08:33:05  1 of 2 OK loaded seed file public.sample_seed .................................. [[32mINSERT 7[0m in 1.15s]
+[0m08:33:05  2 of 2 START sql view model sample_model ....................................... [RUN]
+[0m08:33:06  2 of 2 OK created sql view model sample_model .................................. [[32mSUCCESS[0m in 1.17s]
+[0m08:33:06  
+[0m08:33:06  Finished running 1 seed, 1 view model in 0 hours 0 minutes and 3.96 seconds (3.96s).
+[0m08:33:06  
+[0m08:33:06  [32mCompleted successfully[0m
+[0m08:33:06  
+[0m08:33:06  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+
+
+Invoking dbt with ['show', '--inline', "\n{{ config(materialized = 'ephemeral') }}\nselect\n    col_deci + 100 as col_hundo\nfrom {{ ref('ephemeral_model') }}\n"]
+[0m08:33:06  Running with dbt=1.8.6
+[0m08:33:06  Registered adapter: firebolt=1.8.2
+[0m08:33:06  Found 2 models, 1 seed, 1 sql operation, 450 macros
+[0m08:33:06  
+[0m08:33:07  Concurrency: 1 threads (target='default')
+[0m08:33:07  
+[0m08:33:08  Previewing inline node:
+| col_hundo |
+| --------- |
+|       111 |
+|       112 |
+|       113 |
+|       114 |
+|       115 |
+
