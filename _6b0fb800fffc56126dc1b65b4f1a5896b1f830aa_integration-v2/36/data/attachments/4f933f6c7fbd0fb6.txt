@@ -1,0 +1,46 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project8
+
+
+Invoking dbt with ['seed']
+[0m15:36:21  Running with dbt=1.8.6
+[0m15:36:21  Registered adapter: firebolt=1.8.3
+[0m15:36:21  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:36:22  Found 2 models, 1 snapshot, 1 seed, 3 data tests, 1 source, 2 exposures, 451 macros
+[0m15:36:22  
+[0m15:36:22  Concurrency: 1 threads (target='default')
+[0m15:36:22  
+[0m15:36:22  1 of 1 START seed file seed .................................................... [RUN]
+[0m15:36:23  1 of 1 OK loaded seed file public.seed ......................................... [[32mINSERT 1[0m in 0.59s]
+[0m15:36:23  
+[0m15:36:23  Finished running 1 seed in 0 hours 0 minutes and 1.54 seconds (1.54s).
+[0m15:36:23  
+[0m15:36:23  [32mCompleted successfully[0m
+[0m15:36:23  
+[0m15:36:23  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m15:36:23  Running with dbt=1.8.6
+[0m15:36:23  Registered adapter: firebolt=1.8.3
+[0m15:36:23  Found 2 models, 1 snapshot, 1 seed, 3 data tests, 1 source, 2 exposures, 451 macros
+[0m15:36:23  
+[0m15:36:24  Concurrency: 1 threads (target='default')
+[0m15:36:24  
+[0m15:36:24  1 of 2 START sql view model model .............................................. [RUN]
+[0m15:36:25  1 of 2 OK created sql view model model ......................................... [[32mSUCCESS[0m in 0.53s]
+[0m15:36:25  2 of 2 START sql view model second_model ....................................... [RUN]
+[0m15:36:25  2 of 2 OK created sql view model second_model .................................. [[32mSUCCESS[0m in 0.60s]
+[0m15:36:25  
+[0m15:36:25  Finished running 2 view models in 0 hours 0 minutes and 2.11 seconds (2.11s).
+[0m15:36:25  
+[0m15:36:25  [32mCompleted successfully[0m
+[0m15:36:25  
+[0m15:36:25  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+
+
+Invoking dbt with ['docs', 'generate', '--no-compile']
+[0m15:36:25  Running with dbt=1.8.6
+[0m15:36:25  Registered adapter: firebolt=1.8.3
+[0m15:36:25  Building catalog
+[0m15:36:26  Catalog written to /tmp/pytest-of-runner/pytest-0/project8/target/catalog.json
