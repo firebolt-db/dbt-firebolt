@@ -1,0 +1,27 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project1
+
+
+Invoking dbt with ['test']
+[0m08:27:04  Running with dbt=1.8.6
+[0m08:27:04  Registered adapter: firebolt=1.8.2
+[0m08:27:04  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m08:27:04  Found 2 data tests, 450 macros
+[0m08:27:04  
+[0m08:27:04  Concurrency: 1 threads (target='default')
+[0m08:27:04  
+[0m08:27:04  1 of 2 START test failing ...................................................... [RUN]
+[0m08:27:05  1 of 2 FAIL 1 failing .......................................................... [[31mFAIL 1[0m in 0.26s]
+[0m08:27:05  2 of 2 START test passing ...................................................... [RUN]
+[0m08:27:05  2 of 2 PASS passing ............................................................ [[32mPASS[0m in 0.22s]
+[0m08:27:05  
+[0m08:27:05  Finished running 2 data tests in 0 hours 0 minutes and 0.49 seconds (0.49s).
+[0m08:27:05  
+[0m08:27:05  [31mCompleted with 1 error and 0 warnings:[0m
+[0m08:27:05  
+[0m08:27:05  [31mFailure in test failing (tests/failing.sql)[0m
+[0m08:27:05    Got 1 result, configured to fail if != 0
+[0m08:27:05  
+[0m08:27:05    compiled code at target/compiled/singular_tests/tests/failing.sql
+[0m08:27:05  
+[0m08:27:05  Done. PASS=1 WARN=0 ERROR=1 SKIP=0 TOTAL=2

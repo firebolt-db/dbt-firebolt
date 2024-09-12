@@ -1,0 +1,39 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project79
+
+
+Invoking dbt with ['seed']
+[0m08:40:35  Running with dbt=1.8.6
+[0m08:40:35  Registered adapter: firebolt=1.8.2
+[0m08:40:35  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m08:40:35  Found 2 models, 1 seed, 451 macros
+[0m08:40:35  
+[0m08:40:36  Concurrency: 1 threads (target='default')
+[0m08:40:36  
+[0m08:40:36  1 of 1 START seed file data_equals ............................................. [RUN]
+[0m08:40:37  1 of 1 OK loaded seed file public.data_equals .................................. [[32mINSERT 9[0m in 1.47s]
+[0m08:40:37  
+[0m08:40:37  Finished running 1 seed in 0 hours 0 minutes and 1.96 seconds (1.96s).
+[0m08:40:37  
+[0m08:40:37  [32mCompleted successfully[0m
+[0m08:40:37  
+[0m08:40:37  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m08:40:37  Running with dbt=1.8.6
+[0m08:40:37  Registered adapter: firebolt=1.8.2
+[0m08:40:38  Found 2 models, 1 seed, 451 macros
+[0m08:40:38  
+[0m08:40:38  Concurrency: 1 threads (target='default')
+[0m08:40:38  
+[0m08:40:38  1 of 2 START sql view model equal_values ....................................... [RUN]
+[0m08:40:39  1 of 2 OK created sql view model equal_values .................................. [[32mSUCCESS[0m in 0.74s]
+[0m08:40:39  2 of 2 START sql view model not_equal_values ................................... [RUN]
+[0m08:40:39  2 of 2 OK created sql view model not_equal_values .............................. [[32mSUCCESS[0m in 0.62s]
+[0m08:40:39  
+[0m08:40:39  Finished running 2 view models in 0 hours 0 minutes and 1.83 seconds (1.83s).
+[0m08:40:39  
+[0m08:40:39  [32mCompleted successfully[0m
+[0m08:40:39  
+[0m08:40:39  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
