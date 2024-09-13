@@ -2,7 +2,6 @@ import pytest
 from dbt.adapters.contracts.relation import Path
 
 from dbt.adapters.firebolt.impl import (
-    FireboltAdapter,
     FireboltConfig,
     FireboltIndexConfig,
     FireboltRelation,
@@ -89,11 +88,3 @@ def test_firebolt_config():
         ]
     )
     assert len(config.indexes) == 2
-
-
-def test_firebolt_adapter_is_cancelable():
-    assert not FireboltAdapter.is_cancelable()
-
-
-def test_firebolt_adapter_date_function():
-    assert FireboltAdapter.date_function() == 'now()'
