@@ -274,7 +274,6 @@ class FireboltAdapter(SQLAdapter):
         columns: the number of rows that are different between the two
         relations and the number of mismatched rows.
         """
-        # This method only really exists for test reasons.
         names: List[str]
         if column_names is None:
             columns = self.get_columns_in_relation(relation_a)
