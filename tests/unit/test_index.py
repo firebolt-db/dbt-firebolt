@@ -1,5 +1,6 @@
 import pytest
 from dbt.adapters.contracts.relation import Path
+from dbt_common.exceptions import CompilationError
 
 from dbt.adapters.firebolt.impl import (
     FireboltConfig,
@@ -70,6 +71,39 @@ def test_firebolt_index_config_parse():
     assert index_config.index_type == 'join'
     assert index_config.join_columns == ['"column1"', '"column2"']
     assert index_config.dimension_column == '"dimension"'
+
+
+@pytest.mark.parametrize(
+    'raw_index',
+    [
+        # invalid index type
+        {
+            'index_type': 'fantastic',
+            'join_columns': ['column1'],
+            'dimension_column': 'dimension',
+        },
+        # missing dimension column
+        {'index_type': 'join', 'join_columns': ['column1']},
+        # missing aggregation
+        {'index_type': 'aggregating', 'key_columns': ['key1']},
+        # missing aggregation but containing extra columns
+        {
+            'index_type': 'aggregating',
+            'key_columns': ['key1'],
+            'join_columns': ['column1'],
+            'dimension_column': 'dimension',
+        },
+    ],
+)
+def test_firebolt_index_config_parse_with_errors(raw_index):
+    with pytest.raises(CompilationError):
+        FireboltIndexConfig.parse(raw_index)
+
+
+def test_firebolt_index_config_parse_invalid():
+    with pytest.raises(CompilationError) as e:
+        FireboltIndexConfig.parse({'index_type': 'join', 'join_columns': [1222]})
+    assert 'Could not parse index' in str(e.value)
 
 
 def test_firebolt_config():
