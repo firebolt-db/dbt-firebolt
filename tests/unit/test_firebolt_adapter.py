@@ -35,11 +35,6 @@ def connection():
     return connection
 
 
-class MockFireboltAdapter(FireboltAdapter):
-    def quote(self, identifier):
-        return f'"{identifier}"'
-
-
 @fixture
 def adapter():
     return FireboltAdapter(MagicMock(), get_context('spawn'))
