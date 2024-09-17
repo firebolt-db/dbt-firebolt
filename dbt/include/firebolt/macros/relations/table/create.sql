@@ -24,6 +24,10 @@
         ) }}
     {%- endif -%}
 
+    {%- if temporary -%}
+        {%- do adapter.drop_relation(relation) -%}
+    {%- endif -%}
+
     {%- set table_type = config.get(
         'table_type',
         default = 'dimension'
