@@ -25,4 +25,4 @@ sources:
               skip_blank_lines: true
               date_format: 'YYYY-MM-DD'
               timestamp_format: 'YYYY-MM-DD HH24:MI:SS'
-
+          where: "$source_file_timestamp > NOW() - interval '6 YEARS'"
