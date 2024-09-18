@@ -135,7 +135,7 @@
             CREDENTIALS = (AWS_KEY_ID = '{{credentials.aws_key_id}}' AWS_SECRET_KEY = '{{credentials.aws_secret_key}}')
         {%- endif %}
     {%- endif %}
-    {% if where_clause %}
+    {%- if where_clause %}
         WHERE {{ where_clause }}
-    {% endif %}
+    {%- endif %}
 {% endmacro %}
