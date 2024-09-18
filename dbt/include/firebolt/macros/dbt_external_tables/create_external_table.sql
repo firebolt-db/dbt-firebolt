@@ -76,7 +76,7 @@
     )
     {%- endif %}
     FROM '{{external.url}}'
-    {%- if options | credentials %}
+    {%- if options or credentials %}
         WITH
         {%- if options.object_pattern %}
             PATTERN = '{{options.object_pattern}}'
