@@ -51,6 +51,7 @@
     {# COPY FROM is only available in Firebolt 2.0. #}
     {%- set external = source_node.external -%}
     {%- set credentials = external.credentials -%}
+    {%- set where_clause = external.where -%}
     {%- set options = external.options -%}
     {%- set csv_options = options.csv_options -%}
     {%- set error_file_credentials = options.error_file_credentials -%}
@@ -75,7 +76,7 @@
     )
     {%- endif %}
     FROM '{{external.url}}'
-    {%- if options %}
+    {%- if options or credentials %}
         WITH
         {%- if options.object_pattern %}
             PATTERN = '{{options.object_pattern}}'
@@ -130,8 +131,11 @@
                 TIMESTAMP_FORMAT = '{{ csv_options.timestamp_format }}'
             {%- endif %}
         {%- endif %}
+        {%- if credentials %}
+            CREDENTIALS = (AWS_KEY_ID = '{{credentials.aws_key_id}}' AWS_SECRET_KEY = '{{credentials.aws_secret_key}}')
+        {%- endif %}
     {%- endif %}
-    {%- if credentials %}
-    CREDENTIALS = (AWS_KEY_ID = '{{credentials.aws_key_id}}' AWS_SECRET_KEY = '{{credentials.aws_secret_key}}')
+    {%- if where_clause %}
+        WHERE {{ where_clause }}
     {%- endif %}
 {% endmacro %}
