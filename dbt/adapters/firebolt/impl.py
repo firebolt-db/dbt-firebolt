@@ -120,13 +120,12 @@ class FireboltIndexConfig(dbtClassMixin):
                     'for join indexes.'
                 )
             if index_config.index_type.upper() == 'AGGREGATING' and not (
-                index_config.key_columns and index_config.aggregation
+                index_config.aggregation
             ):
                 raise CompilationError(
                     'Invalid aggregating index definition:\n'
                     f'  Got: {index_config}.\n'
-                    '  key_columns and aggregation must be specified '
-                    'for aggregating indexes.'
+                    '  aggregation must be specified for aggregating indexes.'
                 )
             return index_config
         except ValidationError as exc:
