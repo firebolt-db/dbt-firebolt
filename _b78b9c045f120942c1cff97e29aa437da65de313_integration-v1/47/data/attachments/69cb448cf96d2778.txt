@@ -1,0 +1,23 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project35
+
+
+Invoking dbt with ['seed']
+[0m15:28:30  Running with dbt=1.9.1
+[0m15:28:30  Registered adapter: firebolt=1.9.0
+[0m15:28:30  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:28:30  Found 1 model, 1 seed, 461 macros
+[0m15:28:30  
+[0m15:28:30  Concurrency: 1 threads (target='default')
+[0m15:28:30  
+[0m15:28:31  1 of 1 START seed file seed_pipe_separated ..................................... [RUN]
+[0m15:28:31  1 of 1 ERROR loading seed file public.seed_pipe_separated ...................... [[31mERROR[0m in 0.01s]
+[0m15:28:31  
+[0m15:28:31  Finished running 1 seed in 0 hours 0 minutes and 0.42 seconds (0.42s).
+[0m15:28:31  
+[0m15:28:31  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m15:28:31  
+[0m15:28:31    Compilation Error in seed seed_pipe_separated (seeds/seed_pipe_separated.csv)
+  "delimiter" must be a 1-character string
+[0m15:28:31  
+[0m15:28:31  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
