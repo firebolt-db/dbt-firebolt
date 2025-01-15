@@ -20,6 +20,7 @@ from dbt_common.exceptions import (
 )
 from firebolt.client import DEFAULT_API_URL
 from firebolt.client.auth import Auth, ClientCredentials, UsernamePassword
+from firebolt.common._types import ExtendedType
 from firebolt.db import ARRAY, DECIMAL
 from firebolt.db import connect as sdk_connect
 from firebolt.db.connection import Connection as SDKConnection
@@ -191,8 +192,8 @@ class FireboltConnectionManager(SQLConnectionManager):
         raise NotImplementedError('`cancel` is not implemented for this adapter!')
 
     @classmethod
-    def data_type_code_to_name(  # type: ignore[override] # FIR-29423
-        cls, type_code: Union[type, ARRAY, DECIMAL]
+    def data_type_code_to_name(
+        cls, type_code: Union[type, ExtendedType]  # type: ignore[override] # FIR-29423
     ) -> str:
         """
         Convert a Firebolt data type code to a string representing the data type.
@@ -218,6 +219,7 @@ class FireboltConnectionManager(SQLConnectionManager):
                 return 'bytea'
             else:
                 return 'text'
+        return 'text'
 
 
 def _determine_auth(credentials: FireboltCredentials) -> Auth:
