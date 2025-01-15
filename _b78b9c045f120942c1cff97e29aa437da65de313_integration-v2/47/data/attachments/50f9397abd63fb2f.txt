@@ -1,0 +1,88 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project40
+
+
+Invoking dbt with ['seed']
+[0m15:22:02  Running with dbt=1.9.1
+[0m15:22:02  Registered adapter: firebolt=1.9.0
+[0m15:22:02  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:22:02  Found 1 model, 3 data tests, 1 seed, 461 macros
+[0m15:22:02  
+[0m15:22:02  Concurrency: 1 threads (target='default')
+[0m15:22:02  
+[0m15:22:04  1 of 1 START seed file chipmunks_stage ......................................... [RUN]
+[0m15:22:05  1 of 1 OK loaded seed file public.chipmunks_stage .............................. [[32mINSERT 4[0m in 0.83s]
+[0m15:22:05  
+[0m15:22:05  Finished running 1 seed in 0 hours 0 minutes and 2.43 seconds (2.43s).
+[0m15:22:05  
+[0m15:22:05  [32mCompleted successfully[0m
+[0m15:22:05  
+[0m15:22:05  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m15:22:05  Running with dbt=1.9.1
+[0m15:22:05  Registered adapter: firebolt=1.9.0
+[0m15:22:05  Found 1 model, 3 data tests, 1 seed, 461 macros
+[0m15:22:05  
+[0m15:22:05  Concurrency: 1 threads (target='default')
+[0m15:22:05  
+[0m15:22:07  1 of 1 START sql table model chipmunks ......................................... [RUN]
+[0m15:22:07  1 of 1 OK created sql table model chipmunks .................................... [[32mSUCCESS[0m in 0.87s]
+[0m15:22:07  
+[0m15:22:07  Finished running 1 table model in 0 hours 0 minutes and 2.44 seconds (2.44s).
+[0m15:22:07  
+[0m15:22:07  [32mCompleted successfully[0m
+[0m15:22:07  
+[0m15:22:07  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m15:22:07  Running with dbt=1.9.1
+[0m15:22:07  Registered adapter: firebolt=1.9.0
+[0m15:22:08  Found 1 model, 3 data tests, 1 seed, 461 macros
+[0m15:22:08  
+[0m15:22:08  Concurrency: 1 threads (target='default')
+[0m15:22:08  
+[0m15:22:10  1 of 3 START test results_false ................................................ [RUN]
+[0m15:22:10  1 of 3 FAIL 1 results_false .................................................... [[31mFAIL 1[0m in 0.70s]
+[0m15:22:10  2 of 3 START test results_true ................................................. [RUN]
+[0m15:22:11  2 of 3 FAIL 1 results_true ..................................................... [[31mFAIL 1[0m in 0.73s]
+[0m15:22:11  3 of 3 START test results_unset ................................................ [RUN]
+[0m15:22:12  3 of 3 FAIL 1 results_unset .................................................... [[31mFAIL 1[0m in 0.69s]
+[0m15:22:12  
+[0m15:22:12  Finished running 3 data tests in 0 hours 0 minutes and 4.16 seconds (4.16s).
+[0m15:22:12  
+[0m15:22:12  [31mCompleted with 3 errors, 0 partial successes, and 0 warnings:[0m
+[0m15:22:12  
+[0m15:22:12  [31mFailure in test results_false (tests/results_false.sql)[0m
+[0m15:22:12    Got 1 result, configured to fail if != 0
+[0m15:22:12  
+[0m15:22:12    compiled code at target/compiled/test/tests/results_false.sql
+[0m15:22:12  
+[0m15:22:12    See test failures:
+  ---------------------------
+  select * from results_false
+  ---------------------------
+[0m15:22:12  
+[0m15:22:12  [31mFailure in test results_true (tests/results_true.sql)[0m
+[0m15:22:12    Got 1 result, configured to fail if != 0
+[0m15:22:12  
+[0m15:22:12    compiled code at target/compiled/test/tests/results_true.sql
+[0m15:22:12  
+[0m15:22:12    See test failures:
+  --------------------------
+  select * from results_true
+  --------------------------
+[0m15:22:12  
+[0m15:22:12  [31mFailure in test results_unset (tests/results_unset.sql)[0m
+[0m15:22:12    Got 1 result, configured to fail if != 0
+[0m15:22:12  
+[0m15:22:12    compiled code at target/compiled/test/tests/results_unset.sql
+[0m15:22:12  
+[0m15:22:12    See test failures:
+  ---------------------------
+  select * from results_unset
+  ---------------------------
+[0m15:22:12  
+[0m15:22:12  Done. PASS=0 WARN=0 ERROR=3 SKIP=0 TOTAL=3

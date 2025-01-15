@@ -1,0 +1,54 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project56
+
+
+Invoking dbt with ['seed']
+[0m15:24:17  Running with dbt=1.9.1
+[0m15:24:17  Registered adapter: firebolt=1.9.0
+[0m15:24:17  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:24:17  Found 1 snapshot, 1 seed, 1 test, 461 macros
+[0m15:24:17  
+[0m15:24:17  Concurrency: 1 threads (target='default')
+[0m15:24:17  
+[0m15:24:18  1 of 1 START seed file example_seed ............................................ [RUN]
+[0m15:24:19  1 of 1 OK loaded seed file public.example_seed ................................. [[32mINSERT 3[0m in 0.82s]
+[0m15:24:19  
+[0m15:24:19  Finished running 1 seed in 0 hours 0 minutes and 1.80 seconds (1.80s).
+[0m15:24:19  
+[0m15:24:19  [32mCompleted successfully[0m
+[0m15:24:19  
+[0m15:24:19  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['snapshot']
+[0m15:24:19  Running with dbt=1.9.1
+[0m15:24:19  Registered adapter: firebolt=1.9.0
+[0m15:24:19  Found 1 snapshot, 1 seed, 1 test, 461 macros
+[0m15:24:19  
+[0m15:24:19  Concurrency: 1 threads (target='default')
+[0m15:24:19  
+[0m15:24:20  1 of 1 START snapshot example_snapshot ......................................... [RUN]
+[0m15:24:21  1 of 1 OK snapshotted example_snapshot ......................................... [[32mSUCCESS[0m in 1.10s]
+[0m15:24:21  
+[0m15:24:21  Finished running 1 snapshot in 0 hours 0 minutes and 2.09 seconds (2.09s).
+[0m15:24:21  
+[0m15:24:21  [32mCompleted successfully[0m
+[0m15:24:21  
+[0m15:24:21  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m15:24:21  Running with dbt=1.9.1
+[0m15:24:21  Registered adapter: firebolt=1.9.0
+[0m15:24:21  Found 1 snapshot, 1 seed, 1 test, 461 macros
+[0m15:24:21  
+[0m15:24:21  Concurrency: 1 threads (target='default')
+[0m15:24:21  
+[0m15:24:22  1 of 1 START test accepted_values_example_snapshot_c__0 ........................ [RUN]
+[0m15:24:22  1 of 1 PASS accepted_values_example_snapshot_c__0 .............................. [[32mPASS[0m in 0.52s]
+[0m15:24:22  
+[0m15:24:22  Finished running 1 test in 0 hours 0 minutes and 1.03 seconds (1.03s).
+[0m15:24:22  
+[0m15:24:22  [32mCompleted successfully[0m
+[0m15:24:22  
+[0m15:24:22  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
