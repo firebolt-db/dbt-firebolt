@@ -20,8 +20,7 @@ from dbt_common.exceptions import (
 )
 from firebolt.client import DEFAULT_API_URL
 from firebolt.client.auth import Auth, ClientCredentials, UsernamePassword
-from firebolt.common._types import ExtendedType
-from firebolt.db import ARRAY, DECIMAL
+from firebolt.db import ARRAY, DECIMAL, ExtendedType
 from firebolt.db import connect as sdk_connect
 from firebolt.db.connection import Connection as SDKConnection
 from firebolt.db.cursor import Cursor
