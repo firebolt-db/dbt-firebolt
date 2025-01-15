@@ -75,18 +75,20 @@
        create_statement (str): either "CREATE JOIN INDEX" or
                                "CREATE AND GENERATE AGGREGATING INDEX"
        spine_col ([str]):
-         if agg index, key columns
+         if agg index, key columns - can be none
          if join index, join column
        other_col ([str]):
          if agg index, aggregating columns
          if join index, dimension column
        #}
   {{ create_statement }} "{{ index_name }}" ON {{ relation }} (
-      {% if spine_col is iterable and spine_col is not string -%}
-          {{ spine_col | join(', ') }},
-      {% else -%}
-          {{ spine_col }},
-      {% endif -%}
+      {% if spine_col -%}
+        {% if spine_col is iterable and spine_col is not string -%}
+            {{ spine_col | join(', ') }},
+        {% else -%}
+            {{ spine_col }},
+        {% endif -%}
+      {%- endif -%}
       {% if other_col is iterable and other_col is not string -%}
           {{ other_col | join(', ') }}
       {%- else -%}

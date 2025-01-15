@@ -73,6 +73,17 @@ def test_firebolt_index_config_parse():
     assert index_config.dimension_column == '"dimension"'
 
 
+def test_firebolt_index_config_no_key_columns():
+    raw_index = {
+        'index_type': 'aggregating',
+        'aggregation': 'COUNT(*)',
+    }
+    index_config = FireboltIndexConfig.parse(raw_index)
+    assert index_config.index_type == 'aggregating'
+    assert index_config.key_columns is None
+    assert index_config.aggregation == 'COUNT(*)'
+
+
 @pytest.mark.parametrize(
     'raw_index',
     [
@@ -84,8 +95,6 @@ def test_firebolt_index_config_parse():
         },
         # missing dimension column
         {'index_type': 'join', 'join_columns': ['column1']},
-        # missing aggregation
-        {'index_type': 'aggregating', 'key_columns': ['key1']},
         # missing aggregation but containing extra columns
         {
             'index_type': 'aggregating',
