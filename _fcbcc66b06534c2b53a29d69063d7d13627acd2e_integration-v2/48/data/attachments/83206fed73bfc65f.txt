@@ -1,0 +1,93 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project8
+
+
+Invoking dbt with ['seed']
+[0m10:18:36  Running with dbt=1.9.1
+[0m10:18:36  Registered adapter: firebolt=1.9.1
+[0m10:18:36  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m10:18:36  Found 1 snapshot, 3 seeds, 461 macros
+[0m10:18:36  
+[0m10:18:36  Concurrency: 1 threads (target='default')
+[0m10:18:36  
+[0m10:18:37  1 of 3 START seed file added ................................................... [RUN]
+[0m10:18:38  1 of 3 OK loaded seed file public.added ........................................ [[32mINSERT 20[0m in 0.84s]
+[0m10:18:38  2 of 3 START seed file base .................................................... [RUN]
+[0m10:18:39  2 of 3 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 0.84s]
+[0m10:18:39  3 of 3 START seed file newcolumns .............................................. [RUN]
+[0m10:18:40  3 of 3 OK loaded seed file public.newcolumns ................................... [[32mINSERT 10[0m in 0.88s]
+[0m10:18:40  
+[0m10:18:40  Finished running 3 seeds in 0 hours 0 minutes and 3.60 seconds (3.60s).
+[0m10:18:40  
+[0m10:18:40  [32mCompleted successfully[0m
+[0m10:18:40  
+[0m10:18:40  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 TOTAL=3
+
+
+Invoking dbt with ['snapshot']
+[0m10:18:40  Running with dbt=1.9.1
+[0m10:18:40  Registered adapter: firebolt=1.9.1
+[0m10:18:40  Found 1 snapshot, 3 seeds, 461 macros
+[0m10:18:40  
+[0m10:18:40  Concurrency: 1 threads (target='default')
+[0m10:18:40  
+[0m10:18:41  1 of 1 START snapshot ts_snapshot .............................................. [RUN]
+[0m10:19:32  1 of 1 OK snapshotted ts_snapshot .............................................. [[32mSUCCESS[0m in 51.01s]
+[0m10:19:32  
+[0m10:19:32  Finished running 1 snapshot in 0 hours 0 minutes and 52.05 seconds (52.05s).
+[0m10:19:32  
+[0m10:19:32  [32mCompleted successfully[0m
+[0m10:19:32  
+[0m10:19:32  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['snapshot', '--vars', 'seed_name: added']
+[0m10:19:33  Running with dbt=1.9.1
+[0m10:19:33  Registered adapter: firebolt=1.9.1
+[0m10:19:33  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m10:19:33  Found 1 snapshot, 3 seeds, 461 macros
+[0m10:19:33  
+[0m10:19:33  Concurrency: 1 threads (target='default')
+[0m10:19:33  
+[0m10:19:34  1 of 1 START snapshot ts_snapshot .............................................. [RUN]
+[0m10:19:35  1 of 1 OK snapshotted ts_snapshot .............................................. [[32mSUCCESS[0m in 1.69s]
+[0m10:19:35  
+[0m10:19:35  Finished running 1 snapshot in 0 hours 0 minutes and 2.68 seconds (2.68s).
+[0m10:19:36  
+[0m10:19:36  [32mCompleted successfully[0m
+[0m10:19:36  
+[0m10:19:36  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['snapshot', '--vars', 'seed_name: added']
+[0m10:19:37  Running with dbt=1.9.1
+[0m10:19:37  Registered adapter: firebolt=1.9.1
+[0m10:19:37  Found 1 snapshot, 3 seeds, 461 macros
+[0m10:19:37  
+[0m10:19:37  Concurrency: 1 threads (target='default')
+[0m10:19:37  
+[0m10:19:38  1 of 1 START snapshot ts_snapshot .............................................. [RUN]
+[0m10:19:39  1 of 1 OK snapshotted ts_snapshot .............................................. [[32mSUCCESS[0m in 1.75s]
+[0m10:19:40  
+[0m10:19:40  Finished running 1 snapshot in 0 hours 0 minutes and 2.80 seconds (2.80s).
+[0m10:19:40  
+[0m10:19:40  [32mCompleted successfully[0m
+[0m10:19:40  
+[0m10:19:40  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['snapshot', '--vars', 'seed_name: added']
+[0m10:19:41  Running with dbt=1.9.1
+[0m10:19:41  Registered adapter: firebolt=1.9.1
+[0m10:19:41  Found 1 snapshot, 3 seeds, 461 macros
+[0m10:19:41  
+[0m10:19:41  Concurrency: 1 threads (target='default')
+[0m10:19:41  
+[0m10:19:42  1 of 1 START snapshot ts_snapshot .............................................. [RUN]
+[0m10:19:43  1 of 1 OK snapshotted ts_snapshot .............................................. [[32mSUCCESS[0m in 1.35s]
+[0m10:19:43  
+[0m10:19:43  Finished running 1 snapshot in 0 hours 0 minutes and 2.34 seconds (2.34s).
+[0m10:19:43  
+[0m10:19:43  [32mCompleted successfully[0m
+[0m10:19:43  
+[0m10:19:43  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
