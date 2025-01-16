@@ -1,0 +1,38 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project27
+
+
+Invoking dbt with ['run']
+[0m10:34:17  Running with dbt=1.9.1
+[0m10:34:17  Registered adapter: firebolt=1.9.1
+[0m10:34:17  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m10:34:17  Found 1 model, 462 macros
+[0m10:34:17  
+[0m10:34:17  Concurrency: 1 threads (target='default')
+[0m10:34:17  
+[0m10:34:19  1 of 1 START sql view model model .............................................. [RUN]
+[0m10:34:21  1 of 1 OK created sql view model model ......................................... [[32mSUCCESS[0m in 1.36s]
+[0m10:34:21  
+[0m10:34:21  Finished running 1 view model in 0 hours 0 minutes and 3.44 seconds (3.44s).
+[0m10:34:21  
+[0m10:34:21  [32mCompleted successfully[0m
+[0m10:34:21  
+[0m10:34:21  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+
+
+Invoking dbt with ['--warn-error', 'docs', 'generate']
+[0m10:34:21  Running with dbt=1.9.1
+[0m10:34:21  Registered adapter: firebolt=1.9.1
+[0m10:34:21  Found 1 model, 462 macros
+[0m10:34:21  
+[0m10:34:21  Concurrency: 1 threads (target='default')
+[0m10:34:21  
+[0m10:34:22  Building catalog
+[0m10:34:22  Encountered an error:
+Compilation Error
+  Encountered an error while generating catalog: Runtime Error
+    Compilation Error in macro get_catalog_relations (macros/failure.sql)
+      rejected: no catalogs for you
+      
+      > in macro get_catalog_relations (macros/failure.sql)
+      > called by macro get_catalog_relations (macros/failure.sql)
