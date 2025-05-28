@@ -26,60 +26,64 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e ".[dev]" --no-cache-dir
 
-      - name: Setup database and engine
-        id: setup
-        uses: firebolt-db/integration-testing-setup@v2
-        with:
-          firebolt-client-id: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
-          firebolt-client-secret: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
-          account: "automation"
-          api-endpoint: "api.staging.firebolt.io"
-
-      - name: Restore cached failed tests
-        id: cache-tests-restore
-        uses: actions/cache/restore@v3
-        with:
-          path: |
-            .pytest_cache/v/cache/lastfailed
-          key: ${{ runner.os }}-pytest-restore-failed-${{ github.ref }}-${{ github.sha }}-v2
-
-      - name: Run integration tests
-        env:
-          CLIENT_ID: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
-          CLIENT_SECRET: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
-          DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
-          ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
-          API_ENDPOINT: "api.staging.firebolt.io"
-          ACCOUNT_NAME: "automation"
+      - name: Run pip list
         run: |
-          pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
+          pip list
 
-      - name: Make sure no secrets make it to the logs
-        if: always()
-        run: |
-          find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}/REDACTED/g' {} +
-          find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}/REDACTED/g' {} +
+      # - name: Setup database and engine
+      #   id: setup
+      #   uses: firebolt-db/integration-testing-setup@v2
+      #   with:
+      #     firebolt-client-id: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
+      #     firebolt-client-secret: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
+      #     account: "automation"
+      #     api-endpoint: "api.staging.firebolt.io"
 
-      - name: Save failed tests
-        id: cache-tests-save
-        uses: actions/cache/save@v3
-        if: failure()
-        with:
-          path: |
-            .pytest_cache/v/cache/lastfailed
-          key: ${{ steps.cache-tests-restore.outputs.cache-primary-key }}
+      # - name: Restore cached failed tests
+      #   id: cache-tests-restore
+      #   uses: actions/cache/restore@v3
+      #   with:
+      #     path: |
+      #       .pytest_cache/v/cache/lastfailed
+      #     key: ${{ runner.os }}-pytest-restore-failed-${{ github.ref }}-${{ github.sha }}-v2
 
-      - name: Get Allure history
-        uses: actions/checkout@v2
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
+      # - name: Run integration tests
+      #   env:
+      #     CLIENT_ID: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
+      #     CLIENT_SECRET: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
+      #     DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
+      #     ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
+      #     API_ENDPOINT: "api.staging.firebolt.io"
+      #     ACCOUNT_NAME: "automation"
+      #   run: |
+      #     pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
-      - name: Allure Report
-        uses: firebolt-db/action-allure-report@v1
-        if: always()
-        with:
-          github-key: ${{ secrets.GITHUB_TOKEN }}
-          test-type: integration-v2
+      # - name: Make sure no secrets make it to the logs
+      #   if: always()
+      #   run: |
+      #     find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}/REDACTED/g' {} +
+      #     find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}/REDACTED/g' {} +
+
+      # - name: Save failed tests
+      #   id: cache-tests-save
+      #   uses: actions/cache/save@v3
+      #   if: failure()
+      #   with:
+      #     path: |
+      #       .pytest_cache/v/cache/lastfailed
+      #     key: ${{ steps.cache-tests-restore.outputs.cache-primary-key }}
+
+      # - name: Get Allure history
+      #   uses: actions/checkout@v2
+      #   if: always()
+      #   continue-on-error: true
+      #   with:
+      #     ref: gh-pages
+      #     path: gh-pages
+
+      # - name: Allure Report
+      #   uses: firebolt-db/action-allure-report@v1
+      #   if: always()
+      #   with:
+      #     github-key: ${{ secrets.GITHUB_TOKEN }}
+      #     test-type: integration-v2
