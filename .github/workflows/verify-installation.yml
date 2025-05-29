@@ -8,6 +8,7 @@ jobs:
   verify-installation:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false # finish all jobs even if one fails
       matrix:
         python-version: ['3.9', '3.10', '3.11', '3.12']
         dbt-core-version: ['1.8.*', '1.9.*']
