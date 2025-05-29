@@ -1,0 +1,42 @@
+name: Verify Installation
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  verify-setup:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11', '3.12']
+        dbt-core-version: ['1.8.*', '1.9.*']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Create and activate virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install "dbt-core==${{ matrix.dbt-core-version }}
+          pip install .
+      - name: Verify installation
+        run: |
+          source venv/bin/activate
+          python -c "import dbt.adapters.firebolt; print('Package successfully installed with Python ${{ matrix.python-version }} and dbt-core ${{ matrix.dbt-core-version }}')"
+      - name: Verify correct files in include directory
+        run: |
+          source venv/bin/activate
+          SITE_PKG_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
+          if [ ! -d "$SITE_PKG_DIR/dbt/include/firebolt/" ]; then
+            echo "Include directory with firebolt does not exist in site-packages"
+            exit 1
+          fi
+          if [ ! -f "$SITE_PKG_DIR/dbt/include/firebolt/dbt_project.yaml" ]; then
+            echo "DBT project file dbt_project.yaml is missing in the include directory in site-packages"
+            exit 1
+          fi
+          echo "Include directory and expected files verified successfully in site-packages"
