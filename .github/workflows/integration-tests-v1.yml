@@ -31,6 +31,7 @@ jobs:
         run: |
           source venv/bin/activate
           SITE_PKG_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
+          ls $SITE_PKG_DIR
           if [ ! -d "$SITE_PKG_DIR/dbt/adapters/include/firebolt/" ]; then
             echo "Include directory with firebolt does not exist in site-packages"
             exit 1
