@@ -5,7 +5,7 @@ on:
   workflow_call:
 
 jobs:
-  verify-setup:
+  verify-installation:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,8 +35,8 @@ jobs:
             echo "Include directory with firebolt does not exist in site-packages"
             exit 1
           fi
-          if [ ! -f "$SITE_PKG_DIR/dbt/include/firebolt/dbt_project.yaml" ]; then
-            echo "DBT project file dbt_project.yaml is missing in the include directory in site-packages"
+          if [ ! -f "$SITE_PKG_DIR/dbt/include/firebolt/dbt_project.yml" ]; then
+            echo "dbt_project.yml is missing in the include directory in site-packages"
             exit 1
           fi
           echo "Include directory and expected files verified successfully in site-packages"
