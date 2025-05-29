@@ -29,6 +29,8 @@ jobs:
 
       - name: Install dependencies
         run: |
+          python -m venv venv
+          source venv/bin/activate
           python -m pip install --upgrade pip
           cd dbt-firebolt
           python -m pip install dbt-core -e .
@@ -57,4 +59,5 @@ jobs:
           DBT_PROFILES_DIR: "../dbt-firebolt/.github/workflows/jaffle_shop"
         working-directory: jaffle-shop
         run: |
+          source ../venv/bin/activate
           ../dbt-firebolt/.github/workflows/jaffle_shop/run_test_workflow.sh
