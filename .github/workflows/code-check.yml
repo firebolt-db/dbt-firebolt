@@ -23,4 +23,4 @@ jobs:
         python -m pip install ".[dev]"
 
     - name: Run pre-commit checks
-      uses: pre-commit/action@v2.0.3
+      run: pre-commit run --all-files
