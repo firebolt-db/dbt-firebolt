@@ -1,42 +1,85 @@
-name: Verify Installation
+name: Run integration tests V1
 
 on:
   workflow_dispatch:
   workflow_call:
+    secrets:
+      FIREBOLT_STG_USERNAME:
+        required: true
+      FIREBOLT_STG_PASSWORD:
+        required: true
 
 jobs:
-  verify-setup:
+  tests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ['3.9', '3.10', '3.11', '3.12']
-        dbt-core-version: ['1.8.*', '1.9.*']
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Create and activate virtual environment
+          python-version: 3.9
+
+      - name: Install dependencies
         run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip install "dbt-core==${{ matrix.dbt-core-version }}"
-          pip install .
-      - name: Verify installation
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]" --no-cache-dir
+
+      - name: Setup database and engine
+        id: setup
+        uses: firebolt-db/integration-testing-setup@v1
+        with:
+          firebolt-username: ${{ secrets.FIREBOLT_STG_USERNAME }}
+          firebolt-password: ${{ secrets.FIREBOLT_STG_PASSWORD }}
+          api-endpoint: "api.staging.firebolt.io"
+          region: "us-east-1"
+
+      - name: Restore cached failed tests
+        id: cache-tests-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            .pytest_cache/v/cache/lastfailed
+          key: ${{ runner.os }}-pytest-restore-failed-${{ github.ref }}-${{ github.sha }}-v1
+
+      - name: Run integration tests
+        env:
+          USER_NAME: ${{ secrets.FIREBOLT_STG_USERNAME }}
+          PASSWORD: ${{ secrets.FIREBOLT_STG_PASSWORD }}
+          DATABASE_NAME: ${{ steps.setup.outputs.database_name }}
+          ENGINE_NAME: ${{ steps.setup.outputs.engine_name }}
+          API_ENDPOINT: "api.staging.firebolt.io"
+          ACCOUNT_NAME: "firebolt"
         run: |
-          source venv/bin/activate
-          python -c "import dbt.adapters.firebolt; print('Package successfully installed with Python ${{ matrix.python-version }} and dbt-core ${{ matrix.dbt-core-version }}')"
-      - name: Verify correct files in include directory
+          pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
+
+      - name: Make sure no secrets make it to the logs
+        if: always()
         run: |
-          source venv/bin/activate
-          SITE_PKG_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
-          if [ ! -d "$SITE_PKG_DIR/dbt/include/firebolt/" ]; then
-            echo "Include directory with firebolt does not exist in site-packages"
-            exit 1
-          fi
-          if [ ! -f "$SITE_PKG_DIR/dbt/include/firebolt/dbt_project.yml" ]; then
-            echo "DBT project file dbt_project.yml is missing in the include directory in site-packages"
-            exit 1
-          fi
-          echo "Include directory and expected files verified successfully in site-packages"
+          find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_STG_USERNAME }}/REDACTED/g' {} +
+          find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_STG_PASSWORD }}/REDACTED/g' {} +
+
+      - name: Save failed tests
+        id: cache-tests-save
+        uses: actions/cache/save@v3
+        if: failure()
+        with:
+          path: |
+            .pytest_cache/v/cache/lastfailed
+          key: ${{ steps.cache-tests-restore.outputs.cache-primary-key }}
+
+      - name: Get Allure history
+        uses: actions/checkout@v2
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Allure Report
+        uses: firebolt-db/action-allure-report@v1
+        if: always()
+        with:
+          github-key: ${{ secrets.GITHUB_TOKEN }}
+          test-type: integration-v1
