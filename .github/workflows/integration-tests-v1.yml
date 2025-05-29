@@ -31,11 +31,11 @@ jobs:
         run: |
           source venv/bin/activate
           SITE_PKG_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
-          if [ ! -d "$SITE_PKG_DIR/dbt/adapters/include/firebolt/" ]; then
+          if [ ! -d "$SITE_PKG_DIR/dbt/include/firebolt/" ]; then
             echo "Include directory with firebolt does not exist in site-packages"
             exit 1
           fi
-          if [ ! -f "$SITE_PKG_DIR/dbt/adapters/include/firebolt/dbt_project.yaml" ]; then
+          if [ ! -f "$SITE_PKG_DIR/dbt/include/firebolt/dbt_project.yaml" ]; then
             echo "DBT project file dbt_project.yaml is missing in the include directory in site-packages"
             exit 1
           fi
