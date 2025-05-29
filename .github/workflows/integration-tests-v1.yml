@@ -21,7 +21,7 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-          pip install "dbt-core==${{ matrix.dbt-core-version }}
+          pip install "dbt-core==${{ matrix.dbt-core-version }}"
           pip install .
       - name: Verify installation
         run: |
