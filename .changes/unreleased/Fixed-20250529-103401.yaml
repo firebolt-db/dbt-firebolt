@@ -1,0 +1,3 @@
+kind: Fixed
+body: Fixed installation issues when dbt_project.yml is missing
+time: 2025-05-29T10:34:01.38528+01:00
