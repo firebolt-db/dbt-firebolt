@@ -10,8 +10,8 @@ jobs:
     strategy:
       fail-fast: false # finish all jobs even if one fails
       matrix:
-        python-version: ['3.9', '3.10', '3.11', '3.12']
-        dbt-core-version: ['1.8.*', '1.9.*']
+        python-version: ${{ fromJSON(vars.PYTHON_VERSIONS) }}
+        dbt-core-version: ${{ fromJSON(vars.DBT_VERSIONS) }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
