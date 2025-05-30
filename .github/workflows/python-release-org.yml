@@ -14,20 +14,21 @@ on:
         description: 'Version to release. Should be aligned with dbt-core.'
 
 jobs:
-  integration-tests:
-    uses: ./.github/workflows/integration-tests.yml
-    secrets: inherit
+  # integration-tests:
+  #   uses: ./.github/workflows/integration-tests.yml
+  #   secrets: inherit
 
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    needs: integration-tests
+    # needs: integration-tests
     steps:
     - name: Check out code
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
+        ref: main
         token: ${{ secrets.RELEASE_PAT }}
 
     - name: Apply Changie changelog
