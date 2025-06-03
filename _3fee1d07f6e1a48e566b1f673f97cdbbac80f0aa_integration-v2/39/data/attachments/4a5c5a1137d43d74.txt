@@ -1,0 +1,57 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m16:01:33  Running with dbt=1.10.0-rc1
+[0m16:01:33  Registered adapter: firebolt=1.9.3
+[0m16:01:33  Found 12 models, 1 seed, 463 macros
+[0m16:01:33  
+[0m16:01:33  Concurrency: 1 threads (target='default')
+[0m16:01:33  
+[0m16:01:34  1 of 1 START seed file seed .................................................... [RUN]
+[0m16:01:35  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 7[0m in 0.72s]
+[0m16:01:35  
+[0m16:01:35  Finished running 1 seed in 0 hours 0 minutes and 1.68 seconds (1.68s).
+[0m16:01:35  
+[0m16:01:35  [32mCompleted successfully[0m
+[0m16:01:35  
+[0m16:01:35  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'not_found_unique_key_list', '--full-refresh']
+[0m16:01:35  Running with dbt=1.10.0-rc1
+[0m16:01:35  Registered adapter: firebolt=1.9.3
+[0m16:01:35  Found 12 models, 1 seed, 463 macros
+[0m16:01:35  
+[0m16:01:35  Concurrency: 1 threads (target='default')
+[0m16:01:35  
+[0m16:01:36  1 of 1 START sql incremental model not_found_unique_key_list ................... [RUN]
+[0m16:01:37  1 of 1 OK created sql incremental model not_found_unique_key_list .............. [[32mSUCCESS[0m in 0.81s]
+[0m16:01:37  
+[0m16:01:37  Finished running 1 incremental model in 0 hours 0 minutes and 1.73 seconds (1.73s).
+[0m16:01:37  
+[0m16:01:37  [32mCompleted successfully[0m
+[0m16:01:37  
+[0m16:01:37  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'not_found_unique_key_list']
+[0m16:01:37  Running with dbt=1.10.0-rc1
+[0m16:01:37  Registered adapter: firebolt=1.9.3
+[0m16:01:37  Found 12 models, 1 seed, 463 macros
+[0m16:01:37  
+[0m16:01:37  Concurrency: 1 threads (target='default')
+[0m16:01:37  
+[0m16:01:38  1 of 1 START sql incremental model not_found_unique_key_list ................... [RUN]
+[0m16:01:39  1 of 1 ERROR creating sql incremental model not_found_unique_key_list .......... [[31mERROR[0m in 0.96s]
+[0m16:01:39  
+[0m16:01:39  Finished running 1 incremental model in 0 hours 0 minutes and 1.88 seconds (1.88s).
+[0m16:01:39  
+[0m16:01:39  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m16:01:39  
+[0m16:01:39  [31mFailure in model not_found_unique_key_list (models/not_found_unique_key_list.sql)[0m
+[0m16:01:39    Runtime Error in model not_found_unique_key_list (models/not_found_unique_key_list.sql)
+  - Line 3, Column 27: Column 'thisisnotacolumn' does not exist.
+[0m16:01:39  
+[0m16:01:39    compiled code at target/compiled/test/models/not_found_unique_key_list.sql
+[0m16:01:39  
+[0m16:01:39  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1
