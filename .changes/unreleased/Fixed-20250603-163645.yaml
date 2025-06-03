@@ -1,3 +1,0 @@
-kind: Fixed
-body: Fixed package install that was missing several macros from subdirectories.
-time: 2025-06-03T16:36:45.656745+01:00
