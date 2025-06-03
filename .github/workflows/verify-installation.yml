@@ -40,4 +40,8 @@ jobs:
             echo "dbt_project.yml is missing in the include directory in site-packages"
             exit 1
           fi
+          if [ ! -f "$SITE_PKG_DIR/dbt/include/firebolt/macros/adapters/relation.sql" ]; then
+            echo "relation.sql is missing in the include directory in site-packages"
+            exit 1
+          fi
           echo "Include directory and expected files verified successfully in site-packages"
