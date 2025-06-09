@@ -1,0 +1,47 @@
+name: Verify Installation
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  verify-installation:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # finish all jobs even if one fails
+      matrix:
+        python-version: ${{ fromJSON(vars.PYTHON_VERSIONS) }}
+        dbt-core-version: ${{ fromJSON(vars.DBT_VERSIONS) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Create and activate virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install "dbt-core==${{ matrix.dbt-core-version }}"
+          pip install .
+      - name: Verify installation
+        run: |
+          source venv/bin/activate
+          python -c "import dbt.adapters.firebolt; print('Package successfully installed with Python ${{ matrix.python-version }} and dbt-core ${{ matrix.dbt-core-version }}')"
+      - name: Verify correct files in include directory
+        run: |
+          source venv/bin/activate
+          SITE_PKG_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
+          if [ ! -d "$SITE_PKG_DIR/dbt/include/firebolt/" ]; then
+            echo "Include directory with firebolt does not exist in site-packages"
+            exit 1
+          fi
+          if [ ! -f "$SITE_PKG_DIR/dbt/include/firebolt/dbt_project.yml" ]; then
+            echo "dbt_project.yml is missing in the include directory in site-packages"
+            exit 1
+          fi
+          if [ ! -f "$SITE_PKG_DIR/dbt/include/firebolt/macros/adapters/relation.sql" ]; then
+            echo "relation.sql is missing in the include directory in site-packages"
+            exit 1
+          fi
+          echo "Include directory and expected files verified successfully in site-packages"
