@@ -283,10 +283,10 @@ def test_get_rows_different_sql_valid(adapter):
     )
     column_names = ['col1', 'col2']
     sql = adapter.get_rows_different_sql(relation_a, relation_b, column_names)
-    assert 'SELECT "col1", "col2" FROM "table_a"' in sql
-    assert 'SELECT "col1", "col2" FROM "table_b"' in sql
-    assert 'WHERE "table_a"."col1" = "table_b"."col1"' in sql
-    assert 'AND "table_a"."col2" = "table_b"."col2"' in sql
+    assert 'SELECT "col1", "col2" FROM table_a' in sql
+    assert 'SELECT "col1", "col2" FROM table_b' in sql
+    assert 'WHERE table_a."col1" = table_b."col1"' in sql
+    assert 'AND table_a."col2" = table_b."col2"' in sql
 
 
 def test_get_rows_different_sql_empty_columns(adapter):
@@ -307,10 +307,10 @@ def test_get_rows_different_sql_empty_columns(adapter):
     )
     sql = adapter.get_rows_different_sql(relation_a, relation_b, column_names)
     print(sql)
-    assert 'SELECT "col1", "col2" FROM "table_a"' in sql
-    assert 'SELECT "col1", "col2" FROM "table_b"' in sql
-    assert 'WHERE "table_a"."col1" = "table_b"."col1"' in sql
-    assert 'AND "table_a"."col2" = "table_b"."col2"' in sql
+    assert 'SELECT "col1", "col2" FROM table_a' in sql
+    assert 'SELECT "col1", "col2" FROM table_b' in sql
+    assert 'WHERE table_a."col1" = table_b."col1"' in sql
+    assert 'AND table_a."col2" = table_b."col2"' in sql
 
 
 def test_annotate_date_columns_for_partitions_valid(adapter):
