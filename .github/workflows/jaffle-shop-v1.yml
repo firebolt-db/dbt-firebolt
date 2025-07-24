@@ -62,7 +62,7 @@ jobs:
         id: setup-core
         uses: firebolt-db/action-setup-core@v1.0
         with:
-          tag_version: ${{ inputs.tag_version }}
+            tag_version: ${{ inputs.tag_version || vars.DEFAULT_CORE_IMAGE_TAG }}
 
       - name: Run integration tests HTTP
         env:
