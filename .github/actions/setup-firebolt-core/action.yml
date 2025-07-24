@@ -1,0 +1,119 @@
+name: 'Setup Firebolt Core'
+description: 'Sets up Firebolt Core Docker containers with certificates and waits for service readiness'
+inputs:
+  tag_version:
+    description: 'The docker image tag for the firebolt core'
+    required: false
+    default: 'preview-rc'
+outputs:
+  docker_compose_file:
+    description: 'Path to the Docker Compose file'
+    value: ${{ steps.setup.outputs.docker_compose_file }}
+  service_url:
+    description: 'HTTP URL of the running service'
+    value: ${{ steps.setup.outputs.service_url }}
+  service_https_url:
+    description: 'HTTPS URL of the running service'
+    value: ${{ steps.setup.outputs.service_https_url }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Docker environment
+      id: setup
+      shell: bash
+      env:
+        SERVICE_URL: 'http://localhost:3473'
+        SERVICE_HTTPS_URL: 'https://localhost:443'
+        MAX_RETRIES: '30'
+        RETRY_INTERVAL: '2'
+      run: |
+        DOCKER_COMPOSE_FILE="${{ github.workspace }}/.github/resources/core/docker-compose.yml"
+        echo "docker_compose_file=$DOCKER_COMPOSE_FILE" >> $GITHUB_OUTPUT
+        echo "service_url=$SERVICE_URL" >> $GITHUB_OUTPUT
+        echo "service_https_url=$SERVICE_HTTPS_URL" >> $GITHUB_OUTPUT
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ github.token }}
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Cache Docker layers
+      uses: actions/cache@v3
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
+
+    - name: Generate certificates
+      shell: bash
+      run: |
+        mkdir -p "${{ github.workspace }}/.github/resources/core/certs"
+        pip install trustme
+        # Generate a self-signed certificate for localhost
+        python3 -m trustme -d "${{ github.workspace }}/.github/resources/core/certs/"
+
+    - name: Install certificates to keystore
+      shell: bash
+      run: |
+        sudo cp "${{ github.workspace }}/.github/resources/core/certs/client.pem" /usr/local/share/ca-certificates/client.crt
+        sudo update-ca-certificates
+
+    - name: Set image tag
+      id: set-tag
+      shell: bash
+      run: |
+        IMAGE_TAG="${{ inputs.tag_version }}"
+        echo "tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+    - name: Prepare docker-compose.yml
+      shell: bash
+      run: |
+        DOCKER_COMPOSE_FILE="${{ steps.setup.outputs.docker_compose_file }}"
+        if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
+          echo "Error: Docker compose file not found at $DOCKER_COMPOSE_FILE"
+          exit 1
+        fi
+        sed -i "s|\${IMAGE_TAG}|${{ steps.set-tag.outputs.tag }}|g" "$DOCKER_COMPOSE_FILE"
+        sed -i "s|\${BASE_DIR}|${{ github.workspace }}|g" "$DOCKER_COMPOSE_FILE"
+        echo "Docker compose file prepared:"
+        cat "$DOCKER_COMPOSE_FILE"
+
+    - name: Start service containers
+      shell: bash
+      run: |
+        DOCKER_COMPOSE_FILE="${{ steps.setup.outputs.docker_compose_file }}"
+        docker compose -f "$DOCKER_COMPOSE_FILE" up -d
+        docker compose -f "$DOCKER_COMPOSE_FILE" ps
+
+    - name: Wait for service to be ready
+      shell: bash
+      env:
+        SERVICE_URL: 'http://localhost:3473'
+        MAX_RETRIES: '30'
+        RETRY_INTERVAL: '2'
+      run: |
+        for i in $(seq 1 $MAX_RETRIES); do
+          if curl --silent --fail "$SERVICE_URL" --data-binary "SELECT 1" | grep -q "1"; then
+            echo "Service is up and responding!"
+            exit 0
+          fi
+          echo "Waiting for service... ($i/$MAX_RETRIES)"
+          sleep $RETRY_INTERVAL
+        done
+        echo "Error: Service failed to start within timeout"
+        DOCKER_COMPOSE_FILE="${{ steps.setup.outputs.docker_compose_file }}"
+        docker compose -f "$DOCKER_COMPOSE_FILE" logs
+        exit 1
+
+    - name: Spin down containers
+      if: always()
+      uses: gacts/run-and-post-run@v1
+      with:
+        post: docker compose -f "$DOCKER_COMPOSE_FILE" down

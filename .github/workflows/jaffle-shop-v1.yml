@@ -41,17 +41,9 @@ on:
     secrets:
       SLACK_BOT_TOKEN:
         required: false
-env:
-  DEFAULT_IMAGE_TAG: ${{ vars.DEFAULT_CORE_IMAGE_TAG }}
 jobs:
   run-core-integration-tests:
     runs-on: ${{ inputs.os_name }}
-    env:
-      DOCKER_COMPOSE_FILE: ${{ github.workspace }}/.github/resources/core/docker-compose.yml
-      SERVICE_PORT: 3473
-      SERVICE_URL: http://localhost:3473
-      MAX_RETRIES: 30
-      RETRY_INTERVAL: 2
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -66,75 +58,9 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e ".[dev]" --no-cache-dir
 
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
-      - name: Write certificate and certificate key to file
-        run: |
-          mkdir "${{ github.workspace }}/.github/resources/core/certs"
-          pip install trustme
-          # Generate a self-signed certificate for localhost
-          python3 -m trustme -d "${{ github.workspace }}/.github/resources/core/certs/"
-
-      - name: Install certs to keystore
-        run: |
-          sudo cp ${GITHUB_WORKSPACE}/.github/resources/core/certs/client.pem /usr/local/share/ca-certificates/client.crt
-          sudo update-ca-certificates
-
-      # if no image tag was passed in, then use the image tag from the defaults
-      - name: Set image tag
-        id: set-tag
-        run: |
-          IMAGE_TAG="${{ inputs.tag_version }}"
-          if [ -z "$IMAGE_TAG" ]; then
-            IMAGE_TAG="$DEFAULT_IMAGE_TAG"
-          fi
-          echo "tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
-
-      - name: Prepare docker-compose.yml
-        run: |
-          if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
-            echo "Error: Docker compose file not found at $DOCKER_COMPOSE_FILE"
-            exit 1
-          fi
-          sed -i "s|\${IMAGE_TAG}|${{ steps.set-tag.outputs.tag }}|g" "$DOCKER_COMPOSE_FILE"
-          sed -i "s|\${BASE_DIR}|${{ github.workspace }}|g" "$DOCKER_COMPOSE_FILE"
-          echo "Docker compose file prepared:"
-          cat "$DOCKER_COMPOSE_FILE"
-
-      - name: Start service container
-        run: |
-          docker compose -f "$DOCKER_COMPOSE_FILE" up -d
-          docker compose -f "$DOCKER_COMPOSE_FILE" ps
-
-      - name: Wait for service to be ready
-        run: |
-          for i in $(seq 1 $MAX_RETRIES); do
-            if curl --silent --fail "$SERVICE_URL" --data-binary "SELECT 1" | grep -q "1"; then
-              echo "Service is up and responding!"
-              exit 0
-            fi
-            echo "Waiting for service... ($i/$MAX_RETRIES)"
-            sleep $RETRY_INTERVAL
-          done
-          echo "Error: Service failed to start within timeout"
-          docker compose -f "$DOCKER_COMPOSE_FILE" logs
-          exit 1
+      - name: Setup Firebolt Core
+        id: setup-core
+        uses: ./.github/actions/setup-firebolt-core
 
       - name: Run integration tests HTTP
         env:
@@ -144,7 +70,7 @@ jobs:
           ENGINE_NAME: ""
           API_ENDPOINT: ""
           ACCOUNT_NAME: ""
-          CORE_URL: "http://localhost:3473"
+          CORE_URL: ${{ steps.setup-core.outputs.service_url }}
         run: |
           pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
@@ -157,7 +83,7 @@ jobs:
     #       STOPPED_ENGINE_NAME: ""
     #       API_ENDPOINT: ""
     #       ACCOUNT_NAME: ""
-    #       CORE_URL: "https://localhost:443"
+    #       CORE_URL: ${{ steps.setup-core.outputs.service_https_url }}
     #     run: |
     #       pytest -o log_cli=true -o log_cli_level=WARNING tests/integration -k "core"  --alluredir=allure-results-https/
 
@@ -175,16 +101,16 @@ jobs:
     #         ref: gh-pages
     #         path: gh-pages
 
-      - name: Allure Report
-        uses: firebolt-db/action-allure-report@v1
-        if: always()
-        continue-on-error: true
-        with:
-          github-key: ${{ secrets.GITHUB_TOKEN }}
-          test-type: integration_core
-          allure-dir: allure-results
-          pages-branch: gh-pages
-          repository-name: dbt-firebolt
+    #   - name: Allure Report
+    #     uses: firebolt-db/action-allure-report@v1
+    #     if: always()
+    #     continue-on-error: true
+    #     with:
+    #       github-key: ${{ secrets.GITHUB_TOKEN }}
+    #       test-type: integration_core
+    #       allure-dir: allure-results
+    #       pages-branch: gh-pages
+    #       repository-name: dbt-firebolt
 
     #   - name: Allure Report HTTPS
     #     uses: firebolt-db/action-allure-report@v1
