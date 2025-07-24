@@ -1,5 +1,0 @@
-
-=== Test project_root: /tmp/pytest-of-runner/pytest-0/project23
-
-
-Invoking dbt with ['--debug', '--log-format=json', 'run']

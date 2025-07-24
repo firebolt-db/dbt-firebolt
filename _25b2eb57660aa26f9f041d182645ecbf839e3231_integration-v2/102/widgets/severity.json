@@ -1,1 +1,0 @@
-[{"uid":"fe96dc14bdf27b52","name":"test_singular_tests_ephemeral","time":{"start":1722523732189,"stop":1722523742710,"duration":10521},"status":"passed","severity":"normal"},{"uid":"ee4025e4ffe5ebea","name":"test_build_assert_equal","time":{"start":1722523747593,"stop":1722523752422,"duration":4829},"status":"passed","severity":"normal"}]

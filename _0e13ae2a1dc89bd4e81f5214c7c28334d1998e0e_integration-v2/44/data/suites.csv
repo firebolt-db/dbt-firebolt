@@ -1,3 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Thu Sep 05 08:55:59 GMT 2024","Thu Sep 05 08:56:02 GMT 2024","3096","tests.functional.adapter","test_basic","TestDocsGenerateFirebolt","","","test_run_and_generate_no_compile",""
-"passed","Thu Sep 05 08:55:31 GMT 2024","Thu Sep 05 08:55:50 GMT 2024","18948","tests.functional.adapter","test_basic","TestSimpleMaterializationsFirebolt","","","test_base",""

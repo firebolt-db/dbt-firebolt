@@ -1,7 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Tue Feb 06 09:30:43 GMT 2024","Tue Feb 06 09:31:50 GMT 2024","67354","tests.functional.adapter","test_concurrency","TestConcurenncy","","","test_concurrency",""
-"passed","Tue Feb 06 09:34:20 GMT 2024","Tue Feb 06 09:34:30 GMT 2024","9831","tests.functional.adapter.utils","test_utils","TestEscapeSingleQuotes","","","test_build_assert_equal",""
-"passed","Tue Feb 06 09:30:03 GMT 2024","Tue Feb 06 09:30:20 GMT 2024","16761","tests.functional.adapter","test_basic","TestDocsGenReferencesFirebolt","","","test_references",""
-"passed","Tue Feb 06 09:32:05 GMT 2024","Tue Feb 06 09:32:47 GMT 2024","41819","tests.functional.adapter","test_constraints","TestTableConstraintsColumnsEqualFirebolt","","","test__constraints_wrong_column_data_types",""
-"passed","Tue Feb 06 09:33:00 GMT 2024","Tue Feb 06 09:34:05 GMT 2024","65316","tests.functional.adapter","test_simple_copy","TestSimpleCopyBase","","","test_simple_copy",""
-"skipped","Tue Feb 06 09:34:05 GMT 2024","Tue Feb 06 09:34:05 GMT 2024","0","tests.functional.adapter","test_simple_copy","TestSimpleCopyBase","","","test_simple_copy_with_materialized_views",""

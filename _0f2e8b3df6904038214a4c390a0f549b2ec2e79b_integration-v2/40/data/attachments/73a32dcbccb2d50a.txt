@@ -1,8 +1,0 @@
-INFO:httpx:HTTP Request: POST https://01hzdxdxjqa9n6c07d5j51skep.api.us-east-1.staging.firebolt.io/?output_format=JSON_Compact "HTTP/1.1 200 OK"
-INFO:firebolt.db.cursor:Query fetched 0 rows in 0.10605001449584961 seconds.
-INFO:httpx:HTTP Request: POST https://01hzdxdxjqa9n6c07d5j51skep.api.us-east-1.staging.firebolt.io/?database=integration_testing__1751904863610&output_format=JSON_Compact "HTTP/1.1 200 OK"
-INFO:firebolt.db.cursor:Query fetched 0 rows in 0.06463146209716797 seconds.
-INFO:httpx:HTTP Request: POST https://automation-firebolt.api.us-east-1.staging.firebolt.io/?database=integration_testing__1751904863610&engine=integration_testing__1751904863610&output_format=JSON_Compact "HTTP/1.1 200 OK"
-INFO:firebolt.db.cursor:Query fetched 1 rows in 0.1028144359588623 seconds.
-INFO:httpx:HTTP Request: POST https://automation-firebolt.api.us-east-1.staging.firebolt.io/?database=integration_testing__1751904863610&engine=integration_testing__1751904863610&output_format=JSON_Compact "HTTP/1.1 200 OK"
-INFO:firebolt.db.cursor:Query fetched 1 rows in 0.028647661209106445 seconds.

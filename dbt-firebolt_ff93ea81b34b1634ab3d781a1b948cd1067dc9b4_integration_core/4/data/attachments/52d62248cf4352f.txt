@@ -1,0 +1,54 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project58
+
+
+Invoking dbt with ['seed', '--select', 'expected_delete_insert_incremental_predicates', '--full-refresh']
+[0m18:15:18  Running with dbt=1.10.5
+[0m18:15:18  Registered adapter: firebolt=1.9.4
+[0m18:15:18  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m18:15:18  Found 1 model, 1 seed, 464 macros
+[0m18:15:18  
+[0m18:15:18  Concurrency: 1 threads (target='default')
+[0m18:15:18  
+[0m18:15:18  1 of 1 START seed file expected_delete_insert_incremental_predicates ........... [RUN]
+[0m18:15:19  1 of 1 OK loaded seed file public.expected_delete_insert_incremental_predicates  [[32mCREATE 4[0m in 0.10s]
+[0m18:15:19  
+[0m18:15:19  Finished running 1 seed in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m18:15:19  
+[0m18:15:19  [32mCompleted successfully[0m
+[0m18:15:19  
+[0m18:15:19  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'delete_insert_incremental_predicates', '--full-refresh']
+[0m18:15:19  Running with dbt=1.10.5
+[0m18:15:19  Registered adapter: firebolt=1.9.4
+[0m18:15:19  Found 1 model, 1 seed, 464 macros
+[0m18:15:19  
+[0m18:15:19  Concurrency: 1 threads (target='default')
+[0m18:15:19  
+[0m18:15:19  1 of 1 START sql incremental model delete_insert_incremental_predicates ........ [RUN]
+[0m18:15:19  1 of 1 OK created sql incremental model delete_insert_incremental_predicates ... [[32mSUCCESS[0m in 0.11s]
+[0m18:15:19  
+[0m18:15:19  Finished running 1 incremental model in 0 hours 0 minutes and 0.24 seconds (0.24s).
+[0m18:15:19  
+[0m18:15:19  [32mCompleted successfully[0m
+[0m18:15:19  
+[0m18:15:19  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'delete_insert_incremental_predicates']
+[0m18:15:19  Running with dbt=1.10.5
+[0m18:15:19  Registered adapter: firebolt=1.9.4
+[0m18:15:19  Found 1 model, 1 seed, 464 macros
+[0m18:15:19  
+[0m18:15:19  Concurrency: 1 threads (target='default')
+[0m18:15:19  
+[0m18:15:19  1 of 1 START sql incremental model delete_insert_incremental_predicates ........ [RUN]
+[0m18:15:19  1 of 1 OK created sql incremental model delete_insert_incremental_predicates ... [[32mSUCCESS[0m in 0.20s]
+[0m18:15:19  
+[0m18:15:19  Finished running 1 incremental model in 0 hours 0 minutes and 0.33 seconds (0.33s).
+[0m18:15:20  
+[0m18:15:20  [32mCompleted successfully[0m
+[0m18:15:20  
+[0m18:15:20  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1

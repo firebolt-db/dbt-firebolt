@@ -1,2 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Fri Aug 30 13:12:19 GMT 2024","Fri Aug 30 13:12:25 GMT 2024","6265","tests.functional.adapter.utils","test_utils","TestFireboltMixedNullCompare","","","test_build_assert_equal",""
