@@ -28,9 +28,11 @@
         {%- do adapter.drop_relation(relation) -%}
     {%- endif -%}
 
+    {%- set is_firebolt_core = target.url is defined and target.url -%}
+    {%- set default_table_type = 'fact' if is_firebolt_core else 'dimension' -%}
     {%- set table_type = config.get(
         'table_type',
-        default = 'dimension'
+        default = default_table_type
     ) | upper -%}
     {%- set primary_index = config.get('primary_index') -%}
     {%- set incremental_strategy = config.get('incremental_strategy') -%}

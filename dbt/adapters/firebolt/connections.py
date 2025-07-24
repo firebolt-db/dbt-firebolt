@@ -240,21 +240,21 @@ def _determine_auth(credentials: FireboltCredentials) -> Auth:
     # Handle client credentials authentication
     if _has_client_credentials():
         return ClientCredentials(
-            credentials.client_id,  # type: ignore
-            credentials.client_secret,  # type: ignore
+            credentials.client_id,  # type: ignore[arg-type]
+            credentials.client_secret,  # type: ignore[arg-type]
         )
 
     # Handle username/password authentication
     if _has_user_password():
         if _is_email_auth():
             return UsernamePassword(
-                credentials.user,  # type: ignore
-                credentials.password,  # type: ignore
+                credentials.user,  # type: ignore[arg-type]
+                credentials.password,  # type: ignore[arg-type]
             )
         else:
             return ClientCredentials(
-                credentials.user,  # type: ignore
-                credentials.password,  # type: ignore
+                credentials.user,  # type: ignore[arg-type]
+                credentials.password,  # type: ignore[arg-type]
             )
 
     # If we reach here, no valid authentication method was found
