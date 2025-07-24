@@ -3,9 +3,11 @@ from multiprocessing import get_context
 from unittest.mock import MagicMock, patch
 
 import agate
+import pytest
 from dbt.adapters.contracts.connection import Connection
-from dbt_common.exceptions import DbtRuntimeError
+from dbt_common.exceptions import DbtConfigError, DbtRuntimeError
 from firebolt.client.auth import ClientCredentials, UsernamePassword
+from firebolt.client.auth.firebolt_core import FireboltCore
 from firebolt.db import ARRAY, DECIMAL
 from firebolt.db.connection import Connection as SDKConnection
 from firebolt.utils.exception import InterfaceError
@@ -179,6 +181,33 @@ def test_determine_auth_with_id_and_secret():
     assert isinstance(auth, ClientCredentials)
     assert auth.client_id == 'your_user_id'
     assert auth.client_secret == 'your_user_secret'
+
+
+def test_determine_auth_with_url_only():
+    credentials = FireboltCredentials(
+        database='your_database',
+        schema='your_schema',
+        url='https://example.com',
+        # No user, password, client_id, client_secret
+    )
+    auth = _determine_auth(credentials)
+    assert isinstance(auth, FireboltCore)
+
+
+def test_determine_auth_with_url_and_credentials_raises():
+    with pytest.raises(
+        DbtConfigError,
+        match='If url is provided, do not provide user, password, client_id, '
+        'or client_secret.',
+    ):
+        credentials = FireboltCredentials(
+            user='user',
+            password='pass',
+            database='your_database',
+            schema='your_schema',
+            url='https://example.com',
+        )
+        _determine_auth(credentials)
 
 
 def test_make_field_partition_pairs_valid(adapter):
