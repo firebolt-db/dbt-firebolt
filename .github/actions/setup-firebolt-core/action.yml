@@ -108,12 +108,11 @@ runs:
           sleep $RETRY_INTERVAL
         done
         echo "Error: Service failed to start within timeout"
-        DOCKER_COMPOSE_FILE="${{ steps.setup.outputs.docker_compose_file }}"
-        docker compose -f "$DOCKER_COMPOSE_FILE" logs
+        docker compose -f "${{ steps.setup.outputs.docker_compose_file }}" logs
         exit 1
 
     - name: Spin down containers
       if: always()
       uses: gacts/run-and-post-run@v1
       with:
-        post: docker compose -f "$DOCKER_COMPOSE_FILE" down
+        post: docker compose -f "${{ steps.setup.outputs.docker_compose_file }}" down

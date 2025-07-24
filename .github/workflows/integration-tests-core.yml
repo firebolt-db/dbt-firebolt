@@ -87,11 +87,6 @@ jobs:
     #     run: |
     #       pytest -o log_cli=true -o log_cli_level=WARNING tests/integration -k "core"  --alluredir=allure-results-https/
 
-      - name: Stop container
-        if: always()
-        run: |
-          docker compose -f "$DOCKER_COMPOSE_FILE" down
-
        # Need to pull the pages branch in order to fetch the previous runs
     #   - name: Get Allure history
     #     uses: actions/checkout@v4
