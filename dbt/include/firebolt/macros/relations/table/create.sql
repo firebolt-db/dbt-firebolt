@@ -30,7 +30,7 @@
 
     {%- set table_type = config.get(
         'table_type',
-        default = 'dimension'
+        default = ''
     ) | upper -%}
     {%- set primary_index = config.get('primary_index') -%}
     {%- set incremental_strategy = config.get('incremental_strategy') -%}
