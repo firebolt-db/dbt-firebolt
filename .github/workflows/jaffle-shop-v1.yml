@@ -175,16 +175,16 @@ jobs:
     #         ref: gh-pages
     #         path: gh-pages
 
-    #   - name: Allure Report
-    #     uses: firebolt-db/action-allure-report@v1
-    #     if: always()
-    #     continue-on-error: true
-    #     with:
-    #       github-key: ${{ secrets.GITHUB_TOKEN }}
-    #       test-type: integration_core
-    #       allure-dir: allure-results
-    #       pages-branch: gh-pages
-    #       repository-name: dbt-firebolt
+      - name: Allure Report
+        uses: firebolt-db/action-allure-report@v1
+        if: always()
+        continue-on-error: true
+        with:
+          github-key: ${{ secrets.GITHUB_TOKEN }}
+          test-type: integration_core
+          allure-dir: allure-results
+          pages-branch: gh-pages
+          repository-name: dbt-firebolt
 
     #   - name: Allure Report HTTPS
     #     uses: firebolt-db/action-allure-report@v1
