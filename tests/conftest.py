@@ -30,6 +30,8 @@ def dbt_profile_target():
     elif os.getenv('CLIENT_ID') and os.getenv('CLIENT_SECRET'):
         profile['client_id'] = os.getenv('CLIENT_ID')
         profile['client_secret'] = SecretStr(os.getenv('CLIENT_SECRET', ''))
+    elif os.getenv('CORE_URL'):
+        profile['url'] = os.getenv('CORE_URL')
     else:
         raise Exception('No credentials found in environment')
     return profile
