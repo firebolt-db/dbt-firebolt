@@ -60,7 +60,9 @@ jobs:
 
       - name: Setup Firebolt Core
         id: setup-core
-        uses: ./.github/actions/setup-firebolt-core
+        uses: firebolt-db/action-setup-core@v1.0
+        with:
+          tag_version: ${{ inputs.tag_version }}
 
       - name: Run integration tests HTTP
         env:
