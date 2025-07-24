@@ -1,0 +1,51 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m18:43:05  Running with dbt=1.10.5
+[0m18:43:05  Registered adapter: firebolt=1.9.4
+[0m18:43:05  Found 12 models, 1 seed, 464 macros
+[0m18:43:05  
+[0m18:43:05  Concurrency: 1 threads (target='default')
+[0m18:43:05  
+[0m18:43:07  1 of 1 START seed file seed .................................................... [RUN]
+[0m18:43:08  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 7[0m in 1.04s]
+[0m18:43:08  
+[0m18:43:08  Finished running 1 seed in 0 hours 0 minutes and 2.40 seconds (2.40s).
+[0m18:43:08  
+[0m18:43:08  [32mCompleted successfully[0m
+[0m18:43:08  
+[0m18:43:08  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'nontyped_trinary_unique_key_list', '--full-refresh']
+[0m18:43:08  Running with dbt=1.10.5
+[0m18:43:08  Registered adapter: firebolt=1.9.4
+[0m18:43:08  Found 12 models, 1 seed, 464 macros
+[0m18:43:08  
+[0m18:43:08  Concurrency: 1 threads (target='default')
+[0m18:43:08  
+[0m18:43:09  1 of 1 START sql incremental model nontyped_trinary_unique_key_list ............ [RUN]
+[0m18:43:10  1 of 1 OK created sql incremental model nontyped_trinary_unique_key_list ....... [[32mSUCCESS[0m in 1.07s]
+[0m18:43:10  
+[0m18:43:10  Finished running 1 incremental model in 0 hours 0 minutes and 2.37 seconds (2.37s).
+[0m18:43:10  
+[0m18:43:10  [32mCompleted successfully[0m
+[0m18:43:10  
+[0m18:43:10  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'nontyped_trinary_unique_key_list']
+[0m18:43:13  Running with dbt=1.10.5
+[0m18:43:13  Registered adapter: firebolt=1.9.4
+[0m18:43:13  Found 12 models, 1 seed, 464 macros
+[0m18:43:13  
+[0m18:43:13  Concurrency: 1 threads (target='default')
+[0m18:43:13  
+[0m18:43:14  1 of 1 START sql incremental model nontyped_trinary_unique_key_list ............ [RUN]
+[0m18:43:17  1 of 1 OK created sql incremental model nontyped_trinary_unique_key_list ....... [[32mSUCCESS[0m in 3.14s]
+[0m18:43:17  
+[0m18:43:17  Finished running 1 incremental model in 0 hours 0 minutes and 4.44 seconds (4.44s).
+[0m18:43:17  
+[0m18:43:17  [32mCompleted successfully[0m
+[0m18:43:17  
+[0m18:43:17  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
