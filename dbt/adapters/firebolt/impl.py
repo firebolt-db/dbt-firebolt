@@ -313,7 +313,8 @@ class FireboltAdapter(SQLAdapter):
             names = sorted((self.quote(n) for n in column_names))
 
         where_expressions = [
-            f'{relation_a}.{name} = {relation_b}.{name}' for name in names
+            f'{relation_a}.{name} IS NOT DISTINCT FROM {relation_b}.{name}'
+            for name in names
         ]
         where_clause = ' AND '.join(where_expressions)
         columns_csv = ', '.join(names)
