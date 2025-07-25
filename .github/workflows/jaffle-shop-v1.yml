@@ -60,7 +60,7 @@ jobs:
 
       - name: Setup Firebolt Core
         id: setup-core
-        uses: firebolt-db/action-setup-core@fix-paths
+        uses: firebolt-db/action-setup-core@main
         with:
             tag_version: ${{ inputs.tag_version || vars.DEFAULT_CORE_IMAGE_TAG }}
 
@@ -76,46 +76,13 @@ jobs:
         run: |
           pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
-    #   - name: Run integration tests HTTPS
-    #     env:
-    #       SERVICE_ID: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
-    #       SERVICE_SECRET: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
-    #       DATABASE_NAME: "firebolt"
-    #       ENGINE_NAME: ""
-    #       STOPPED_ENGINE_NAME: ""
-    #       API_ENDPOINT: ""
-    #       ACCOUNT_NAME: ""
-    #       CORE_URL: ${{ steps.setup-core.outputs.service_https_url }}
-    #     run: |
-    #       pytest -o log_cli=true -o log_cli_level=WARNING tests/integration -k "core"  --alluredir=allure-results-https/
-
-       # Need to pull the pages branch in order to fetch the previous runs
-    #   - name: Get Allure history
-    #     uses: actions/checkout@v4
-    #     if: always()
-    #     continue-on-error: true
-    #     with:
-    #         ref: gh-pages
-    #         path: gh-pages
-
-    #   - name: Allure Report
-    #     uses: firebolt-db/action-allure-report@v1
-    #     if: always()
-    #     continue-on-error: true
-    #     with:
-    #       github-key: ${{ secrets.GITHUB_TOKEN }}
-    #       test-type: integration_core
-    #       allure-dir: allure-results
-    #       pages-branch: gh-pages
-    #       repository-name: dbt-firebolt
-
-    #   - name: Allure Report HTTPS
-    #     uses: firebolt-db/action-allure-report@v1
-    #     if: always()
-    #     continue-on-error: true
-    #     with:
-    #       github-key: ${{ secrets.GITHUB_TOKEN }}
-    #       test-type: integration_https
-    #       allure-dir: allure-results-https
-    #       pages-branch: gh-pages
-    #       repository-name: python-sdk
+      - name: Allure Report
+        uses: firebolt-db/action-allure-report@v1
+        if: always()
+        continue-on-error: true
+        with:
+          github-key: ${{ secrets.GITHUB_TOKEN }}
+          test-type: integration_core
+          allure-dir: allure-results
+          pages-branch: gh-pages
+          repository-name: dbt-firebolt
