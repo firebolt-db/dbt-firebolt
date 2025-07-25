@@ -1,0 +1,22 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project94
+
+
+Invoking dbt with ['build']
+[0m13:20:31  Running with dbt=1.10.5
+[0m13:20:31  Registered adapter: firebolt=1.9.4
+[0m13:20:31  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m13:20:31  [[33mWARNING[0m]: Did not find matching node for patch with name 'test_powers_of_two' in the 'models' section of file 'models/test_get_powers_of_two.yml'
+[0m13:20:31  [[33mWARNING[0m]: Test 'test.test.assert_equal_test_powers_of_two_actual__expected.ae998713ba' (models/test_get_powers_of_two.yml) depends on a node named 'test_powers_of_two' in package '' which was not found
+[0m13:20:31  Found 1 model, 467 macros
+[0m13:20:31  
+[0m13:20:31  Concurrency: 1 threads (target='default')
+[0m13:20:31  
+[0m13:20:31  1 of 1 START sql view model test_get_powers_of_two ............................. [RUN]
+[0m13:20:31  1 of 1 OK created sql view model test_get_powers_of_two ........................ [[32mSUCCESS[0m in 0.09s]
+[0m13:20:31  
+[0m13:20:31  Finished running 1 view model in 0 hours 0 minutes and 0.21 seconds (0.21s).
+[0m13:20:31  
+[0m13:20:31  [32mCompleted successfully[0m
+[0m13:20:31  
+[0m13:20:31  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
