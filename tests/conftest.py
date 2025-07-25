@@ -1,4 +1,5 @@
 import os
+from typing import Any
 
 import pytest
 from dbt.tests.util import write_file
@@ -13,7 +14,7 @@ pytest_plugins = ['dbt.tests.fixtures.project']
 # The profile dictionary, used to write out profiles.yml
 # dbt will supply a unique schema per test, so we do not specify 'schema' here
 @pytest.fixture(scope='class')
-def dbt_profile_target():
+def dbt_profile_target() -> dict[str, Any]:
     profile = {
         'type': 'firebolt',
         'threads': 1,
@@ -89,6 +90,31 @@ def profiles_yml(profiles_root, dbt_profile_data):
 @pytest.fixture(scope='class')
 def profile_user(dbt_profile_target):
     return dbt_profile_target.get('user', dbt_profile_target.get('client_id'))
+
+
+@pytest.fixture(scope='class')
+def is_firebolt_core(dbt_profile_target: dict[str, Any]) -> bool:
+    """
+    Returns True if the connection is to Firebolt Core, False otherwise.
+    """
+    return 'url' in dbt_profile_target
+
+
+@pytest.fixture(scope='class')
+def project_config_update(is_firebolt_core: bool) -> dict[str, Any]:
+    # Explicitly set table types, since CORE does not support DIMENSION
+    return {
+        'models': {
+            'test': {
+                'table_type': 'fact' if is_firebolt_core else 'dimension',
+            }
+        },
+        'seeds': {
+            'test': {
+                'table_type': 'fact' if is_firebolt_core else 'dimension',
+            }
+        },
+    }
 
 
 @pytest.fixture(scope='class')

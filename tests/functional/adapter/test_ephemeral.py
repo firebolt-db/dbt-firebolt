@@ -53,7 +53,7 @@ class TestEphemeralMultiFirebolt(BaseEphemeralMulti):
             },
         }
 
-    def test_ephemeral_multi(self, project):
+    def test_ephemeral_multi(self, project, is_firebolt_core):
         run_dbt(['seed'])
         results = run_dbt(['run'])
         assert len(results) == 3
@@ -66,8 +66,9 @@ class TestEphemeralMultiFirebolt(BaseEphemeralMulti):
             sql_file = fp.read()
 
         sql_file = re.sub(r'\d+', '', sql_file)
+        table_type = 'DIMENSION' if not is_firebolt_core else 'FACT'
         expected_sql = (
-            'CREATE DIMENSION TABLE IF NOT EXISTS double_dependent AS ('
+            f'CREATE {table_type} TABLE IF NOT EXISTS double_dependent AS ('
             'with __dbt__cte__base as ('
             'select * from public.seed'
             '),  __dbt__cte__base_copy as ('
