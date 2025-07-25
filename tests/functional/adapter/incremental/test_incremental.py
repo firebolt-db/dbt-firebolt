@@ -23,6 +23,7 @@ class TestIncrementalUniqueKeyFirebolt(BaseIncrementalUniqueKey):
     pass
 
 
+@mark.xfail(reason='Bug in not exists, FIR-47938')
 class TestUniqueKeyDeleteInsertFirebolt(BaseIncrementalUniqueKey):
     @fixture(scope='class')
     def project_config_update(self):
