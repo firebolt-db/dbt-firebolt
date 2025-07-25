@@ -1,0 +1,241 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project38
+
+
+Invoking dbt with ['seed']
+[0m14:24:31  Running with dbt=1.10.5
+[0m14:24:31  Registered adapter: firebolt=1.9.4
+[0m14:24:31  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:24:31  Found 1 model, 13 data tests, 1 seed, 464 macros
+[0m14:24:31  
+[0m14:24:31  Concurrency: 1 threads (target='default')
+[0m14:24:31  
+[0m14:24:31  1 of 1 START seed file chipmunks_stage ......................................... [RUN]
+[0m14:24:31  1 of 1 OK loaded seed file public.chipmunks_stage .............................. [[32mINSERT 4[0m in 0.09s]
+[0m14:24:31  
+[0m14:24:31  Finished running 1 seed in 0 hours 0 minutes and 0.29 seconds (0.29s).
+[0m14:24:31  
+[0m14:24:31  [32mCompleted successfully[0m
+[0m14:24:31  
+[0m14:24:31  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m14:24:31  Running with dbt=1.10.5
+[0m14:24:31  Registered adapter: firebolt=1.9.4
+[0m14:24:31  Found 1 model, 13 data tests, 1 seed, 464 macros
+[0m14:24:31  
+[0m14:24:31  Concurrency: 1 threads (target='default')
+[0m14:24:31  
+[0m14:24:32  1 of 1 START sql table model chipmunks ......................................... [RUN]
+[0m14:24:32  1 of 1 OK created sql table model chipmunks .................................... [[32mSUCCESS[0m in 0.10s]
+[0m14:24:32  
+[0m14:24:32  Finished running 1 table model in 0 hours 0 minutes and 0.30 seconds (0.30s).
+[0m14:24:32  
+[0m14:24:32  [32mCompleted successfully[0m
+[0m14:24:32  
+[0m14:24:32  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m14:24:32  Running with dbt=1.10.5
+[0m14:24:32  Registered adapter: firebolt=1.9.4
+[0m14:24:32  Found 1 model, 13 data tests, 1 seed, 464 macros
+[0m14:24:32  
+[0m14:24:32  Concurrency: 1 threads (target='default')
+[0m14:24:32  
+[0m14:24:32  1 of 13 START test ephemeral_false ............................................. [RUN]
+[0m14:24:32  1 of 13 FAIL 1 ephemeral_false ................................................. [[31mFAIL 1[0m in 0.07s]
+[0m14:24:32  2 of 13 START test ephemeral_true .............................................. [RUN]
+[0m14:24:32  2 of 13 FAIL 1 ephemeral_true .................................................. [[31mFAIL 1[0m in 0.06s]
+[0m14:24:32  3 of 13 START test ephemeral_unset ............................................. [RUN]
+[0m14:24:32  3 of 13 FAIL 1 ephemeral_unset ................................................. [[31mFAIL 1[0m in 0.07s]
+[0m14:24:32  4 of 13 START test table_false ................................................. [RUN]
+[0m14:24:32  4 of 13 ERROR table_false ...................................................... [[31mERROR[0m in 0.06s]
+[0m14:24:32  5 of 13 START test table_true .................................................. [RUN]
+[0m14:24:32  5 of 13 ERROR table_true ....................................................... [[31mERROR[0m in 0.06s]
+[0m14:24:32  6 of 13 START test table_unset ................................................. [RUN]
+[0m14:24:33  6 of 13 ERROR table_unset ...................................................... [[31mERROR[0m in 0.06s]
+[0m14:24:33  7 of 13 START test unset_false ................................................. [RUN]
+[0m14:24:33  7 of 13 FAIL 1 unset_false ..................................................... [[31mFAIL 1[0m in 0.06s]
+[0m14:24:33  8 of 13 START test unset_true .................................................. [RUN]
+[0m14:24:33  8 of 13 ERROR unset_true ....................................................... [[31mERROR[0m in 0.06s]
+[0m14:24:33  9 of 13 START test unset_unset ................................................. [RUN]
+[0m14:24:33  9 of 13 FAIL 1 unset_unset ..................................................... [[31mFAIL 1[0m in 0.06s]
+[0m14:24:33  10 of 13 START test view_false ................................................. [RUN]
+[0m14:24:33  10 of 13 FAIL 1 view_false ..................................................... [[31mFAIL 1[0m in 0.08s]
+[0m14:24:33  11 of 13 START test view_true .................................................. [RUN]
+[0m14:24:33  11 of 13 FAIL 1 view_true ...................................................... [[31mFAIL 1[0m in 0.08s]
+[0m14:24:33  12 of 13 START test view_unset ................................................. [RUN]
+[0m14:24:33  12 of 13 FAIL 1 view_unset ..................................................... [[31mFAIL 1[0m in 0.08s]
+[0m14:24:33  13 of 13 START test view_unset_pass ............................................ [RUN]
+[0m14:24:33  13 of 13 PASS view_unset_pass .................................................. [[32mPASS[0m in 0.08s]
+[0m14:24:33  
+[0m14:24:33  Finished running 13 data tests in 0 hours 0 minutes and 1.16 seconds (1.16s).
+[0m14:24:33  
+[0m14:24:33  [31mCompleted with 12 errors, 0 partial successes, and 0 warnings:[0m
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test ephemeral_false (tests/ephemeral_false.sql)[0m
+[0m14:24:33    Got 1 result, configured to fail if != 0
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/ephemeral_false.sql
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test ephemeral_true (tests/ephemeral_true.sql)[0m
+[0m14:24:33    Got 1 result, configured to fail if != 0
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/ephemeral_true.sql
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test ephemeral_unset (tests/ephemeral_unset.sql)[0m
+[0m14:24:33    Got 1 result, configured to fail if != 0
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/ephemeral_unset.sql
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test table_false (tests/table_false.sql)[0m
+[0m14:24:33    Runtime Error in test table_false (tests/table_false.sql)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "CREATE DIMENSION TABLE AS SELECT is not supported in Firebolt Core"
+      }
+    ],
+    "query": {
+      "query_id": "52662ca1-26b2-4329-9a73-637ad791b761",
+      "query_label": null,
+      "request_id": "0225e7a2-1a71-4eda-bbbb-9ac6566af400"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/table_false.sql
+[0m14:24:33  
+[0m14:24:33    See test failures:
+  -------------------------
+  select * from table_false
+  -------------------------
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test table_true (tests/table_true.sql)[0m
+[0m14:24:33    Runtime Error in test table_true (tests/table_true.sql)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "CREATE DIMENSION TABLE AS SELECT is not supported in Firebolt Core"
+      }
+    ],
+    "query": {
+      "query_id": "9e6191ed-af27-497a-89b5-4366141b4db2",
+      "query_label": null,
+      "request_id": "e8668931-69fe-407e-8bc7-39585133f47d"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/table_true.sql
+[0m14:24:33  
+[0m14:24:33    See test failures:
+  ------------------------
+  select * from table_true
+  ------------------------
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test table_unset (tests/table_unset.sql)[0m
+[0m14:24:33    Runtime Error in test table_unset (tests/table_unset.sql)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "CREATE DIMENSION TABLE AS SELECT is not supported in Firebolt Core"
+      }
+    ],
+    "query": {
+      "query_id": "51aa2c56-11ef-4ded-81c3-3dd4bb90ac60",
+      "query_label": null,
+      "request_id": "4c73d323-6f2a-47df-af93-902bbfd7828e"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/table_unset.sql
+[0m14:24:33  
+[0m14:24:33    See test failures:
+  -------------------------
+  select * from table_unset
+  -------------------------
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test unset_false (tests/unset_false.sql)[0m
+[0m14:24:33    Got 1 result, configured to fail if != 0
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/unset_false.sql
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test unset_true (tests/unset_true.sql)[0m
+[0m14:24:33    Runtime Error in test unset_true (tests/unset_true.sql)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "CREATE DIMENSION TABLE AS SELECT is not supported in Firebolt Core"
+      }
+    ],
+    "query": {
+      "query_id": "34ef5b1d-eccf-4266-a2dd-eec7dd0a1426",
+      "query_label": null,
+      "request_id": "3202657f-711b-4122-9fd3-17125e28bfbc"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/unset_true.sql
+[0m14:24:33  
+[0m14:24:33    See test failures:
+  ------------------------
+  select * from unset_true
+  ------------------------
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test unset_unset (tests/unset_unset.sql)[0m
+[0m14:24:33    Got 1 result, configured to fail if != 0
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/unset_unset.sql
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test view_false (tests/view_false.sql)[0m
+[0m14:24:33    Got 1 result, configured to fail if != 0
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/view_false.sql
+[0m14:24:33  
+[0m14:24:33    See test failures:
+  ------------------------
+  select * from view_false
+  ------------------------
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test view_true (tests/view_true.sql)[0m
+[0m14:24:33    Got 1 result, configured to fail if != 0
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/view_true.sql
+[0m14:24:33  
+[0m14:24:33    See test failures:
+  -----------------------
+  select * from view_true
+  -----------------------
+[0m14:24:33  
+[0m14:24:33  [31mFailure in test view_unset (tests/view_unset.sql)[0m
+[0m14:24:33    Got 1 result, configured to fail if != 0
+[0m14:24:33  
+[0m14:24:33    compiled code at target/compiled/test/tests/view_unset.sql
+[0m14:24:33  
+[0m14:24:33    See test failures:
+  ------------------------
+  select * from view_unset
+  ------------------------
+[0m14:24:33  
+[0m14:24:33  Done. PASS=1 WARN=0 ERROR=12 SKIP=0 NO-OP=0 TOTAL=13

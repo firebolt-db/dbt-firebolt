@@ -1,0 +1,84 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project8
+
+
+Invoking dbt with ['seed']
+[0m14:23:23  Running with dbt=1.10.5
+[0m14:23:23  Registered adapter: firebolt=1.9.4
+[0m14:23:23  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:23:23  Found 1 snapshot, 3 seeds, 464 macros
+[0m14:23:23  
+[0m14:23:23  Concurrency: 1 threads (target='default')
+[0m14:23:23  
+[0m14:23:23  1 of 3 START seed file added ................................................... [RUN]
+[0m14:23:23  1 of 3 ERROR loading seed file public.added .................................... [[31mERROR[0m in 0.06s]
+[0m14:23:23  2 of 3 START seed file base .................................................... [RUN]
+[0m14:23:23  2 of 3 ERROR loading seed file public.base ..................................... [[31mERROR[0m in 0.07s]
+[0m14:23:23  3 of 3 START seed file newcolumns .............................................. [RUN]
+[0m14:23:24  3 of 3 ERROR loading seed file public.newcolumns ............................... [[31mERROR[0m in 0.22s]
+[0m14:23:24  
+[0m14:23:24  Finished running 3 seeds in 0 hours 0 minutes and 0.49 seconds (0.49s).
+[0m14:23:24  
+[0m14:23:24  [31mCompleted with 3 errors, 0 partial successes, and 0 warnings:[0m
+[0m14:23:24  
+[0m14:23:24  [31mFailure in seed added (seeds/added.csv)[0m
+[0m14:23:24    Runtime Error in seed added (seeds/added.csv)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "CREATE DIMENSION TABLE is not supported in Firebolt Core"
+      }
+    ],
+    "query": {
+      "query_id": "49d814bb-c4a9-4953-ae89-461a8379d200",
+      "query_label": null,
+      "request_id": "9967d095-79de-4fd5-8437-429035a665c3"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m14:23:24  
+[0m14:23:24  [31mFailure in seed base (seeds/base.csv)[0m
+[0m14:23:24    Runtime Error in seed base (seeds/base.csv)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "CREATE DIMENSION TABLE is not supported in Firebolt Core"
+      }
+    ],
+    "query": {
+      "query_id": "0678a761-adac-4356-aeb2-a80216b1b849",
+      "query_label": null,
+      "request_id": "9f8fe592-5c5b-4923-83ee-737c77cd3dad"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m14:23:24  
+[0m14:23:24  [31mFailure in seed newcolumns (seeds/newcolumns.csv)[0m
+[0m14:23:24    Runtime Error in seed newcolumns (seeds/newcolumns.csv)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "CREATE DIMENSION TABLE is not supported in Firebolt Core"
+      }
+    ],
+    "query": {
+      "query_id": "4394d990-a534-4f1a-89c6-eeacd46e0a69",
+      "query_label": null,
+      "request_id": "f3dd35d6-aa4d-4326-8462-42f548c1dc6a"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m14:23:24  
+[0m14:23:24  Done. PASS=0 WARN=0 ERROR=3 SKIP=0 NO-OP=0 TOTAL=3

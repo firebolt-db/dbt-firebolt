@@ -1,0 +1,40 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project58
+
+
+Invoking dbt with ['seed', '--select', 'expected_delete_insert_incremental_predicates', '--full-refresh']
+[0m14:24:57  Running with dbt=1.10.5
+[0m14:24:57  Registered adapter: firebolt=1.9.4
+[0m14:24:57  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:24:57  Found 1 model, 1 seed, 464 macros
+[0m14:24:57  
+[0m14:24:57  Concurrency: 1 threads (target='default')
+[0m14:24:57  
+[0m14:24:57  1 of 1 START seed file expected_delete_insert_incremental_predicates ........... [RUN]
+[0m14:24:57  1 of 1 ERROR loading seed file public.expected_delete_insert_incremental_predicates  [[31mERROR[0m in 0.06s]
+[0m14:24:57  
+[0m14:24:57  Finished running 1 seed in 0 hours 0 minutes and 0.19 seconds (0.19s).
+[0m14:24:57  
+[0m14:24:57  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m14:24:57  
+[0m14:24:57  [31mFailure in seed expected_delete_insert_incremental_predicates (seeds/expected_delete_insert_incremental_predicates.csv)[0m
+[0m14:24:57    Runtime Error in seed expected_delete_insert_incremental_predicates (seeds/expected_delete_insert_incremental_predicates.csv)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "CREATE DIMENSION TABLE is not supported in Firebolt Core"
+      }
+    ],
+    "query": {
+      "query_id": "0e260fd8-8377-4910-baa6-299875ae02c0",
+      "query_label": null,
+      "request_id": "f62076ba-05b3-403f-9bfd-bbc891d909bb"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m14:24:57  
+[0m14:24:57  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1

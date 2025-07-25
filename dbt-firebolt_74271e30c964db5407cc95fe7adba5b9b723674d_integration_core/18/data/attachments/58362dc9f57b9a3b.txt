@@ -1,0 +1,20 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project25
+
+
+Invoking dbt with ['show', '--select', 'sql_header', '--vars', 'timezone: Asia/Kolkata']
+[0m14:24:18  Running with dbt=1.10.5
+[0m14:24:18  Registered adapter: firebolt=1.9.4
+[0m14:24:18  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:24:19  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- seeds.test
+[0m14:24:19  Found 1 model, 464 macros
+[0m14:24:19  
+[0m14:24:19  Concurrency: 1 threads (target='default')
+[0m14:24:19  
+Previewing node 'sql_header':
+| my_variable |
+| ----------- |
+|           1 |
+

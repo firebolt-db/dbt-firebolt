@@ -1,0 +1,33 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project27
+
+
+Invoking dbt with ['run']
+[0m14:24:20  Running with dbt=1.10.5
+[0m14:24:20  Registered adapter: firebolt=1.9.4
+[0m14:24:20  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:24:20  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- seeds.test
+[0m14:24:20  Found 1 model, 465 macros
+[0m14:24:20  
+[0m14:24:20  Concurrency: 1 threads (target='default')
+[0m14:24:20  
+[0m14:24:21  1 of 1 START sql view model model .............................................. [RUN]
+[0m14:24:21  1 of 1 OK created sql view model model ......................................... [[32mSUCCESS[0m in 0.09s]
+[0m14:24:21  
+[0m14:24:21  Finished running 1 view model in 0 hours 0 minutes and 0.38 seconds (0.38s).
+[0m14:24:21  
+[0m14:24:21  [32mCompleted successfully[0m
+[0m14:24:21  
+[0m14:24:21  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['--warn-error', 'docs', 'generate']
+[0m14:24:21  Running with dbt=1.10.5
+[0m14:24:21  Registered adapter: firebolt=1.9.4
+[0m14:24:21  Encountered an error:
+Compilation Error
+  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+  There are 1 unused configuration paths:
+  - seeds.test

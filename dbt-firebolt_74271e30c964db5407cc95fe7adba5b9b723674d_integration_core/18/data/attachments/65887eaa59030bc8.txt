@@ -1,0 +1,39 @@
+
+
+Invoking dbt with ['run', '--select', 'one_str__overwrite']
+[0m14:24:59  Running with dbt=1.10.5
+[0m14:24:59  Registered adapter: firebolt=1.9.4
+[0m14:25:00  Found 12 models, 1 seed, 464 macros
+[0m14:25:00  
+[0m14:25:00  Concurrency: 1 threads (target='default')
+[0m14:25:00  
+[0m14:25:00  1 of 1 START sql table model one_str__overwrite ................................ [RUN]
+[0m14:25:00  1 of 1 ERROR creating sql table model one_str__overwrite ....................... [[31mERROR[0m in 0.09s]
+[0m14:25:00  
+[0m14:25:00  Finished running 1 table model in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m14:25:00  
+[0m14:25:00  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m14:25:00  
+[0m14:25:00  [31mFailure in model one_str__overwrite (models/expected/one_str__overwrite.sql)[0m
+[0m14:25:00    Runtime Error in model one_str__overwrite (models/expected/one_str__overwrite.sql)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "CREATE DIMENSION TABLE AS SELECT is not supported in Firebolt Core"
+      }
+    ],
+    "query": {
+      "query_id": "8cf90297-5433-481d-af8a-0165f8e6bdc1",
+      "query_label": null,
+      "request_id": "4edde0bb-1347-49ce-8ee6-2b5296965874"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m14:25:00  
+[0m14:25:00    compiled code at target/compiled/test/models/expected/one_str__overwrite.sql
+[0m14:25:00  
+[0m14:25:00  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1

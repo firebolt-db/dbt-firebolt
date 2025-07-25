@@ -1,0 +1,40 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project2
+
+
+Invoking dbt with ['seed']
+[0m14:23:15  Running with dbt=1.10.5
+[0m14:23:15  Registered adapter: firebolt=1.9.4
+[0m14:23:15  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m14:23:15  Found 3 models, 2 data tests, 1 seed, 1 source, 464 macros
+[0m14:23:15  
+[0m14:23:15  Concurrency: 1 threads (target='default')
+[0m14:23:15  
+[0m14:23:16  1 of 1 START seed file base .................................................... [RUN]
+[0m14:23:16  1 of 1 ERROR loading seed file public.base ..................................... [[31mERROR[0m in 0.06s]
+[0m14:23:16  
+[0m14:23:16  Finished running 1 seed in 0 hours 0 minutes and 0.19 seconds (0.19s).
+[0m14:23:16  
+[0m14:23:16  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m14:23:16  
+[0m14:23:16  [31mFailure in seed base (seeds/base.csv)[0m
+[0m14:23:16    Runtime Error in seed base (seeds/base.csv)
+  Error executing query:
+  {
+    "errors": [
+      {
+        "description": "CREATE DIMENSION TABLE is not supported in Firebolt Core"
+      }
+    ],
+    "query": {
+      "query_id": "bdf016d7-93fd-4ad9-a21d-27c842e3535e",
+      "query_label": null,
+      "request_id": "b2d587c0-5881-41a5-aac7-f3a83acecf9f"
+    },
+    "statistics": {
+      "elapsed": 0.0
+    }
+  }
+  
+[0m14:23:16  
+[0m14:23:16  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1
