@@ -60,7 +60,7 @@ jobs:
 
       - name: Setup Firebolt Core
         id: setup-core
-        uses: firebolt-db/action-setup-core@v1.0
+        uses: firebolt-db/action-setup-core@fix-paths
         with:
             tag_version: ${{ inputs.tag_version || vars.DEFAULT_CORE_IMAGE_TAG }}
 
