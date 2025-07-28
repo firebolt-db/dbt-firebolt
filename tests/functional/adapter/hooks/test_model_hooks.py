@@ -1,3 +1,5 @@
+from typing import Any
+
 from dbt.tests.adapter.hooks.test_model_hooks import (
     TestDuplicateHooksInConfigs as DuplicateHooksInConfigs,
 )
@@ -93,20 +95,20 @@ snapshots:
 class FireboltProjectUpdateMixin:
     # Override because we don't support ALTER TABLE
     @fixture(scope='class')
-    def project_config_update(self):
-        return {
-            'seed-paths': ['seeds'],
-            'models': {},
-            'seeds': {
-                'post-hook': [
-                    'update {{ this }} set c = 0',
-                    # call any macro to track dependency:
-                    # https://github.com/dbt-labs/dbt-core/issues/6806
-                    'select null::{{ dbt.type_int() }} as id',
-                ],
-                'quote_columns': False,
-            },
+    def project_config_update(
+        self, project_config_update: dict[str, Any]
+    ) -> dict[str, Any]:
+        project_config_update['seed-paths'] = ['seeds']
+        project_config_update['seeds'] = project_config_update['seeds'] | {
+            'post-hook': [
+                'update {{ this }} set c = 0',
+                # call any macro to track dependency:
+                # https://github.com/dbt-labs/dbt-core/issues/6806
+                'select null::{{ dbt.type_int() }} as id',
+            ],
+            'quote_columns': False,
         }
+        return project_config_update
 
     @fixture(scope='class')
     def models(self):
@@ -158,20 +160,20 @@ class TestPrePostModelHooksOnSnapshotsFirebolt(
 ):
     # Override because we don't support ALTER TABLE
     @fixture(scope='class')
-    def project_config_update(self):
-        return {
-            'seed-paths': ['seeds'],
-            'snapshot-paths': ['test-snapshots'],
-            'models': {},
-            'snapshots': {
-                'post-hook': [
-                    'update {{ this }} set c = 0',
-                ]
-            },
-            'seeds': {
-                'quote_columns': False,
-            },
+    def project_config_update(
+        self, project_config_update: dict[str, Any]
+    ) -> dict[str, Any]:
+        project_config_update['snapshot-paths'] = ['test-snapshots']
+        project_config_update['seed-paths'] = ['seeds']
+        project_config_update['snapshots'] = project_config_update['snapshots'] | {
+            'post-hook': [
+                'update {{ this }} set c = 0',
+            ]
         }
+        project_config_update['seeds'] = project_config_update['seeds'] | {
+            'quote_columns': False,
+        }
+        return project_config_update
 
     @fixture(scope='class')
     def models(self):
@@ -200,20 +202,20 @@ class TestPrePostSnapshotHooksInConfigKwargsFirebolt(
     FireboltCheckerMixin, PrePostSnapshotHooksInConfigKwargs
 ):
     @fixture(scope='class')
-    def project_config_update(self):
-        return {
-            'seed-paths': ['seeds'],
-            'snapshot-paths': ['test-kwargs-snapshots'],
-            'models': {},
-            'snapshots': {
-                'post-hook': [
-                    'update {{ this }} set c = 0',
-                ]
-            },
-            'seeds': {
-                'quote_columns': False,
-            },
+    def project_config_update(
+        self, project_config_update: dict[str, Any]
+    ) -> dict[str, Any]:  # pyright: ignore[reportIncompatibleMethodOverride]
+        project_config_update['seed-paths'] = ['seeds']
+        project_config_update['snapshot-paths'] = ['test-kwargs-snapshots']
+        project_config_update['snapshots'] = project_config_update['snapshots'] | {
+            'post-hook': [
+                'update {{ this }} set c = 0',
+            ]
         }
+        project_config_update['seeds'] = project_config_update['seeds'] | {
+            'quote_columns': False,
+        }
+        return project_config_update
 
     @fixture(scope='class')
     def models(self):

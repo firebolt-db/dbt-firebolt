@@ -1,3 +1,5 @@
+from typing import Any
+
 from dbt.tests.adapter.simple_seed.test_seed import SeedUniqueDelimiterTestBase
 from dbt.tests.util import run_dbt
 from pytest import fixture
@@ -19,10 +21,14 @@ class TestSeedWithWrongDelimiter(SeedUniqueDelimiterTestBase):
         project.run_sql(seeds__expected_sql)
 
     @fixture(scope='class')
-    def project_config_update(self):
-        return {
-            'seeds': {'quote_columns': False, 'delimiter': ';'},
+    def project_config_update(
+        self, project_config_update: dict[str, Any]
+    ) -> dict[str, Any]:  # pyright: ignore[reportIncompatibleMethodOverride]
+        project_config_update['seeds'] = project_config_update['seeds'] | {
+            'quote_columns': False,
+            'delimiter': ';',
         }
+        return project_config_update
 
     def test_seed_with_wrong_delimiter(self, project):
         """Testing failure of running dbt seed with a wrongly configured delimiter"""

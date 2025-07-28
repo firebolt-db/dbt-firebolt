@@ -1,3 +1,5 @@
+from typing import Any
+
 import pytest
 from dbt.tests.adapter.utils import (
     fixture_array_append,
@@ -184,6 +186,21 @@ seeds:
 
 
 class TestDateAdd(BaseDateAdd):
+    @pytest.fixture(scope='class')
+    def project_config_update(
+        self, project_config_update: dict[str, Any]
+    ) -> dict[str, Any]:
+        project_config_update['seeds'] = project_config_update['seeds'] | {
+            'data_dateadd': {
+                '+column_types': {
+                    'from_time': 'timestamp',
+                    'result': 'timestamp',
+                },
+            },
+        }
+        project_config_update['name'] = 'test'
+        return project_config_update
+
     @pytest.fixture(scope='class')
     def models(self):
         return {

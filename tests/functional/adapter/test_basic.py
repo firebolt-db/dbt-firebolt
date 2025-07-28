@@ -1,4 +1,5 @@
 import os
+from typing import Any
 
 from dbt.tests.adapter.basic.expected_catalog import (
     base_expected_catalog,
@@ -67,7 +68,17 @@ class AnySpecifiedType:
         return 'AnySpecifiedType<{!r}>'.format(self.types)
 
 
-class TestSimpleMaterializationsFirebolt(BaseSimpleMaterializations):
+class BaseTestFireboltMixin:
+    @fixture(scope='class')
+    def project_config_update(
+        self, project_config_update: dict[str, Any]
+    ) -> dict[str, Any]:
+        return project_config_update
+
+
+class TestSimpleMaterializationsFirebolt(
+    BaseTestFireboltMixin, BaseSimpleMaterializations
+):  # pyright: ignore[reportIncompatibleMethodOverride]
     # Adding comment to verify CTAS wrapping
     # more info in PR #122
     my_model_base = """
@@ -88,7 +99,9 @@ class TestSingularTestsFirebolt(BaseSingularTests):
     pass
 
 
-class TestSingularTestsEphemeralFirebolt(BaseSingularTestsEphemeral):
+class TestSingularTestsEphemeralFirebolt(
+    BaseTestFireboltMixin, BaseSingularTestsEphemeral
+):
     pass
 
 
@@ -96,11 +109,11 @@ class TestEmptyFirebolt(BaseEmpty):
     pass
 
 
-class TestEphemeralFirebolt(BaseEphemeral):
+class TestEphemeralFirebolt(BaseTestFireboltMixin, BaseEphemeral):
     pass
 
 
-class TestIncrementalFirebolt(BaseIncremental):
+class TestIncrementalFirebolt(BaseTestFireboltMixin, BaseIncremental):
     def test_incremental(self, project):
         # seed command
         results = run_dbt(['seed'])
@@ -143,16 +156,44 @@ class TestIncrementalFirebolt(BaseIncremental):
         assert len(catalog.sources) == 1
 
 
-class TestGenericTestsFirebolt(BaseGenericTests):
+class TestGenericTestsFirebolt(BaseTestFireboltMixin, BaseGenericTests):
     pass
 
 
 class TestSnapshotCheckColsFirebolt(BaseSnapshotCheckCols):
-    pass
+    @fixture(scope='class')
+    def project_config_update(
+        self, project_config_update: dict[str, Any]
+    ) -> dict[str, Any]:
+        project_config_update['name'] = 'snapshot_strategy_check_cols'
+        project_config_update['seeds'][
+            'snapshot_strategy_check_cols'
+        ] = project_config_update['seeds']['test']
+        project_config_update['models'][
+            'snapshot_strategy_check_cols'
+        ] = project_config_update['models']['test']
+        project_config_update['snapshots'][
+            'snapshot_strategy_check_cols'
+        ] = project_config_update['snapshots']['test']
+        return project_config_update
 
 
 class TestSnapshotTimestampFirebolt(BaseSnapshotTimestamp):
-    pass
+    @fixture(scope='class')
+    def project_config_update(
+        self, project_config_update: dict[str, Any]
+    ) -> dict[str, Any]:
+        project_config_update['name'] = 'snapshot_strategy_timestamp'
+        project_config_update['seeds'][
+            'snapshot_strategy_timestamp'
+        ] = project_config_update['seeds']['test']
+        project_config_update['models'][
+            'snapshot_strategy_timestamp'
+        ] = project_config_update['models']['test']
+        project_config_update['snapshots'][
+            'snapshot_strategy_timestamp'
+        ] = project_config_update['snapshots']['test']
+        return project_config_update
 
 
 class TestBaseAdapterMethod(BaseAdapterMethod):
@@ -173,7 +214,23 @@ select * from {{ ref('seed') }}
 """
 
 
-class TestDocsGenerateFirebolt(BaseDocsGenerate):
+class DocsGenerateFireboltMixin:
+    @fixture(scope='class')
+    def project_config_update(
+        self, project_config_update: dict[str, Any]
+    ) -> dict[str, Any]:
+        project_config_update['asset-paths'] = ['assets', 'invalid-asset-paths']
+        project_config_update['vars'] = {
+            'test_schema': 'public',
+            'alternate_schema': 'public_test',
+        }
+        project_config_update['seeds'] = project_config_update['seeds'] | {
+            'quote_columns': True,
+        }
+        return project_config_update
+
+
+class TestDocsGenerateFirebolt(DocsGenerateFireboltMixin, BaseDocsGenerate):
 
     # TODO: remove this override once schema support is added.
     @fixture(scope='class')
@@ -212,7 +269,7 @@ class TestDocsGenerateFirebolt(BaseDocsGenerate):
         return catalog
 
 
-class TestDocsGenReferencesFirebolt(BaseDocsGenReferences):
+class TestDocsGenReferencesFirebolt(DocsGenerateFireboltMixin, BaseDocsGenReferences):
 
     # TODO: remove this override once schema support is added.
     @fixture(scope='class')

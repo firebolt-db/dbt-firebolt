@@ -103,18 +103,12 @@ def is_firebolt_core(dbt_profile_target: dict[str, Any]) -> bool:
 @pytest.fixture(scope='class')
 def project_config_update(is_firebolt_core: bool) -> dict[str, Any]:
     # Explicitly set table types, since CORE does not support DIMENSION
-    return {
-        'models': {
-            'test': {
-                'table_type': 'fact' if is_firebolt_core else 'dimension',
-            }
-        },
-        'seeds': {
-            'test': {
-                'table_type': 'fact' if is_firebolt_core else 'dimension',
-            }
-        },
-    }
+    config = {}
+    table_type = 'FACT' if is_firebolt_core else 'DIMENSION'
+    for type in ['models', 'seeds', 'snapshots', 'tests', 'unit_tests']:
+        for name in ['test', 'base']:
+            config[type][name]['table_type'] = table_type
+    return config
 
 
 @pytest.fixture(scope='class')

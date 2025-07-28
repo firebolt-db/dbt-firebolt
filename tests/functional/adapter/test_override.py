@@ -14,6 +14,12 @@ fail_macros__failure_sql = """
 """
 
 
+@pytest.fixture(scope='class')
+def project_config_update():
+    # Ignore this fixture, so it does not cause unexpected warnings
+    return {}
+
+
 class TestDocsGenerateOverride:
     """
     This essentially tests that the capability to get relations

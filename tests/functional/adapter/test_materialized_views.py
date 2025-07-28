@@ -28,10 +28,6 @@ class TestMaterializedViews:
             'base.csv': seeds_base_csv,
         }
 
-    @fixture(scope='class')
-    def project_config_update(self):
-        return {'name': 'materialized_views'}
-
     def test_singular_tests(self, project):
         run_dbt(['seed'], expect_pass=True)
         # test command
