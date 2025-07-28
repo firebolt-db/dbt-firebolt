@@ -106,8 +106,9 @@ def project_config_update(is_firebolt_core: bool) -> dict[str, Any]:
     config = {}
     table_type = 'FACT' if is_firebolt_core else 'DIMENSION'
     for type in ['models', 'seeds', 'snapshots', 'tests', 'unit_tests']:
+        config[type] = {}
         for name in ['test', 'base']:
-            config[type][name]['table_type'] = table_type
+            config[type][name] = {'table_type': table_type}
     return config
 
 
