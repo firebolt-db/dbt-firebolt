@@ -1,8 +1,10 @@
+from typing import Any
+
 from dbt.tests.adapter.simple_copy.test_simple_copy import (
     EmptyModelsArentRunBase,
     SimpleCopyBase,
 )
-from pytest import mark
+from pytest import fixture, mark
 
 
 class TestSimpleCopyBase(SimpleCopyBase):
@@ -12,4 +14,11 @@ class TestSimpleCopyBase(SimpleCopyBase):
 
 
 class TestEmptyModelsArentRun(EmptyModelsArentRunBase):
-    pass
+    @fixture(scope='class')
+    def project_config_update(
+        self, project_config_update: dict[str, Any]
+    ) -> dict[str, Any]:
+        project_config_update['seeds'] = project_config_update['seeds'] | {
+            'quote_columns': False
+        }
+        return project_config_update
