@@ -1,0 +1,35 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project70
+
+
+Invoking dbt with ['build']
+[0m16:13:41  Running with dbt=1.10.5
+[0m16:13:41  Registered adapter: firebolt=1.9.4
+[0m16:13:41  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m16:13:41  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 7 unused configuration paths:
+- models.base
+- seeds.base
+- snapshots.test
+- snapshots.base
+- data_tests.base
+- unit_tests.test
+- unit_tests.base
+[0m16:13:41  Found 1 model, 2 seeds, 1 test, 467 macros
+[0m16:13:41  
+[0m16:13:41  Concurrency: 1 threads (target='default')
+[0m16:13:41  
+[0m16:13:41  1 of 4 START seed file data_any_value .......................................... [RUN]
+[0m16:13:41  1 of 4 OK loaded seed file public.data_any_value ............................... [[32mINSERT 6[0m in 0.10s]
+[0m16:13:41  2 of 4 START seed file data_any_value_expected ................................. [RUN]
+[0m16:13:41  2 of 4 OK loaded seed file public.data_any_value_expected ...................... [[32mINSERT 3[0m in 0.09s]
+[0m16:13:41  3 of 4 START sql view model test_any_value ..................................... [RUN]
+[0m16:13:42  3 of 4 OK created sql view model test_any_value ................................ [[32mSUCCESS[0m in 0.29s]
+[0m16:13:42  4 of 4 START test assert_equal_test_any_value_actual__expected ................. [RUN]
+[0m16:13:42  4 of 4 PASS assert_equal_test_any_value_actual__expected ....................... [[32mPASS[0m in 0.07s]
+[0m16:13:42  
+[0m16:13:42  Finished running 2 seeds, 1 test, 1 view model in 0 hours 0 minutes and 0.69 seconds (0.69s).
+[0m16:13:42  
+[0m16:13:42  [32mCompleted successfully[0m
+[0m16:13:42  
+[0m16:13:42  Done. PASS=4 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=4
