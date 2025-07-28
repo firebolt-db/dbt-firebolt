@@ -1,0 +1,56 @@
+
+
+Invoking dbt with ['seed']
+[0m16:39:14  Running with dbt=1.10.5
+[0m16:39:14  Registered adapter: firebolt=1.9.4
+[0m16:39:14  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 8 unused configuration paths:
+- models.base
+- seeds.base
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- data_tests.test
+- unit_tests.base
+- unit_tests.test
+[0m16:39:14  Found 2 models, 1 seed, 467 macros
+[0m16:39:14  
+[0m16:39:14  Concurrency: 1 threads (target='default')
+[0m16:39:14  
+[0m16:39:15  1 of 1 START seed file data_equals ............................................. [RUN]
+[0m16:39:15  1 of 1 OK loaded seed file public.data_equals .................................. [[32mINSERT 9[0m in 0.14s]
+[0m16:39:15  
+[0m16:39:15  Finished running 1 seed in 0 hours 0 minutes and 0.27 seconds (0.27s).
+[0m16:39:15  
+[0m16:39:15  [32mCompleted successfully[0m
+[0m16:39:15  
+[0m16:39:15  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m16:39:15  Running with dbt=1.10.5
+[0m16:39:15  Registered adapter: firebolt=1.9.4
+[0m16:39:15  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 8 unused configuration paths:
+- models.base
+- seeds.base
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- data_tests.test
+- unit_tests.base
+- unit_tests.test
+[0m16:39:15  Found 2 models, 1 seed, 467 macros
+[0m16:39:15  
+[0m16:39:15  Concurrency: 1 threads (target='default')
+[0m16:39:15  
+[0m16:39:15  1 of 2 START sql view model equal_values ....................................... [RUN]
+[0m16:39:15  1 of 2 OK created sql view model equal_values .................................. [[32mSUCCESS[0m in 0.09s]
+[0m16:39:15  2 of 2 START sql view model not_equal_values ................................... [RUN]
+[0m16:39:15  2 of 2 OK created sql view model not_equal_values .............................. [[32mSUCCESS[0m in 0.09s]
+[0m16:39:15  
+[0m16:39:15  Finished running 2 view models in 0 hours 0 minutes and 0.31 seconds (0.31s).
+[0m16:39:15  
+[0m16:39:15  [32mCompleted successfully[0m
+[0m16:39:15  
+[0m16:39:15  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2

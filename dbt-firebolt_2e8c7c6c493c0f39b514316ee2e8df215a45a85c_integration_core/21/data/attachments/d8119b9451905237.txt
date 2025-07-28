@@ -1,0 +1,105 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project41
+
+
+Invoking dbt with ['seed']
+[0m16:37:50  Running with dbt=1.10.5
+[0m16:37:50  Registered adapter: firebolt=1.9.4
+[0m16:37:50  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m16:37:50  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 7 unused configuration paths:
+- models.base
+- seeds.base
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- unit_tests.base
+- unit_tests.test
+[0m16:37:50  Found 1 model, 1 seed, 3 data tests, 464 macros
+[0m16:37:50  
+[0m16:37:50  Concurrency: 1 threads (target='default')
+[0m16:37:50  
+[0m16:37:51  1 of 1 START seed file chipmunks_stage ......................................... [RUN]
+[0m16:37:51  1 of 1 OK loaded seed file public.chipmunks_stage .............................. [[32mINSERT 4[0m in 0.10s]
+[0m16:37:51  
+[0m16:37:51  Finished running 1 seed in 0 hours 0 minutes and 0.30 seconds (0.30s).
+[0m16:37:51  
+[0m16:37:51  [32mCompleted successfully[0m
+[0m16:37:51  
+[0m16:37:51  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m16:37:51  Running with dbt=1.10.5
+[0m16:37:51  Registered adapter: firebolt=1.9.4
+[0m16:37:51  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 7 unused configuration paths:
+- models.base
+- seeds.base
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- unit_tests.base
+- unit_tests.test
+[0m16:37:51  Found 1 model, 1 seed, 3 data tests, 464 macros
+[0m16:37:51  
+[0m16:37:51  Concurrency: 1 threads (target='default')
+[0m16:37:51  
+[0m16:37:51  1 of 1 START sql table model chipmunks ......................................... [RUN]
+[0m16:37:51  1 of 1 OK created sql table model chipmunks .................................... [[32mSUCCESS[0m in 0.11s]
+[0m16:37:51  
+[0m16:37:51  Finished running 1 table model in 0 hours 0 minutes and 0.31 seconds (0.31s).
+[0m16:37:51  
+[0m16:37:51  [32mCompleted successfully[0m
+[0m16:37:51  
+[0m16:37:51  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m16:37:51  Running with dbt=1.10.5
+[0m16:37:51  Registered adapter: firebolt=1.9.4
+[0m16:37:51  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 7 unused configuration paths:
+- models.base
+- seeds.base
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- unit_tests.base
+- unit_tests.test
+[0m16:37:51  Found 1 model, 1 seed, 3 data tests, 464 macros
+[0m16:37:51  
+[0m16:37:51  Concurrency: 1 threads (target='default')
+[0m16:37:51  
+[0m16:37:52  1 of 3 START test accepted_values_chipmunks_name__alvin__simon__theodore ....... [RUN]
+[0m16:37:52  1 of 3 FAIL 1 accepted_values_chipmunks_name__alvin__simon__theodore ........... [[31mFAIL 1[0m in 0.10s]
+[0m16:37:52  2 of 3 START test not_null_chipmunks_name ...................................... [RUN]
+[0m16:37:52  2 of 3 PASS not_null_chipmunks_name ............................................ [[32mPASS[0m in 0.08s]
+[0m16:37:52  3 of 3 START test not_null_chipmunks_shirt ..................................... [RUN]
+[0m16:37:52  3 of 3 FAIL 1 not_null_chipmunks_shirt ......................................... [[31mFAIL 1[0m in 0.08s]
+[0m16:37:52  
+[0m16:37:52  Finished running 3 data tests in 0 hours 0 minutes and 0.52 seconds (0.52s).
+[0m16:37:52  
+[0m16:37:52  [31mCompleted with 2 errors, 0 partial successes, and 0 warnings:[0m
+[0m16:37:52  
+[0m16:37:52  [31mFailure in test accepted_values_chipmunks_name__alvin__simon__theodore (models/schema.yml)[0m
+[0m16:37:52    Got 1 result, configured to fail if != 0
+[0m16:37:52  
+[0m16:37:52    compiled code at target/compiled/test/models/schema.yml/accepted_values_chipmunks_name__alvin__simon__theodore.sql
+[0m16:37:52  
+[0m16:37:52    See test failures:
+  --------------------------------------------------------------------
+  select * from accepted_values_chipmunks_name__alvin__simon__theodore
+  --------------------------------------------------------------------
+[0m16:37:52  
+[0m16:37:52  [31mFailure in test not_null_chipmunks_shirt (models/schema.yml)[0m
+[0m16:37:52    Got 1 result, configured to fail if != 0
+[0m16:37:52  
+[0m16:37:52    compiled code at target/compiled/test/models/schema.yml/not_null_chipmunks_shirt.sql
+[0m16:37:52  
+[0m16:37:52    See test failures:
+  --------------------------------------
+  select * from not_null_chipmunks_shirt
+  --------------------------------------
+[0m16:37:52  
+[0m16:37:52  Done. PASS=1 WARN=0 ERROR=2 SKIP=0 NO-OP=0 TOTAL=3

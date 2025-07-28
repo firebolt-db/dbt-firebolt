@@ -1,0 +1,197 @@
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m16:37:02  Running with dbt=1.10.5
+[0m16:37:02  Registered adapter: firebolt=1.9.4
+[0m16:37:03  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 9 unused configuration paths:
+- models.base
+- seeds.base
+- seeds.test
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- data_tests.test
+- unit_tests.base
+- unit_tests.test
+[0m16:37:03  Found 3 models, 464 macros
+[0m16:37:03  
+[0m16:37:03  Concurrency: 1 threads (target='default')
+[0m16:37:03  
+[0m16:37:03  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m16:37:03  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.13s]
+[0m16:37:03  
+[0m16:37:03  Finished running 1 table model in 0 hours 0 minutes and 0.27 seconds (0.27s).
+[0m16:37:03  
+[0m16:37:03  [32mCompleted successfully[0m
+[0m16:37:03  
+[0m16:37:03  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m16:37:03  Running with dbt=1.10.5
+[0m16:37:03  Registered adapter: firebolt=1.9.4
+[0m16:37:03  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 9 unused configuration paths:
+- models.base
+- seeds.base
+- seeds.test
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- data_tests.test
+- unit_tests.base
+- unit_tests.test
+[0m16:37:03  Found 3 models, 464 macros
+[0m16:37:03  
+[0m16:37:03  Concurrency: 1 threads (target='default')
+[0m16:37:03  
+[0m16:37:03  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m16:37:03  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.14s]
+[0m16:37:03  
+[0m16:37:03  Finished running 1 table model in 0 hours 0 minutes and 0.27 seconds (0.27s).
+[0m16:37:03  
+[0m16:37:03  [32mCompleted successfully[0m
+[0m16:37:03  
+[0m16:37:03  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m16:37:03  Running with dbt=1.10.5
+[0m16:37:03  Registered adapter: firebolt=1.9.4
+[0m16:37:03  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 9 unused configuration paths:
+- models.base
+- seeds.base
+- seeds.test
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- data_tests.test
+- unit_tests.base
+- unit_tests.test
+[0m16:37:03  Found 3 models, 464 macros
+[0m16:37:03  
+[0m16:37:03  Concurrency: 1 threads (target='default')
+[0m16:37:03  
+[0m16:37:04  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m16:37:04  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.14s]
+[0m16:37:04  
+[0m16:37:04  Finished running 1 table model in 0 hours 0 minutes and 0.27 seconds (0.27s).
+[0m16:37:04  
+[0m16:37:04  [32mCompleted successfully[0m
+[0m16:37:04  
+[0m16:37:04  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m16:37:04  Running with dbt=1.10.5
+[0m16:37:04  Registered adapter: firebolt=1.9.4
+[0m16:37:04  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 9 unused configuration paths:
+- models.base
+- seeds.base
+- seeds.test
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- data_tests.test
+- unit_tests.base
+- unit_tests.test
+[0m16:37:04  Found 3 models, 464 macros
+[0m16:37:04  
+[0m16:37:04  Concurrency: 1 threads (target='default')
+[0m16:37:04  
+[0m16:37:04  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m16:37:04  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.14s]
+[0m16:37:04  
+[0m16:37:04  Finished running 1 table model in 0 hours 0 minutes and 0.27 seconds (0.27s).
+[0m16:37:04  
+[0m16:37:04  [32mCompleted successfully[0m
+[0m16:37:04  
+[0m16:37:04  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m16:37:04  Running with dbt=1.10.5
+[0m16:37:04  Registered adapter: firebolt=1.9.4
+[0m16:37:04  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 9 unused configuration paths:
+- models.base
+- seeds.base
+- seeds.test
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- data_tests.test
+- unit_tests.base
+- unit_tests.test
+[0m16:37:04  Found 3 models, 464 macros
+[0m16:37:04  
+[0m16:37:04  Concurrency: 1 threads (target='default')
+[0m16:37:04  
+[0m16:37:05  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m16:37:05  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.13s]
+[0m16:37:05  
+[0m16:37:05  Finished running 1 table model in 0 hours 0 minutes and 0.26 seconds (0.26s).
+[0m16:37:05  
+[0m16:37:05  [32mCompleted successfully[0m
+[0m16:37:05  
+[0m16:37:05  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m16:37:05  Running with dbt=1.10.5
+[0m16:37:05  Registered adapter: firebolt=1.9.4
+[0m16:37:05  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 9 unused configuration paths:
+- models.base
+- seeds.base
+- seeds.test
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- data_tests.test
+- unit_tests.base
+- unit_tests.test
+[0m16:37:05  Found 3 models, 464 macros
+[0m16:37:05  
+[0m16:37:05  Concurrency: 1 threads (target='default')
+[0m16:37:05  
+[0m16:37:05  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m16:37:05  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.13s]
+[0m16:37:05  
+[0m16:37:05  Finished running 1 table model in 0 hours 0 minutes and 0.26 seconds (0.26s).
+[0m16:37:05  
+[0m16:37:05  [32mCompleted successfully[0m
+[0m16:37:05  
+[0m16:37:05  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+[0m16:37:05  Running with dbt=1.10.5
+[0m16:37:05  Registered adapter: firebolt=1.9.4
+[0m16:37:05  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 9 unused configuration paths:
+- models.base
+- seeds.base
+- seeds.test
+- snapshots.base
+- snapshots.test
+- data_tests.base
+- data_tests.test
+- unit_tests.base
+- unit_tests.test
+[0m16:37:05  Found 3 models, 464 macros
+[0m16:37:05  
+[0m16:37:05  Concurrency: 1 threads (target='default')
+[0m16:37:05  
+[0m16:37:05  1 of 1 START sql table model my_model_data_type ................................ [RUN]
+[0m16:37:06  Detected columns with numeric type and unspecified precision/scale, this can lead to unintended rounding: ['wrong_data_type_column_name']`
+[0m16:37:06  1 of 1 OK created sql table model my_model_data_type ........................... [[32mSUCCESS[0m in 0.13s]
+[0m16:37:06  
+[0m16:37:06  Finished running 1 table model in 0 hours 0 minutes and 0.26 seconds (0.26s).
+[0m16:37:06  
+[0m16:37:06  [32mCompleted successfully[0m
+[0m16:37:06  
+[0m16:37:06  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1

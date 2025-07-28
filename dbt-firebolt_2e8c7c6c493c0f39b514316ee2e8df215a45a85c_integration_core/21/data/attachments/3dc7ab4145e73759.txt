@@ -1,0 +1,102 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project42
+
+
+Invoking dbt with ['seed']
+[0m16:37:53  Running with dbt=1.10.5
+[0m16:37:53  Registered adapter: firebolt=1.9.4
+[0m16:37:53  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m16:37:54  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 6 unused configuration paths:
+- models.base
+- seeds.base
+- snapshots.base
+- snapshots.test
+- unit_tests.base
+- unit_tests.test
+[0m16:37:54  Found 1 model, 3 data tests, 1 seed, 464 macros
+[0m16:37:54  
+[0m16:37:54  Concurrency: 1 threads (target='default')
+[0m16:37:54  
+[0m16:37:54  1 of 1 START seed file chipmunks_stage ......................................... [RUN]
+[0m16:37:54  1 of 1 OK loaded seed file public.chipmunks_stage .............................. [[32mINSERT 4[0m in 0.10s]
+[0m16:37:54  
+[0m16:37:54  Finished running 1 seed in 0 hours 0 minutes and 0.31 seconds (0.31s).
+[0m16:37:54  
+[0m16:37:54  [32mCompleted successfully[0m
+[0m16:37:54  
+[0m16:37:54  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m16:37:54  Running with dbt=1.10.5
+[0m16:37:54  Registered adapter: firebolt=1.9.4
+[0m16:37:54  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 6 unused configuration paths:
+- models.base
+- seeds.base
+- snapshots.base
+- snapshots.test
+- unit_tests.base
+- unit_tests.test
+[0m16:37:54  Found 1 model, 3 data tests, 1 seed, 464 macros
+[0m16:37:54  
+[0m16:37:54  Concurrency: 1 threads (target='default')
+[0m16:37:54  
+[0m16:37:54  1 of 1 START sql table model chipmunks ......................................... [RUN]
+[0m16:37:54  1 of 1 OK created sql table model chipmunks .................................... [[32mSUCCESS[0m in 0.11s]
+[0m16:37:54  
+[0m16:37:54  Finished running 1 table model in 0 hours 0 minutes and 0.31 seconds (0.31s).
+[0m16:37:54  
+[0m16:37:54  [32mCompleted successfully[0m
+[0m16:37:54  
+[0m16:37:54  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m16:37:54  Running with dbt=1.10.5
+[0m16:37:54  Registered adapter: firebolt=1.9.4
+[0m16:37:54  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 6 unused configuration paths:
+- models.base
+- seeds.base
+- snapshots.base
+- snapshots.test
+- unit_tests.base
+- unit_tests.test
+[0m16:37:54  Found 1 model, 3 data tests, 1 seed, 464 macros
+[0m16:37:54  
+[0m16:37:54  Concurrency: 1 threads (target='default')
+[0m16:37:54  
+[0m16:37:55  1 of 3 START test results_true ................................................. [RUN]
+[0m16:37:55  1 of 3 FAIL 1 results_true ..................................................... [[31mFAIL 1[0m in 0.07s]
+[0m16:37:55  2 of 3 START test results_unset ................................................ [RUN]
+[0m16:37:55  2 of 3 FAIL 1 results_unset .................................................... [[31mFAIL 1[0m in 0.06s]
+[0m16:37:55  3 of 3 START test results_view ................................................. [RUN]
+[0m16:37:55  3 of 3 FAIL 1 results_view ..................................................... [[31mFAIL 1[0m in 0.08s]
+[0m16:37:55  
+[0m16:37:55  Finished running 3 data tests in 0 hours 0 minutes and 0.49 seconds (0.49s).
+[0m16:37:55  
+[0m16:37:55  [31mCompleted with 3 errors, 0 partial successes, and 0 warnings:[0m
+[0m16:37:55  
+[0m16:37:55  [31mFailure in test results_true (tests/results_true.sql)[0m
+[0m16:37:55    Got 1 result, configured to fail if != 0
+[0m16:37:55  
+[0m16:37:55    compiled code at target/compiled/test/tests/results_true.sql
+[0m16:37:55  
+[0m16:37:55  [31mFailure in test results_unset (tests/results_unset.sql)[0m
+[0m16:37:55    Got 1 result, configured to fail if != 0
+[0m16:37:55  
+[0m16:37:55    compiled code at target/compiled/test/tests/results_unset.sql
+[0m16:37:55  
+[0m16:37:55  [31mFailure in test results_view (tests/results_view.sql)[0m
+[0m16:37:55    Got 1 result, configured to fail if != 0
+[0m16:37:55  
+[0m16:37:55    compiled code at target/compiled/test/tests/results_view.sql
+[0m16:37:55  
+[0m16:37:55    See test failures:
+  --------------------------
+  select * from results_view
+  --------------------------
+[0m16:37:55  
+[0m16:37:55  Done. PASS=0 WARN=0 ERROR=3 SKIP=0 NO-OP=0 TOTAL=3
