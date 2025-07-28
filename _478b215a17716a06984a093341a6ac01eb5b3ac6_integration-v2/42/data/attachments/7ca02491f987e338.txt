@@ -1,0 +1,90 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project39
+
+
+Invoking dbt with ['seed']
+[0m17:08:45  Running with dbt=1.10.5
+[0m17:08:45  Registered adapter: firebolt=1.9.4
+[0m17:08:45  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m17:08:45  Found 1 model, 4 data tests, 1 seed, 464 macros
+[0m17:08:45  
+[0m17:08:45  Concurrency: 1 threads (target='default')
+[0m17:08:45  
+[0m17:08:46  1 of 1 START seed file chipmunks_stage ......................................... [RUN]
+[0m17:08:47  1 of 1 OK loaded seed file public.chipmunks_stage .............................. [[32mINSERT 4[0m in 0.71s]
+[0m17:08:47  
+[0m17:08:47  Finished running 1 seed in 0 hours 0 minutes and 1.45 seconds (1.45s).
+[0m17:08:47  
+[0m17:08:47  [32mCompleted successfully[0m
+[0m17:08:47  
+[0m17:08:47  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m17:08:47  Running with dbt=1.10.5
+[0m17:08:47  Registered adapter: firebolt=1.9.4
+[0m17:08:47  Found 1 model, 4 data tests, 1 seed, 464 macros
+[0m17:08:47  
+[0m17:08:47  Concurrency: 1 threads (target='default')
+[0m17:08:47  
+[0m17:08:48  1 of 1 START sql table model chipmunks ......................................... [RUN]
+[0m17:08:48  1 of 1 OK created sql table model chipmunks .................................... [[32mSUCCESS[0m in 0.50s]
+[0m17:08:48  
+[0m17:08:48  Finished running 1 table model in 0 hours 0 minutes and 1.26 seconds (1.26s).
+[0m17:08:48  
+[0m17:08:48  [32mCompleted successfully[0m
+[0m17:08:48  
+[0m17:08:48  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m17:08:48  Running with dbt=1.10.5
+[0m17:08:48  Registered adapter: firebolt=1.9.4
+[0m17:08:48  Found 1 model, 4 data tests, 1 seed, 464 macros
+[0m17:08:48  
+[0m17:08:48  Concurrency: 1 threads (target='default')
+[0m17:08:48  
+[0m17:08:49  1 of 4 START test results_ephemeral ............................................ [RUN]
+[0m17:08:50  1 of 4 FAIL 1 results_ephemeral ................................................ [[31mFAIL 1[0m in 0.25s]
+[0m17:08:50  2 of 4 START test results_table ................................................ [RUN]
+[0m17:08:50  2 of 4 FAIL 1 results_table .................................................... [[31mFAIL 1[0m in 0.46s]
+[0m17:08:50  3 of 4 START test results_unset ................................................ [RUN]
+[0m17:08:50  3 of 4 FAIL 1 results_unset .................................................... [[31mFAIL 1[0m in 0.25s]
+[0m17:08:50  4 of 4 START test results_view ................................................. [RUN]
+[0m17:08:51  4 of 4 FAIL 1 results_view ..................................................... [[31mFAIL 1[0m in 0.35s]
+[0m17:08:51  
+[0m17:08:51  Finished running 4 data tests in 0 hours 0 minutes and 2.36 seconds (2.36s).
+[0m17:08:51  
+[0m17:08:51  [31mCompleted with 4 errors, 0 partial successes, and 0 warnings:[0m
+[0m17:08:51  
+[0m17:08:51  [31mFailure in test results_ephemeral (tests/results_ephemeral.sql)[0m
+[0m17:08:51    Got 1 result, configured to fail if != 0
+[0m17:08:51  
+[0m17:08:51    compiled code at target/compiled/test/tests/results_ephemeral.sql
+[0m17:08:51  
+[0m17:08:51  [31mFailure in test results_table (tests/results_table.sql)[0m
+[0m17:08:51    Got 1 result, configured to fail if != 0
+[0m17:08:51  
+[0m17:08:51    compiled code at target/compiled/test/tests/results_table.sql
+[0m17:08:51  
+[0m17:08:51    See test failures:
+  ---------------------------
+  select * from results_table
+  ---------------------------
+[0m17:08:51  
+[0m17:08:51  [31mFailure in test results_unset (tests/results_unset.sql)[0m
+[0m17:08:51    Got 1 result, configured to fail if != 0
+[0m17:08:51  
+[0m17:08:51    compiled code at target/compiled/test/tests/results_unset.sql
+[0m17:08:51  
+[0m17:08:51  [31mFailure in test results_view (tests/results_view.sql)[0m
+[0m17:08:51    Got 1 result, configured to fail if != 0
+[0m17:08:51  
+[0m17:08:51    compiled code at target/compiled/test/tests/results_view.sql
+[0m17:08:51  
+[0m17:08:51    See test failures:
+  --------------------------
+  select * from results_view
+  --------------------------
+[0m17:08:51  
+[0m17:08:51  Done. PASS=0 WARN=0 ERROR=4 SKIP=0 NO-OP=0 TOTAL=4
