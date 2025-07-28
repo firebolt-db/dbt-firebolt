@@ -1,0 +1,343 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project62
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m17:03:55  Running with dbt=1.10.5
+[0m17:03:55  Registered adapter: firebolt=1.9.4
+[0m17:03:55  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m17:03:55  Found 2 models, 464 macros, 1 unit test
+[0m17:03:55  
+[0m17:03:55  Concurrency: 1 threads (target='default')
+[0m17:03:55  
+[0m17:03:55  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m17:03:55  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m17:03:55  
+[0m17:03:55  Finished running 1 view model in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m17:03:55  
+[0m17:03:55  [32mCompleted successfully[0m
+[0m17:03:55  
+[0m17:03:55  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m17:03:55  Running with dbt=1.10.5
+[0m17:03:55  Registered adapter: firebolt=1.9.4
+[0m17:03:55  Found 2 models, 464 macros, 1 unit test
+[0m17:03:55  
+[0m17:03:55  Concurrency: 1 threads (target='default')
+[0m17:03:55  
+[0m17:03:55  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m17:03:55  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m17:03:55  
+[0m17:03:55  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m17:03:55  
+[0m17:03:55  [32mCompleted successfully[0m
+[0m17:03:55  
+[0m17:03:55  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m17:03:55  Running with dbt=1.10.5
+[0m17:03:56  Registered adapter: firebolt=1.9.4
+[0m17:03:56  Found 2 models, 464 macros, 1 unit test
+[0m17:03:56  
+[0m17:03:56  Concurrency: 1 threads (target='default')
+[0m17:03:56  
+[0m17:03:56  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m17:03:56  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m17:03:56  
+[0m17:03:56  Finished running 1 view model in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m17:03:56  
+[0m17:03:56  [32mCompleted successfully[0m
+[0m17:03:56  
+[0m17:03:56  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m17:03:56  Running with dbt=1.10.5
+[0m17:03:56  Registered adapter: firebolt=1.9.4
+[0m17:03:56  Found 2 models, 464 macros, 1 unit test
+[0m17:03:56  
+[0m17:03:56  Concurrency: 1 threads (target='default')
+[0m17:03:56  
+[0m17:03:56  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m17:03:56  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m17:03:56  
+[0m17:03:56  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m17:03:56  
+[0m17:03:56  [32mCompleted successfully[0m
+[0m17:03:56  
+[0m17:03:56  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m17:03:56  Running with dbt=1.10.5
+[0m17:03:56  Registered adapter: firebolt=1.9.4
+[0m17:03:56  Found 2 models, 464 macros, 1 unit test
+[0m17:03:56  
+[0m17:03:56  Concurrency: 1 threads (target='default')
+[0m17:03:56  
+[0m17:03:56  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m17:03:57  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m17:03:57  
+[0m17:03:57  Finished running 1 view model in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m17:03:57  
+[0m17:03:57  [32mCompleted successfully[0m
+[0m17:03:57  
+[0m17:03:57  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m17:03:57  Running with dbt=1.10.5
+[0m17:03:57  Registered adapter: firebolt=1.9.4
+[0m17:03:57  Found 2 models, 464 macros, 1 unit test
+[0m17:03:57  
+[0m17:03:57  Concurrency: 1 threads (target='default')
+[0m17:03:57  
+[0m17:03:57  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m17:03:57  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m17:03:57  
+[0m17:03:57  Finished running 1 unit test in 0 hours 0 minutes and 0.24 seconds (0.24s).
+[0m17:03:57  
+[0m17:03:57  [32mCompleted successfully[0m
+[0m17:03:57  
+[0m17:03:57  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m17:03:57  Running with dbt=1.10.5
+[0m17:03:57  Registered adapter: firebolt=1.9.4
+[0m17:03:57  Found 2 models, 464 macros, 1 unit test
+[0m17:03:57  
+[0m17:03:57  Concurrency: 1 threads (target='default')
+[0m17:03:57  
+[0m17:03:57  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m17:03:57  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m17:03:57  
+[0m17:03:57  Finished running 1 view model in 0 hours 0 minutes and 0.21 seconds (0.21s).
+[0m17:03:57  
+[0m17:03:57  [32mCompleted successfully[0m
+[0m17:03:57  
+[0m17:03:57  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m17:03:57  Running with dbt=1.10.5
+[0m17:03:57  Registered adapter: firebolt=1.9.4
+[0m17:03:57  Found 2 models, 464 macros, 1 unit test
+[0m17:03:57  
+[0m17:03:57  Concurrency: 1 threads (target='default')
+[0m17:03:57  
+[0m17:03:58  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m17:03:58  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m17:03:58  
+[0m17:03:58  Finished running 1 unit test in 0 hours 0 minutes and 0.24 seconds (0.24s).
+[0m17:03:58  
+[0m17:03:58  [32mCompleted successfully[0m
+[0m17:03:58  
+[0m17:03:58  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m17:03:58  Running with dbt=1.10.5
+[0m17:03:58  Registered adapter: firebolt=1.9.4
+[0m17:03:58  Found 2 models, 464 macros, 1 unit test
+[0m17:03:58  
+[0m17:03:58  Concurrency: 1 threads (target='default')
+[0m17:03:58  
+[0m17:03:58  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m17:03:58  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m17:03:58  
+[0m17:03:58  Finished running 1 view model in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m17:03:58  
+[0m17:03:58  [32mCompleted successfully[0m
+[0m17:03:58  
+[0m17:03:58  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m17:03:58  Running with dbt=1.10.5
+[0m17:03:58  Registered adapter: firebolt=1.9.4
+[0m17:03:58  Found 2 models, 464 macros, 1 unit test
+[0m17:03:58  
+[0m17:03:58  Concurrency: 1 threads (target='default')
+[0m17:03:58  
+[0m17:03:58  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m17:03:58  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m17:03:58  
+[0m17:03:58  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m17:03:58  
+[0m17:03:58  [32mCompleted successfully[0m
+[0m17:03:58  
+[0m17:03:58  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m17:03:58  Running with dbt=1.10.5
+[0m17:03:58  Registered adapter: firebolt=1.9.4
+[0m17:03:59  Found 2 models, 464 macros, 1 unit test
+[0m17:03:59  
+[0m17:03:59  Concurrency: 1 threads (target='default')
+[0m17:03:59  
+[0m17:03:59  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m17:03:59  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m17:03:59  
+[0m17:03:59  Finished running 1 view model in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m17:03:59  
+[0m17:03:59  [32mCompleted successfully[0m
+[0m17:03:59  
+[0m17:03:59  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m17:03:59  Running with dbt=1.10.5
+[0m17:03:59  Registered adapter: firebolt=1.9.4
+[0m17:03:59  Found 2 models, 464 macros, 1 unit test
+[0m17:03:59  
+[0m17:03:59  Concurrency: 1 threads (target='default')
+[0m17:03:59  
+[0m17:03:59  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m17:03:59  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m17:03:59  
+[0m17:03:59  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m17:03:59  
+[0m17:03:59  [32mCompleted successfully[0m
+[0m17:03:59  
+[0m17:03:59  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m17:03:59  Running with dbt=1.10.5
+[0m17:03:59  Registered adapter: firebolt=1.9.4
+[0m17:03:59  Found 2 models, 464 macros, 1 unit test
+[0m17:03:59  
+[0m17:03:59  Concurrency: 1 threads (target='default')
+[0m17:03:59  
+[0m17:04:00  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m17:04:00  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m17:04:00  
+[0m17:04:00  Finished running 1 view model in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m17:04:00  
+[0m17:04:00  [32mCompleted successfully[0m
+[0m17:04:00  
+[0m17:04:00  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m17:04:00  Running with dbt=1.10.5
+[0m17:04:00  Registered adapter: firebolt=1.9.4
+[0m17:04:00  Found 2 models, 464 macros, 1 unit test
+[0m17:04:00  
+[0m17:04:00  Concurrency: 1 threads (target='default')
+[0m17:04:00  
+[0m17:04:00  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m17:04:00  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m17:04:00  
+[0m17:04:00  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m17:04:00  
+[0m17:04:00  [32mCompleted successfully[0m
+[0m17:04:00  
+[0m17:04:00  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m17:04:00  Running with dbt=1.10.5
+[0m17:04:00  Registered adapter: firebolt=1.9.4
+[0m17:04:00  Found 2 models, 464 macros, 1 unit test
+[0m17:04:00  
+[0m17:04:00  Concurrency: 1 threads (target='default')
+[0m17:04:00  
+[0m17:04:00  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m17:04:00  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m17:04:00  
+[0m17:04:00  Finished running 1 view model in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m17:04:00  
+[0m17:04:00  [32mCompleted successfully[0m
+[0m17:04:00  
+[0m17:04:00  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m17:04:00  Running with dbt=1.10.5
+[0m17:04:00  Registered adapter: firebolt=1.9.4
+[0m17:04:00  Found 2 models, 464 macros, 1 unit test
+[0m17:04:00  
+[0m17:04:00  Concurrency: 1 threads (target='default')
+[0m17:04:00  
+[0m17:04:01  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m17:04:01  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m17:04:01  
+[0m17:04:01  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m17:04:01  
+[0m17:04:01  [32mCompleted successfully[0m
+[0m17:04:01  
+[0m17:04:01  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m17:04:01  Running with dbt=1.10.5
+[0m17:04:01  Registered adapter: firebolt=1.9.4
+[0m17:04:01  Found 2 models, 464 macros, 1 unit test
+[0m17:04:01  
+[0m17:04:01  Concurrency: 1 threads (target='default')
+[0m17:04:01  
+[0m17:04:01  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m17:04:01  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.10s]
+[0m17:04:01  
+[0m17:04:01  Finished running 1 view model in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m17:04:01  
+[0m17:04:01  [32mCompleted successfully[0m
+[0m17:04:01  
+[0m17:04:01  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m17:04:01  Running with dbt=1.10.5
+[0m17:04:01  Registered adapter: firebolt=1.9.4
+[0m17:04:01  Found 2 models, 464 macros, 1 unit test
+[0m17:04:01  
+[0m17:04:01  Concurrency: 1 threads (target='default')
+[0m17:04:01  
+[0m17:04:01  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m17:04:02  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m17:04:02  
+[0m17:04:02  Finished running 1 unit test in 0 hours 0 minutes and 0.24 seconds (0.24s).
+[0m17:04:02  
+[0m17:04:02  [32mCompleted successfully[0m
+[0m17:04:02  
+[0m17:04:02  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m17:04:02  Running with dbt=1.10.5
+[0m17:04:02  Registered adapter: firebolt=1.9.4
+[0m17:04:02  Found 2 models, 464 macros, 1 unit test
+[0m17:04:02  
+[0m17:04:02  Concurrency: 1 threads (target='default')
+[0m17:04:02  
+[0m17:04:02  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m17:04:02  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m17:04:02  
+[0m17:04:02  Finished running 1 view model in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m17:04:02  
+[0m17:04:02  [32mCompleted successfully[0m
+[0m17:04:02  
+[0m17:04:02  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m17:04:02  Running with dbt=1.10.5
+[0m17:04:02  Registered adapter: firebolt=1.9.4
+[0m17:04:02  Found 2 models, 464 macros, 1 unit test
+[0m17:04:02  
+[0m17:04:02  Concurrency: 1 threads (target='default')
+[0m17:04:02  
+[0m17:04:02  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m17:04:02  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m17:04:02  
+[0m17:04:02  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m17:04:02  
+[0m17:04:02  [32mCompleted successfully[0m
+[0m17:04:02  
+[0m17:04:02  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
