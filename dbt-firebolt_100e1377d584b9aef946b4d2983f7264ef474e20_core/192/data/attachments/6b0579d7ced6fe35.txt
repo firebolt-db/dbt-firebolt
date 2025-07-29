@@ -1,0 +1,60 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project60
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m16:13:57  Running with dbt=1.10.5
+[0m16:13:57  Registered adapter: firebolt=1.9.4
+[0m16:13:57  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m16:13:57  Found 12 models, 1 seed, 464 macros
+[0m16:13:57  
+[0m16:13:57  Concurrency: 1 threads (target='default')
+[0m16:13:57  
+[0m16:13:57  1 of 1 START seed file seed .................................................... [RUN]
+[0m16:13:57  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 7[0m in 0.10s]
+[0m16:13:57  
+[0m16:13:57  Finished running 1 seed in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m16:13:58  
+[0m16:13:58  [32mCompleted successfully[0m
+[0m16:13:58  
+[0m16:13:58  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'not_found_unique_key', '--full-refresh']
+[0m16:13:58  Running with dbt=1.10.5
+[0m16:13:58  Registered adapter: firebolt=1.9.4
+[0m16:13:58  Found 12 models, 1 seed, 464 macros
+[0m16:13:58  
+[0m16:13:58  Concurrency: 1 threads (target='default')
+[0m16:13:58  
+[0m16:13:58  1 of 1 START sql incremental model not_found_unique_key ........................ [RUN]
+[0m16:13:58  1 of 1 OK created sql incremental model not_found_unique_key ................... [[32mSUCCESS[0m in 0.11s]
+[0m16:13:58  
+[0m16:13:58  Finished running 1 incremental model in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m16:13:58  
+[0m16:13:58  [32mCompleted successfully[0m
+[0m16:13:58  
+[0m16:13:58  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'not_found_unique_key']
+[0m16:13:58  Running with dbt=1.10.5
+[0m16:13:58  Registered adapter: firebolt=1.9.4
+[0m16:13:58  Found 12 models, 1 seed, 464 macros
+[0m16:13:58  
+[0m16:13:58  Concurrency: 1 threads (target='default')
+[0m16:13:58  
+[0m16:13:58  1 of 1 START sql incremental model not_found_unique_key ........................ [RUN]
+[0m16:13:58  1 of 1 ERROR creating sql incremental model not_found_unique_key ............... [[31mERROR[0m in 0.14s]
+[0m16:13:58  
+[0m16:13:58  Finished running 1 incremental model in 0 hours 0 minutes and 0.26 seconds (0.26s).
+[0m16:13:58  
+[0m16:13:58  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m16:13:58  
+[0m16:13:58  [31mFailure in model not_found_unique_key (models/not_found_unique_key.sql)[0m
+[0m16:13:58    Runtime Error in model not_found_unique_key (models/not_found_unique_key.sql)
+  - Line 3, Column 17: Column 'thisisnotacolumn' does not exist.
+[0m16:13:58  
+[0m16:13:58    compiled code at target/compiled/test/models/not_found_unique_key.sql
+[0m16:13:58  
+[0m16:13:58  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1

@@ -1,0 +1,51 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m16:14:04  Running with dbt=1.10.5
+[0m16:14:04  Registered adapter: firebolt=1.9.4
+[0m16:14:05  Found 12 models, 1 seed, 464 macros
+[0m16:14:05  
+[0m16:14:05  Concurrency: 1 threads (target='default')
+[0m16:14:05  
+[0m16:14:05  1 of 1 START seed file seed .................................................... [RUN]
+[0m16:14:05  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 7[0m in 0.10s]
+[0m16:14:05  
+[0m16:14:05  Finished running 1 seed in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m16:14:05  
+[0m16:14:05  [32mCompleted successfully[0m
+[0m16:14:05  
+[0m16:14:05  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'no_unique_key', '--full-refresh']
+[0m16:14:05  Running with dbt=1.10.5
+[0m16:14:05  Registered adapter: firebolt=1.9.4
+[0m16:14:05  Found 12 models, 1 seed, 464 macros
+[0m16:14:05  
+[0m16:14:05  Concurrency: 1 threads (target='default')
+[0m16:14:05  
+[0m16:14:05  1 of 1 START sql incremental model no_unique_key ............................... [RUN]
+[0m16:14:05  1 of 1 OK created sql incremental model no_unique_key .......................... [[32mSUCCESS[0m in 0.11s]
+[0m16:14:05  
+[0m16:14:05  Finished running 1 incremental model in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m16:14:05  
+[0m16:14:05  [32mCompleted successfully[0m
+[0m16:14:05  
+[0m16:14:05  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'no_unique_key']
+[0m16:14:05  Running with dbt=1.10.5
+[0m16:14:05  Registered adapter: firebolt=1.9.4
+[0m16:14:05  Found 12 models, 1 seed, 464 macros
+[0m16:14:05  
+[0m16:14:05  Concurrency: 1 threads (target='default')
+[0m16:14:05  
+[0m16:14:06  1 of 1 START sql incremental model no_unique_key ............................... [RUN]
+[0m16:14:06  1 of 1 OK created sql incremental model no_unique_key .......................... [[32mSUCCESS[0m in 0.20s]
+[0m16:14:06  
+[0m16:14:06  Finished running 1 incremental model in 0 hours 0 minutes and 0.32 seconds (0.32s).
+[0m16:14:06  
+[0m16:14:06  [32mCompleted successfully[0m
+[0m16:14:06  
+[0m16:14:06  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
