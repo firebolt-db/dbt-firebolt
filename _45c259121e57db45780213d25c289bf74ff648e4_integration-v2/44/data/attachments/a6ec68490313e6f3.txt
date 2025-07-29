@@ -1,0 +1,17 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project26
+
+
+Invoking dbt with ['show', '--select', 'sql_header', '--vars', 'timezone: Asia/Kolkata']
+[0m15:34:07  Running with dbt=1.10.5
+[0m15:34:07  Registered adapter: firebolt=1.9.4
+[0m15:34:07  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:34:07  Found 1 model, 464 macros
+[0m15:34:07  
+[0m15:34:07  Concurrency: 1 threads (target='default')
+[0m15:34:07  
+Previewing node 'sql_header':
+| my_variable |
+| ----------- |
+|           1 |
+
