@@ -1,0 +1,30 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project3
+
+
+Invoking dbt with ['seed']
+[0m12:13:06  Running with dbt=1.10.6
+[0m12:13:06  Registered adapter: firebolt=1.9.4
+[0m12:13:06  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:13:06  Found 464 macros
+[0m12:13:06  Nothing to do. Try checking your model configs and model specification args
+[0m12:13:06  
+[0m12:13:06  [32mCompleted successfully[0m
+[0m12:13:06  
+[0m12:13:06  Done. PASS=0 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=0
+
+
+Invoking dbt with ['run']
+[0m12:13:06  Running with dbt=1.10.6
+[0m12:13:06  Registered adapter: firebolt=1.9.4
+[0m12:13:06  Found 464 macros
+[0m12:13:06  Nothing to do. Try checking your model configs and model specification args
+
+
+Invoking dbt with ['docs', 'generate']
+[0m12:13:06  Running with dbt=1.10.6
+[0m12:13:06  Registered adapter: firebolt=1.9.4
+[0m12:13:06  Found 464 macros
+[0m12:13:06  Nothing to do. Try checking your model configs and model specification args
+[0m12:13:07  Building catalog
+[0m12:13:07  Catalog written to /tmp/pytest-of-runner/pytest-0/project3/target/catalog.json

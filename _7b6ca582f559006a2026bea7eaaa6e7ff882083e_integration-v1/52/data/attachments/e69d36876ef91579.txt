@@ -1,0 +1,104 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project12
+
+
+Invoking dbt with ['seed']
+[0m12:17:38  Running with dbt=1.10.6
+[0m12:17:38  Registered adapter: firebolt=1.9.4
+[0m12:17:38  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:17:38  [[33mWARNING[0m]: 'base' is a seed node, but it is specified in the models section of
+seeds/schema.yml. To fix this error, place the `base` specification under the
+seeds key instead.
+[0m12:17:38  Found 2 models, 1 snapshot, 1 seed, 3 data tests, 1 source, 464 macros
+[0m12:17:38  
+[0m12:17:38  Concurrency: 1 threads (target='default')
+[0m12:17:38  
+[0m12:17:40  1 of 1 START seed file base .................................................... [RUN]
+[0m12:17:42  1 of 1 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 1.56s]
+[0m12:17:42  
+[0m12:17:42  Finished running 1 seed in 0 hours 0 minutes and 3.36 seconds (3.36s).
+[0m12:17:42  
+[0m12:17:42  [32mCompleted successfully[0m
+[0m12:17:42  
+[0m12:17:42  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '-m', 'base']
+[0m12:17:42  Running with dbt=1.10.6
+[0m12:17:42  [[33mWARNING[0m]: Deprecated functionality
+Usage of `--models`, `--model`, and `-m` is deprecated in favor of `--select` or
+`-s`.
+[0m12:17:42  Registered adapter: firebolt=1.9.4
+[0m12:17:42  Found 2 models, 1 snapshot, 1 seed, 3 data tests, 1 source, 464 macros
+[0m12:17:42  
+[0m12:17:42  Concurrency: 1 threads (target='default')
+[0m12:17:42  
+[0m12:17:43  1 of 1 START test not_null_base_id ............................................. [RUN]
+[0m12:17:44  1 of 1 PASS not_null_base_id ................................................... [[32mPASS[0m in 0.89s]
+[0m12:17:44  
+[0m12:17:44  Finished running 1 test in 0 hours 0 minutes and 1.80 seconds (1.80s).
+[0m12:17:44  
+[0m12:17:44  [32mCompleted successfully[0m
+[0m12:17:44  
+[0m12:17:44  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m12:17:44  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- ModelParamUsageDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+
+
+Invoking dbt with ['run']
+[0m12:17:44  Running with dbt=1.10.6
+[0m12:17:44  Registered adapter: firebolt=1.9.4
+[0m12:17:44  Found 2 models, 1 snapshot, 1 seed, 3 data tests, 1 source, 464 macros
+[0m12:17:44  
+[0m12:17:44  Concurrency: 1 threads (target='default')
+[0m12:17:44  
+[0m12:17:46  1 of 2 START sql table model table_model ....................................... [RUN]
+[0m12:17:47  1 of 2 OK created sql table model table_model .................................. [[32mSUCCESS[0m in 1.67s]
+[0m12:17:47  2 of 2 START sql view model view_model ......................................... [RUN]
+[0m12:17:49  2 of 2 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 1.31s]
+[0m12:17:49  
+[0m12:17:49  Finished running 1 table model, 1 view model in 0 hours 0 minutes and 4.77 seconds (4.77s).
+[0m12:17:49  
+[0m12:17:49  [32mCompleted successfully[0m
+[0m12:17:49  
+[0m12:17:49  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+[0m12:17:49  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- ModelParamUsageDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+
+
+Invoking dbt with ['test']
+[0m12:17:49  Running with dbt=1.10.6
+[0m12:17:49  Registered adapter: firebolt=1.9.4
+[0m12:17:49  Found 2 models, 1 snapshot, 1 seed, 3 data tests, 1 source, 464 macros
+[0m12:17:49  
+[0m12:17:49  Concurrency: 1 threads (target='default')
+[0m12:17:49  
+[0m12:17:50  1 of 3 START test not_null_base_id ............................................. [RUN]
+[0m12:17:50  1 of 3 PASS not_null_base_id ................................................... [[32mPASS[0m in 0.90s]
+[0m12:17:51  2 of 3 START test not_null_table_model_id ...................................... [RUN]
+[0m12:17:51  2 of 3 PASS not_null_table_model_id ............................................ [[32mPASS[0m in 0.87s]
+[0m12:17:51  3 of 3 START test not_null_view_model_id ....................................... [RUN]
+[0m12:17:52  3 of 3 PASS not_null_view_model_id ............................................. [[32mPASS[0m in 0.86s]
+[0m12:17:52  
+[0m12:17:52  Finished running 3 data tests in 0 hours 0 minutes and 3.55 seconds (3.55s).
+[0m12:17:52  
+[0m12:17:52  [32mCompleted successfully[0m
+[0m12:17:52  
+[0m12:17:52  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=3
+[0m12:17:52  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- ModelParamUsageDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
