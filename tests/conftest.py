@@ -1,4 +1,5 @@
 import os
+from typing import Any
 
 import pytest
 from dbt.tests.util import write_file
@@ -13,7 +14,7 @@ pytest_plugins = ['dbt.tests.fixtures.project']
 # The profile dictionary, used to write out profiles.yml
 # dbt will supply a unique schema per test, so we do not specify 'schema' here
 @pytest.fixture(scope='class')
-def dbt_profile_target():
+def dbt_profile_target() -> dict[str, Any]:
     profile = {
         'type': 'firebolt',
         'threads': 1,
@@ -30,6 +31,8 @@ def dbt_profile_target():
     elif os.getenv('CLIENT_ID') and os.getenv('CLIENT_SECRET'):
         profile['client_id'] = os.getenv('CLIENT_ID')
         profile['client_secret'] = SecretStr(os.getenv('CLIENT_SECRET', ''))
+    elif os.getenv('CORE_URL'):
+        profile['url'] = os.getenv('CORE_URL')
     else:
         raise Exception('No credentials found in environment')
     return profile
@@ -87,6 +90,14 @@ def profiles_yml(profiles_root, dbt_profile_data):
 @pytest.fixture(scope='class')
 def profile_user(dbt_profile_target):
     return dbt_profile_target.get('user', dbt_profile_target.get('client_id'))
+
+
+@pytest.fixture(scope='class')
+def is_firebolt_core(dbt_profile_target: dict[str, Any]) -> bool:
+    """
+    Returns True if the connection is to Firebolt Core, False otherwise.
+    """
+    return 'url' in dbt_profile_target
 
 
 @pytest.fixture(scope='class')

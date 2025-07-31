@@ -19,7 +19,12 @@ from dbt_common.exceptions import (
     NotImplementedError,
 )
 from firebolt.client import DEFAULT_API_URL
-from firebolt.client.auth import Auth, ClientCredentials, UsernamePassword
+from firebolt.client.auth import (
+    Auth,
+    ClientCredentials,
+    FireboltCore,
+    UsernamePassword,
+)
 from firebolt.db import ARRAY, DECIMAL, ExtendedType
 from firebolt.db import connect as sdk_connect
 from firebolt.db.connection import Connection as SDKConnection
@@ -41,6 +46,7 @@ class FireboltCredentials(Credentials):
     api_endpoint: Optional[str] = DEFAULT_API_URL
     engine_name: Optional[str] = None
     account_name: Optional[str] = None
+    url: Optional[str] = None
     retries: int = 1
 
     _ALIASES = {
@@ -48,26 +54,14 @@ class FireboltCredentials(Credentials):
     }
 
     def __post_init__(self) -> None:
-        # If user and password are not provided, assume client_id and client_secret
-        # are provided instead
-        if not self.user and not self.password:
-            if not self.client_id or not self.client_secret:
-                raise DbtConfigError(
-                    'Either user and password or client_id and client_secret'
-                    ' must be provided'
-                )
-        else:
-            if self.client_id or self.client_secret:
-                raise DbtConfigError(
-                    'Either user and password or client_id and client_secret'
-                    ' must be provided'
-                )
+        # Check the credentials are valid and we can determine the auth method
+        _determine_auth(self)
 
     @property
     def type(self) -> str:
         return 'firebolt'
 
-    def _connection_keys(self) -> Tuple[str, str, str, str, str, str, str]:
+    def _connection_keys(self) -> Tuple[str, str, str, str, str, str, str, str]:
         """
         Return tuple of keys (i.e. not values) to display
         in the `dbt debug` output.
@@ -80,6 +74,7 @@ class FireboltCredentials(Credentials):
             'database',
             'engine_name',
             'params',
+            'url',
         )
 
     @property
@@ -222,17 +217,50 @@ class FireboltConnectionManager(SQLConnectionManager):
 
 
 def _determine_auth(credentials: FireboltCredentials) -> Auth:
-    if credentials.client_id and credentials.client_secret:
-        return ClientCredentials(credentials.client_id, credentials.client_secret)
-    elif '@' in credentials.user:  # type: ignore # checked in the dataclass
-        # email auth can only be used with UsernamePassword
-        return UsernamePassword(
-            credentials.user,  # type: ignore[arg-type]
-            credentials.password,  # type: ignore[arg-type]
-        )
-    else:
-        # assume user provided id and secret in the user/password fields
+    """Determine the appropriate authentication method based on provided credentials."""
+
+    def _has_client_credentials() -> bool:
+        return bool(credentials.client_id and credentials.client_secret)
+
+    def _has_user_password() -> bool:
+        return bool(credentials.user and credentials.password)
+
+    def _is_email_auth() -> bool:
+        return bool(credentials.user and '@' in credentials.user)
+
+    # Handle Firebolt Core authentication (no other credentials allowed)
+    if credentials.url:
+        if _has_client_credentials() or _has_user_password():
+            raise DbtConfigError(
+                'If url is provided, do not provide user, password, '
+                'client_id, or client_secret.'
+            )
+        return FireboltCore()
+
+    # Handle client credentials authentication
+    if _has_client_credentials():
         return ClientCredentials(
-            credentials.user,  # type: ignore[arg-type]
-            credentials.password,  # type: ignore[arg-type]
+            credentials.client_id,  # type: ignore[arg-type]
+            credentials.client_secret,  # type: ignore[arg-type]
         )
+
+    # Handle username/password authentication
+    if _has_user_password():
+        if _is_email_auth():
+            return UsernamePassword(
+                credentials.user,  # type: ignore[arg-type]
+                credentials.password,  # type: ignore[arg-type]
+            )
+        else:
+            return ClientCredentials(
+                credentials.user,  # type: ignore[arg-type]
+                credentials.password,  # type: ignore[arg-type]
+            )
+
+    # If we reach here, no valid authentication method was found
+    raise DbtConfigError(
+        'No valid authentication method found. Provide either:\n'
+        '- client_id and client_secret\n'
+        '- user and password\n'
+        '- or use url for Firebolt Core connection'
+    )

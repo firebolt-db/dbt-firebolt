@@ -6,6 +6,17 @@ on:
 jobs:
   code-check:
     uses: ./.github/workflows/code-check.yml
+  core-tests:
+    strategy:
+      fail-fast: false # finish all jobs even if one fails
+      matrix:
+        os: ['ubuntu-latest']
+        python-version: ['3.9', '3.10', '3.11', '3.12']
+    uses: ./.github/workflows/integration-tests-core.yml
+    with:
+      python_version: ${{ matrix.python-version }}
+      os_name: ${{ matrix.os }}
+
   tests:
     runs-on: ${{ matrix.os }}
     strategy:

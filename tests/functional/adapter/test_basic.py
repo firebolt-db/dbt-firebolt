@@ -37,7 +37,12 @@ from dbt.tests.adapter.basic.test_snapshot_check_cols import (
 from dbt.tests.adapter.basic.test_snapshot_timestamp import (
     BaseSnapshotTimestamp,
 )
-from dbt.tests.util import check_relations_equal, relation_from_name, run_dbt
+from dbt.tests.util import (
+    check_relations_equal,
+    relation_from_name,
+    run_dbt,
+    run_dbt_and_capture,
+)
 from pytest import fixture, mark
 
 
@@ -237,3 +242,51 @@ class TestDocsGenReferencesFirebolt(BaseDocsGenReferences):
 @mark.skip('Firebolt does not support schema change yet')
 class TestIncrementalNotSchemaChange(BaseIncrementalNotSchemaChange):
     pass
+
+
+class TestFireboltCorrectTypeMaterialisation(BaseGenericTests):
+    @fixture(scope='class')
+    def snapshots(self):
+        return {
+            'test_snapshot.sql': """
+                {% snapshot test_snapshot %}
+                    {{
+                        config(
+                            target_schema='public',
+                            unique_key='id',
+                            strategy='timestamp',
+                            updated_at='some_date',
+                        )
+                    }}
+                    select * from {{ ref('base') }}
+                {% endsnapshot %}
+            """
+        }
+
+    def test_table_type_based_on_is_firebolt_core(
+        self, project, is_firebolt_core: bool
+    ):
+        # Determine expected and unexpected table types based on Firebolt type
+        expected_table = 'FACT' if is_firebolt_core else 'DIMENSION'
+        expected_table_query = f'CREATE {expected_table} TABLE'
+        unexpected_table = 'DIMENSION' if is_firebolt_core else 'FACT'
+        unexpected_table_query = f'CREATE {unexpected_table} TABLE'
+
+        for command in ['seed', 'run', 'snapshot', 'test']:
+            # Run the command with debug and JSON logging to capture SQL statements
+            results, log_output = run_dbt_and_capture(
+                ['--debug', '--log-format=json', command], expect_pass=True
+            )
+            assert results is not None, f'Command {command} failed'
+
+            # Check for unexpected table type - fail immediately if found
+            assert unexpected_table_query not in log_output, (
+                f"Found unexpected '{unexpected_table_query}' in dbt " f'{command} logs'
+            )
+
+            # Check for expected table type
+            if command in ['seed', 'run', 'snapshot']:
+                assert expected_table_query in log_output, (
+                    f"No instances of '{expected_table_query}' found "
+                    f'in dbt {command} logs'
+                )

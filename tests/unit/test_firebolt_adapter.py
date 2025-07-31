@@ -3,9 +3,11 @@ from multiprocessing import get_context
 from unittest.mock import MagicMock, patch
 
 import agate
+import pytest
 from dbt.adapters.contracts.connection import Connection
-from dbt_common.exceptions import DbtRuntimeError
+from dbt_common.exceptions import DbtConfigError, DbtRuntimeError
 from firebolt.client.auth import ClientCredentials, UsernamePassword
+from firebolt.client.auth.firebolt_core import FireboltCore
 from firebolt.db import ARRAY, DECIMAL
 from firebolt.db.connection import Connection as SDKConnection
 from firebolt.utils.exception import InterfaceError
@@ -181,6 +183,33 @@ def test_determine_auth_with_id_and_secret():
     assert auth.client_secret == 'your_user_secret'
 
 
+def test_determine_auth_with_url_only():
+    credentials = FireboltCredentials(
+        database='your_database',
+        schema='your_schema',
+        url='https://example.com',
+        # No user, password, client_id, client_secret
+    )
+    auth = _determine_auth(credentials)
+    assert isinstance(auth, FireboltCore)
+
+
+def test_determine_auth_with_url_and_credentials_raises():
+    with pytest.raises(
+        DbtConfigError,
+        match='If url is provided, do not provide user, password, client_id, '
+        'or client_secret.',
+    ):
+        credentials = FireboltCredentials(
+            user='user',
+            password='pass',
+            database='your_database',
+            schema='your_schema',
+            url='https://example.com',
+        )
+        _determine_auth(credentials)
+
+
 def test_make_field_partition_pairs_valid(adapter):
     columns = [
         {'name': 'col1', 'data_type': 'INT'},
@@ -285,8 +314,8 @@ def test_get_rows_different_sql_valid(adapter):
     sql = adapter.get_rows_different_sql(relation_a, relation_b, column_names)
     assert 'SELECT "col1", "col2" FROM table_a' in sql
     assert 'SELECT "col1", "col2" FROM table_b' in sql
-    assert 'WHERE table_a."col1" = table_b."col1"' in sql
-    assert 'AND table_a."col2" = table_b."col2"' in sql
+    assert 'WHERE table_a."col1" IS NOT DISTINCT FROM table_b."col1"' in sql
+    assert 'AND table_a."col2" IS NOT DISTINCT FROM table_b."col2"' in sql
 
 
 def test_get_rows_different_sql_empty_columns(adapter):
@@ -309,8 +338,8 @@ def test_get_rows_different_sql_empty_columns(adapter):
     print(sql)
     assert 'SELECT "col1", "col2" FROM table_a' in sql
     assert 'SELECT "col1", "col2" FROM table_b' in sql
-    assert 'WHERE table_a."col1" = table_b."col1"' in sql
-    assert 'AND table_a."col2" = table_b."col2"' in sql
+    assert 'WHERE table_a."col1" IS NOT DISTINCT FROM table_b."col1"' in sql
+    assert 'AND table_a."col2" IS NOT DISTINCT FROM table_b."col2"' in sql
 
 
 def test_annotate_date_columns_for_partitions_valid(adapter):
