@@ -1,0 +1,16 @@
+INFO:httpx:HTTP Request: POST https://01hzdxdxjqa9n6c07d5j51skep.api.us-east-1.staging.firebolt.io/?output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 0 rows in 0.39582109451293945 seconds.
+INFO:httpx:HTTP Request: POST https://01hzdxdxjqa9n6c07d5j51skep.api.us-east-1.staging.firebolt.io/?database=integration_testing__1754041390329&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 0 rows in 0.35333681106567383 seconds.
+INFO:httpx:HTTP Request: POST https://automation-firebolt.api.us-east-1.staging.firebolt.io/?database=integration_testing__1754041390329&engine=integration_testing__1754041390329&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 1 rows in 0.038059234619140625 seconds.
+INFO:httpx:HTTP Request: POST https://automation-firebolt.api.us-east-1.staging.firebolt.io/?database=integration_testing__1754041390329&engine=integration_testing__1754041390329&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 1 rows in 0.023001432418823242 seconds.
+INFO:httpx:HTTP Request: POST https://01hzdxdxjqa9n6c07d5j51skep.api.us-east-1.staging.firebolt.io/?output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 0 rows in 0.04672122001647949 seconds.
+INFO:httpx:HTTP Request: POST https://01hzdxdxjqa9n6c07d5j51skep.api.us-east-1.staging.firebolt.io/?database=integration_testing__1754041390329&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 0 rows in 0.046724557876586914 seconds.
+INFO:httpx:HTTP Request: POST https://automation-firebolt.api.us-east-1.staging.firebolt.io/?database=integration_testing__1754041390329&engine=integration_testing__1754041390329&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 1 rows in 0.03483915328979492 seconds.
+INFO:httpx:HTTP Request: POST https://automation-firebolt.api.us-east-1.staging.firebolt.io/?database=integration_testing__1754041390329&engine=integration_testing__1754041390329&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 1 rows in 0.016251564025878906 seconds.
