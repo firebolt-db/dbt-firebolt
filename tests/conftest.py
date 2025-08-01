@@ -101,6 +101,14 @@ def is_firebolt_core(dbt_profile_target: dict[str, Any]) -> bool:
 
 
 @pytest.fixture(scope='class')
+def is_firebolt_1_0(dbt_profile_target: dict[str, Any]) -> bool:
+    """
+    Returns True if the connection is to Firebolt 1.0, False otherwise.
+    """
+    return dbt_profile_target.get('password') is not None
+
+
+@pytest.fixture(scope='class')
 def unique_schema(request, prefix) -> str:
     """Firebolt does not have concept of schemas so we return 'public' here."""
     return 'public'
