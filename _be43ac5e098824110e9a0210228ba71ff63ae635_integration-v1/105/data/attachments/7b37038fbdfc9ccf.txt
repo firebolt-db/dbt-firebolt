@@ -1,0 +1,51 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m09:57:21  Running with dbt=1.10.6
+[0m09:57:21  Registered adapter: firebolt=1.9.4
+[0m09:57:22  Found 12 models, 1 seed, 464 macros
+[0m09:57:22  
+[0m09:57:22  Concurrency: 1 threads (target='default')
+[0m09:57:22  
+[0m09:57:22  1 of 1 START seed file seed .................................................... [RUN]
+[0m09:57:24  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 7[0m in 1.77s]
+[0m09:57:24  
+[0m09:57:24  Finished running 1 seed in 0 hours 0 minutes and 2.54 seconds (2.54s).
+[0m09:57:24  
+[0m09:57:24  [32mCompleted successfully[0m
+[0m09:57:24  
+[0m09:57:24  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'empty_unique_key_list', '--full-refresh']
+[0m09:57:24  Running with dbt=1.10.6
+[0m09:57:24  Registered adapter: firebolt=1.9.4
+[0m09:57:24  Found 12 models, 1 seed, 464 macros
+[0m09:57:24  
+[0m09:57:24  Concurrency: 1 threads (target='default')
+[0m09:57:24  
+[0m09:57:25  1 of 1 START sql incremental model empty_unique_key_list ....................... [RUN]
+[0m09:57:26  1 of 1 OK created sql incremental model empty_unique_key_list .................. [[32mSUCCESS[0m in 1.19s]
+[0m09:57:26  
+[0m09:57:26  Finished running 1 incremental model in 0 hours 0 minutes and 1.93 seconds (1.93s).
+[0m09:57:26  
+[0m09:57:26  [32mCompleted successfully[0m
+[0m09:57:26  
+[0m09:57:26  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'empty_unique_key_list']
+[0m09:57:28  Running with dbt=1.10.6
+[0m09:57:28  Registered adapter: firebolt=1.9.4
+[0m09:57:28  Found 12 models, 1 seed, 464 macros
+[0m09:57:28  
+[0m09:57:28  Concurrency: 1 threads (target='default')
+[0m09:57:28  
+[0m09:57:29  1 of 1 START sql incremental model empty_unique_key_list ....................... [RUN]
+[0m09:57:31  1 of 1 OK created sql incremental model empty_unique_key_list .................. [[32mSUCCESS[0m in 1.76s]
+[0m09:57:31  
+[0m09:57:31  Finished running 1 incremental model in 0 hours 0 minutes and 2.54 seconds (2.54s).
+[0m09:57:31  
+[0m09:57:31  [32mCompleted successfully[0m
+[0m09:57:31  
+[0m09:57:31  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
