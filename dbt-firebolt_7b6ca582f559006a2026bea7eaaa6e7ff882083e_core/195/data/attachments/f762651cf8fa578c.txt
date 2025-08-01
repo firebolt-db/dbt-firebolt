@@ -1,0 +1,21 @@
+
+
+Invoking dbt with ['build']
+[0m01:42:17  Running with dbt=1.10.6
+[0m01:42:17  Registered adapter: firebolt=1.9.4
+[0m01:42:17  Found 2 models, 467 macros
+[0m01:42:17  
+[0m01:42:17  Concurrency: 1 threads (target='default')
+[0m01:42:17  
+[0m01:42:18  1 of 2 START sql table model actual ............................................ [RUN]
+[0m01:42:18  1 of 2 OK created sql table model actual ....................................... [[32mSUCCESS[0m in 0.10s]
+[0m01:42:18  2 of 2 START sql table model expected .......................................... [RUN]
+[0m01:42:18  2 of 2 OK created sql table model expected ..................................... [[32mSUCCESS[0m in 0.10s]
+[0m01:42:18  
+[0m01:42:18  Finished running 2 table models in 0 hours 0 minutes and 0.32 seconds (0.32s).
+[0m01:42:18  
+[0m01:42:18  [32mCompleted successfully[0m
+[0m01:42:18  
+[0m01:42:18  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+Expected: [('array_col', 'ARRAY(INTEGER)', None), ('id', 'INTEGER', None)]
+Actual: [('array_col', 'ARRAY(INTEGER)', None), ('id', 'INTEGER', None)]

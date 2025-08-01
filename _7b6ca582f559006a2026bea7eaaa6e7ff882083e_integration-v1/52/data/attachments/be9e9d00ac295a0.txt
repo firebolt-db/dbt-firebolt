@@ -1,6 +1,0 @@
-INFO:httpx:HTTP Request: GET https://api.staging.firebolt.io/iam/v2/accounts:getIdByName?account_name=firebolt "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://api.staging.firebolt.io/core/v1/accounts/297db526-f0c1-46f2-9f67-6e9142931479/engines:getIdByName?engine_name=integration_testing__1753963708 "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://api.staging.firebolt.io/core/v1/accounts/297db526-f0c1-46f2-9f67-6e9142931479/engines/a81e5675-274b-4e17-8855-77e5438878ee "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: POST https://integration-testing-1753963708.firebolt.us-east-1.staging.firebolt.io/?database=integration_testing__1753963708&output_format=JSON_Compact "HTTP/1.1 200 OK"
-INFO:firebolt.db.cursor:Query fetched 1 rows in 0.31351375579833984 seconds.
-INFO:httpx:HTTP Request: POST https://integration-testing-1753963708.firebolt.us-east-1.staging.firebolt.io/?database=integration_testing__1753963708&output_format=JSON_Compact "HTTP/1.1 500 Internal Server Error"
