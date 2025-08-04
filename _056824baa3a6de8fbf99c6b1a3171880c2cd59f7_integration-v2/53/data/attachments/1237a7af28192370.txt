@@ -1,0 +1,88 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project41
+
+
+Invoking dbt with ['seed']
+[0m08:41:46  Running with dbt=1.10.6
+[0m08:41:46  Registered adapter: firebolt=1.9.4
+[0m08:41:46  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m08:41:46  Found 1 model, 3 data tests, 1 seed, 464 macros
+[0m08:41:46  
+[0m08:41:46  Concurrency: 1 threads (target='default')
+[0m08:41:46  
+[0m08:41:47  1 of 1 START seed file chipmunks_stage ......................................... [RUN]
+[0m08:41:47  1 of 1 OK loaded seed file public.chipmunks_stage .............................. [[32mINSERT 4[0m in 0.60s]
+[0m08:41:47  
+[0m08:41:47  Finished running 1 seed in 0 hours 0 minutes and 1.68 seconds (1.68s).
+[0m08:41:47  
+[0m08:41:47  [32mCompleted successfully[0m
+[0m08:41:47  
+[0m08:41:47  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m08:41:47  Running with dbt=1.10.6
+[0m08:41:48  Registered adapter: firebolt=1.9.4
+[0m08:41:48  Found 1 model, 3 data tests, 1 seed, 464 macros
+[0m08:41:48  
+[0m08:41:48  Concurrency: 1 threads (target='default')
+[0m08:41:48  
+[0m08:41:49  1 of 1 START sql table model chipmunks ......................................... [RUN]
+[0m08:41:50  1 of 1 OK created sql table model chipmunks .................................... [[32mSUCCESS[0m in 1.07s]
+[0m08:41:50  
+[0m08:41:50  Finished running 1 table model in 0 hours 0 minutes and 2.92 seconds (2.92s).
+[0m08:41:51  
+[0m08:41:51  [32mCompleted successfully[0m
+[0m08:41:51  
+[0m08:41:51  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m08:41:51  Running with dbt=1.10.6
+[0m08:41:51  Registered adapter: firebolt=1.9.4
+[0m08:41:51  Found 1 model, 3 data tests, 1 seed, 464 macros
+[0m08:41:51  
+[0m08:41:51  Concurrency: 1 threads (target='default')
+[0m08:41:51  
+[0m08:41:53  1 of 3 START test results_false ................................................ [RUN]
+[0m08:41:53  1 of 3 FAIL 1 results_false .................................................... [[31mFAIL 1[0m in 0.49s]
+[0m08:41:53  2 of 3 START test results_true ................................................. [RUN]
+[0m08:41:53  2 of 3 FAIL 1 results_true ..................................................... [[31mFAIL 1[0m in 0.46s]
+[0m08:41:53  3 of 3 START test results_unset ................................................ [RUN]
+[0m08:41:54  3 of 3 FAIL 1 results_unset .................................................... [[31mFAIL 1[0m in 0.45s]
+[0m08:41:54  
+[0m08:41:54  Finished running 3 data tests in 0 hours 0 minutes and 3.18 seconds (3.18s).
+[0m08:41:54  
+[0m08:41:54  [31mCompleted with 3 errors, 0 partial successes, and 0 warnings:[0m
+[0m08:41:54  
+[0m08:41:54  [31mFailure in test results_false (tests/results_false.sql)[0m
+[0m08:41:54    Got 1 result, configured to fail if != 0
+[0m08:41:54  
+[0m08:41:54    compiled code at target/compiled/test/tests/results_false.sql
+[0m08:41:54  
+[0m08:41:54    See test failures:
+  ---------------------------
+  select * from results_false
+  ---------------------------
+[0m08:41:54  
+[0m08:41:54  [31mFailure in test results_true (tests/results_true.sql)[0m
+[0m08:41:54    Got 1 result, configured to fail if != 0
+[0m08:41:54  
+[0m08:41:54    compiled code at target/compiled/test/tests/results_true.sql
+[0m08:41:54  
+[0m08:41:54    See test failures:
+  --------------------------
+  select * from results_true
+  --------------------------
+[0m08:41:54  
+[0m08:41:54  [31mFailure in test results_unset (tests/results_unset.sql)[0m
+[0m08:41:54    Got 1 result, configured to fail if != 0
+[0m08:41:54  
+[0m08:41:54    compiled code at target/compiled/test/tests/results_unset.sql
+[0m08:41:54  
+[0m08:41:54    See test failures:
+  ---------------------------
+  select * from results_unset
+  ---------------------------
+[0m08:41:54  
+[0m08:41:54  Done. PASS=0 WARN=0 ERROR=3 SKIP=0 NO-OP=0 TOTAL=3
