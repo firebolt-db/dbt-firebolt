@@ -1,0 +1,18 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project44
+
+
+Invoking dbt with ['parse']
+[0m08:40:40  Running with dbt=1.10.6
+[0m08:40:40  Registered adapter: firebolt=1.9.4
+[0m08:40:40  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m08:40:41  Encountered an error:
+Parsing Error
+  
+  Seeds cannot depend on other nodes. dbt detected a seed with a pre- or post-hook
+  that calls 'ref', 'source', or 'metric', either directly or indirectly via other macros.
+  
+  Error raised for 'seed.test.example_seed', which has these hooks defined: 
+  - post_hook: "select * from {{ ref('post') }}"
+          
+[0m08:40:41  Unable to do partial parsing because saved manifest not found. Starting full parse.
