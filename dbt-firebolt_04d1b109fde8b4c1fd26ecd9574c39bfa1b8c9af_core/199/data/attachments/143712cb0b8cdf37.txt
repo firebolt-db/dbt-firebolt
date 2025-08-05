@@ -1,0 +1,43 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project90
+
+
+Invoking dbt with ['run']
+[0m01:41:49  Running with dbt=1.10.6
+[0m01:41:49  Registered adapter: firebolt=1.10.0
+[0m01:41:49  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m01:41:49  Found 1 model, 1 test, 467 macros
+[0m01:41:49  
+[0m01:41:49  Concurrency: 1 threads (target='default')
+[0m01:41:49  
+[0m01:41:49  1 of 1 START sql view model test_mixed_null_compare ............................ [RUN]
+[0m01:41:49  1 of 1 OK created sql view model test_mixed_null_compare ....................... [[32mSUCCESS[0m in 0.09s]
+[0m01:41:49  
+[0m01:41:49  Finished running 1 view model in 0 hours 0 minutes and 0.21 seconds (0.21s).
+[0m01:41:49  
+[0m01:41:49  [32mCompleted successfully[0m
+[0m01:41:49  
+[0m01:41:49  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m01:41:49  Running with dbt=1.10.6
+[0m01:41:49  Registered adapter: firebolt=1.10.0
+[0m01:41:49  Found 1 model, 1 test, 467 macros
+[0m01:41:49  
+[0m01:41:49  Concurrency: 1 threads (target='default')
+[0m01:41:49  
+[0m01:41:49  1 of 1 START test assert_equal_test_mixed_null_compare_actual__expected ........ [RUN]
+[0m01:41:49  1 of 1 ERROR assert_equal_test_mixed_null_compare_actual__expected ............. [[31mERROR[0m in 0.06s]
+[0m01:41:49  
+[0m01:41:49  Finished running 1 test in 0 hours 0 minutes and 0.13 seconds (0.13s).
+[0m01:41:49  
+[0m01:41:49  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m01:41:49  
+[0m01:41:49  [31mFailure in test assert_equal_test_mixed_null_compare_actual__expected (models/test_mixed_null_compare.yml)[0m
+[0m01:41:49    Runtime Error in test assert_equal_test_mixed_null_compare_actual__expected (models/test_mixed_null_compare.yml)
+  - Line 14, Column 30: operator '=' for input types (integer, text) not found, try adding explicit casts
+[0m01:41:49  
+[0m01:41:49    compiled code at target/compiled/test/models/test_mixed_null_compare.yml/assert_equal_test_mixed_null_compare_actual__expected.sql
+[0m01:41:49  
+[0m01:41:49  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1
