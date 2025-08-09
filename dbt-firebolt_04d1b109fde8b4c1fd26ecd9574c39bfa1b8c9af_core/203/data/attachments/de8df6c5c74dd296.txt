@@ -1,0 +1,38 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project15
+
+
+Invoking dbt with ['run']
+[0m01:37:24  Running with dbt=1.10.7
+[0m01:37:24  Registered adapter: firebolt=1.10.0
+[0m01:37:24  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m01:37:24  Found 1 model, 1 test, 467 macros
+[0m01:37:24  
+[0m01:37:24  Concurrency: 1 threads (target='default')
+[0m01:37:24  
+[0m01:37:24  1 of 1 START sql view model model .............................................. [RUN]
+[0m01:37:24  1 of 1 OK created sql view model model ......................................... [[32mSUCCESS[0m in 0.08s]
+[0m01:37:24  
+[0m01:37:24  Finished running 1 view model in 0 hours 0 minutes and 0.19 seconds (0.19s).
+[0m01:37:24  
+[0m01:37:24  [32mCompleted successfully[0m
+[0m01:37:24  
+[0m01:37:24  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m01:37:24  Running with dbt=1.10.7
+[0m01:37:24  Registered adapter: firebolt=1.10.0
+[0m01:37:25  Found 1 model, 1 test, 467 macros
+[0m01:37:25  
+[0m01:37:25  Concurrency: 1 threads (target='default')
+[0m01:37:25  
+[0m01:37:25  1 of 1 START test is_type_model__integer_number____integer_number____integer_number____float_number____float_number____numeric_number____string_not_number____string_not_number_  [RUN]
+[0m01:37:25  bad columns: []
+[0m01:37:25  1 of 1 PASS is_type_model__integer_number____integer_number____integer_number____float_number____float_number____numeric_number____string_not_number____string_not_number_  [[32mPASS[0m in 0.10s]
+[0m01:37:25  
+[0m01:37:25  Finished running 1 test in 0 hours 0 minutes and 0.17 seconds (0.17s).
+[0m01:37:25  
+[0m01:37:25  [32mCompleted successfully[0m
+[0m01:37:25  
+[0m01:37:25  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
