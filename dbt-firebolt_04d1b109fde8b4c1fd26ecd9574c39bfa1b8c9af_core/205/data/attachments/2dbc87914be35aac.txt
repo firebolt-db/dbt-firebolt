@@ -1,0 +1,33 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project9
+
+
+Invoking dbt with ['compile']
+[0m01:39:19  Running with dbt=1.10.7
+[0m01:39:19  Registered adapter: firebolt=1.10.0
+[0m01:39:19  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m01:39:19  Found 3 models, 1 test, 464 macros
+[0m01:39:19  
+[0m01:39:19  Concurrency: 1 threads (target='default')
+[0m01:39:19  
+
+
+Invoking dbt with ['run']
+[0m01:39:20  Running with dbt=1.10.7
+[0m01:39:20  Registered adapter: firebolt=1.10.0
+[0m01:39:20  Found 3 models, 1 test, 464 macros
+[0m01:39:20  
+[0m01:39:20  Concurrency: 1 threads (target='default')
+[0m01:39:20  
+[0m01:39:20  1 of 3 START sql view model upstream ........................................... [RUN]
+[0m01:39:21  1 of 3 OK created sql view model upstream ...................................... [[32mSUCCESS[0m in 0.26s]
+[0m01:39:21  2 of 3 START sql view model model .............................................. [RUN]
+[0m01:39:21  2 of 3 OK created sql view model model ......................................... [[32mSUCCESS[0m in 0.45s]
+[0m01:39:21  3 of 3 START sql view model expected ........................................... [RUN]
+[0m01:39:21  3 of 3 OK created sql view model expected ...................................... [[32mSUCCESS[0m in 0.09s]
+[0m01:39:21  
+[0m01:39:21  Finished running 3 view models in 0 hours 0 minutes and 0.94 seconds (0.94s).
+[0m01:39:21  
+[0m01:39:21  [32mCompleted successfully[0m
+[0m01:39:21  
+[0m01:39:21  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=3
