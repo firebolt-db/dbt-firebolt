@@ -1,0 +1,88 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project41
+
+
+Invoking dbt with ['seed']
+[0m01:38:54  Running with dbt=1.10.7
+[0m01:38:54  Registered adapter: firebolt=1.10.0
+[0m01:38:54  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m01:38:55  Found 1 model, 3 data tests, 1 seed, 464 macros
+[0m01:38:55  
+[0m01:38:55  Concurrency: 1 threads (target='default')
+[0m01:38:55  
+[0m01:38:55  1 of 1 START seed file chipmunks_stage ......................................... [RUN]
+[0m01:38:55  1 of 1 OK loaded seed file public.chipmunks_stage .............................. [[32mINSERT 4[0m in 0.09s]
+[0m01:38:55  
+[0m01:38:55  Finished running 1 seed in 0 hours 0 minutes and 0.28 seconds (0.28s).
+[0m01:38:55  
+[0m01:38:55  [32mCompleted successfully[0m
+[0m01:38:55  
+[0m01:38:55  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m01:38:55  Running with dbt=1.10.7
+[0m01:38:55  Registered adapter: firebolt=1.10.0
+[0m01:38:55  Found 1 model, 3 data tests, 1 seed, 464 macros
+[0m01:38:55  
+[0m01:38:55  Concurrency: 1 threads (target='default')
+[0m01:38:55  
+[0m01:38:55  1 of 1 START sql table model chipmunks ......................................... [RUN]
+[0m01:38:55  1 of 1 OK created sql table model chipmunks .................................... [[32mSUCCESS[0m in 0.10s]
+[0m01:38:55  
+[0m01:38:56  Finished running 1 table model in 0 hours 0 minutes and 0.29 seconds (0.29s).
+[0m01:38:56  
+[0m01:38:56  [32mCompleted successfully[0m
+[0m01:38:56  
+[0m01:38:56  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test']
+[0m01:38:56  Running with dbt=1.10.7
+[0m01:38:56  Registered adapter: firebolt=1.10.0
+[0m01:38:56  Found 1 model, 3 data tests, 1 seed, 464 macros
+[0m01:38:56  
+[0m01:38:56  Concurrency: 1 threads (target='default')
+[0m01:38:56  
+[0m01:38:56  1 of 3 START test results_false ................................................ [RUN]
+[0m01:38:56  1 of 3 FAIL 1 results_false .................................................... [[31mFAIL 1[0m in 0.07s]
+[0m01:38:56  2 of 3 START test results_true ................................................. [RUN]
+[0m01:38:56  2 of 3 FAIL 1 results_true ..................................................... [[31mFAIL 1[0m in 0.07s]
+[0m01:38:56  3 of 3 START test results_unset ................................................ [RUN]
+[0m01:38:56  3 of 3 FAIL 1 results_unset .................................................... [[31mFAIL 1[0m in 0.07s]
+[0m01:38:56  
+[0m01:38:56  Finished running 3 data tests in 0 hours 0 minutes and 0.47 seconds (0.47s).
+[0m01:38:56  
+[0m01:38:56  [31mCompleted with 3 errors, 0 partial successes, and 0 warnings:[0m
+[0m01:38:56  
+[0m01:38:56  [31mFailure in test results_false (tests/results_false.sql)[0m
+[0m01:38:56    Got 1 result, configured to fail if != 0
+[0m01:38:56  
+[0m01:38:56    compiled code at target/compiled/test/tests/results_false.sql
+[0m01:38:56  
+[0m01:38:56    See test failures:
+  ---------------------------
+  select * from results_false
+  ---------------------------
+[0m01:38:56  
+[0m01:38:56  [31mFailure in test results_true (tests/results_true.sql)[0m
+[0m01:38:56    Got 1 result, configured to fail if != 0
+[0m01:38:56  
+[0m01:38:56    compiled code at target/compiled/test/tests/results_true.sql
+[0m01:38:56  
+[0m01:38:56    See test failures:
+  --------------------------
+  select * from results_true
+  --------------------------
+[0m01:38:56  
+[0m01:38:56  [31mFailure in test results_unset (tests/results_unset.sql)[0m
+[0m01:38:56    Got 1 result, configured to fail if != 0
+[0m01:38:56  
+[0m01:38:56    compiled code at target/compiled/test/tests/results_unset.sql
+[0m01:38:56  
+[0m01:38:56    See test failures:
+  ---------------------------
+  select * from results_unset
+  ---------------------------
+[0m01:38:56  
+[0m01:38:56  Done. PASS=0 WARN=0 ERROR=3 SKIP=0 NO-OP=0 TOTAL=3
