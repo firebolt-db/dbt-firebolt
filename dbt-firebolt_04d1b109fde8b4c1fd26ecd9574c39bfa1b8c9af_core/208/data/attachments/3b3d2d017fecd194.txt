@@ -1,0 +1,103 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project42
+
+
+Invoking dbt with ['seed']
+[0m01:39:21  Running with dbt=1.10.8
+[0m01:39:21  Registered adapter: firebolt=1.10.0
+[0m01:39:21  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m01:39:21  [[33mWARNING[0m][MissingArgumentsPropertyInGenericTestDeprecation]: Deprecated
+functionality
+Found top-level arguments to test `not_null`. Arguments to generic tests should
+be nested under the `arguments` property.`
+[0m01:39:21  Found 1 model, 1 seed, 3 data tests, 464 macros
+[0m01:39:21  
+[0m01:39:21  Concurrency: 1 threads (target='default')
+[0m01:39:21  
+[0m01:39:21  1 of 1 START seed file chipmunks_stage ......................................... [RUN]
+[0m01:39:21  1 of 1 OK loaded seed file public.chipmunks_stage .............................. [[32mINSERT 4[0m in 0.08s]
+[0m01:39:21  
+[0m01:39:21  Finished running 1 seed in 0 hours 0 minutes and 0.26 seconds (0.26s).
+[0m01:39:21  
+[0m01:39:21  [32mCompleted successfully[0m
+[0m01:39:21  
+[0m01:39:21  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m01:39:21  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 3 occurrences
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+
+
+Invoking dbt with ['run']
+[0m01:39:21  Running with dbt=1.10.8
+[0m01:39:21  Registered adapter: firebolt=1.10.0
+[0m01:39:21  Found 1 model, 1 seed, 3 data tests, 464 macros
+[0m01:39:21  
+[0m01:39:21  Concurrency: 1 threads (target='default')
+[0m01:39:21  
+[0m01:39:22  1 of 1 START sql table model chipmunks ......................................... [RUN]
+[0m01:39:22  1 of 1 OK created sql table model chipmunks .................................... [[32mSUCCESS[0m in 0.09s]
+[0m01:39:22  
+[0m01:39:22  Finished running 1 table model in 0 hours 0 minutes and 0.26 seconds (0.26s).
+[0m01:39:22  
+[0m01:39:22  [32mCompleted successfully[0m
+[0m01:39:22  
+[0m01:39:22  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m01:39:22  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 3 occurrences
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+
+
+Invoking dbt with ['test']
+[0m01:39:22  Running with dbt=1.10.8
+[0m01:39:22  Registered adapter: firebolt=1.10.0
+[0m01:39:22  Found 1 model, 1 seed, 3 data tests, 464 macros
+[0m01:39:22  
+[0m01:39:22  Concurrency: 1 threads (target='default')
+[0m01:39:22  
+[0m01:39:22  1 of 3 START test accepted_values_chipmunks_name__alvin__simon__theodore ....... [RUN]
+[0m01:39:22  1 of 3 FAIL 1 accepted_values_chipmunks_name__alvin__simon__theodore ........... [[31mFAIL 1[0m in 0.09s]
+[0m01:39:22  2 of 3 START test not_null_chipmunks_name ...................................... [RUN]
+[0m01:39:22  2 of 3 PASS not_null_chipmunks_name ............................................ [[32mPASS[0m in 0.08s]
+[0m01:39:22  3 of 3 START test not_null_chipmunks_shirt ..................................... [RUN]
+[0m01:39:22  3 of 3 FAIL 1 not_null_chipmunks_shirt ......................................... [[31mFAIL 1[0m in 0.07s]
+[0m01:39:22  
+[0m01:39:22  Finished running 3 data tests in 0 hours 0 minutes and 0.47 seconds (0.47s).
+[0m01:39:22  
+[0m01:39:22  [31mCompleted with 2 errors, 0 partial successes, and 0 warnings:[0m
+[0m01:39:22  
+[0m01:39:22  [31mFailure in test accepted_values_chipmunks_name__alvin__simon__theodore (models/schema.yml)[0m
+[0m01:39:22    Got 1 result, configured to fail if != 0
+[0m01:39:22  
+[0m01:39:22    compiled code at target/compiled/test/models/schema.yml/accepted_values_chipmunks_name__alvin__simon__theodore.sql
+[0m01:39:22  
+[0m01:39:22    See test failures:
+  --------------------------------------------------------------------
+  select * from accepted_values_chipmunks_name__alvin__simon__theodore
+  --------------------------------------------------------------------
+[0m01:39:22  
+[0m01:39:22  [31mFailure in test not_null_chipmunks_shirt (models/schema.yml)[0m
+[0m01:39:22    Got 1 result, configured to fail if != 0
+[0m01:39:22  
+[0m01:39:22    compiled code at target/compiled/test/models/schema.yml/not_null_chipmunks_shirt.sql
+[0m01:39:22  
+[0m01:39:22    See test failures:
+  --------------------------------------
+  select * from not_null_chipmunks_shirt
+  --------------------------------------
+[0m01:39:22  
+[0m01:39:22  Done. PASS=1 WARN=0 ERROR=2 SKIP=0 NO-OP=0 TOTAL=3
+[0m01:39:22  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 3 occurrences
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.

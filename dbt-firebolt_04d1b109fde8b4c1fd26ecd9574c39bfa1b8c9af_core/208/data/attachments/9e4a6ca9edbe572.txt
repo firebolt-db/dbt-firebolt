@@ -1,0 +1,55 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project52
+
+
+Invoking dbt with ['seed']
+[0m01:39:35  Running with dbt=1.10.8
+[0m01:39:35  Registered adapter: firebolt=1.10.0
+[0m01:39:35  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m01:39:35  [[33mWARNING[0m][MissingArgumentsPropertyInGenericTestDeprecation]: Deprecated
+functionality
+Found top-level arguments to test `accepted_values`. Arguments to generic tests
+should be nested under the `arguments` property.`
+[0m01:39:36  Found 1 seed, 1 test, 464 macros
+[0m01:39:36  
+[0m01:39:36  Concurrency: 1 threads (target='default')
+[0m01:39:36  
+[0m01:39:36  1 of 1 START seed file example_seed ............................................ [RUN]
+[0m01:39:36  1 of 1 OK loaded seed file public.example_seed ................................. [[32mINSERT 3[0m in 0.11s]
+[0m01:39:36  
+[0m01:39:36  Finished running 1 seed in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m01:39:36  
+[0m01:39:36  [32mCompleted successfully[0m
+[0m01:39:36  
+[0m01:39:36  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m01:39:36  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+
+
+Invoking dbt with ['test']
+[0m01:39:36  Running with dbt=1.10.8
+[0m01:39:36  Registered adapter: firebolt=1.10.0
+[0m01:39:36  Found 1 seed, 1 test, 464 macros
+[0m01:39:36  
+[0m01:39:36  Concurrency: 1 threads (target='default')
+[0m01:39:36  
+[0m01:39:36  1 of 1 START test accepted_values_example_seed_c__0 ............................ [RUN]
+[0m01:39:36  1 of 1 PASS accepted_values_example_seed_c__0 .................................. [[32mPASS[0m in 0.07s]
+[0m01:39:36  
+[0m01:39:36  Finished running 1 test in 0 hours 0 minutes and 0.13 seconds (0.13s).
+[0m01:39:36  
+[0m01:39:36  [32mCompleted successfully[0m
+[0m01:39:36  
+[0m01:39:36  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m01:39:36  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
