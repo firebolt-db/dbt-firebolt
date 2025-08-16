@@ -1,0 +1,35 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project75
+
+
+Invoking dbt with ['build']
+[0m01:39:20  Running with dbt=1.10.9
+[0m01:39:20  Registered adapter: firebolt=1.10.0
+[0m01:39:20  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m01:39:20  [[33mWARNING[0m][MissingArgumentsPropertyInGenericTestDeprecation]: Deprecated
+functionality
+Found top-level arguments to test `assert_equal`. Arguments to generic tests
+should be nested under the `arguments` property.`
+[0m01:39:20  Found 1 model, 1 seed, 1 test, 467 macros
+[0m01:39:20  
+[0m01:39:20  Concurrency: 1 threads (target='default')
+[0m01:39:20  
+[0m01:39:20  1 of 3 START seed file data_dateadd ............................................ [RUN]
+[0m01:39:20  1 of 3 OK loaded seed file public.data_dateadd ................................. [[32mINSERT 5[0m in 0.09s]
+[0m01:39:20  2 of 3 START sql view model test_dateadd ....................................... [RUN]
+[0m01:39:20  2 of 3 OK created sql view model test_dateadd .................................. [[32mSUCCESS[0m in 0.09s]
+[0m01:39:20  3 of 3 START test assert_equal_test_dateadd_actual__expected ................... [RUN]
+[0m01:39:20  3 of 3 PASS assert_equal_test_dateadd_actual__expected ......................... [[32mPASS[0m in 0.06s]
+[0m01:39:20  
+[0m01:39:20  Finished running 1 seed, 1 test, 1 view model in 0 hours 0 minutes and 0.36 seconds (0.36s).
+[0m01:39:20  
+[0m01:39:20  [32mCompleted successfully[0m
+[0m01:39:20  
+[0m01:39:20  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=3
+[0m01:39:20  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
