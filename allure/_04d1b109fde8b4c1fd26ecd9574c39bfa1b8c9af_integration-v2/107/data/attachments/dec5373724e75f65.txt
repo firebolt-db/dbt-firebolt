@@ -1,0 +1,79 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project53
+
+
+Invoking dbt with ['seed']
+[0m12:25:05  Running with dbt=1.10.9
+[0m12:25:05  Registered adapter: firebolt=1.10.0
+[0m12:25:05  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:25:05  [[33mWARNING[0m][MissingArgumentsPropertyInGenericTestDeprecation]: Deprecated
+functionality
+Found top-level arguments to test `accepted_values`. Arguments to generic tests
+should be nested under the `arguments` property.`
+[0m12:25:05  Found 1 snapshot, 1 seed, 1 test, 464 macros
+[0m12:25:05  
+[0m12:25:05  Concurrency: 1 threads (target='default')
+[0m12:25:05  
+[0m12:25:07  1 of 1 START seed file example_seed ............................................ [RUN]
+[0m12:25:08  1 of 1 OK loaded seed file public.example_seed ................................. [[32mINSERT 3[0m in 1.20s]
+[0m12:25:08  
+[0m12:25:08  Finished running 1 seed in 0 hours 0 minutes and 2.45 seconds (2.45s).
+[0m12:25:08  
+[0m12:25:08  [32mCompleted successfully[0m
+[0m12:25:08  
+[0m12:25:08  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m12:25:08  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+
+
+Invoking dbt with ['snapshot']
+[0m12:25:08  Running with dbt=1.10.9
+[0m12:25:08  Registered adapter: firebolt=1.10.0
+[0m12:25:08  Found 1 snapshot, 1 seed, 1 test, 464 macros
+[0m12:25:08  
+[0m12:25:08  Concurrency: 1 threads (target='default')
+[0m12:25:08  
+[0m12:25:09  1 of 1 START snapshot example_snapshot ......................................... [RUN]
+[0m12:25:10  1 of 1 OK snapshotted example_snapshot ......................................... [[32mSUCCESS[0m in 1.26s]
+[0m12:25:10  
+[0m12:25:10  Finished running 1 snapshot in 0 hours 0 minutes and 2.56 seconds (2.56s).
+[0m12:25:10  
+[0m12:25:10  [32mCompleted successfully[0m
+[0m12:25:10  
+[0m12:25:10  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m12:25:10  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+
+
+Invoking dbt with ['test']
+[0m12:25:10  Running with dbt=1.10.9
+[0m12:25:10  Registered adapter: firebolt=1.10.0
+[0m12:25:11  Found 1 snapshot, 1 seed, 1 test, 464 macros
+[0m12:25:11  
+[0m12:25:11  Concurrency: 1 threads (target='default')
+[0m12:25:11  
+[0m12:25:11  1 of 1 START test accepted_values_example_snapshot_c__0 ........................ [RUN]
+[0m12:25:12  1 of 1 PASS accepted_values_example_snapshot_c__0 .............................. [[32mPASS[0m in 0.66s]
+[0m12:25:12  
+[0m12:25:12  Finished running 1 test in 0 hours 0 minutes and 1.33 seconds (1.33s).
+[0m12:25:12  
+[0m12:25:12  [32mCompleted successfully[0m
+[0m12:25:12  
+[0m12:25:12  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m12:25:12  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.

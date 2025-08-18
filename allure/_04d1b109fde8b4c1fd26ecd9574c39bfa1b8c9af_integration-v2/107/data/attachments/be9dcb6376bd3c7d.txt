@@ -1,0 +1,50 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project4
+
+
+Invoking dbt with ['seed']
+[0m12:08:06  Running with dbt=1.10.9
+[0m12:08:06  Registered adapter: firebolt=1.10.0
+[0m12:08:06  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:08:06  Found 3 models, 1 seed, 1 source, 464 macros
+[0m12:08:06  
+[0m12:08:06  Concurrency: 1 threads (target='default')
+[0m12:08:06  
+[0m12:08:08  1 of 1 START seed file base .................................................... [RUN]
+[0m12:08:09  1 of 1 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 1.04s]
+[0m12:08:09  
+[0m12:08:09  Finished running 1 seed in 0 hours 0 minutes and 2.32 seconds (2.32s).
+[0m12:08:09  
+[0m12:08:09  [32mCompleted successfully[0m
+[0m12:08:09  
+[0m12:08:09  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m12:08:09  Running with dbt=1.10.9
+[0m12:08:09  Registered adapter: firebolt=1.10.0
+[0m12:08:09  Found 3 models, 1 seed, 1 source, 464 macros
+[0m12:08:09  
+[0m12:08:09  Concurrency: 1 threads (target='default')
+[0m12:08:09  
+[0m12:08:10  1 of 2 START sql table model table_model ....................................... [RUN]
+[0m12:08:11  1 of 2 OK created sql table model table_model .................................. [[32mSUCCESS[0m in 0.99s]
+[0m12:08:11  2 of 2 START sql view model view_model ......................................... [RUN]
+[0m12:08:12  2 of 2 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 0.91s]
+[0m12:08:12  
+[0m12:08:12  Finished running 1 table model, 1 view model in 0 hours 0 minutes and 3.20 seconds (3.20s).
+[0m12:08:12  
+[0m12:08:12  [32mCompleted successfully[0m
+[0m12:08:12  
+[0m12:08:12  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+
+
+Invoking dbt with ['docs', 'generate']
+[0m12:08:14  Running with dbt=1.10.9
+[0m12:08:14  Registered adapter: firebolt=1.10.0
+[0m12:08:14  Found 3 models, 1 seed, 1 source, 464 macros
+[0m12:08:14  
+[0m12:08:14  Concurrency: 1 threads (target='default')
+[0m12:08:14  
+[0m12:08:15  Building catalog
+[0m12:08:16  Catalog written to /tmp/pytest-of-runner/pytest-0/project4/target/catalog.json
