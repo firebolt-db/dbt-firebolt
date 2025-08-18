@@ -1,0 +1,61 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m15:42:41  Running with dbt=1.10.9
+[0m15:42:41  Registered adapter: firebolt=1.10.0
+[0m15:42:41  Found 12 models, 1 seed, 464 macros
+[0m15:42:41  
+[0m15:42:41  Concurrency: 1 threads (target='default')
+[0m15:42:41  
+[0m15:42:42  1 of 1 START seed file seed .................................................... [RUN]
+[0m15:42:45  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 7[0m in 3.11s]
+[0m15:42:45  
+[0m15:42:45  Finished running 1 seed in 0 hours 0 minutes and 3.56 seconds (3.56s).
+[0m15:42:45  
+[0m15:42:45  [32mCompleted successfully[0m
+[0m15:42:45  
+[0m15:42:45  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'no_unique_key', '--full-refresh']
+[0m15:42:45  Running with dbt=1.10.9
+[0m15:42:45  Registered adapter: firebolt=1.10.0
+[0m15:42:45  Found 12 models, 1 seed, 464 macros
+[0m15:42:45  
+[0m15:42:45  Concurrency: 1 threads (target='default')
+[0m15:42:45  
+[0m15:42:46  1 of 1 START sql incremental model no_unique_key ............................... [RUN]
+[0m15:42:47  1 of 1 OK created sql incremental model no_unique_key .......................... [[32mSUCCESS[0m in 1.30s]
+[0m15:42:47  
+[0m15:42:47  Finished running 1 incremental model in 0 hours 0 minutes and 1.77 seconds (1.77s).
+[0m15:42:47  
+[0m15:42:47  [32mCompleted successfully[0m
+[0m15:42:47  
+[0m15:42:47  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'no_unique_key']
+[0m15:42:48  Running with dbt=1.10.9
+[0m15:42:48  Registered adapter: firebolt=1.10.0
+[0m15:42:48  Found 12 models, 1 seed, 464 macros
+[0m15:42:48  
+[0m15:42:48  Concurrency: 1 threads (target='default')
+[0m15:42:48  
+[0m15:42:49  1 of 1 START sql incremental model no_unique_key ............................... [RUN]
+[0m15:42:50  1 of 1 ERROR creating sql incremental model no_unique_key ...................... [[31mERROR[0m in 1.14s]
+[0m15:42:50  
+[0m15:42:50  Finished running 1 incremental model in 0 hours 0 minutes and 1.61 seconds (1.61s).
+[0m15:42:50  
+[0m15:42:50  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m15:42:50  
+[0m15:42:50  [31mFailure in model no_unique_key (models/no_unique_key.sql)[0m
+[0m15:42:50    Runtime Error in model no_unique_key (models/no_unique_key.sql)
+  Error executing query:
+  Line 9, Column 5: syntax error, unexpected identifier, expecting end of file
+      merge into no_unique_key as DBT_INTERNAL_DEST
+      ^
+  
+[0m15:42:50  
+[0m15:42:50    compiled code at target/compiled/test/models/no_unique_key.sql
+[0m15:42:50  
+[0m15:42:50  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1
