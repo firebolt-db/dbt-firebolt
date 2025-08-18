@@ -1,5 +1,3 @@
-import os
-
 from dbt.tests.adapter.basic.expected_catalog import (
     base_expected_catalog,
     expected_references_catalog,
@@ -41,12 +39,7 @@ from dbt.tests.adapter.basic.test_snapshot_timestamp import (
 from dbt.tests.util import run_dbt_and_capture
 from pytest import fixture, mark
 
-
-def is2_0():
-    """Helper to check Firebolt version we're testing against"""
-    if os.getenv('USER_NAME') and '@' in os.getenv('USER_NAME', ''):
-        return False
-    return True
+from tests.conftest import is2_0
 
 
 class AnySpecifiedType:
@@ -101,7 +94,7 @@ class TestEphemeralFirebolt(BaseEphemeral):
     pass
 
 
-@mark.skipif(bool(os.getenv('CORE_URL')), reason='Not supported in Core')
+@mark.xfail(condition=not is2_0(), reason='Not supported in Firebolt 1.0 and Core')
 class TestIncrementalMergeFirebolt(BaseIncremental):
     config_materialized_incremental = """
     {{ config(materialized="incremental", strategy="merge") }}
