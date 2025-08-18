@@ -1,0 +1,106 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project7
+
+
+Invoking dbt with ['seed']
+[0m12:10:32  Running with dbt=1.10.9
+[0m12:10:32  Registered adapter: firebolt=1.10.0
+[0m12:10:32  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:10:33  Found 3 snapshots, 2 seeds, 464 macros
+[0m12:10:33  
+[0m12:10:33  Concurrency: 1 threads (target='default')
+[0m12:10:33  
+[0m12:10:35  1 of 2 START seed file added ................................................... [RUN]
+[0m12:10:36  1 of 2 OK loaded seed file public.added ........................................ [[32mINSERT 20[0m in 1.59s]
+[0m12:10:36  2 of 2 START seed file base .................................................... [RUN]
+[0m12:10:38  2 of 2 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 1.56s]
+[0m12:10:38  
+[0m12:10:38  Finished running 2 seeds in 0 hours 0 minutes and 4.97 seconds (4.97s).
+[0m12:10:38  
+[0m12:10:38  [32mCompleted successfully[0m
+[0m12:10:38  
+[0m12:10:38  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+
+
+Invoking dbt with ['snapshot']
+[0m12:10:38  Running with dbt=1.10.9
+[0m12:10:38  Registered adapter: firebolt=1.10.0
+[0m12:10:38  Found 3 snapshots, 2 seeds, 464 macros
+[0m12:10:38  
+[0m12:10:38  Concurrency: 1 threads (target='default')
+[0m12:10:38  
+[0m12:10:40  1 of 3 START snapshot cc_all_snapshot .......................................... [RUN]
+[0m12:10:42  1 of 3 OK snapshotted cc_all_snapshot .......................................... [[32mSUCCESS[0m in 1.77s]
+[0m12:10:42  2 of 3 START snapshot cc_date_snapshot ......................................... [RUN]
+[0m12:10:43  2 of 3 OK snapshotted cc_date_snapshot ......................................... [[32mSUCCESS[0m in 1.69s]
+[0m12:10:43  3 of 3 START snapshot cc_name_snapshot ......................................... [RUN]
+[0m12:10:45  3 of 3 OK snapshotted cc_name_snapshot ......................................... [[32mSUCCESS[0m in 1.67s]
+[0m12:10:45  
+[0m12:10:45  Finished running 3 snapshots in 0 hours 0 minutes and 6.92 seconds (6.92s).
+[0m12:10:45  
+[0m12:10:45  [32mCompleted successfully[0m
+[0m12:10:45  
+[0m12:10:45  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=3
+
+
+Invoking dbt with ['--no-partial-parse', 'snapshot', '--vars', 'seed_name: added']
+[0m12:10:49  Running with dbt=1.10.9
+[0m12:10:49  Registered adapter: firebolt=1.10.0
+[0m12:10:49  Found 3 snapshots, 2 seeds, 464 macros
+[0m12:10:49  
+[0m12:10:49  Concurrency: 1 threads (target='default')
+[0m12:10:49  
+[0m12:10:51  1 of 3 START snapshot cc_all_snapshot .......................................... [RUN]
+[0m12:10:54  1 of 3 OK snapshotted cc_all_snapshot .......................................... [[32mSUCCESS[0m in 3.29s]
+[0m12:10:54  2 of 3 START snapshot cc_date_snapshot ......................................... [RUN]
+[0m12:10:57  2 of 3 OK snapshotted cc_date_snapshot ......................................... [[32mSUCCESS[0m in 3.26s]
+[0m12:10:57  3 of 3 START snapshot cc_name_snapshot ......................................... [RUN]
+[0m12:11:00  3 of 3 OK snapshotted cc_name_snapshot ......................................... [[32mSUCCESS[0m in 3.32s]
+[0m12:11:00  
+[0m12:11:00  Finished running 3 snapshots in 0 hours 0 minutes and 11.65 seconds (11.65s).
+[0m12:11:00  
+[0m12:11:00  [32mCompleted successfully[0m
+[0m12:11:00  
+[0m12:11:00  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=3
+
+
+Invoking dbt with ['snapshot', '--vars', 'seed_name: added']
+[0m12:11:05  Running with dbt=1.10.9
+[0m12:11:05  Registered adapter: firebolt=1.10.0
+[0m12:11:05  Found 3 snapshots, 2 seeds, 464 macros
+[0m12:11:05  
+[0m12:11:05  Concurrency: 1 threads (target='default')
+[0m12:11:05  
+[0m12:11:07  1 of 3 START snapshot cc_all_snapshot .......................................... [RUN]
+[0m12:11:12  1 of 3 OK snapshotted cc_all_snapshot .......................................... [[32mSUCCESS[0m in 5.61s]
+[0m12:11:12  2 of 3 START snapshot cc_date_snapshot ......................................... [RUN]
+[0m12:11:17  2 of 3 OK snapshotted cc_date_snapshot ......................................... [[32mSUCCESS[0m in 4.83s]
+[0m12:11:17  3 of 3 START snapshot cc_name_snapshot ......................................... [RUN]
+[0m12:11:20  3 of 3 OK snapshotted cc_name_snapshot ......................................... [[32mSUCCESS[0m in 3.18s]
+[0m12:11:20  
+[0m12:11:20  Finished running 3 snapshots in 0 hours 0 minutes and 15.51 seconds (15.51s).
+[0m12:11:20  
+[0m12:11:20  [32mCompleted successfully[0m
+[0m12:11:20  
+[0m12:11:20  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=3
+
+
+Invoking dbt with ['snapshot', '--vars', 'seed_name: added']
+[0m12:11:24  Running with dbt=1.10.9
+[0m12:11:24  Registered adapter: firebolt=1.10.0
+[0m12:11:24  Found 3 snapshots, 2 seeds, 464 macros
+[0m12:11:24  
+[0m12:11:24  Concurrency: 1 threads (target='default')
+[0m12:11:24  
+[0m12:11:26  1 of 3 START snapshot cc_all_snapshot .......................................... [RUN]
+[0m12:11:31  1 of 3 OK snapshotted cc_all_snapshot .......................................... [[32mSUCCESS[0m in 5.08s]
+[0m12:11:31  2 of 3 START snapshot cc_date_snapshot ......................................... [RUN]
+[0m12:11:34  2 of 3 OK snapshotted cc_date_snapshot ......................................... [[32mSUCCESS[0m in 3.36s]
+[0m12:11:34  3 of 3 START snapshot cc_name_snapshot ......................................... [RUN]
+[0m12:11:39  3 of 3 OK snapshotted cc_name_snapshot ......................................... [[32mSUCCESS[0m in 4.17s]
+[0m12:11:39  
+[0m12:11:39  Finished running 3 snapshots in 0 hours 0 minutes and 14.43 seconds (14.43s).
+[0m12:11:39  
+[0m12:11:39  [32mCompleted successfully[0m
+[0m12:11:39  
+[0m12:11:39  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=3
