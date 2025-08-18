@@ -1,0 +1,97 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project38
+
+
+Invoking dbt with ['seed']
+[0m12:26:25  Running with dbt=1.10.9
+[0m12:26:25  Registered adapter: firebolt=1.10.0
+[0m12:26:25  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:26:25  Found 8 models, 1 seed, 464 macros
+[0m12:26:25  
+[0m12:26:25  Concurrency: 1 threads (target='default')
+[0m12:26:25  
+[0m12:26:27  1 of 1 START seed file seed .................................................... [RUN]
+[0m12:26:28  1 of 1 OK loaded seed file public.seed ......................................... [[32mINSERT 100[0m in 1.13s]
+[0m12:26:28  
+[0m12:26:28  Finished running 1 seed in 0 hours 0 minutes and 2.27 seconds (2.27s).
+[0m12:26:28  
+[0m12:26:28  [32mCompleted successfully[0m
+[0m12:26:28  
+[0m12:26:28  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m12:26:28  Running with dbt=1.10.9
+[0m12:26:28  Registered adapter: firebolt=1.10.0
+[0m12:26:28  Found 8 models, 1 seed, 464 macros
+[0m12:26:28  
+[0m12:26:28  Concurrency: 1 threads (target='default')
+[0m12:26:28  
+[0m12:26:29  1 of 7 START sql incremental model advanced_incremental ........................ [RUN]
+[0m12:26:30  1 of 7 OK created sql incremental model advanced_incremental ................... [[32mSUCCESS[0m in 0.89s]
+[0m12:26:30  2 of 7 START sql table model compound_sort ..................................... [RUN]
+[0m12:26:31  2 of 7 OK created sql table model compound_sort ................................ [[32mSUCCESS[0m in 0.88s]
+[0m12:26:31  3 of 7 START sql incremental model incremental ................................. [RUN]
+[0m12:26:32  3 of 7 OK created sql incremental model incremental ............................ [[32mSUCCESS[0m in 0.91s]
+[0m12:26:32  4 of 7 START sql table model interleaved_sort .................................. [RUN]
+[0m12:26:32  4 of 7 OK created sql table model interleaved_sort ............................. [[32mSUCCESS[0m in 0.87s]
+[0m12:26:32  5 of 7 START sql table model materialized ...................................... [RUN]
+[0m12:26:33  5 of 7 OK created sql table model materialized ................................. [[32mSUCCESS[0m in 0.87s]
+[0m12:26:33  6 of 7 START sql view model view_model ......................................... [RUN]
+[0m12:26:35  6 of 7 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 1.44s]
+[0m12:26:35  7 of 7 START sql view model get_and_ref ........................................ [RUN]
+[0m12:26:36  7 of 7 OK created sql view model get_and_ref ................................... [[32mSUCCESS[0m in 1.52s]
+[0m12:26:36  
+[0m12:26:36  Finished running 2 incremental models, 3 table models, 2 view models in 0 hours 0 minutes and 8.45 seconds (8.45s).
+[0m12:26:36  
+[0m12:26:36  [32mCompleted successfully[0m
+[0m12:26:36  
+[0m12:26:36  Done. PASS=7 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=7
+
+
+Invoking dbt with ['seed']
+[0m12:26:37  Running with dbt=1.10.9
+[0m12:26:37  Registered adapter: firebolt=1.10.0
+[0m12:26:37  Found 8 models, 1 seed, 464 macros
+[0m12:26:37  
+[0m12:26:37  Concurrency: 1 threads (target='default')
+[0m12:26:37  
+[0m12:26:38  1 of 1 START seed file seed .................................................... [RUN]
+[0m12:26:40  1 of 1 OK loaded seed file public.seed ......................................... [[32mINSERT 200[0m in 1.65s]
+[0m12:26:40  
+[0m12:26:40  Finished running 1 seed in 0 hours 0 minutes and 2.68 seconds (2.68s).
+[0m12:26:40  
+[0m12:26:40  [32mCompleted successfully[0m
+[0m12:26:40  
+[0m12:26:40  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m12:26:40  Running with dbt=1.10.9
+[0m12:26:40  Registered adapter: firebolt=1.10.0
+[0m12:26:40  Found 8 models, 1 seed, 464 macros
+[0m12:26:40  
+[0m12:26:40  Concurrency: 1 threads (target='default')
+[0m12:26:40  
+[0m12:26:41  1 of 7 START sql incremental model advanced_incremental ........................ [RUN]
+[0m12:26:41  Model advanced_incremental is set to incremental, but no incremental strategy is set. Defaulting to append
+[0m12:26:43  1 of 7 OK created sql incremental model advanced_incremental ................... [[32mSUCCESS[0m in 1.32s]
+[0m12:26:43  2 of 7 START sql table model compound_sort ..................................... [RUN]
+[0m12:26:43  2 of 7 OK created sql table model compound_sort ................................ [[32mSUCCESS[0m in 0.90s]
+[0m12:26:43  3 of 7 START sql incremental model incremental ................................. [RUN]
+[0m12:26:43  Model incremental is set to incremental, but no incremental strategy is set. Defaulting to append
+[0m12:26:45  3 of 7 OK created sql incremental model incremental ............................ [[32mSUCCESS[0m in 1.20s]
+[0m12:26:45  4 of 7 START sql table model interleaved_sort .................................. [RUN]
+[0m12:26:46  4 of 7 OK created sql table model interleaved_sort ............................. [[32mSUCCESS[0m in 1.03s]
+[0m12:26:46  5 of 7 START sql table model materialized ...................................... [RUN]
+[0m12:26:47  5 of 7 OK created sql table model materialized ................................. [[32mSUCCESS[0m in 1.01s]
+[0m12:26:47  6 of 7 START sql view model view_model ......................................... [RUN]
+[0m12:26:47  6 of 7 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 0.74s]
+[0m12:26:47  7 of 7 START sql view model get_and_ref ........................................ [RUN]
+[0m12:26:48  7 of 7 OK created sql view model get_and_ref ................................... [[32mSUCCESS[0m in 0.73s]
+[0m12:26:48  
+[0m12:26:48  Finished running 2 incremental models, 3 table models, 2 view models in 0 hours 0 minutes and 7.99 seconds (7.99s).
+[0m12:26:48  
+[0m12:26:48  [32mCompleted successfully[0m
+[0m12:26:48  
+[0m12:26:48  Done. PASS=7 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=7

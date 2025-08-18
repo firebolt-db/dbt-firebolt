@@ -1,0 +1,51 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m12:32:43  Running with dbt=1.10.9
+[0m12:32:43  Registered adapter: firebolt=1.10.0
+[0m12:32:43  Found 12 models, 1 seed, 464 macros
+[0m12:32:43  
+[0m12:32:43  Concurrency: 1 threads (target='default')
+[0m12:32:43  
+[0m12:32:44  1 of 1 START seed file seed .................................................... [RUN]
+[0m12:32:45  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 7[0m in 0.88s]
+[0m12:32:45  
+[0m12:32:45  Finished running 1 seed in 0 hours 0 minutes and 1.93 seconds (1.93s).
+[0m12:32:45  
+[0m12:32:45  [32mCompleted successfully[0m
+[0m12:32:45  
+[0m12:32:45  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'empty_str_unique_key', '--full-refresh']
+[0m12:32:45  Running with dbt=1.10.9
+[0m12:32:45  Registered adapter: firebolt=1.10.0
+[0m12:32:45  Found 12 models, 1 seed, 464 macros
+[0m12:32:45  
+[0m12:32:45  Concurrency: 1 threads (target='default')
+[0m12:32:45  
+[0m12:32:47  1 of 1 START sql incremental model empty_str_unique_key ........................ [RUN]
+[0m12:32:47  1 of 1 OK created sql incremental model empty_str_unique_key ................... [[32mSUCCESS[0m in 0.93s]
+[0m12:32:48  
+[0m12:32:48  Finished running 1 incremental model in 0 hours 0 minutes and 2.06 seconds (2.06s).
+[0m12:32:48  
+[0m12:32:48  [32mCompleted successfully[0m
+[0m12:32:48  
+[0m12:32:48  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'empty_str_unique_key']
+[0m12:32:50  Running with dbt=1.10.9
+[0m12:32:50  Registered adapter: firebolt=1.10.0
+[0m12:32:51  Found 12 models, 1 seed, 464 macros
+[0m12:32:51  
+[0m12:32:51  Concurrency: 1 threads (target='default')
+[0m12:32:51  
+[0m12:32:52  1 of 1 START sql incremental model empty_str_unique_key ........................ [RUN]
+[0m12:32:53  1 of 1 OK created sql incremental model empty_str_unique_key ................... [[32mSUCCESS[0m in 1.40s]
+[0m12:32:53  
+[0m12:32:53  Finished running 1 incremental model in 0 hours 0 minutes and 2.44 seconds (2.44s).
+[0m12:32:53  
+[0m12:32:53  [32mCompleted successfully[0m
+[0m12:32:53  
+[0m12:32:53  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
