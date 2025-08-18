@@ -1,0 +1,54 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project64
+
+
+Invoking dbt with ['seed', '--select', 'expected_merge_exclude_columns', '--full-refresh']
+[0m11:22:29  Running with dbt=1.10.9
+[0m11:22:29  Registered adapter: firebolt=1.10.0
+[0m11:22:29  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m11:22:30  Found 1 model, 1 seed, 464 macros
+[0m11:22:30  
+[0m11:22:30  Concurrency: 1 threads (target='default')
+[0m11:22:30  
+[0m11:22:31  1 of 1 START seed file expected_merge_exclude_columns .......................... [RUN]
+[0m11:22:32  1 of 1 OK loaded seed file public.expected_merge_exclude_columns ............... [[32mCREATE 3[0m in 1.00s]
+[0m11:22:32  
+[0m11:22:32  Finished running 1 seed in 0 hours 0 minutes and 2.25 seconds (2.25s).
+[0m11:22:32  
+[0m11:22:32  [32mCompleted successfully[0m
+[0m11:22:32  
+[0m11:22:32  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'merge_exclude_columns', '--full-refresh']
+[0m11:22:32  Running with dbt=1.10.9
+[0m11:22:32  Registered adapter: firebolt=1.10.0
+[0m11:22:32  Found 1 model, 1 seed, 464 macros
+[0m11:22:32  
+[0m11:22:32  Concurrency: 1 threads (target='default')
+[0m11:22:32  
+[0m11:22:33  1 of 1 START sql incremental model merge_exclude_columns ....................... [RUN]
+[0m11:22:34  1 of 1 OK created sql incremental model merge_exclude_columns .................. [[32mSUCCESS[0m in 1.01s]
+[0m11:22:34  
+[0m11:22:34  Finished running 1 incremental model in 0 hours 0 minutes and 2.28 seconds (2.28s).
+[0m11:22:34  
+[0m11:22:34  [32mCompleted successfully[0m
+[0m11:22:34  
+[0m11:22:34  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'merge_exclude_columns']
+[0m11:22:35  Running with dbt=1.10.9
+[0m11:22:35  Registered adapter: firebolt=1.10.0
+[0m11:22:35  Found 1 model, 1 seed, 464 macros
+[0m11:22:35  
+[0m11:22:35  Concurrency: 1 threads (target='default')
+[0m11:22:35  
+[0m11:22:38  1 of 1 START sql incremental model merge_exclude_columns ....................... [RUN]
+[0m11:22:40  1 of 1 OK created sql incremental model merge_exclude_columns .................. [[32mSUCCESS[0m in 1.69s]
+[0m11:22:40  
+[0m11:22:40  Finished running 1 incremental model in 0 hours 0 minutes and 4.58 seconds (4.58s).
+[0m11:22:40  
+[0m11:22:40  [32mCompleted successfully[0m
+[0m11:22:40  
+[0m11:22:40  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
