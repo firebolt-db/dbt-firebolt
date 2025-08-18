@@ -116,6 +116,6 @@ def unique_schema(request, prefix) -> str:
 
 def is2_0():
     """Helper to check Firebolt version we're testing against"""
-    if os.getenv('USER_NAME') and '@' in os.getenv('USER_NAME', ''):
+    if os.getenv('CORE_URL') or '@' in os.getenv('USER_NAME', ''):
         return False
     return True
