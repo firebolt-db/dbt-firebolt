@@ -1,3 +1,8 @@
+import os
+
+from dbt.tests.adapter.incremental.test_incremental_merge_exclude_columns import (
+    BaseMergeExcludeColumns,
+)
 from dbt.tests.adapter.incremental.test_incremental_predicates import (
     BaseIncrementalPredicates,
 )
@@ -26,6 +31,18 @@ class TestIncrementalPredicatesDeleteInsertFirebolt(BaseIncrementalPredicates):
             'models': {
                 '+predicates': ['id != 2'],
                 '+incremental_strategy': 'delete+insert',
+            }
+        }
+
+
+@mark.skipif(bool(os.getenv('CORE_URL')), reason='Not supported in Core')
+class TestIncrementalPredicatesMergeFirebolt(BaseIncrementalPredicates):
+    @fixture(scope='class')
+    def project_config_update(self):
+        return {
+            'models': {
+                '+predicates': ['DBT_INTERNAL_DEST.id != 2'],
+                '+incremental_strategy': 'merge',
             }
         }
 
@@ -77,3 +94,15 @@ class TestUniqueKeyDeleteInsertFirebolt(BaseIncrementalUniqueKey):
         if is_firebolt_1_0:
             model_dict['seeds.yml'] = schema_seed_delete_insert_yml
         return model_dict
+
+
+@mark.skipif(bool(os.getenv('CORE_URL')), reason='Not supported in Core')
+class TestUniqueKeyMergeFirebolt(TestUniqueKeyDeleteInsertFirebolt):
+    @fixture(scope='class')
+    def project_config_update(self):
+        return {'models': {'+incremental_strategy': 'merge'}}
+
+
+@mark.skipif(bool(os.getenv('CORE_URL')), reason='Not supported in Core')
+class TestMergeExcludeColumnsFirebolt(BaseMergeExcludeColumns):
+    pass

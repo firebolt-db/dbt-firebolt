@@ -9,6 +9,7 @@ from dbt.tests.adapter.basic.files import (
     base_materialized_var_sql,
     base_view_sql,
     config_materialized_table,
+    model_incremental,
     schema_base_yml,
 )
 from dbt.tests.adapter.basic.test_adapter_methods import BaseAdapterMethod
@@ -37,12 +38,7 @@ from dbt.tests.adapter.basic.test_snapshot_check_cols import (
 from dbt.tests.adapter.basic.test_snapshot_timestamp import (
     BaseSnapshotTimestamp,
 )
-from dbt.tests.util import (
-    check_relations_equal,
-    relation_from_name,
-    run_dbt,
-    run_dbt_and_capture,
-)
+from dbt.tests.util import run_dbt_and_capture
 from pytest import fixture, mark
 
 
@@ -105,47 +101,20 @@ class TestEphemeralFirebolt(BaseEphemeral):
     pass
 
 
+@mark.skipif(bool(os.getenv('CORE_URL')), reason='Not supported in Core')
+class TestIncrementalMergeFirebolt(BaseIncremental):
+    config_materialized_incremental = """
+    {{ config(materialized="incremental", strategy="merge") }}
+    """
+    incremental_sql = config_materialized_incremental + model_incremental
+
+    @fixture(scope='class')
+    def models(self):
+        return {'incremental.sql': self.incremental_sql, 'schema.yml': schema_base_yml}
+
+
 class TestIncrementalFirebolt(BaseIncremental):
-    def test_incremental(self, project):
-        # seed command
-        results = run_dbt(['seed'])
-        assert len(results) == 2
-
-        # base table rowcount
-        relation = relation_from_name(project.adapter, 'base')
-        result = project.run_sql(
-            f'select count(*) as num_rows from {relation}', fetch='one'
-        )
-        assert result[0] == 10
-
-        # added table rowcount
-        relation = relation_from_name(project.adapter, 'added')
-        result = project.run_sql(
-            f'select count(*) as num_rows from {relation}', fetch='one'
-        )
-        assert result[0] == 20
-
-        # run command
-        # the 'seed_name' var changes the seed identifier in the schema file
-        results = run_dbt(['run', '--vars', 'seed_name: base'])
-        assert len(results) == 1
-
-        # check relations equal
-        check_relations_equal(project.adapter, ['base', 'incremental'])
-
-        # change seed_name var
-        # the 'seed_name' var changes the seed identifier in the schema file
-        # adding --full-refresh because schema changes are not allowed
-        results = run_dbt(['run', '--full-refresh', '--vars', 'seed_name: added'])
-        assert len(results) == 1
-
-        # check relations equal
-        check_relations_equal(project.adapter, ['added', 'incremental'])
-
-        # get catalog from docs generate
-        catalog = run_dbt(['docs', 'generate'])
-        assert len(catalog.nodes) == 3
-        assert len(catalog.sources) == 1
+    pass
 
 
 class TestGenericTestsFirebolt(BaseGenericTests):
