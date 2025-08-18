@@ -119,3 +119,10 @@ def is2_0():
     if os.getenv('CORE_URL') or '@' in os.getenv('USER_NAME', ''):
         return False
     return True
+
+
+def is_core():
+    """Helper to check Firebolt version we're testing against"""
+    if os.getenv('CORE_URL'):
+        return True
+    return False
