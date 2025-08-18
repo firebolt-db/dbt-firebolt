@@ -1,0 +1,57 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m12:55:08  Running with dbt=1.10.9
+[0m12:55:08  Registered adapter: firebolt=1.10.0
+[0m12:55:08  Found 12 models, 1 seed, 464 macros
+[0m12:55:08  
+[0m12:55:08  Concurrency: 1 threads (target='default')
+[0m12:55:08  
+[0m12:55:09  1 of 1 START seed file seed .................................................... [RUN]
+[0m12:55:09  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 7[0m in 0.11s]
+[0m12:55:09  
+[0m12:55:09  Finished running 1 seed in 0 hours 0 minutes and 0.25 seconds (0.25s).
+[0m12:55:09  
+[0m12:55:09  [32mCompleted successfully[0m
+[0m12:55:09  
+[0m12:55:09  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'empty_str_unique_key', '--full-refresh']
+[0m12:55:09  Running with dbt=1.10.9
+[0m12:55:09  Registered adapter: firebolt=1.10.0
+[0m12:55:09  Found 12 models, 1 seed, 464 macros
+[0m12:55:09  
+[0m12:55:09  Concurrency: 1 threads (target='default')
+[0m12:55:09  
+[0m12:55:09  1 of 1 START sql incremental model empty_str_unique_key ........................ [RUN]
+[0m12:55:09  1 of 1 OK created sql incremental model empty_str_unique_key ................... [[32mSUCCESS[0m in 0.12s]
+[0m12:55:09  
+[0m12:55:09  Finished running 1 incremental model in 0 hours 0 minutes and 0.25 seconds (0.25s).
+[0m12:55:09  
+[0m12:55:09  [32mCompleted successfully[0m
+[0m12:55:09  
+[0m12:55:09  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'empty_str_unique_key']
+[0m12:55:09  Running with dbt=1.10.9
+[0m12:55:09  Registered adapter: firebolt=1.10.0
+[0m12:55:09  Found 12 models, 1 seed, 464 macros
+[0m12:55:09  
+[0m12:55:09  Concurrency: 1 threads (target='default')
+[0m12:55:09  
+[0m12:55:10  1 of 1 START sql incremental model empty_str_unique_key ........................ [RUN]
+[0m12:55:10  1 of 1 ERROR creating sql incremental model empty_str_unique_key ............... [[31mERROR[0m in 0.16s]
+[0m12:55:10  
+[0m12:55:10  Finished running 1 incremental model in 0 hours 0 minutes and 0.33 seconds (0.33s).
+[0m12:55:10  
+[0m12:55:10  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m12:55:10  
+[0m12:55:10  [31mFailure in model empty_str_unique_key (models/empty_str_unique_key.sql)[0m
+[0m12:55:10    Runtime Error in model empty_str_unique_key (models/empty_str_unique_key.sql)
+  - MERGE statement is not supported
+[0m12:55:10  
+[0m12:55:10    compiled code at target/compiled/test/models/empty_str_unique_key.sql
+[0m12:55:10  
+[0m12:55:10  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1
