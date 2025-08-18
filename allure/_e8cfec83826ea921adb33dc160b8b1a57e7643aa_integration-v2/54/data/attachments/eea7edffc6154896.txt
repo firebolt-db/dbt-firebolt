@@ -1,0 +1,58 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project23
+
+
+Invoking dbt with ['seed']
+[0m15:40:44  Running with dbt=1.10.9
+[0m15:40:44  Registered adapter: firebolt=1.10.0
+[0m15:40:44  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:40:45  Found 3 models, 1 seed, 1 source, 464 macros
+[0m15:40:45  
+[0m15:40:45  Concurrency: 1 threads (target='default')
+[0m15:40:45  
+[0m15:40:46  1 of 1 START seed file raw_source .............................................. [RUN]
+[0m15:40:48  1 of 1 OK loaded seed file public.raw_source ................................... [[32mINSERT 1[0m in 1.46s]
+[0m15:40:48  
+[0m15:40:48  Finished running 1 seed in 0 hours 0 minutes and 2.99 seconds (2.99s).
+[0m15:40:48  
+[0m15:40:48  [32mCompleted successfully[0m
+[0m15:40:48  
+[0m15:40:48  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m15:40:48  Running with dbt=1.10.9
+[0m15:40:48  Registered adapter: firebolt=1.10.0
+[0m15:40:48  Found 3 models, 1 seed, 1 source, 464 macros
+[0m15:40:48  
+[0m15:40:48  Concurrency: 1 threads (target='default')
+[0m15:40:48  
+[0m15:40:49  1 of 2 START sql view model model_input ........................................ [RUN]
+[0m15:40:50  1 of 2 OK created sql view model model_input ................................... [[32mSUCCESS[0m in 1.03s]
+[0m15:40:50  2 of 2 START sql view model model .............................................. [RUN]
+[0m15:40:51  2 of 2 OK created sql view model model ......................................... [[32mSUCCESS[0m in 1.05s]
+[0m15:40:51  
+[0m15:40:51  Finished running 2 view models in 0 hours 0 minutes and 3.59 seconds (3.59s).
+[0m15:40:51  
+[0m15:40:51  [32mCompleted successfully[0m
+[0m15:40:51  
+[0m15:40:51  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+
+
+Invoking dbt with ['run', '--empty']
+[0m15:40:52  Running with dbt=1.10.9
+[0m15:40:52  Registered adapter: firebolt=1.10.0
+[0m15:40:52  Found 3 models, 1 seed, 1 source, 464 macros
+[0m15:40:52  
+[0m15:40:52  Concurrency: 1 threads (target='default')
+[0m15:40:52  
+[0m15:40:54  1 of 2 START sql view model model_input ........................................ [RUN]
+[0m15:40:55  1 of 2 OK created sql view model model_input ................................... [[32mSUCCESS[0m in 1.14s]
+[0m15:40:55  2 of 2 START sql view model model .............................................. [RUN]
+[0m15:40:56  2 of 2 OK created sql view model model ......................................... [[32mSUCCESS[0m in 1.00s]
+[0m15:40:56  
+[0m15:40:56  Finished running 2 view models in 0 hours 0 minutes and 3.65 seconds (3.65s).
+[0m15:40:56  
+[0m15:40:56  [32mCompleted successfully[0m
+[0m15:40:56  
+[0m15:40:56  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
