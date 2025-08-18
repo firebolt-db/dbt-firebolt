@@ -1,0 +1,86 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project15
+
+
+Invoking dbt with ['seed']
+[0m10:55:56  Running with dbt=1.10.9
+[0m10:55:56  Registered adapter: firebolt=1.10.0
+[0m10:55:56  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m10:55:56  [[33mWARNING[0m][MissingArgumentsPropertyInGenericTestDeprecation]: Deprecated
+functionality
+Found top-level arguments to test `unique`. Arguments to generic tests should be
+nested under the `arguments` property.`
+[0m10:55:56  Found 3 models, 1 snapshot, 1 seed, 2 data tests, 1 exposure, 468 macros
+[0m10:55:56  
+[0m10:55:56  Concurrency: 1 threads (target='default')
+[0m10:55:56  
+[0m10:55:58  1 of 1 START seed file seed .................................................... [RUN]
+[0m10:55:59  1 of 1 OK loaded seed file public_seeds.seed ................................... [[32mINSERT 2[0m in 0.56s]
+[0m10:55:59  
+[0m10:55:59  Finished running 1 seed in 0 hours 0 minutes and 2.86 seconds (2.86s).
+[0m10:55:59  
+[0m10:55:59  [32mCompleted successfully[0m
+[0m10:55:59  
+[0m10:55:59  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m10:55:59  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+
+
+Invoking dbt with ['run']
+[0m10:55:59  Running with dbt=1.10.9
+[0m10:55:59  Registered adapter: firebolt=1.10.0
+[0m10:55:59  Found 3 models, 1 snapshot, 1 seed, 2 data tests, 1 exposure, 468 macros
+[0m10:55:59  
+[0m10:55:59  Concurrency: 1 threads (target='default')
+[0m10:55:59  
+[0m10:56:00  1 of 2 START sql view model view_model ......................................... [RUN]
+[0m10:56:00  1 of 2 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 0.43s]
+[0m10:56:00  2 of 2 START sql table model table_model ....................................... [RUN]
+[0m10:56:01  2 of 2 OK created sql table model table_model .................................. [[32mSUCCESS[0m in 0.67s]
+[0m10:56:01  
+[0m10:56:01  Finished running 1 table model, 1 view model in 0 hours 0 minutes and 1.77 seconds (1.77s).
+[0m10:56:01  
+[0m10:56:01  [32mCompleted successfully[0m
+[0m10:56:01  
+[0m10:56:01  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+[0m10:56:01  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+
+
+Invoking dbt with ['test']
+[0m10:56:01  Running with dbt=1.10.9
+[0m10:56:01  Registered adapter: firebolt=1.10.0
+[0m10:56:01  Found 3 models, 1 snapshot, 1 seed, 2 data tests, 1 exposure, 468 macros
+[0m10:56:01  
+[0m10:56:01  Concurrency: 1 threads (target='default')
+[0m10:56:01  
+[0m10:56:02  1 of 2 START test not_null_view_model_id ....................................... [RUN]
+[0m10:56:02  1 of 2 PASS not_null_view_model_id ............................................. [[32mPASS[0m in 0.22s]
+[0m10:56:02  2 of 2 START test unique_view_model_id ......................................... [RUN]
+[0m10:56:02  2 of 2 PASS unique_view_model_id ............................................... [[32mPASS[0m in 0.27s]
+[0m10:56:02  
+[0m10:56:02  Finished running 2 data tests in 0 hours 0 minutes and 1.32 seconds (1.32s).
+[0m10:56:02  
+[0m10:56:02  [32mCompleted successfully[0m
+[0m10:56:02  
+[0m10:56:02  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+[0m10:56:02  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+
+
+Invoking dbt with ['clone', '--state', 'target']

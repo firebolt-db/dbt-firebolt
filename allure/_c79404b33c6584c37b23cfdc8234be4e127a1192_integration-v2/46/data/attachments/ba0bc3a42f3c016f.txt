@@ -1,0 +1,105 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project0
+
+
+Invoking dbt with ['seed']
+[0m10:51:28  Running with dbt=1.10.9
+[0m10:51:28  Registered adapter: firebolt=1.10.0
+[0m10:51:28  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m10:51:29  Found 3 models, 1 seed, 1 source, 464 macros
+[0m10:51:29  
+[0m10:51:29  Concurrency: 1 threads (target='default')
+[0m10:51:29  
+[0m10:51:31  1 of 1 START seed file base .................................................... [RUN]
+[0m10:51:32  1 of 1 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 1.18s]
+[0m10:51:32  
+[0m10:51:32  Finished running 1 seed in 0 hours 0 minutes and 2.70 seconds (2.70s).
+[0m10:51:32  
+[0m10:51:32  [32mCompleted successfully[0m
+[0m10:51:32  
+[0m10:51:32  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m10:51:32  Running with dbt=1.10.9
+[0m10:51:32  Registered adapter: firebolt=1.10.0
+[0m10:51:32  Found 3 models, 1 seed, 1 source, 464 macros
+[0m10:51:32  
+[0m10:51:32  Concurrency: 1 threads (target='default')
+[0m10:51:32  
+[0m10:51:33  1 of 3 START sql table model swappable ......................................... [RUN]
+[0m10:51:35  1 of 3 OK created sql table model swappable .................................... [[32mSUCCESS[0m in 2.12s]
+[0m10:51:35  2 of 3 START sql table model table_model ....................................... [RUN]
+[0m10:51:37  2 of 3 OK created sql table model table_model .................................. [[32mSUCCESS[0m in 1.88s]
+[0m10:51:37  3 of 3 START sql view model view_model ......................................... [RUN]
+[0m10:51:38  3 of 3 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 0.55s]
+[0m10:51:38  
+[0m10:51:38  Finished running 2 table models, 1 view model in 0 hours 0 minutes and 5.58 seconds (5.58s).
+[0m10:51:38  
+[0m10:51:38  [32mCompleted successfully[0m
+[0m10:51:38  
+[0m10:51:38  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=3
+
+
+Invoking dbt with ['docs', 'generate']
+[0m10:51:40  Running with dbt=1.10.9
+[0m10:51:40  Registered adapter: firebolt=1.10.0
+[0m10:51:40  Found 3 models, 1 seed, 1 source, 464 macros
+[0m10:51:40  
+[0m10:51:40  Concurrency: 1 threads (target='default')
+[0m10:51:40  
+[0m10:51:40  Building catalog
+[0m10:51:41  Catalog written to /tmp/pytest-of-runner/pytest-0/project0/target/catalog.json
+
+
+Invoking dbt with ['run', '-m', 'swappable', '--vars', 'materialized_var: view']
+[0m10:51:41  Running with dbt=1.10.9
+[0m10:51:41  [[33mWARNING[0m]: Deprecated functionality
+Usage of `--models`, `--model`, and `-m` is deprecated in favor of `--select` or
+`-s`.
+[0m10:51:41  Registered adapter: firebolt=1.10.0
+[0m10:51:41  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m10:51:41  Found 3 models, 1 seed, 1 source, 464 macros
+[0m10:51:41  
+[0m10:51:41  Concurrency: 1 threads (target='default')
+[0m10:51:41  
+[0m10:51:42  1 of 1 START sql view model swappable .......................................... [RUN]
+[0m10:51:43  1 of 1 OK created sql view model swappable ..................................... [[32mSUCCESS[0m in 0.81s]
+[0m10:51:43  
+[0m10:51:43  Finished running 1 view model in 0 hours 0 minutes and 1.49 seconds (1.49s).
+[0m10:51:43  
+[0m10:51:43  [32mCompleted successfully[0m
+[0m10:51:43  
+[0m10:51:43  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m10:51:43  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- ModelParamUsageDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+
+
+Invoking dbt with ['run', '-m', 'swappable', '--vars', 'materialized_var: incremental']
+[0m10:51:44  Running with dbt=1.10.9
+[0m10:51:44  Registered adapter: firebolt=1.10.0
+[0m10:51:44  Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m10:51:45  Found 3 models, 1 seed, 1 source, 464 macros
+[0m10:51:45  
+[0m10:51:45  Concurrency: 1 threads (target='default')
+[0m10:51:45  
+[0m10:51:45  1 of 1 START sql incremental model swappable ................................... [RUN]
+[0m10:51:46  1 of 1 OK created sql incremental model swappable .............................. [[32mSUCCESS[0m in 0.74s]
+[0m10:51:46  
+[0m10:51:46  Finished running 1 incremental model in 0 hours 0 minutes and 1.47 seconds (1.47s).
+[0m10:51:46  
+[0m10:51:46  [32mCompleted successfully[0m
+[0m10:51:46  
+[0m10:51:46  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m10:51:46  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- ModelParamUsageDeprecation: 2 occurrences
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
