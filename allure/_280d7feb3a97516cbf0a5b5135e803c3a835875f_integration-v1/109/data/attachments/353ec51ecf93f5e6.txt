@@ -1,0 +1,36 @@
+
+
+Invoking dbt with ['seed']
+[0m14:32:29  Running with dbt=1.10.9
+[0m14:32:29  Registered adapter: firebolt=1.10.0
+[0m14:32:29  Found 2 models, 1 seed, 467 macros
+[0m14:32:29  
+[0m14:32:29  Concurrency: 1 threads (target='default')
+[0m14:32:29  
+[0m14:32:30  1 of 1 START seed file data_equals ............................................. [RUN]
+[0m14:32:33  1 of 1 OK loaded seed file public.data_equals .................................. [[32mINSERT 9[0m in 2.84s]
+[0m14:32:33  
+[0m14:32:33  Finished running 1 seed in 0 hours 0 minutes and 4.14 seconds (4.14s).
+[0m14:32:33  
+[0m14:32:33  [32mCompleted successfully[0m
+[0m14:32:33  
+[0m14:32:33  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m14:32:33  Running with dbt=1.10.9
+[0m14:32:33  Registered adapter: firebolt=1.10.0
+[0m14:32:33  Found 2 models, 1 seed, 467 macros
+[0m14:32:33  
+[0m14:32:33  Concurrency: 1 threads (target='default')
+[0m14:32:33  
+[0m14:32:34  1 of 2 START sql view model equal_values ....................................... [RUN]
+[0m14:32:35  1 of 2 OK created sql view model equal_values .................................. [[32mSUCCESS[0m in 0.95s]
+[0m14:32:35  2 of 2 START sql view model not_equal_values ................................... [RUN]
+[0m14:32:36  2 of 2 OK created sql view model not_equal_values .............................. [[32mSUCCESS[0m in 0.94s]
+[0m14:32:36  
+[0m14:32:36  Finished running 2 view models in 0 hours 0 minutes and 3.05 seconds (3.05s).
+[0m14:32:36  
+[0m14:32:36  [32mCompleted successfully[0m
+[0m14:32:36  
+[0m14:32:36  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2

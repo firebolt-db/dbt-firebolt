@@ -1,0 +1,61 @@
+
+
+Invoking dbt with ['seed', '--select', 'seed', '--full-refresh']
+[0m14:26:55  Running with dbt=1.10.9
+[0m14:26:55  Registered adapter: firebolt=1.10.0
+[0m14:26:55  Found 12 models, 1 seed, 464 macros
+[0m14:26:55  
+[0m14:26:55  Concurrency: 1 threads (target='default')
+[0m14:26:55  
+[0m14:26:56  1 of 1 START seed file seed .................................................... [RUN]
+[0m14:26:58  1 of 1 OK loaded seed file public.seed ......................................... [[32mCREATE 7[0m in 2.50s]
+[0m14:26:58  
+[0m14:26:58  Finished running 1 seed in 0 hours 0 minutes and 3.66 seconds (3.66s).
+[0m14:26:58  
+[0m14:26:58  [32mCompleted successfully[0m
+[0m14:26:58  
+[0m14:26:58  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'nontyped_trinary_unique_key_list', '--full-refresh']
+[0m14:26:58  Running with dbt=1.10.9
+[0m14:26:59  Registered adapter: firebolt=1.10.0
+[0m14:26:59  Found 12 models, 1 seed, 464 macros
+[0m14:26:59  
+[0m14:26:59  Concurrency: 1 threads (target='default')
+[0m14:26:59  
+[0m14:27:00  1 of 1 START sql incremental model nontyped_trinary_unique_key_list ............ [RUN]
+[0m14:27:02  1 of 1 OK created sql incremental model nontyped_trinary_unique_key_list ....... [[32mSUCCESS[0m in 2.42s]
+[0m14:27:02  
+[0m14:27:02  Finished running 1 incremental model in 0 hours 0 minutes and 3.60 seconds (3.60s).
+[0m14:27:02  
+[0m14:27:02  [32mCompleted successfully[0m
+[0m14:27:02  
+[0m14:27:02  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'nontyped_trinary_unique_key_list']
+[0m14:27:05  Running with dbt=1.10.9
+[0m14:27:05  Registered adapter: firebolt=1.10.0
+[0m14:27:05  Found 12 models, 1 seed, 464 macros
+[0m14:27:05  
+[0m14:27:05  Concurrency: 1 threads (target='default')
+[0m14:27:05  
+[0m14:27:06  1 of 1 START sql incremental model nontyped_trinary_unique_key_list ............ [RUN]
+[0m14:27:08  1 of 1 ERROR creating sql incremental model nontyped_trinary_unique_key_list ... [[31mERROR[0m in 1.71s]
+[0m14:27:08  
+[0m14:27:08  Finished running 1 incremental model in 0 hours 0 minutes and 2.91 seconds (2.91s).
+[0m14:27:08  
+[0m14:27:08  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m14:27:08  
+[0m14:27:08  [31mFailure in model nontyped_trinary_unique_key_list (models/nontyped_trinary_unique_key_list.sql)[0m
+[0m14:27:08    Runtime Error in model nontyped_trinary_unique_key_list (models/nontyped_trinary_unique_key_list.sql)
+  Error executing query:
+  Line 20, Column 5: syntax error, unexpected identifier, expecting end of file
+      merge into nontyped_trinary_unique_key_list as DBT_INTERNAL_DEST
+      ^
+  
+[0m14:27:08  
+[0m14:27:08    compiled code at target/compiled/test/models/nontyped_trinary_unique_key_list.sql
+[0m14:27:08  
+[0m14:27:08  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1
