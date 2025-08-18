@@ -1,3 +1,5 @@
+import os
+
 from dbt.tests.adapter.basic.expected_catalog import (
     base_expected_catalog,
     expected_references_catalog,
@@ -39,7 +41,12 @@ from dbt.tests.adapter.basic.test_snapshot_timestamp import (
 from dbt.tests.util import run_dbt_and_capture
 from pytest import fixture, mark
 
-from tests.conftest import is2_0, is_core
+
+def is2_0():
+    """Helper to check Firebolt version we're testing against"""
+    if os.getenv('USER_NAME') and '@' in os.getenv('USER_NAME', ''):
+        return False
+    return True
 
 
 class AnySpecifiedType:
@@ -94,7 +101,10 @@ class TestEphemeralFirebolt(BaseEphemeral):
     pass
 
 
-@mark.xfail(condition=not is2_0(), reason='Not supported in Firebolt 1.0 and Core')
+@mark.xfail(
+    condition=not bool(os.getenv('CLIENT_ID')),
+    reason='Not supported in Firebolt 1.0 and Core',
+)
 class TestIncrementalMergeFirebolt(BaseIncremental):
     config_materialized_incremental = """
     {{ config(materialized="incremental", strategy="merge") }}
@@ -170,7 +180,7 @@ class TestDocsGenerateFirebolt(BaseDocsGenerate):
             text_type='TEXT',
             time_type='TIMESTAMP',
             view_type='VIEW',
-            table_type='DIMENSION' if is_core() else 'BASE TABLE',
+            table_type='BASE TABLE' if is2_0() else 'DIMENSION',
             model_stats=no_stats(),
         )
         # Can't have any other schema apart from public at the moment.
@@ -196,7 +206,7 @@ class TestDocsGenReferencesFirebolt(BaseDocsGenReferences):
             time_type='TIMESTAMP',
             bigint_type=AnySpecifiedType(['BIGINT', 'LONG']),
             view_type='VIEW',
-            table_type='DIMENSION' if is_core() else 'BASE TABLE',
+            table_type='BASE TABLE' if is2_0() else 'DIMENSION',
             model_stats=no_stats(),
         )
 

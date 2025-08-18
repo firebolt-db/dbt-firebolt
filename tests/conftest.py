@@ -112,17 +112,3 @@ def is_firebolt_1_0(dbt_profile_target: dict[str, Any]) -> bool:
 def unique_schema(request, prefix) -> str:
     """Firebolt does not have concept of schemas so we return 'public' here."""
     return 'public'
-
-
-def is2_0():
-    """Helper to check Firebolt version we're testing against"""
-    if os.getenv('CORE_URL') or '@' in os.getenv('USER_NAME', ''):
-        return False
-    return True
-
-
-def is_core():
-    """Helper to check Firebolt version we're testing against"""
-    if os.getenv('CORE_URL'):
-        return True
-    return False
