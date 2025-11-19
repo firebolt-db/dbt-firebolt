@@ -10,8 +10,9 @@ on:
         required: false
         description: 'Trigger a major release (optional). Leave empty for regular release.'
       version:
-        required: true
-        description: 'Version to release. Should be aligned with dbt-core.'
+        required: false
+        description: 'Version to release (optional). Leave empty to auto-detect from commits.'
+        default: ''
 
 jobs:
   integration-tests:
