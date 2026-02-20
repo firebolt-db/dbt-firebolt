@@ -1,0 +1,37 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project64
+
+
+Invoking dbt with ['seed', '--select', 'expected_merge_exclude_columns', '--full-refresh']
+[0m01:45:08  Running with dbt=1.11.0-b3
+[0m01:45:08  Registered adapter: firebolt=1.11.0
+[0m01:45:08  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m01:45:08  Found 1 model, 1 seed, 477 macros
+[0m01:45:08  
+[0m01:45:08  Concurrency: 1 threads (target='default')
+[0m01:45:08  
+[0m01:45:08  1 of 1 START seed file expected_merge_exclude_columns .......................... [RUN]
+[0m01:45:08  1 of 1 OK loaded seed file public.expected_merge_exclude_columns ............... [[32mCREATE 3[0m in 0.10s]
+[0m01:45:08  
+[0m01:45:08  Finished running 1 seed in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m01:45:08  
+[0m01:45:08  [32mCompleted successfully[0m
+[0m01:45:08  
+[0m01:45:08  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'merge_exclude_columns', '--full-refresh']
+[0m01:45:08  Running with dbt=1.11.0-b3
+[0m01:45:08  Registered adapter: firebolt=1.11.0
+[0m01:45:08  Found 1 model, 1 seed, 477 macros
+[0m01:45:08  
+[0m01:45:08  Concurrency: 1 threads (target='default')
+[0m01:45:08  
+[0m01:45:09  1 of 1 START sql incremental model merge_exclude_columns ....................... [RUN]
+[0m01:45:09  1 of 1 OK created sql incremental model merge_exclude_columns .................. [[32mSUCCESS[0m in 0.11s]
+[0m01:45:09  
+[0m01:45:09  Finished running 1 incremental model in 0 hours 0 minutes and 0.24 seconds (0.24s).
+[0m01:45:09  
+[0m01:45:09  [32mCompleted successfully[0m
+[0m01:45:09  
+[0m01:45:09  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
