@@ -1,0 +1,16 @@
+INFO     httpx:_client.py:1025 HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:280 Query fetched 1 rows in 0.004316091537475586 seconds.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:280 Query fetched 1 rows in 0.0026242733001708984 seconds.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:280 Query fetched 1 rows in 0.004263877868652344 seconds.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:280 Query fetched 42 rows in 0.006105899810791016 seconds.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:280 Query fetched 1 rows in 0.004207611083984375 seconds.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:280 Query fetched 0 rows in 0.002849578857421875 seconds.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:280 Query fetched 0 rows in 0.0035371780395507812 seconds.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO     firebolt.db.cursor:cursor.py:280 Query fetched 0 rows in 0.0033855438232421875 seconds.
