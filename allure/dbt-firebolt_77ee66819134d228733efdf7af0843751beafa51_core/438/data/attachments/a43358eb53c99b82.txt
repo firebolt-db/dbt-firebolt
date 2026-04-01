@@ -1,0 +1,16 @@
+INFO:httpx:HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 1 rows in 0.0038857460021972656 seconds.
+INFO:httpx:HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 1 rows in 0.0025110244750976562 seconds.
+INFO:httpx:HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 1 rows in 0.004305362701416016 seconds.
+INFO:httpx:HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 42 rows in 0.005738735198974609 seconds.
+INFO:httpx:HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 1 rows in 0.004249095916748047 seconds.
+INFO:httpx:HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 0 rows in 0.002868175506591797 seconds.
+INFO:httpx:HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 0 rows in 0.0034894943237304688 seconds.
+INFO:httpx:HTTP Request: POST http://localhost:3473/?database=firebolt&output_format=JSON_Compact "HTTP/1.1 200 OK"
+INFO:firebolt.db.cursor:Query fetched 0 rows in 0.003548145294189453 seconds.
