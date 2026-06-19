@@ -1,0 +1,41 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project0
+
+
+Invoking dbt with ['seed']
+[0m02:03:30  Running with dbt=1.11.11
+[0m02:03:30  Registered adapter: firebolt=1.11.0
+[0m02:03:30  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m02:03:31  Found 3 models, 1 seed, 1 source, 504 macros
+[0m02:03:31  
+[0m02:03:31  Concurrency: 1 threads (target='default')
+[0m02:03:31  
+[0m02:03:31  1 of 1 START seed file base .................................................... [RUN]
+[0m02:03:31  1 of 1 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 0.17s]
+[0m02:03:31  
+[0m02:03:31  Finished running 1 seed in 0 hours 0 minutes and 0.31 seconds (0.31s).
+[0m02:03:31  
+[0m02:03:31  [32mCompleted successfully[0m
+[0m02:03:31  
+[0m02:03:31  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run']
+[0m02:03:31  Running with dbt=1.11.11
+[0m02:03:31  Registered adapter: firebolt=1.11.0
+[0m02:03:31  Found 3 models, 1 seed, 1 source, 504 macros
+[0m02:03:31  
+[0m02:03:31  Concurrency: 1 threads (target='default')
+[0m02:03:31  
+[0m02:03:31  1 of 3 START sql table model swappable ......................................... [RUN]
+[0m02:03:32  1 of 3 OK created sql table model swappable .................................... [[32mSUCCESS[0m in 0.11s]
+[0m02:03:32  2 of 3 START sql table model table_model ....................................... [RUN]
+[0m02:03:32  2 of 3 OK created sql table model table_model .................................. [[32mSUCCESS[0m in 0.09s]
+[0m02:03:32  3 of 3 START sql view model view_model ......................................... [RUN]
+[0m02:03:32  3 of 3 OK created sql view model view_model .................................... [[32mSUCCESS[0m in 0.09s]
+[0m02:03:32  
+[0m02:03:32  Finished running 2 table models, 1 view model in 0 hours 0 minutes and 0.41 seconds (0.41s).
+[0m02:03:32  
+[0m02:03:32  [32mCompleted successfully[0m
+[0m02:03:32  
+[0m02:03:32  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=3
