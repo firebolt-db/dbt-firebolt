@@ -1,0 +1,41 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project9
+
+
+Invoking dbt with ['seed']
+[0m01:41:56  Running with dbt=1.11.12
+[0m01:41:56  Registered adapter: firebolt=1.11.0
+[0m01:41:56  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m01:41:56  Found 1 snapshot, 3 seeds, 504 macros
+[0m01:41:56  
+[0m01:41:56  Concurrency: 1 threads (target='default')
+[0m01:41:56  
+[0m01:41:56  1 of 3 START seed file added ................................................... [RUN]
+[0m01:41:56  1 of 3 OK loaded seed file public.added ........................................ [[32mINSERT 20[0m in 0.12s]
+[0m01:41:56  2 of 3 START seed file base .................................................... [RUN]
+[0m01:41:57  2 of 3 OK loaded seed file public.base ......................................... [[32mINSERT 10[0m in 0.11s]
+[0m01:41:57  3 of 3 START seed file newcolumns .............................................. [RUN]
+[0m01:41:57  3 of 3 OK loaded seed file public.newcolumns ................................... [[32mINSERT 10[0m in 0.11s]
+[0m01:41:57  
+[0m01:41:57  Finished running 3 seeds in 0 hours 0 minutes and 0.48 seconds (0.48s).
+[0m01:41:57  
+[0m01:41:57  [32mCompleted successfully[0m
+[0m01:41:57  
+[0m01:41:57  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=3
+
+
+Invoking dbt with ['snapshot']
+[0m01:41:57  Running with dbt=1.11.12
+[0m01:41:57  Registered adapter: firebolt=1.11.0
+[0m01:41:57  Found 1 snapshot, 3 seeds, 504 macros
+[0m01:41:57  
+[0m01:41:57  Concurrency: 1 threads (target='default')
+[0m01:41:57  
+[0m01:41:57  1 of 1 START snapshot ts_snapshot .............................................. [RUN]
+[0m01:41:57  1 of 1 OK snapshotted ts_snapshot .............................................. [[32mSUCCESS[0m in 0.13s]
+[0m01:41:57  
+[0m01:41:57  Finished running 1 snapshot in 0 hours 0 minutes and 0.26 seconds (0.26s).
+[0m01:41:57  
+[0m01:41:57  [32mCompleted successfully[0m
+[0m01:41:57  
+[0m01:41:57  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
