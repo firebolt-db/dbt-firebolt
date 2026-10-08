@@ -12,18 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out dbt-adapter code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
         with:
           path: dbt-firebolt
 
       - name: Check out Jaffle Shop code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
         with:
           repository: firebolt-db/jaffle_shop_firebolt
           path: jaffle-shop
 
       - name: Set up Python 3.8
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: 3.8
 
@@ -35,7 +35,7 @@ jobs:
 
       - name: Setup database and engine
         id: setup
-        uses: firebolt-db/integration-testing-setup@v1
+        uses: firebolt-db/integration-testing-setup@v2
         with:
           firebolt-username: ${{ secrets.FIREBOLT_STG_USERNAME }}
           firebolt-password: ${{ secrets.FIREBOLT_STG_PASSWORD }}
