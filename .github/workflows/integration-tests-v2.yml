@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
 
       - name: Set up Python 3.9
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
           python-version: 3.9
 
@@ -37,7 +37,7 @@ jobs:
 
       - name: Restore cached failed tests
         id: cache-tests-restore
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v6
         with:
           path: |
             .pytest_cache/v/cache/lastfailed
@@ -62,7 +62,7 @@ jobs:
 
       - name: Save failed tests
         id: cache-tests-save
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v6
         if: failure()
         with:
           path: |
@@ -70,7 +70,7 @@ jobs:
           key: ${{ steps.cache-tests-restore.outputs.cache-primary-key }}
 
       - name: Get Allure history
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
         if: always()
         continue-on-error: true
         with:
@@ -78,7 +78,7 @@ jobs:
           path: gh-pages
 
       - name: Allure Report
-        uses: firebolt-db/action-allure-report@v1
+        uses: firebolt-db/action-allure-report@v2
         if: always()
         with:
           github-key: ${{ secrets.GITHUB_TOKEN }}

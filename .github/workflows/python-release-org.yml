@@ -26,13 +26,13 @@ jobs:
     needs: integration-tests
     steps:
     - name: Check out code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v7
       with:
         fetch-depth: 0
         token: ${{ secrets.RELEASE_PAT }}
 
     - name: Apply Changie changelog
-      uses: miniscruff/changie-action@v0.2.0
+      uses: miniscruff/changie-action@v3.0.1
       with:
         version: v1.10.2
         args: batch ${{ inputs.version }}
@@ -40,7 +40,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Merge into CHANGELOG.md
-      uses: miniscruff/changie-action@v0.2.0
+      uses: miniscruff/changie-action@v3.0.1
       with:
         version: v1.10.2
         args: merge
