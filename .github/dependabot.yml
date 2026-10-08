@@ -1,0 +1,36 @@
+---
+version: 2
+updates:
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "08:17"
+      timezone: "Etc/UTC"
+    commit-message:
+      prefix: "chore(deps):"
+    open-pull-requests-limit: 20
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:30"
+      timezone: "Etc/UTC"
+    commit-message:
+      prefix: "chore(deps):"
+    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 7
+    groups:
+      python:
+        patterns:
+          - "*"
