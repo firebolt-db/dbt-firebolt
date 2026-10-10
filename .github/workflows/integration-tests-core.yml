@@ -69,7 +69,7 @@ jobs:
           ACCOUNT_NAME: ""
           CORE_URL: ${{ steps.setup-core.outputs.service_url }}
         run: |
-          pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
+          pytest --last-failed -o log_cli=true -o log_cli_level=WARNING tests/functional/ --alluredir=allure-results
 
       - name: Allure Report
         uses: firebolt-db/action-allure-report@v1
