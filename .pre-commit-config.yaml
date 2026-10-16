@@ -12,8 +12,8 @@ repos:
         args:
           - --include-version-classifiers
 
-  - repo: https://github.com/myint/autoflake
-    rev: v1.4
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.4.0
     hooks:
       - id: autoflake
         args:
@@ -36,7 +36,7 @@ repos:
         # python-version: 3.9
 
   - repo: https://github.com/pycqa/flake8
-    rev: "4.0.1"
+    rev: "7.4.1"
     hooks:
       - id: flake8
         additional_dependencies:
