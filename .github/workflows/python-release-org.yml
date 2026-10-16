@@ -19,6 +19,8 @@ permissions: {}
 jobs:
   integration-tests:
     uses: ./.github/workflows/integration-tests.yml
+    with:
+      use-cache: false # no cache restore/save in the release path (cache poisoning)
     permissions:
       contents: write # Allure Report (called workflow) publishes to gh-pages
       statuses: write # Allure Report (called workflow) sets the report commit status
@@ -49,6 +51,16 @@ jobs:
         fetch-depth: 0
         token: ${{ steps.app-token.outputs.token }}
         persist-credentials: true # The changelog commit and the release step push to main and tag.
+
+    - name: Validate version input
+      env:
+        VERSION: ${{ inputs.version }}
+      run: |
+        if [ -n "$VERSION" ] && ! [[ "$VERSION" =~ ^v?(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
+          echo "::error::Invalid version '$VERSION': expected empty or a semantic version like 1.2.3"
+          exit 1
+        fi
+      shell: bash
 
     - name: Apply Changie changelog
       uses: miniscruff/changie-action@3223cb29b92a0972dedc864ace3da01e04780ae4 # v3.0.1
