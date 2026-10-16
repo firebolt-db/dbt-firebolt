@@ -13,12 +13,28 @@ on:
       FIREBOLT_CLIENT_SECRET_STG_NEW_IDN:
         required: true
 
+permissions: {}
+
 jobs:
   integration-test-v1:
     uses: ./.github/workflows/integration-tests-v1.yml
-    secrets: inherit
+    permissions:
+      contents: write # Allure Report (called workflow) publishes to gh-pages
+      statuses: write # Allure Report (called workflow) sets the report commit status
+      pages: read # Allure Report (called workflow) reads the GitHub Pages URL
+    secrets:
+      FIREBOLT_STG_USERNAME: ${{ secrets.FIREBOLT_STG_USERNAME }}
+      FIREBOLT_STG_PASSWORD: ${{ secrets.FIREBOLT_STG_PASSWORD }}
   integration-test-v2:
     uses: ./.github/workflows/integration-tests-v2.yml
-    secrets: inherit
+    permissions:
+      contents: write # Allure Report (called workflow) publishes to gh-pages
+      statuses: write # Allure Report (called workflow) sets the report commit status
+      pages: read # Allure Report (called workflow) reads the GitHub Pages URL
+    secrets:
+      FIREBOLT_CLIENT_ID_STG_NEW_IDN: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
+      FIREBOLT_CLIENT_SECRET_STG_NEW_IDN: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
   verify-installation:
     uses: ./.github/workflows/verify-installation.yml
+    permissions:
+      contents: read

@@ -36,15 +36,24 @@ on:
     secrets:
       SLACK_BOT_TOKEN:
         required: false
+
+permissions: {}
+
 jobs:
   run-core-integration-tests:
     runs-on: ${{ inputs.os_name }}
+    permissions:
+      contents: write # Allure Report publishes to gh-pages
+      statuses: write # Allure Report sets the report commit status
+      pages: read # Allure Report reads the GitHub Pages URL
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: ${{ inputs.python_version }}
 
@@ -55,7 +64,7 @@ jobs:
 
       - name: Setup Firebolt Core
         id: setup-core
-        uses: firebolt-db/action-setup-core@main
+        uses: firebolt-db/action-setup-core@d89662ec72f2cedccef9a6e4b84d45bf1c429dd4 # main
         with:
           tag_version: ${{ inputs.tag_version || vars.DEFAULT_CORE_IMAGE_TAG }}
 
@@ -72,7 +81,7 @@ jobs:
           pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
       - name: Allure Report
-        uses: firebolt-db/action-allure-report@v1
+        uses: firebolt-db/action-allure-report@781b4529b67b4f393c63d7dc1e098cb558e1ab16 # v1.4.1
         if: always()
         continue-on-error: true
         with:

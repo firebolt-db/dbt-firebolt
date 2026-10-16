@@ -1,0 +1,7 @@
+# .github/workflows/jaffle_shop/ holds dbt config files used by the Jaffle Shop
+# tests, not workflows. GitHub ignores subdirectories of .github/workflows, but
+# actionlint scans them, so suppress its findings there.
+paths:
+  .github/workflows/jaffle_shop/**:
+    ignore:
+      - '.+'

@@ -7,23 +7,34 @@ on:
         required: true
       FIREBOLT_STG_PASSWORD:
         required: true
+      AWS_ACCESS_KEY_ID:
+        required: false
+      AWS_ACCESS_SECRET_KEY:
+        required: false
+
+permissions: {}
+
 jobs:
   tests:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Check out dbt-adapter code
-        uses: actions/checkout@v2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           path: dbt-firebolt
+          persist-credentials: false
 
       - name: Check out Jaffle Shop code
-        uses: actions/checkout@v2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: firebolt-db/jaffle_shop_firebolt
           path: jaffle-shop
+          persist-credentials: false
 
       - name: Set up Python 3.8
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: 3.8
 
@@ -35,7 +46,7 @@ jobs:
 
       - name: Setup database and engine
         id: setup
-        uses: firebolt-db/integration-testing-setup@v1
+        uses: firebolt-db/integration-testing-setup@eb35b7719247c93392cb3a8aa4f554a4c11a770b # v1.0.3
         with:
           firebolt-username: ${{ secrets.FIREBOLT_STG_USERNAME }}
           firebolt-password: ${{ secrets.FIREBOLT_STG_PASSWORD }}
