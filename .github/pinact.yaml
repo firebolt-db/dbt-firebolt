@@ -1,0 +1,7 @@
+# pinact configuration: https://github.com/suzuki-shunsuke/pinact/blob/main/docs/config.md
+version: 3
+ignore_actions:
+  # The major version selects the product (v1 = FB 1.0, v2 = FB 2.0), so `pinact run -u`
+  # must never move it. Dependabot (with its semver-major ignore) keeps it up to date.
+  - name: firebolt-db/integration-testing-setup
+    ref: .*
