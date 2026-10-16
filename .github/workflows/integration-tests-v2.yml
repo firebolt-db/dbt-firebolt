@@ -2,7 +2,17 @@ name: Run integration tests V2
 
 on:
   workflow_dispatch:
+    inputs:
+      use-cache:
+        description: 'Restore and save the pytest failed-tests cache'
+        type: boolean
+        default: true
   workflow_call:
+    inputs:
+      use-cache:
+        description: 'Restore and save the pytest failed-tests cache (the release passes false)'
+        type: boolean
+        default: true
     secrets:
       FIREBOLT_CLIENT_ID_STG_NEW_IDN:
         required: true
@@ -24,10 +34,10 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.12
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: 3.9
+          python-version: 3.12
 
       - name: Install dependencies
         run: |
@@ -45,6 +55,7 @@ jobs:
 
       - name: Restore cached failed tests
         id: cache-tests-restore
+        if: inputs.use-cache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
@@ -67,14 +78,28 @@ jobs:
         env:
           SECRET_1: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
           SECRET_2: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
+        # Read the secrets from the environment so they never appear on a command line.
         run: |
-          find allure-results -type f -exec sed -i "s/${SECRET_1}/REDACTED/g" {} +
-          find allure-results -type f -exec sed -i "s/${SECRET_2}/REDACTED/g" {} +
+          python3 - <<'EOF'
+          import os
+          import pathlib
+
+          secrets = [os.environ[name].encode() for name in ("SECRET_1", "SECRET_2")]
+          for path in pathlib.Path("allure-results").rglob("*"):
+              if not path.is_file():
+                  continue
+              data = original = path.read_bytes()
+              for secret in secrets:
+                  if secret:
+                      data = data.replace(secret, b"REDACTED")
+              if data != original:
+                  path.write_bytes(data)
+          EOF
 
       - name: Save failed tests
         id: cache-tests-save
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        if: failure()
+        if: failure() && inputs.use-cache
         with:
           path: |
             .pytest_cache/v/cache/lastfailed
