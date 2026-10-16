@@ -92,7 +92,7 @@ jobs:
         git push origin main
 
     - name: 'Publish action'
-      uses: firebolt-db/action-python-release@535d72bf4fb7ff9ff7f87bb0454e232afe1cef91 # main
+      uses: firebolt-db/action-python-release@4df4861ff745d6e2bbc602b2e8d6578d4f8dcf61 # v1.0.0
       with:
         pre-release-tag: ${{ inputs.pre-release-tag }}
         major-release: ${{ inputs.major-release }}

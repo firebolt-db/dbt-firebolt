@@ -64,7 +64,7 @@ jobs:
 
       - name: Setup Firebolt Core
         id: setup-core
-        uses: firebolt-db/action-setup-core@d89662ec72f2cedccef9a6e4b84d45bf1c429dd4 # main
+        uses: firebolt-db/action-setup-core@5adec87419b62523e77ca1a1affe9411809738a5 # v1.1.0
         with:
           tag_version: ${{ inputs.tag_version || vars.DEFAULT_CORE_IMAGE_TAG }}
 
