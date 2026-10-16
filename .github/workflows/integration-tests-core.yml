@@ -81,12 +81,13 @@ jobs:
           pytest --last-failed -o log_cli=true -o log_cli_level=INFO tests/functional/ --alluredir=allure-results
 
       - name: Allure Report
-        uses: firebolt-db/action-allure-report@781b4529b67b4f393c63d7dc1e098cb558e1ab16 # v1.4.1
+        uses: firebolt-db/action-allure-report@39037f1a56d995af294067c7c5ceb5713c407274 # v2.1.2
         if: always()
         continue-on-error: true
         with:
-          github-key: ${{ secrets.GITHUB_TOKEN }}
-          test-type: core
-          allure-dir: allure-results
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           pages-branch: gh-pages
-          repository-name: dbt-firebolt
+          mapping-json: |
+            {
+              "allure-results": "core"
+            }
