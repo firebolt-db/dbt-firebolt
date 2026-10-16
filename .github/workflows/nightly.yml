@@ -3,9 +3,13 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 1 * * *' # 3 am UTC every day
+permissions: {}
+
 jobs:
   code-check:
     uses: ./.github/workflows/code-check.yml
+    permissions:
+      contents: read
   core-tests:
     strategy:
       fail-fast: false # finish all jobs even if one fails
@@ -13,12 +17,18 @@ jobs:
         os: ['ubuntu-latest']
         python-version: ['3.9', '3.10', '3.11', '3.12']
     uses: ./.github/workflows/integration-tests-core.yml
+    permissions:
+      contents: write # Allure Report (called workflow) publishes to gh-pages
+      statuses: write # Allure Report (called workflow) sets the report commit status
+      pages: read # Allure Report (called workflow) reads the GitHub Pages URL
     with:
       python_version: ${{ matrix.python-version }}
       os_name: ${{ matrix.os }}
 
   tests:
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     strategy:
       fail-fast: false # finish all jobs even if one fails
       max-parallel: 2
@@ -27,18 +37,20 @@ jobs:
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
     steps:
       - name: Check out dbt-adapter code
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           path: dbt-firebolt
+          persist-credentials: false
 
       - name: Check out Jaffle Shop code
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: firebolt-db/jaffle_shop_firebolt
           path: jaffle-shop
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -49,7 +61,7 @@ jobs:
 
       - name: Setup database and engine
         id: setup
-        uses: firebolt-db/integration-testing-setup@v2
+        uses: firebolt-db/integration-testing-setup@813c4835ef38adcba3f8760e7afc21a3c7248023 # v2.6.2
         with:
           firebolt-client-id: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
           firebolt-client-secret: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
@@ -77,7 +89,7 @@ jobs:
       - name: Slack Notify of failure
         if: failure()
         id: slack
-        uses: firebolt-db/action-slack-nightly-notify@v1
+        uses: firebolt-db/action-slack-nightly-notify@1bdd915837fbe0986aeacd2ee63a648ae2dcc6db # v1.0.0
         with:
           os: ${{ matrix.os }}
           programming-language: Python

@@ -11,10 +11,32 @@ on:
         required: true
       FIREBOLT_CLIENT_SECRET_STG_NEW_IDN:
         required: true
+      AWS_ACCESS_KEY_ID:
+        required: false
+      AWS_ACCESS_SECRET_KEY:
+        required: false
+      AWS_ACCESS_ROLE_ARN:
+        required: false
+
+permissions: {}
+
 jobs:
   jaffle-shop-v1:
     uses: ./.github/workflows/jaffle-shop-v1.yml
-    secrets: inherit
+    permissions:
+      contents: read
+    secrets:
+      FIREBOLT_STG_USERNAME: ${{ secrets.FIREBOLT_STG_USERNAME }}
+      FIREBOLT_STG_PASSWORD: ${{ secrets.FIREBOLT_STG_PASSWORD }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_ACCESS_SECRET_KEY: ${{ secrets.AWS_ACCESS_SECRET_KEY }}
   jaffle-shop-v2:
     uses: ./.github/workflows/jaffle-shop-v2.yml
-    secrets: inherit
+    permissions:
+      contents: read
+    secrets:
+      FIREBOLT_CLIENT_ID_STG_NEW_IDN: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
+      FIREBOLT_CLIENT_SECRET_STG_NEW_IDN: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_ACCESS_SECRET_KEY: ${{ secrets.AWS_ACCESS_SECRET_KEY }}
+      AWS_ACCESS_ROLE_ARN: ${{ secrets.AWS_ACCESS_ROLE_ARN }}

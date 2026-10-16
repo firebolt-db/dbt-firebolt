@@ -1,0 +1,6 @@
+rules:
+  # zizmor suggests the new `uses: $/...` self-repository syntax for local
+  # reusable workflows, but actionlint does not support it yet and fails on it.
+  # Keep the workspace-relative `./.github/workflows/...` form until it does.
+  self-repository:
+    disable: true

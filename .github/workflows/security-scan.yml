@@ -6,12 +6,19 @@ on:
   push:
     branches: [ main ]
 
+permissions: {}
+
 jobs:
   security-scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read # SonarCloud reads PR information
     steps:
       - name: "Checkout Code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: "Hack version attr for security scanning"
         run: |
@@ -19,7 +26,7 @@ jobs:
           sed -i 's#attr: dbt.adapters.firebolt.__version__#attr: dbt.__version__#' setup.cfg
 
       - name: "Security Scan"
-        uses: firebolt-db/action-security-scan@main
+        uses: firebolt-db/action-security-scan@83d65487985b5e0e967362900c665ced1e8d0dbf # main
         with:
           github-key: ${{ secrets.GITHUB_TOKEN }}
           fossa-key: ${{ secrets.FOSSA_TOKEN }}

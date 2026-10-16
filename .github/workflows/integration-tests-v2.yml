@@ -2,24 +2,42 @@ name: Run integration tests V2
 
 on:
   workflow_dispatch:
+    inputs:
+      use-cache:
+        description: 'Restore and save the pytest failed-tests cache'
+        type: boolean
+        default: true
   workflow_call:
+    inputs:
+      use-cache:
+        description: 'Restore and save the pytest failed-tests cache (the release passes false)'
+        type: boolean
+        default: true
     secrets:
       FIREBOLT_CLIENT_ID_STG_NEW_IDN:
         required: true
       FIREBOLT_CLIENT_SECRET_STG_NEW_IDN:
         required: true
 
+permissions: {}
+
 jobs:
   tests:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Allure Report publishes to gh-pages
+      statuses: write # Allure Report sets the report commit status
+      pages: read # Allure Report reads the GitHub Pages URL
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          python-version: 3.9
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: 3.12
 
       - name: Install dependencies
         run: |
@@ -28,7 +46,7 @@ jobs:
 
       - name: Setup database and engine
         id: setup
-        uses: firebolt-db/integration-testing-setup@v2
+        uses: firebolt-db/integration-testing-setup@813c4835ef38adcba3f8760e7afc21a3c7248023 # v2.6.2
         with:
           firebolt-client-id: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
           firebolt-client-secret: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
@@ -37,7 +55,8 @@ jobs:
 
       - name: Restore cached failed tests
         id: cache-tests-restore
-        uses: actions/cache/restore@v3
+        if: inputs.use-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             .pytest_cache/v/cache/lastfailed
@@ -56,29 +75,47 @@ jobs:
 
       - name: Make sure no secrets make it to the logs
         if: always()
+        env:
+          SECRET_1: ${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}
+          SECRET_2: ${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}
+        # Read the secrets from the environment so they never appear on a command line.
         run: |
-          find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_CLIENT_ID_STG_NEW_IDN }}/REDACTED/g' {} +
-          find allure-results -type f -exec sed -i 's/${{ secrets.FIREBOLT_CLIENT_SECRET_STG_NEW_IDN }}/REDACTED/g' {} +
+          python3 - <<'EOF'
+          import os
+          import pathlib
+
+          secrets = [os.environ[name].encode() for name in ("SECRET_1", "SECRET_2")]
+          for path in pathlib.Path("allure-results").rglob("*"):
+              if not path.is_file():
+                  continue
+              data = original = path.read_bytes()
+              for secret in secrets:
+                  if secret:
+                      data = data.replace(secret, b"REDACTED")
+              if data != original:
+                  path.write_bytes(data)
+          EOF
 
       - name: Save failed tests
         id: cache-tests-save
-        uses: actions/cache/save@v3
-        if: failure()
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        if: failure() && inputs.use-cache
         with:
           path: |
             .pytest_cache/v/cache/lastfailed
           key: ${{ steps.cache-tests-restore.outputs.cache-primary-key }}
 
       - name: Get Allure history
-        uses: actions/checkout@v2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         if: always()
         continue-on-error: true
         with:
           ref: gh-pages
           path: gh-pages
+          persist-credentials: false
 
       - name: Allure Report
-        uses: firebolt-db/action-allure-report@v1
+        uses: firebolt-db/action-allure-report@781b4529b67b4f393c63d7dc1e098cb558e1ab16 # v1.4.1
         if: always()
         with:
           github-key: ${{ secrets.GITHUB_TOKEN }}

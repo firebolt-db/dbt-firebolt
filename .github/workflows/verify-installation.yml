@@ -4,30 +4,41 @@ on:
   workflow_dispatch:
   workflow_call:
 
+permissions: {}
+
 jobs:
   verify-installation:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       fail-fast: false # finish all jobs even if one fails
       matrix:
         python-version: ${{ fromJSON(vars.PYTHON_VERSIONS) }}
         dbt-core-version: ${{ fromJSON(vars.DBT_VERSIONS) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: ${{ matrix.python-version }}
       - name: Create and activate virtual environment
+        env:
+          DBT_CORE_VERSION: ${{ matrix.dbt-core-version }}
         run: |
           python -m venv venv
           source venv/bin/activate
-          pip install "dbt-core==${{ matrix.dbt-core-version }}"
+          pip install "dbt-core==${DBT_CORE_VERSION}"
           pip install .
       - name: Verify installation
+        env:
+          PYTHON_VERSION: ${{ matrix.python-version }}
+          DBT_CORE_VERSION: ${{ matrix.dbt-core-version }}
         run: |
           source venv/bin/activate
-          python -c "import dbt.adapters.firebolt; print('Package successfully installed with Python ${{ matrix.python-version }} and dbt-core ${{ matrix.dbt-core-version }}')"
+          python -c "import dbt.adapters.firebolt; print('Package successfully installed with Python ${PYTHON_VERSION} and dbt-core ${DBT_CORE_VERSION}')"
       - name: Verify correct files in include directory
         run: |
           source venv/bin/activate
