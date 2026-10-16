@@ -15,12 +15,3 @@ jobs:
     uses: ./.github/workflows/unit-tests.yml
     permissions:
       contents: read
-  check-title:
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write # the action comments on the PR when the title is invalid
-    steps:
-      - name: Check title name convention
-        uses: jef/conventional-commits-pr-action@2ee589f151916f92da5e2887c38d5fe6402e803c # v1.3.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
