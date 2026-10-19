@@ -105,18 +105,14 @@ jobs:
             .pytest_cache/v/cache/lastfailed
           key: ${{ steps.cache-tests-restore.outputs.cache-primary-key }}
 
-      - name: Get Allure history
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-          persist-credentials: false
-
+      # action-allure-report v2 checks out the pages branch for the history itself.
       - name: Allure Report
-        uses: firebolt-db/action-allure-report@781b4529b67b4f393c63d7dc1e098cb558e1ab16 # v1.4.1
+        uses: firebolt-db/action-allure-report@39037f1a56d995af294067c7c5ceb5713c407274 # v2.1.2
         if: always()
         with:
-          github-key: ${{ secrets.GITHUB_TOKEN }}
-          test-type: integration-v1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pages-branch: gh-pages
+          mapping-json: |
+            {
+              "allure-results": "integration-v1"
+            }
