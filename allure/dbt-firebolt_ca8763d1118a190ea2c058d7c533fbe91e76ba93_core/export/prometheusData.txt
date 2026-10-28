@@ -1,6 +1,6 @@
-launch_status_failed 1
+launch_status_failed 0
 launch_status_broken 27
-launch_status_passed 99
+launch_status_passed 100
 launch_status_skipped 45
 launch_status_unknown 0
 launch_time_duration 209305
