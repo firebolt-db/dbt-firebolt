@@ -1,0 +1,3 @@
+
+
+Invoking dbt with ['run', '-s', 'my_model_wrong_name']

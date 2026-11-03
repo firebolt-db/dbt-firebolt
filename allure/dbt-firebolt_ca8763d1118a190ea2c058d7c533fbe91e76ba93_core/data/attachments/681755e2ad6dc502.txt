@@ -1,0 +1,21 @@
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
+
+
+Invoking dbt with ['run', '-s', 'my_model_data_type']
