@@ -1,0 +1,363 @@
+
+=== Test project_root: /tmp/pytest-of-runner/pytest-0/project67
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m01:08:12  Running with dbt=1.10.23
+[0m01:08:12  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:12  Registered adapter: firebolt=1.11.0
+[0m01:08:12  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m01:08:12  Found 2 models, 477 macros, 1 unit test
+[0m01:08:12  
+[0m01:08:12  Concurrency: 1 threads (target='default')
+[0m01:08:12  
+[0m01:08:13  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m01:08:13  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m01:08:13  
+[0m01:08:13  Finished running 1 view model in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m01:08:13  
+[0m01:08:13  [32mCompleted successfully[0m
+[0m01:08:13  
+[0m01:08:13  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m01:08:13  Running with dbt=1.10.23
+[0m01:08:13  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:13  Registered adapter: firebolt=1.11.0
+[0m01:08:13  Found 2 models, 477 macros, 1 unit test
+[0m01:08:13  
+[0m01:08:13  Concurrency: 1 threads (target='default')
+[0m01:08:13  
+[0m01:08:13  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m01:08:13  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m01:08:13  
+[0m01:08:13  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m01:08:13  
+[0m01:08:13  [32mCompleted successfully[0m
+[0m01:08:13  
+[0m01:08:13  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m01:08:13  Running with dbt=1.10.23
+[0m01:08:13  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:13  Registered adapter: firebolt=1.11.0
+[0m01:08:13  Found 2 models, 477 macros, 1 unit test
+[0m01:08:13  
+[0m01:08:13  Concurrency: 1 threads (target='default')
+[0m01:08:13  
+[0m01:08:13  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m01:08:13  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.10s]
+[0m01:08:13  
+[0m01:08:13  Finished running 1 view model in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m01:08:13  
+[0m01:08:13  [32mCompleted successfully[0m
+[0m01:08:13  
+[0m01:08:13  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m01:08:13  Running with dbt=1.10.23
+[0m01:08:13  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:13  Registered adapter: firebolt=1.11.0
+[0m01:08:14  Found 2 models, 477 macros, 1 unit test
+[0m01:08:14  
+[0m01:08:14  Concurrency: 1 threads (target='default')
+[0m01:08:14  
+[0m01:08:14  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m01:08:14  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.15s]
+[0m01:08:14  
+[0m01:08:14  Finished running 1 unit test in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m01:08:14  
+[0m01:08:14  [32mCompleted successfully[0m
+[0m01:08:14  
+[0m01:08:14  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m01:08:14  Running with dbt=1.10.23
+[0m01:08:14  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:14  Registered adapter: firebolt=1.11.0
+[0m01:08:14  Found 2 models, 477 macros, 1 unit test
+[0m01:08:14  
+[0m01:08:14  Concurrency: 1 threads (target='default')
+[0m01:08:14  
+[0m01:08:14  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m01:08:14  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m01:08:14  
+[0m01:08:14  Finished running 1 view model in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m01:08:14  
+[0m01:08:14  [32mCompleted successfully[0m
+[0m01:08:14  
+[0m01:08:14  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m01:08:14  Running with dbt=1.10.23
+[0m01:08:14  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:14  Registered adapter: firebolt=1.11.0
+[0m01:08:14  Found 2 models, 477 macros, 1 unit test
+[0m01:08:14  
+[0m01:08:14  Concurrency: 1 threads (target='default')
+[0m01:08:14  
+[0m01:08:14  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m01:08:15  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m01:08:15  
+[0m01:08:15  Finished running 1 unit test in 0 hours 0 minutes and 0.24 seconds (0.24s).
+[0m01:08:15  
+[0m01:08:15  [32mCompleted successfully[0m
+[0m01:08:15  
+[0m01:08:15  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m01:08:15  Running with dbt=1.10.23
+[0m01:08:15  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:15  Registered adapter: firebolt=1.11.0
+[0m01:08:15  Found 2 models, 477 macros, 1 unit test
+[0m01:08:15  
+[0m01:08:15  Concurrency: 1 threads (target='default')
+[0m01:08:15  
+[0m01:08:15  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m01:08:15  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m01:08:15  
+[0m01:08:15  Finished running 1 view model in 0 hours 0 minutes and 0.21 seconds (0.21s).
+[0m01:08:15  
+[0m01:08:15  [32mCompleted successfully[0m
+[0m01:08:15  
+[0m01:08:15  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m01:08:15  Running with dbt=1.10.23
+[0m01:08:15  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:15  Registered adapter: firebolt=1.11.0
+[0m01:08:15  Found 2 models, 477 macros, 1 unit test
+[0m01:08:15  
+[0m01:08:15  Concurrency: 1 threads (target='default')
+[0m01:08:15  
+[0m01:08:15  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m01:08:15  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.17s]
+[0m01:08:15  
+[0m01:08:15  Finished running 1 unit test in 0 hours 0 minutes and 0.25 seconds (0.25s).
+[0m01:08:15  
+[0m01:08:15  [32mCompleted successfully[0m
+[0m01:08:15  
+[0m01:08:15  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m01:08:15  Running with dbt=1.10.23
+[0m01:08:15  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:15  Registered adapter: firebolt=1.11.0
+[0m01:08:16  Found 2 models, 477 macros, 1 unit test
+[0m01:08:16  
+[0m01:08:16  Concurrency: 1 threads (target='default')
+[0m01:08:16  
+[0m01:08:16  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m01:08:16  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m01:08:16  
+[0m01:08:16  Finished running 1 view model in 0 hours 0 minutes and 0.21 seconds (0.21s).
+[0m01:08:16  
+[0m01:08:16  [32mCompleted successfully[0m
+[0m01:08:16  
+[0m01:08:16  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m01:08:16  Running with dbt=1.10.23
+[0m01:08:16  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:16  Registered adapter: firebolt=1.11.0
+[0m01:08:16  Found 2 models, 477 macros, 1 unit test
+[0m01:08:16  
+[0m01:08:16  Concurrency: 1 threads (target='default')
+[0m01:08:16  
+[0m01:08:16  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m01:08:16  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m01:08:16  
+[0m01:08:16  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m01:08:16  
+[0m01:08:16  [32mCompleted successfully[0m
+[0m01:08:16  
+[0m01:08:16  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m01:08:16  Running with dbt=1.10.23
+[0m01:08:16  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:16  Registered adapter: firebolt=1.11.0
+[0m01:08:16  Found 2 models, 477 macros, 1 unit test
+[0m01:08:16  
+[0m01:08:16  Concurrency: 1 threads (target='default')
+[0m01:08:16  
+[0m01:08:17  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m01:08:17  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m01:08:17  
+[0m01:08:17  Finished running 1 view model in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m01:08:17  
+[0m01:08:17  [32mCompleted successfully[0m
+[0m01:08:17  
+[0m01:08:17  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m01:08:17  Running with dbt=1.10.23
+[0m01:08:17  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:17  Registered adapter: firebolt=1.11.0
+[0m01:08:17  Found 2 models, 477 macros, 1 unit test
+[0m01:08:17  
+[0m01:08:17  Concurrency: 1 threads (target='default')
+[0m01:08:17  
+[0m01:08:17  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m01:08:17  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m01:08:17  
+[0m01:08:17  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m01:08:17  
+[0m01:08:17  [32mCompleted successfully[0m
+[0m01:08:17  
+[0m01:08:17  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m01:08:17  Running with dbt=1.10.23
+[0m01:08:17  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:17  Registered adapter: firebolt=1.11.0
+[0m01:08:17  Found 2 models, 477 macros, 1 unit test
+[0m01:08:17  
+[0m01:08:17  Concurrency: 1 threads (target='default')
+[0m01:08:17  
+[0m01:08:17  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m01:08:18  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m01:08:18  
+[0m01:08:18  Finished running 1 view model in 0 hours 0 minutes and 0.43 seconds (0.43s).
+[0m01:08:18  
+[0m01:08:18  [32mCompleted successfully[0m
+[0m01:08:18  
+[0m01:08:18  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m01:08:18  Running with dbt=1.10.23
+[0m01:08:18  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:18  Registered adapter: firebolt=1.11.0
+[0m01:08:18  Found 2 models, 477 macros, 1 unit test
+[0m01:08:18  
+[0m01:08:18  Concurrency: 1 threads (target='default')
+[0m01:08:18  
+[0m01:08:18  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m01:08:18  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.15s]
+[0m01:08:18  
+[0m01:08:18  Finished running 1 unit test in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m01:08:18  
+[0m01:08:18  [32mCompleted successfully[0m
+[0m01:08:18  
+[0m01:08:18  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m01:08:18  Running with dbt=1.10.23
+[0m01:08:18  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:18  Registered adapter: firebolt=1.11.0
+[0m01:08:18  Found 2 models, 477 macros, 1 unit test
+[0m01:08:18  
+[0m01:08:18  Concurrency: 1 threads (target='default')
+[0m01:08:18  
+[0m01:08:18  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m01:08:18  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m01:08:18  
+[0m01:08:18  Finished running 1 view model in 0 hours 0 minutes and 0.22 seconds (0.22s).
+[0m01:08:18  
+[0m01:08:18  [32mCompleted successfully[0m
+[0m01:08:18  
+[0m01:08:18  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m01:08:18  Running with dbt=1.10.23
+[0m01:08:18  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:18  Registered adapter: firebolt=1.11.0
+[0m01:08:18  Found 2 models, 477 macros, 1 unit test
+[0m01:08:18  
+[0m01:08:18  Concurrency: 1 threads (target='default')
+[0m01:08:18  
+[0m01:08:18  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m01:08:19  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.16s]
+[0m01:08:19  
+[0m01:08:19  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m01:08:19  
+[0m01:08:19  [32mCompleted successfully[0m
+[0m01:08:19  
+[0m01:08:19  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m01:08:19  Running with dbt=1.10.23
+[0m01:08:19  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:19  Registered adapter: firebolt=1.11.0
+[0m01:08:19  Found 2 models, 477 macros, 1 unit test
+[0m01:08:19  
+[0m01:08:19  Concurrency: 1 threads (target='default')
+[0m01:08:19  
+[0m01:08:19  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m01:08:19  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.08s]
+[0m01:08:19  
+[0m01:08:19  Finished running 1 view model in 0 hours 0 minutes and 0.20 seconds (0.20s).
+[0m01:08:19  
+[0m01:08:19  [32mCompleted successfully[0m
+[0m01:08:19  
+[0m01:08:19  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m01:08:19  Running with dbt=1.10.23
+[0m01:08:19  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:19  Registered adapter: firebolt=1.11.0
+[0m01:08:19  Found 2 models, 477 macros, 1 unit test
+[0m01:08:19  
+[0m01:08:19  Concurrency: 1 threads (target='default')
+[0m01:08:19  
+[0m01:08:19  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m01:08:19  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.15s]
+[0m01:08:20  
+[0m01:08:20  Finished running 1 unit test in 0 hours 0 minutes and 0.23 seconds (0.23s).
+[0m01:08:20  
+[0m01:08:20  [32mCompleted successfully[0m
+[0m01:08:20  
+[0m01:08:20  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['run', '--select', 'my_upstream_model']
+[0m01:08:20  Running with dbt=1.10.23
+[0m01:08:20  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:20  Registered adapter: firebolt=1.11.0
+[0m01:08:20  Found 2 models, 477 macros, 1 unit test
+[0m01:08:20  
+[0m01:08:20  Concurrency: 1 threads (target='default')
+[0m01:08:20  
+[0m01:08:20  1 of 1 START sql view model my_upstream_model .................................. [RUN]
+[0m01:08:20  1 of 1 OK created sql view model my_upstream_model ............................. [[32mSUCCESS[0m in 0.09s]
+[0m01:08:20  
+[0m01:08:20  Finished running 1 view model in 0 hours 0 minutes and 0.21 seconds (0.21s).
+[0m01:08:20  
+[0m01:08:20  [32mCompleted successfully[0m
+[0m01:08:20  
+[0m01:08:20  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+
+
+Invoking dbt with ['test', '--select', 'my_model']
+[0m01:08:20  Running with dbt=1.10.23
+[0m01:08:20  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m01:08:20  Registered adapter: firebolt=1.11.0
+[0m01:08:20  Found 2 models, 477 macros, 1 unit test
+[0m01:08:20  
+[0m01:08:20  Concurrency: 1 threads (target='default')
+[0m01:08:20  
+[0m01:08:20  1 of 1 START unit_test my_model::test_my_model ................................. [RUN]
+[0m01:08:20  1 of 1 PASS my_model::test_my_model ............................................ [[32mPASS[0m in 0.17s]
+[0m01:08:20  
+[0m01:08:20  Finished running 1 unit test in 0 hours 0 minutes and 0.24 seconds (0.24s).
+[0m01:08:20  
+[0m01:08:20  [32mCompleted successfully[0m
+[0m01:08:20  
+[0m01:08:20  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
